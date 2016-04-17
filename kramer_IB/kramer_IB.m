@@ -123,3 +123,21 @@ plotv(data,spec,'varlabel','V');
 
 % dnsim(spec);
 
+
+%% Plot currents
+for i = 1:4
+    %varlabels = {'V','iKDR_mKDR','iCaH_mCaH','iM_mM','iAR_mAR'};
+    varlabels = {'V','iCaH_mCaH','iM_mM','iAR_mAR'};
+    comp2plot=i;
+    [fig,lfps,T] = plot_currents(data,spec,varlabels,'comp2plot',comp2plot);
+
+end
+% % Plot other currents
+% plotv(data,spec,'varlabel','iKDR_mKDR');
+% plotv(data,spec,'varlabel','iCaH_mCaH');
+% plotv(data,spec,'varlabel','iM_mM');
+% plotv(data,spec,'varlabel','iAR_mAR');
+% plotv(data,spec,'varlabel','iSYN_sSYNpre');
+
+
+
