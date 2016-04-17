@@ -1,7 +1,7 @@
 % Model: Kramer 2008, PLoS Comp Bio
 
 % simulation controls
-tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % number of cells per population
