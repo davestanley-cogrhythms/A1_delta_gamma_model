@@ -10,7 +10,7 @@ N=2;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-8.5; % -4.5
+Js=-20.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -18,7 +18,7 @@ gRAN=125;
 
 % some intrinsic currents
 gAR_L=50;  % 50,  LTS - max conductance of h-channel
-gAR_d=155; % 155, IBda - max conductance of h-channel
+gAR_d=0; % 155, IBda - max conductance of h-channel
 
 % connection strengths
 gad=0;      % IBa -> IBdb, 0(.04)
@@ -30,7 +30,7 @@ ggja=.002;  % IBa -> IBa
 
 % Compartmental parameters
 gM_s = 1.5;         % Value from axon
-gCaH_s = 0.65;
+gCaH_s = 0;
 
 
 % constant biophysical parameters
