@@ -1,0 +1,5 @@
+
+Might want to check out values for the following M current rate constant scaling factors.
+	'c_MaM',1,'c_MbM',1,
+
+They seem to differ between axon and dendrite, but are not so in the original Kramer paper.
