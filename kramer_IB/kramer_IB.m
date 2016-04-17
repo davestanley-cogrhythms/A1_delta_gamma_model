@@ -111,5 +111,15 @@ spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
 % process specification and simulate model
 data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0);
 plotv(data,spec,'varlabel','V');
+
+
+% % Plot other currents
+% plotv(data,spec,'varlabel','iKDR_mKDR');
+% plotv(data,spec,'varlabel','iCaH_mCaH');
+% plotv(data,spec,'varlabel','iM_mM');
+% plotv(data,spec,'varlabel','iAR_mAR');
+% plotv(data,spec,'varlabel','iSYN_sSYNpre');
+
+
 % dnsim(spec);
 
