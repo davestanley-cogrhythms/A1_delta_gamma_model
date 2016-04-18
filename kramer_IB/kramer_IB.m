@@ -10,7 +10,7 @@ N=2;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-8.5; % -4.5
+Js=-12.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -18,7 +18,7 @@ gRAN=125;
 
 % some intrinsic currents
 gAR_L=50;  % 50,  LTS - max conductance of h-channel
-gAR_d=155; % 155, IBda - max conductance of h-channel
+gAR_d=0; % 155, IBda - max conductance of h-channel
 
 % connection strengths
 gad=0;      % IBa -> IBdb, 0(.04)
@@ -29,7 +29,7 @@ gsa=.3;     % IBs -> IBa
 ggja=.002;  % IBa -> IBa
 
 % Compartmental parameters
-gM_s = 1.5;         % Value from axon
+gM_s = 0;         % Value from axon
 gCaH_s = 6.5;
 
 
@@ -55,7 +55,7 @@ spec.nodes(i).parameters = {...
   'gKDR',10,'E_KDR',E_EKDR,'KDR_V1',29.5,'KDR_d1',10,'KDR_V2',10,'KDR_d2',10,...
   'gAR',gAR_d,'E_AR',IB_Eh,'AR_V12',-87.5,'AR_k',-5.5,'c_ARaM',2.75,'c_ARbM',3,'AR_L',1,'AR_R',1,...
   'gM',gM_s,'E_M',E_EKDR,'c_MaM',1,'c_MbM',1,...
-  'gCaH',gCaH_s,'E_CaH',ECa,'tauCaH',.33333,'c_CaHaM',3,'c_CaHbM',3,...
+  'gCaH',gCaH_s,'E_CaH',ECa,'tauCaH',1,'c_CaHaM',1,'c_CaHbM',1,...
   };
 
 
