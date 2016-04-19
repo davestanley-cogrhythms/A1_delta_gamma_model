@@ -2,7 +2,7 @@
 % Single compartment version of Kramer model
 
 % simulation controls
-tspan=[0 150]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % number of cells per population
@@ -10,7 +10,7 @@ N=2;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-9.5; % -4.5
+Js=-14.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -29,7 +29,7 @@ gsa=.3;     % IBs -> IBa
 ggja=.002;  % IBa -> IBa
 
 % Compartmental parameters
-gM_s = 0;         % Value from axon
+gM_s = 1;         % Value from axon
 gCaH_s = 2;
 
 

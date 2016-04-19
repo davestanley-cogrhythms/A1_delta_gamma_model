@@ -1,6 +1,9 @@
 
 
 function startup
+
+    set(0, 'DefaultFigureColor', 'White');
+    
     dnsim_root = fullfile('~','src','dnsim');
     currd2 = pwd;
 
