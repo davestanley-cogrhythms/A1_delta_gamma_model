@@ -10,7 +10,7 @@ N=2;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-14.5; % -4.5
+Js=-10.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -47,7 +47,8 @@ i = i + 1;
 spec.nodes(i).label = 'IBs';
 spec.nodes(i).multiplicity = N;
 spec.nodes(i).dynamics = {'V''=(current)/Cm'};
-spec.nodes(i).mechanisms = {'IBs_itonic','IBs_noise','IBs_iNaF','IBs_iKDR','IBda_iAR','IBda_iM','IBda_iCaH','IBs_leak'};
+%spec.nodes(i).mechanisms = {'IBs_itonic','IBs_noise','IBs_iNaF','IBs_iKDR','IBda_iAR','IBda_iM','IBda_iCaH','IBs_leak'};
+spec.nodes(i).mechanisms = {'IBs_itonic','IBs_noise','IBs_iNaF','IBs_iKDR','IBda_iAR','IB_iM_Mich','IBda_iCaH','IBs_leak'};
 spec.nodes(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',1,...
   'stim',Js,'onset',0,'V_noise',0,...
@@ -68,7 +69,7 @@ data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 %% Plot currents
 for i = 1:1
     %varlabels = {'V','iKDR_mKDR','iCaH_mCaH','iM_mM','iAR_mAR'};
-    varlabels = {'V','iCaH_mCaH','iM_mM','iAR_mAR'};
+    varlabels = {'V','iCaH_mCaH','IB_iM_Mich_mM','iAR_mAR'};
     comp2plot=i;
     scale_ylim_flag = 0;
     [fig,lfps,T] = plot_currents(data,spec,varlabels,'comp2plot',comp2plot,'scale_ylim_flag',scale_ylim_flag);
