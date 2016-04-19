@@ -24,15 +24,15 @@ minf = aM ./ (aM + bM);
 mtau = 1 ./ (aM + bM);
 
 figure;
-subplot(211); plot(V,minf);
-subplot(212); plot(V,mtau);
+subplot(211); plot(V,minf); xlabel('V (mV)'); ylabel('m\_inf');
+subplot(212); plot(V,mtau); xlabel('V (mV)'); ylabel('Tau\_m');
 
 
 
-%% Lee's M current
+%% Michelle's M current (from Lee )
 
     V = -80.5:1:30.5;
-    Qs = 3.209
+    Qs = 3.209;
 	aM = (0.0001*Qs*(V+30)) ./ (1-exp(-(V+30)/9));
 	bM = (-0.0001*Qs*(V+30)) ./ (1-exp((V+30)/9));
     
@@ -40,8 +40,8 @@ subplot(212); plot(V,mtau);
     mtau = 1 ./ (aM + bM);
 
     figure;
-    subplot(211); plot(V,minf);
-    subplot(212); plot(V,mtau);
+    subplot(211); plot(V,minf); xlabel('V (mV)'); ylabel('m\_inf');
+    subplot(212); plot(V,mtau); xlabel('V (mV)'); ylabel('Tau\_m');
 
 %% Original mod file for Lee's M current
 
