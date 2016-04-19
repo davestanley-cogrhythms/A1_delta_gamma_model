@@ -2,7 +2,7 @@
 % Single compartment version of Kramer model
 
 % simulation controls
-tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 150]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % number of cells per population
@@ -10,7 +10,7 @@ N=2;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-12.5; % -4.5
+Js=-9.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -30,7 +30,7 @@ ggja=.002;  % IBa -> IBa
 
 % Compartmental parameters
 gM_s = 0;         % Value from axon
-gCaH_s = 6.5;
+gCaH_s = 2;
 
 
 % constant biophysical parameters
@@ -51,8 +51,8 @@ spec.nodes(i).mechanisms = {'IBs_itonic','IBs_noise','IBs_iNaF','IBs_iKDR','IBda
 spec.nodes(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',1,...
   'stim',Js,'onset',0,'V_noise',0,...
-  'gNaF',50,'E_NaF',ENa,'NaF_V0',34.5,'NaF_V1',59.4,'NaF_d1',10.7,'NaF_V2',33.5,'NaF_d2',15,'NaF_c0',.15,'NaF_c1',1.15,...
-  'gKDR',10,'E_KDR',E_EKDR,'KDR_V1',29.5,'KDR_d1',10,'KDR_V2',10,'KDR_d2',10,...
+  'gNaF',100,'E_NaF',ENa,'NaF_V0',34.5,'NaF_V1',59.4,'NaF_d1',10.7,'NaF_V2',33.5,'NaF_d2',15,'NaF_c0',.15,'NaF_c1',1.15,...
+  'gKDR',80,'E_KDR',E_EKDR,'KDR_V1',29.5,'KDR_d1',10,'KDR_V2',10,'KDR_d2',10,...
   'gAR',gAR_d,'E_AR',IB_Eh,'AR_V12',-87.5,'AR_k',-5.5,'c_ARaM',2.75,'c_ARbM',3,'AR_L',1,'AR_R',1,...
   'gM',gM_s,'E_M',E_EKDR,'c_MaM',1,'c_MbM',1,...
   'gCaH',gCaH_s,'E_CaH',ECa,'tauCaH',1,'c_CaHaM',1,'c_CaHbM',1,...
