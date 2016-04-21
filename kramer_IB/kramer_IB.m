@@ -10,7 +10,7 @@ N=2;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-10.5; % -4.5
+Js=-14.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
