@@ -8,4 +8,7 @@ function startup_DynaSim
     addpath(genpath(fullfile('~','src','DynaSim','functions')));
     addpath(genpath(fullfile('~','src','DynaSim','models')));
     
+    
+    addpath(genpath(fullfile(pwd,'supporting_funcs')));
+    
 end

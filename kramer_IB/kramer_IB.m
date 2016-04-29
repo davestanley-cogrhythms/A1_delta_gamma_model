@@ -39,7 +39,7 @@ spec=[];
 spec.nodes(1).label = 'IBda';
 spec.nodes(1).multiplicity = N;
 spec.nodes(1).dynamics = {'V''=(current)/Cm'};
-spec.nodes(1).mechanisms = {'IBda_itonic','IBda_noise','IBda_iNaF','IBda_iKDR','IBda_iAR','IBda_iM','IBda_iCaH','IBda_leak'};
+spec.nodes(1).mechanisms = {'IBdaitonic','IBdanoise','IBdaiNaF','IBdaiKDR','IBdaiAR','IBdaiM','IBdaiCaH','IBdaleak'};
 spec.nodes(1).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',2,...
   'stim',Jd,'onset',0,'V_noise',.1,...
@@ -52,7 +52,7 @@ spec.nodes(1).parameters = {...
 spec.nodes(2).label = 'IBs';
 spec.nodes(2).multiplicity = N;
 spec.nodes(2).dynamics = {'V''=(current)/Cm'};
-spec.nodes(2).mechanisms = {'IBs_itonic','IBs_noise','IBs_iNaF','IBs_iKDR','IBs_leak'};
+spec.nodes(2).mechanisms = {'IBsitonic','IBsnoise','IBsiNaF','IBsiKDR','IBsleak'};
 spec.nodes(2).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',1,...
   'stim',Js,'onset',0,'V_noise',0,...
@@ -62,7 +62,7 @@ spec.nodes(2).parameters = {...
 spec.nodes(3).label = 'IBdb';
 spec.nodes(3).multiplicity = N;
 spec.nodes(3).dynamics = {'V''=(current)/Cm'};
-spec.nodes(3).mechanisms = {'IBdb_iPoissonExp','IBdb_itonic','IBdb_noise','IBdb_iNaF','IBdb_iKDR','IBdb_iAR','IBdb_iM','IBdb_iCaH','IBdb_leak'};
+spec.nodes(3).mechanisms = {'IBdbiPoissonExp','IBdbitonic','IBdbnoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
 spec.nodes(3).parameters = {... % same as IBda except gAR=115, + IPSP params
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',2,...
   'stim',Jd,'onset',0,'V_noise',.1,'gRAN',gRAN,'ERAN',-80,'tauRAN',4,...
@@ -75,7 +75,7 @@ spec.nodes(3).parameters = {... % same as IBda except gAR=115, + IPSP params
 spec.nodes(4).label = 'IBa';
 spec.nodes(4).multiplicity = N;
 spec.nodes(4).dynamics = {'V''=(current)/Cm'};
-spec.nodes(4).mechanisms = {'IBa_itonic','IBa_noise','IBa_iNaF','IBa_iKDR','IBa_iM','IBa_leak'};
+spec.nodes(4).mechanisms = {'IBaitonic','IBanoise','IBaiNaF','IBaiKDR','IBaiM','IBaleak'};
 spec.nodes(4).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',.25,...
   'stim',Ja,'onset',0,'V_noise',.5,...
@@ -83,31 +83,37 @@ spec.nodes(4).parameters = {...
   'gKDR',5,'E_KDR',E_EKDR,'KDR_V1',29.5,'KDR_d1',10,'KDR_V2',10,'KDR_d2',10,...
   'gM',1.5,'E_M',E_EKDR,'c_MaM',1.5,'c_MbM',.75,...
   };
-spec.connections(1,2).label = 'IBda-IBs';
-spec.connections(1,2).mechanisms = {'IBda_IBs_iCOM'};
-spec.connections(1,2).parameters = {'g_COM',gds,'comspan',.5};
-spec.connections(2,1).label = 'IBs-IBda';
-spec.connections(2,1).mechanisms = {'IBs_IBda_iCOM'};
-spec.connections(2,1).parameters = {'g_COM',gsd,'comspan',.5};
-spec.connections(2,3).label = 'IBs-IBdb';
-spec.connections(2,3).mechanisms = {'IBs_IBdb_iCOM'};
-spec.connections(2,3).parameters = {'g_COM',gsd,'comspan',.5};
-spec.connections(2,4).label = 'IBs-IBa';
-spec.connections(2,4).mechanisms = {'IBs_IBa_iCOM'};
-spec.connections(2,4).parameters = {'g_COM',gsa,'comspan',.5};
-spec.connections(3,2).label = 'IBdb-IBs';
-spec.connections(3,2).mechanisms = {'IBdb_IBs_iCOM'};
-spec.connections(3,2).parameters = {'g_COM',gds,'comspan',.5};
-spec.connections(4,2).label = 'IBa-IBs';
-spec.connections(4,2).mechanisms = {'IBa_IBs_iCOM'};
-spec.connections(4,2).parameters = {'g_COM',gas,'comspan',.5};
-spec.connections(4,3).label = 'IBa-IBdb';
-spec.connections(4,3).mechanisms = {'IBa_IBdb_iSYN'};
-spec.connections(4,3).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
-spec.connections(4,4).label = 'IBa-IBa';
-spec.connections(4,4).mechanisms = {'IBa_IBa_iGAP'};
-spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
+% spec.connections(1,2).label = 'IBda-IBs';
+% spec.connections(1,2).mechanisms = {'IBda_IBs_iCOM'};
+% spec.connections(1,2).parameters = {'g_COM',gds,'comspan',.5};
+% spec.connections(2,1).label = 'IBs-IBda';
+% spec.connections(2,1).mechanisms = {'IBs_IBda_iCOM'};
+% spec.connections(2,1).parameters = {'g_COM',gsd,'comspan',.5};
+% spec.connections(2,3).label = 'IBs-IBdb';
+% spec.connections(2,3).mechanisms = {'IBs_IBdb_iCOM'};
+% spec.connections(2,3).parameters = {'g_COM',gsd,'comspan',.5};
+% spec.connections(2,4).label = 'IBs-IBa';
+% spec.connections(2,4).mechanisms = {'IBs_IBa_iCOM'};
+% spec.connections(2,4).parameters = {'g_COM',gsa,'comspan',.5};
+% spec.connections(3,2).label = 'IBdb-IBs';
+% spec.connections(3,2).mechanisms = {'IBdb_IBs_iCOM'};
+% spec.connections(3,2).parameters = {'g_COM',gds,'comspan',.5};
+% spec.connections(4,2).label = 'IBa-IBs';
+% spec.connections(4,2).mechanisms = {'IBa_IBs_iCOM'};
+% spec.connections(4,2).parameters = {'g_COM',gas,'comspan',.5};
+% spec.connections(4,3).label = 'IBa-IBdb';
+% spec.connections(4,3).mechanisms = {'IBa_IBdb_iSYN'};
+% spec.connections(4,3).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
+% spec.connections(4,4).label = 'IBa-IBa';
+% spec.connections(4,4).mechanisms = {'IBa_IBa_iGAP'};
+% spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
 
+%% DynaSim code
+data=SimulateModel(spec);
+PlotData(data);
+
+
+%% DNSim code
 % process specification and simulate model
 data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0);
 plotv(data,spec,'varlabel','V');
