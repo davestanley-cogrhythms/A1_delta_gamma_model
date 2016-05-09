@@ -113,35 +113,33 @@ spec.populations(i).parameters = {...
 % spec.connections(4,4).mechanisms = {'IBaIBaiGAP'};
 % spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
 
-% spec.connections(1).direction='IBa->IBa';
-% spec.connections(1).mechanism_list={'iGJ'};
-% spec.connections(1).parameters={'gGJ',ggja};
-% spec.connections(1).parameters={'gGJ',2};
+
+% New connection mechs
+% ggja = .2
+spec.connections(1).direction='IBa->IBa';
+spec.connections(1).mechanism_list={'IBaIBaiGAP'};
+spec.connections(1).parameters={'g_GAP',ggja,'fanout',inf};
+% spec.connections(2).direction='IBa<-IBa';
+% spec.connections(2).mechanism_list={'IBaIBaiGAP'};
+% spec.connections(2).parameters={'g_GAP',ggja,'fanout',inf};
 
 
+% New connection mechs
+% ggja = .2
 % spec.connections(1).direction='IBa->IBs';
-% spec.connections(1).mechanism_list={'iGJ'};
-% spec.connections(1).parameters={'gGJ',20000};
+% spec.connections(1).mechanism_list={'iGJkr'};
+% spec.connections(1).parameters={'gGJ',ggja};
+
+
+% 
+% ggja=.2
+% spec.connections(1).direction='IBa->IBs';
+% spec.connections(1).mechanism_list={'iGJkr'};
+% spec.connections(1).parameters={'gGJ',ggja};
 % 
 % spec.connections(2).direction='IBa<-IBs';
-% spec.connections(2).mechanism_list={'iGJ'};
-% spec.connections(2).parameters={'gGJ',20000};
-
-% spec=[];
-% spec.populations(1).name='E1';
-% spec.populations(1).size=2;
-% spec.populations(1).equations={'dv/dt=@current+10; {iNa,iK}; v(0)=-65;'};
-% spec.populations(2).name='E2';
-% spec.populations(2).size=2;
-% spec.populations(2).equations='dv/dt=@current-0; {iNa,iK}; v(0)=-65';
-% % s.connections(1).direction='E1<-E2';
-% % s.connections(1).mechanism_list={'iGJ'};
-% % s.connections(1).parameters={'gGJ',.2};
-% spec.connections(1).direction='E1->E2';
-% spec.connections(1).mechanism_list={'iGJ'};
-% spec.connections(1).parameters={'gGJ',.2};
-
-
+% spec.connections(2).mechanism_list={'iGJkr'};
+% spec.connections(2).parameters={'gGJ',ggja};
 
 
 

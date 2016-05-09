@@ -112,9 +112,11 @@ spec.nodes(i).parameters = {...
 % spec.connections(4,4).mechanisms = {'IBaIBaiGAP'};
 % spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
 % 
-% spec.connections(2,2).label = 'IBa-IBa';
-% spec.connections(2,2).mechanisms = {'IBaIBaiGAP'};
-% spec.connections(2,2).parameters = {'g_GAP',ggja,'fanout',inf};
+
+% ggja = .2;
+spec.connections(2,2).label = 'IBa-IBa';
+spec.connections(2,2).mechanisms = {'IBaIBaiGAP'};
+spec.connections(2,2).parameters = {'g_GAP',ggja,'fanout',inf};
 
 % process specification and simulate model
 rng(1);
