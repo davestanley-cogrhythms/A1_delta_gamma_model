@@ -5,7 +5,7 @@ tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % number of cells per population
-N=2;
+N=4;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
@@ -115,13 +115,22 @@ spec.populations(i).parameters = {...
 
 
 % New connection mechs
+i=0;
+i=i+1;
 % ggja = .2
 spec.connections(1).direction='IBa->IBa';
 spec.connections(1).mechanism_list={'IBaIBaiGAP'};
 spec.connections(1).parameters={'g_GAP',ggja,'fanout',inf};
-% spec.connections(2).direction='IBa<-IBa';
-% spec.connections(2).mechanism_list={'IBaIBaiGAP'};
-% spec.connections(2).parameters={'g_GAP',ggja,'fanout',inf};
+
+i=i+1;
+spec.connections(i).direction='IBs->IBa';
+spec.connections(i).mechanism_list={'iCOM'};
+spec.connections(i).parameters={'gCOM',gsa};
+
+i=i+1;
+spec.connections(i).direction='IBa->IBs';
+spec.connections(i).mechanism_list={'iCOM'};
+spec.connections(i).parameters={'gCOM',gas};
 
 
 % New connection mechs

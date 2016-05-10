@@ -5,7 +5,7 @@ tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % number of cells per population
-N=2;
+N=4;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
@@ -117,6 +117,16 @@ spec.nodes(i).parameters = {...
 spec.connections(2,2).label = 'IBa-IBa';
 spec.connections(2,2).mechanisms = {'IBaIBaiGAP'};
 spec.connections(2,2).parameters = {'g_GAP',ggja,'fanout',inf};
+
+
+spec.connections(1,2).label = 'IBs-IBa';
+spec.connections(1,2).mechanisms = {'IBsIBaiCOM'};
+spec.connections(1,2).parameters = {'g_COM',gsa,'comspan',.5};
+
+spec.connections(2,1).label = 'IBa-IBs';
+spec.connections(2,1).mechanisms = {'IBaIBsiCOM'};
+spec.connections(2,1).parameters = {'g_COM',gas,'comspan',.5};
+
 
 % process specification and simulate model
 rng(1);
