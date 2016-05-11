@@ -1,4 +1,5 @@
 % Model: Kramer 2008, PLoS Comp Bio
+%%
 
 % simulation controls
 tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -110,7 +111,17 @@ spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
 
 % process specification and simulate model
 data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0);
+
+% Alternative plotting option
+figl;
+N=length(data);
+for i=1:N
+    subplot(N,1,i); plot(squeeze(data(i).epochs.data(end,:,:)));
+end
+
+%%
 plotv(data,spec,'varlabel','V');
+
 
 
 % % Plot other currents
