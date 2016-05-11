@@ -1,14 +1,14 @@
 % Model: Kramer 2008, PLoS Comp Bio
 
 % simulation controls
-tspan=[0 200]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
 no_noise = 0;
 
 % number of cells per population
-N=2;
+N=10;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
@@ -52,7 +52,7 @@ if no_noise
     gRAN=0;
 end
 
-IC_V = -0;
+IC_V = -65;
 
 spec=[];
 i=0;
