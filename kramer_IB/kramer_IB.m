@@ -61,7 +61,7 @@ i=i+1;
 spec.populations(i).name = 'IBda';
 spec.populations(i).size = N;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBdaitonic','IBdanoise','IBdaiNaF','IBdaiKDR','IBdaiAR','IBdaiM','IBdaiCaH','IBdaleak'};
+spec.populations(i).mechanism_list = {'IBdaitonic','IBanoise','IBdaiNaF','IBdaiKDR','IBdaiAR','IBdaiM','IBdaiCaH','IBdaleak'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',2,...
   'stim',Jd,'onset',0,'V_noise',IBda_Vnoise,...
@@ -76,7 +76,7 @@ i=i+1;
 spec.populations(i).name = 'IBs';
 spec.populations(i).size = N;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBsitonic','IBsnoise','IBsiNaF','IBsiKDR','IBsleak'};
+spec.populations(i).mechanism_list = {'IBsitonic','IBanoise','IBsiNaF','IBsiKDR','IBsleak'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',1,...
   'stim',Js,'onset',0,'V_noise',IBs_Vnoise,...
@@ -88,7 +88,7 @@ i=i+1;
 spec.populations(i).name = 'IBdb';
 spec.populations(i).size = N;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBdbiPoissonExp','IBdbitonic','IBdbnoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
+spec.populations(i).mechanism_list = {'IBdbiPoissonExp','IBdbitonic','IBanoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
 spec.populations(i).parameters = {... % same as IBda except gAR=115, + IPSP params
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',2,...
   'stim',Jd,'onset',0,'V_noise',IBdb_Vnoise,'gRAN',gRAN,'ERAN',-80,'tauRAN',4,...
