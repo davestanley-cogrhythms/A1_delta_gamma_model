@@ -1,11 +1,11 @@
 % Model: Kramer 2008, PLoS Comp Bio
 
 % simulation controls
-tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 200]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % number of cells per population
-N=2;
+N=20;
 
 % tonic input currents
 Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
@@ -124,7 +124,7 @@ spec.connections(i).mechanism_list = {'IBsIBdbiCOM'};
 spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
 i=i+1;
 spec.connections(i).direction = 'IBa->IBdb';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYN'};
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
 spec.connections(i).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
 i=i+1;
 spec.connections(i).direction = 'IBa->IBa';
@@ -146,7 +146,9 @@ spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
 
 % DynaSim code
 % data=SimulateModel(spec);
+tic
 data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1);
+toc
 %PlotData(data);
 
 figl;
