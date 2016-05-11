@@ -109,6 +109,7 @@ spec.connections(4,4).mechanisms = {'IBa_IBa_iGAP'};
 spec.connections(4,4).parameters = {'g_GAP',ggja,'fanout',inf};
 
 % process specification and simulate model
+rng(1);
 data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0);
 plotv(data,spec,'varlabel','V');
 % dnsim(spec);
