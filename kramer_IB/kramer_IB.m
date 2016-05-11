@@ -49,6 +49,7 @@ if no_noise
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
     IBa_Vnoise = 0;
+    gRAN=0;
 end
 
 IC_V = -0;
@@ -87,7 +88,7 @@ i=i+1;
 spec.populations(i).name = 'IBdb';
 spec.populations(i).size = N;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBdbitonic','IBdbnoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
+spec.populations(i).mechanism_list = {'IBdbiPoissonExp','IBdbitonic','IBdbnoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
 spec.populations(i).parameters = {... % same as IBda except gAR=115, + IPSP params
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',2,...
   'stim',Jd,'onset',0,'V_noise',IBdb_Vnoise,'gRAN',gRAN,'ERAN',-80,'tauRAN',4,...
@@ -145,17 +146,6 @@ i=i+1;
 spec.connections(i).direction = 'IBa->IBa';
 spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
 spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-
-
-% 
-% % New connection mechs
-% i=0;
-% i=i+1;
-% % ggja = .2
-% spec.connections(1).direction='IBa->IBa';
-% spec.connections(1).mechanism_list={'IBaIBaiGAP'};
-% spec.connections(1).parameters={'g_GAP',ggja,'fanout',inf};
-% 
 
 
 

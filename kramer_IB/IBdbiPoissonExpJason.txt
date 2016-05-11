@@ -1,0 +1,23 @@
+% Poisson mechanism based on Jason's email implementation. For some
+% reason this produces huge PSPs
+
+% Synapse Parameters
+Pmax=1; 	% conductance step on spike
+gRAN=125;		% input strength
+ERAN=-80;
+
+% Poisson Parameters
+baseline = 0;
+lambda=100; 	% Hz, Poisson spike rate
+ac = 0;
+freq = 0;
+phase = 0;
+onsetRAN = 0;
+T=2000; 	% ms, duration
+tauRAN=4; 	% ms, exponential decay time constant
+T2=(0:0.01:T)';
+
+s=getPoissonGating(baseline,lambda,ac,freq,phase,onsetRAN,T,tauRAN,T2,Npop);
+Iext(X)=gRAN*s(k,:).*(X-ERAN)
+current => -Iext(X)
+

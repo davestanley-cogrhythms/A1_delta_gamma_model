@@ -49,6 +49,7 @@ if no_noise
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
     IBa_Vnoise = 0;
+    gRAN=0;
 end
 
 V_ICvar = -0;
@@ -81,7 +82,7 @@ spec.nodes(i).parameters = {...
 spec.nodes(3).label = 'IBdb';
 spec.nodes(3).multiplicity = N;
 spec.nodes(3).dynamics = {'V''=(current)/Cm'};
-spec.nodes(3).mechanisms = {'IBdbitonic','IBdbnoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
+spec.nodes(3).mechanisms = {'IBdbiPoissonExp','IBdbitonic','IBdbnoise','IBdbiNaF','IBdbiKDR','IBdbiAR','IBdbiM','IBdbiCaH','IBdbleak'};
 spec.nodes(3).parameters = {... % same as IBda except gAR=115, + IPSP params
   'V_IC',V_ICvar,'IC_noise',IC_noise,'Cm',Cm,'E_l',-70,'g_l',2,...
   'stim',Jd,'onset',0,'V_noise',IBdb_Vnoise,'gRAN',gRAN,'ERAN',-80,'tauRAN',4,...

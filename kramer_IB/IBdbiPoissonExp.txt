@@ -12,6 +12,7 @@ overwrite_flag=0;
 
 G = getPoissonExp(lambda,tauRAN,Pmax,Npop,T,dt,overwrite_flag,poiss_id);
 
-Gt(t) = gRAN.*G(:,max(1,round(t/dt)));
+Gt(t) = gRAN.*G(:,max(1,round(t/dt)))';
 Itrain(t,V) = Gt(t).*(V-ERAN);
 current => -Itrain(t,V)
+
