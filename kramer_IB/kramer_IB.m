@@ -157,10 +157,10 @@ toc
 %PlotData(data);
 
 figl;
-subplot(411); plot(data.IBda_V)
-subplot(412); plot(data.IBs_V)
-subplot(413); plot(data.IBdb_V)
-subplot(414); plot(data.IBa_V)
+subplot(411); plot(data.IBda_V); title('Apical dendrites');
+subplot(412); plot(data.IBs_V); title('Soma');
+subplot(413); plot(data.IBdb_V); title('Basal dendrites');
+subplot(414); plot(data.IBa_V); title('Axon');
 
 % PlotData(data,'plot_type','waveform');
 
