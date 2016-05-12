@@ -166,6 +166,7 @@ subplot(414); plot(data.IBa_V); title('Axon');
 
 %% DNSim code
 % process specification and simulate model
+rng(1);
 data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0);
 plotv(data,spec,'varlabel','V');
 
