@@ -1,7 +1,7 @@
 g_SYN = [0.04]
 E_SYN = [0]
-tauDx = [100]
-tauRx = [.5]
+tauDx = [50]
+tauRx = [2.5]
 IC = [0.1]
 IC_noise = [0]
  

@@ -1,7 +1,7 @@
-g_SYN = [0.04]
+g_SYN = [0.045]
 E_SYN = [0]
-tauDx = [100]
-tauRx = [.5]
+tauDx = [1]
+tauRx = [0.25]
 IC = [0.1]
 IC_noise = [0]
  
@@ -11,7 +11,7 @@ Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
 Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
 mask = abs(Xpre-Xpost)<=fanout
 
-gsyn=unifrnd(g_SYN-.005,g_SYN+.005,[Npre 1])
+gsyn=unifrnd(g_SYN-.01,g_SYN+.01,[Npre 1])
 ISYN(V,s) = (gsyn.*(s'*mask)'.*(V-E_SYN))
  
 sSYNpre' = -sSYNpre./tauDx + ((1-sSYNpre)/tauRx).*(1+tanh(Vpre/10));

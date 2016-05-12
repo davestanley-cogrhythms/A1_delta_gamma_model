@@ -34,7 +34,7 @@ ggja=.002;  % IBa -> IBa
 IBda_Vnoise = .1;
 IBs_Vnoise = 0;
 IBdb_Vnoise = .1;
-IBa_Vnoise = 5.5;
+IBa_Vnoise = 0.5;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
