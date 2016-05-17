@@ -11,9 +11,9 @@ no_noise = 0;
 N=1;
 
 % tonic input currents
-Jd=2; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=1; % -4.5
-Ja=1;   % -6(-.4)
+Jd=0; % apical: 23.5(25.5), basal: 23.5(42.5)
+Js=0; % -4.5
+Ja=0;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=3;
