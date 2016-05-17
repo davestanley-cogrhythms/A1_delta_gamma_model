@@ -8,11 +8,11 @@ dsfact=1; % downsample factor, applied after simulation
 no_noise = 0;
 
 % number of cells per population
-N=10;
+N=1;
 
 % tonic input currents
-Jd=23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-4.5; % -4.5
+Jd=-23.5; % apical: 23.5(25.5), basal: 23.5(42.5)
+Js=-14.5; % -4.5
 Ja=-6;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -113,40 +113,40 @@ spec.populations(i).parameters = {...
   };
 
 i=0;
-
-i=i+1;
-spec.connections(i).direction = 'IBda->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBda';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBdb';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBa';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBdb->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBa->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBa->IBdb';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-spec.connections(i).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
-i=i+1;
-spec.connections(i).direction = 'IBa->IBa';
-spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
-spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-
+% 
+% i=i+1;
+% spec.connections(i).direction = 'IBda->IBs';
+% spec.connections(i).mechanism_list = {'IBiCOM'};
+% spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
+% i=i+1;
+% spec.connections(i).direction = 'IBs->IBda';
+% spec.connections(i).mechanism_list = {'IBiCOM'};
+% spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
+% i=i+1;
+% spec.connections(i).direction = 'IBs->IBdb';
+% spec.connections(i).mechanism_list = {'IBiCOM'};
+% spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
+% i=i+1;
+% spec.connections(i).direction = 'IBs->IBa';
+% spec.connections(i).mechanism_list = {'IBiCOM'};
+% spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
+% i=i+1;
+% spec.connections(i).direction = 'IBdb->IBs';
+% spec.connections(i).mechanism_list = {'IBiCOM'};
+% spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
+% i=i+1;
+% spec.connections(i).direction = 'IBa->IBs';
+% spec.connections(i).mechanism_list = {'IBiCOM'};
+% spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
+% i=i+1;
+% spec.connections(i).direction = 'IBa->IBdb';
+% spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+% spec.connections(i).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
+% i=i+1;
+% spec.connections(i).direction = 'IBa->IBa';
+% spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
+% spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
+% 
 
 
 % DynaSim code
@@ -163,21 +163,3 @@ subplot(413); plot(data.IBdb_V); title('Basal dendrites');
 subplot(414); plot(data.IBa_V); title('Axon');
 
 % PlotData(data,'plot_type','waveform');
-
-%% DNSim code
-% process specification and simulate model
-rng(1);
-data = runsim(spec,'timelimits',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0);
-plotv(data,spec,'varlabel','V');
-
-
-% % Plot other currents
-% plotv(data,spec,'varlabel','iKDR_mKDR');
-% plotv(data,spec,'varlabel','iCaH_mCaH');
-% plotv(data,spec,'varlabel','iM_mM');
-% plotv(data,spec,'varlabel','iAR_mAR');
-% plotv(data,spec,'varlabel','iSYN_sSYNpre');
-
-
-% dnsim(spec);
-
