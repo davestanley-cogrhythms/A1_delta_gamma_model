@@ -31,10 +31,10 @@ gsa=.3;     % IBs -> IBa
 ggja=.002;  % IBa -> IBa
 
 % Current injection noise levels
-IBda_Vnoise = .1;
-IBs_Vnoise = 0;
-IBdb_Vnoise = .1;
-IBa_Vnoise = 0.5;
+IBda_Vnoise = .3;
+IBs_Vnoise = .1;
+IBdb_Vnoise = .3;
+IBa_Vnoise = .1;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
