@@ -21,7 +21,6 @@ ERAN=0;
 tauRAN=2;
 lambda = 20;
 
-
 % some intrinsic currents
 gAR_L=50;  % 50,  LTS - max conductance of h-channel
 gAR_d=155; % 155, IBda - max conductance of h-channel
@@ -88,20 +87,6 @@ spec.populations(i).parameters = {...
   };
 
 i=i+1;
-spec.populations(i).name = 'IBdb';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
-spec.populations(i).parameters = {... % same as IBda except gAR=115, + IPSP params
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',.1,...
-  'stim',Jd,'onset',0,'V_noise',IBdb_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,'NaF_V0',34.5,'NaF_V1',59.4,'NaF_d1',10.7,'NaF_V2',33.5,'NaF_d2',15,'NaF_c0',.15,'NaF_c1',1.15,...
-  'gKDR',80,'E_KDR',E_EKDR,'KDR_V1',29.5,'KDR_d1',10,'KDR_V2',10,'KDR_d2',10,...
-  'gM',.75,'E_M',E_EKDR,'c_MaM',1,'c_MbM',1,...
-  'gCaH',6.5,'E_CaH',ECa,'tauCaH',.33333,'c_CaHaM',3,'c_CaHbM',3,...
-  };
-
-i=i+1;
 spec.populations(i).name = 'IBa';
 spec.populations(i).size = N;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
@@ -159,9 +144,8 @@ toc
 %PlotData(data);
 
 figl;
-subplot(411); plot(data.IBda_V); title('Apical dendrites');
-subplot(412); plot(data.IBs_V); title('Soma');
-subplot(413); plot(data.IBdb_V); title('Basal dendrites');
-subplot(414); plot(data.IBa_V); title('Axon');
+subplot(311); plot(data.IBda_V); title('Apical dendrites');
+subplot(312); plot(data.IBs_V); title('Soma');
+subplot(313); plot(data.IBa_V); title('Axon');
 
 % PlotData(data,'plot_type','waveform');
