@@ -11,9 +11,9 @@ no_noise = 0;
 N=1;
 
 % tonic input currents
-Jd=0; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=0; % -4.5
-Ja=0;   % -6(-.4)
+Jd=2; % apical: 23.5(25.5), basal: 23.5(42.5)
+Js=1; % -4.5
+Ja=1;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=3;
@@ -100,31 +100,23 @@ spec.populations(i).parameters = {...
   };
 
 i=0;
-% 
-% i=i+1;
-% spec.connections(i).direction = 'IBda->IBs';
-% spec.connections(i).mechanism_list = {'IBiCOM'};
-% spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-% i=i+1;
-% spec.connections(i).direction = 'IBs->IBda';
-% spec.connections(i).mechanism_list = {'IBiCOM'};
-% spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-% i=i+1;
-% spec.connections(i).direction = 'IBs->IBdb';
-% spec.connections(i).mechanism_list = {'IBiCOM'};
-% spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-% i=i+1;
-% spec.connections(i).direction = 'IBs->IBa';
-% spec.connections(i).mechanism_list = {'IBiCOM'};
-% spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
-% i=i+1;
-% spec.connections(i).direction = 'IBdb->IBs';
-% spec.connections(i).mechanism_list = {'IBiCOM'};
-% spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-% i=i+1;
-% spec.connections(i).direction = 'IBa->IBs';
-% spec.connections(i).mechanism_list = {'IBiCOM'};
-% spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
+
+i=i+1;
+spec.connections(i).direction = 'IBda->IBs';
+spec.connections(i).mechanism_list = {'IBiCOM'};
+spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
+i=i+1;
+spec.connections(i).direction = 'IBs->IBda';
+spec.connections(i).mechanism_list = {'IBiCOM'};
+spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
+i=i+1;
+spec.connections(i).direction = 'IBs->IBa';
+spec.connections(i).mechanism_list = {'IBiCOM'};
+spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
+i=i+1;
+spec.connections(i).direction = 'IBa->IBs';
+spec.connections(i).mechanism_list = {'IBiCOM'};
+spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
 % i=i+1;
 % spec.connections(i).direction = 'IBa->IBdb';
 % spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
