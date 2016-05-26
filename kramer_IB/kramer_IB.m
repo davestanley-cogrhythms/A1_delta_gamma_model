@@ -61,16 +61,16 @@ gsyn_hetero = 0;
 % % % % % % % % % % % % % % % % % % % % % % 
 
 
-gAMPAee=80/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
 
-gAMPAei=1/Nng;      % IBa -> IBdb, 0(.04)
+gAMPAei=0/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
 
-gGABAaii=1/Nng;
+gGABAaii=0/Nng;
 gGABAbii=gGABAaii/50;
 
-gGABAaie=1/N;
+gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
 
 
@@ -97,6 +97,7 @@ IBda_Vnoise = .3;
 IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
+NG_Vnoise = .3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -171,7 +172,7 @@ spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
 spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-  'stim',Jfs,'onset',0,'V_noise',IBa_Vnoise,...
+  'stim',Jfs,'onset',0,'V_noise',NG_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
   };
