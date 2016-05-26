@@ -8,19 +8,23 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
-no_noise = 0;
+no_noise = 1;
+
 
 % number of cells per population
-N=10;
+N=5;   % Number of excitatory cells
+Nng=5;  % Number of FSNG cells
 
+% % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
 Jd=-10; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=-1; % -4.5
 Ja=-1;   % -6(-.4)
+Jfs=0.1;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.01;
@@ -28,17 +32,65 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 
-% some intrinsic currents
-gAR_L=50;  % 50,  LTS - max conductance of h-channel
-gAR_d=155; % 155, IBda - max conductance of h-channel
 
-% connection strengths
-gad=0;      % IBa -> IBdb, 0(.04)
+% % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
+% compartmental connection strengths
 gsd=.2;     % IBs -> IBda,IBdb
 gds=.4;     % IBda,IBdb -> IBs
 gas=.3;     % IBa -> IBs
 gsa=.3;     % IBs -> IBa
+
+% Gap junction connection
 ggja=.002;  % IBa -> IBa
+
+% Synaptic connection strengths
+gAMPAee=3e-3;      % IBa -> IBdb, 0(.04)
+gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
+
+gAMPAei=gAMPAee;      % IBa -> IBdb, 0(.04)
+gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
+
+gGABAaii=.6e-3;
+gGABAbii=gGABAaii/50;
+
+gGABAaie=.2e-3;
+gGABAbie=gGABAaie/50;
+
+gsyn_hetero = 0;
+
+% % % % % % % % % % % % % % % % % % % % % % 
+
+
+gAMPAee=0;      % IBa -> IBdb, 0(.04)
+gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
+
+gAMPAei=0;      % IBa -> IBdb, 0(.04)
+gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
+
+gGABAaii=0;
+gGABAbii=gGABAaii/50;
+
+gGABAaie=0;
+gGABAbie=gGABAaie/50;
+
+
+% % % % % % % % % % % % % % % % % % % % % % 
+
+
+
+% Synaptic time constants & reversals
+tauAMPAr=.25;  % ms, AMPA rise time; Jung et al
+tauAMPAd=1;   % ms, AMPA decay time; Jung et al
+tauNMDAr=5; % ms, NMDA rise time; Jung et al
+tauNMDAd=100; % ms, NMDA decay time; Jung et al
+tauGABAar=.5;  % ms, GABAa rise time; Jung et al
+tauGABAad=8;   % ms, GABAa decay time; Jung et al
+tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
+tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
+EAMPA=0;
+EGABA=-75;
+
+
 
 % Current injection noise levels
 IBda_Vnoise = .3;
@@ -64,6 +116,9 @@ if no_noise
 end
 
 IC_V = -65;
+
+
+% % % % % % % % % % % % %  Populations  % % % % % % % % % % % % %  
 
 spec=[];
 i=0;
@@ -109,8 +164,24 @@ spec.populations(i).parameters = {...
   'gM',2,'E_M',E_EKDR,...
   };
 
+i=i+1;
+spec.populations(i).name = 'NG';
+spec.populations(i).size = Nng;
+spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR'};
+spec.populations(i).parameters = {...
+  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+  'stim',Jfs,'onset',0,'V_noise',IBa_Vnoise,...
+  'gNaF',100,'E_NaF',ENa,...
+  'gKDR',80,'E_KDR',E_EKDR,...
+  };
+
+
+
+% % % % % % % % % % % % %  Connections  % % % % % % % % % % % % %  
 i=0;
 
+% % Inter-compartmental connections
 i=i+1;
 spec.connections(i).direction = 'IBda->IBs';
 spec.connections(i).mechanism_list = {'IBiCOM'};
@@ -129,15 +200,40 @@ spec.connections(i).mechanism_list = {'IBiCOM'};
 spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
 
 
-
+% % IB Synaptic connections
 i=i+1;
 spec.connections(i).direction = 'IBa->IBda';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-spec.connections(i).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+    };
 i=i+1;
 spec.connections(i).direction = 'IBa->IBa';
 spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
 spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
+i=i+1;
+spec.connections(i).direction = 'IBa->NG';
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+    };
+
+% % NG->NG Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'NG->NG';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABseed'};
+spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr ...
+    };
+
+% % NG->IB Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'NG->IBs';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABseed'};
+spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr ...
+    };
+
 
 
 switch sim_mode
@@ -148,12 +244,12 @@ switch sim_mode
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
         toc
-        %PlotData(data);
+        PlotData(data);
 
-        figl;
-        subplot(311); plot(data.IBda_V); title('Apical dendrites');
-        subplot(312); plot(data.IBs_V); title('Soma');
-        subplot(313); plot(data.IBa_V); title('Axon');
+%         figl;
+%         subplot(311); plot(data.IBda_V); title('Apical dendrites');
+%         subplot(312); plot(data.IBs_V); title('Soma');
+%         subplot(313); plot(data.IBa_V); title('Axon');
         
     case 2
         
