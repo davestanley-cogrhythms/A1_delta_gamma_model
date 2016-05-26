@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -61,7 +61,7 @@ gsyn_hetero = 0;
 % % % % % % % % % % % % % % % % % % % % % % 
 
 
-gAMPAee=0;      % IBa -> IBdb, 0(.04)
+gAMPAee=80/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
 
 gAMPAei=0;      % IBa -> IBdb, 0(.04)
