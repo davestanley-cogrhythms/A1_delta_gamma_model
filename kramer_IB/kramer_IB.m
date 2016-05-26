@@ -63,7 +63,7 @@ gsyn_hetero = 0;
 
 gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=10/N;
+gNMDAee=40/N;
 
 gAMPAei=0/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
