@@ -21,13 +21,13 @@ Nng=5;  % Number of FSNG cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd=-10; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=-1; % -4.5
-Ja=-1;   % -6(-.4)
+Jd=2; % apical: 23.5(25.5), basal: 23.5(42.5)
+Js=1; % -4.5
+Ja=1;   % -6(-.4)
 Jfs=0.1;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.01;
+gRAN=.03;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
