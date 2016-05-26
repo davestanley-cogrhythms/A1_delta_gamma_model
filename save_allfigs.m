@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '4c-IB_decreased_iCaH_iM'; 
+    currfigname = '4d-IB_restored_iM'; 
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['IB cells: Decreased calcium and M currents to make dendrites slightly less bursty.'];
+    mycomment = ['IB cells: Restored M currents to default; now only iCaH is decreased.'];
     currd = pwd;
     cd ..
     system('git add *');
