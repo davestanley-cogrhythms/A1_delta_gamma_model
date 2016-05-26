@@ -1,9 +1,10 @@
-gGABAB = [0.04]
+gGABAB = [0.0]
 EGABAB = [0]
 tauGABABd = [100]
 tauGABABr = [.5]
 IC = [0.1]
 IC_noise = [0]
+gGABAB_hetero = [0.005]
  
 fanout = inf
 UB = max(Npre,Npost)
@@ -11,7 +12,7 @@ Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
 Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
 mask = (abs(Xpre-Xpost)<=fanout)
 
-gsyn=unifrnd(gGABAB-.005,gGABAB+.005,[Npre 1])'
+gsyn=unifrnd(gGABAB-gGABAB_hetero,gGABAB+gGABAB_hetero,[Npre 1])'
 ISYN(V,s) = (gsyn.*(s*mask).*(V-EGABAB))
  
 sSYNpre' = -sSYNpre./tauGABABd + ((1-sSYNpre)/tauGABABr).*(1+tanh(Vpre/10));

@@ -12,7 +12,7 @@ tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
-no_noise = 1;
+no_noise = 0;
 
 
 % number of cells per population
@@ -63,15 +63,14 @@ gsyn_hetero = 0;
 
 gAMPAee=80/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gAMPAee=0;
 
-gAMPAei=0;      % IBa -> IBdb, 0(.04)
+gAMPAei=1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
 
-gGABAaii=0;
+gGABAaii=1/Nng;
 gGABAbii=gGABAaii/50;
 
-gGABAaie=0;
+gGABAaie=1/N;
 gGABAbie=gGABAaie/50;
 
 
@@ -224,7 +223,7 @@ i=i+1;
 spec.connections(i).direction = 'NG->NG';                   % GABA_A
 spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABseed'};
 spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr ...
+    'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero  ...
     };
 
 % % NG->IB Synaptic connections
@@ -232,7 +231,7 @@ i=i+1;
 spec.connections(i).direction = 'NG->IBs';                   % GABA_A
 spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABseed'};
 spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr ...
+    'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero ...
     };
 
 
