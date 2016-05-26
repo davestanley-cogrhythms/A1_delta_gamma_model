@@ -2,20 +2,20 @@
 %%
 
 % Simulation mode
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IBdb inject
                 % 3 - sim study IBs inject
                 
 
 % simulation controls
-tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
 no_noise = 0;
 
 % number of cells per population
-N=1;
+N=10;
 
 % tonic input currents
 Jd=-10; % apical: 23.5(25.5), basal: 23.5(42.5)
@@ -23,7 +23,7 @@ Js=-1; % -4.5
 Ja=-1;   % -6(-.4)
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=0;
+gRAN=.01;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
@@ -33,6 +33,7 @@ gAR_L=50;  % 50,  LTS - max conductance of h-channel
 gAR_d=155; % 155, IBda - max conductance of h-channel
 
 % connection strengths
+gad=0;      % IBa -> IBdb, 0(.04)
 gsd=.2;     % IBs -> IBda,IBdb
 gds=.4;     % IBda,IBdb -> IBs
 gas=.3;     % IBa -> IBs
@@ -129,15 +130,15 @@ spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
 
 
 
-% i=i+1;
-% spec.connections(i).direction = 'IBa->IBdb';
-% spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-% spec.connections(i).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
-% i=i+1;
-% spec.connections(i).direction = 'IBa->IBa';
-% spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
-% spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-% 
+i=i+1;
+spec.connections(i).direction = 'IBa->IBda';
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+spec.connections(i).parameters = {'g_SYN',gad,'E_SYN',0,'tauDx',100,'tauRx',.5,'fanout',inf,'IC_noise',0};
+i=i+1;
+spec.connections(i).direction = 'IBa->IBa';
+spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
+spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
+
 
 switch sim_mode
 
