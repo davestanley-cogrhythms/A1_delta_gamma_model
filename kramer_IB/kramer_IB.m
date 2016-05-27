@@ -70,7 +70,7 @@ gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
 
 gGABAaii=0/Nng;
 gGABAbii=gGABAaii/50;
-gGABAbii=1/Nng;
+gGABAbii=0/Nng;
 
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
@@ -224,7 +224,7 @@ spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd
 % % NG->NG Synaptic connections
 i=i+1;
 spec.connections(i).direction = 'NG->NG';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABseed'};
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
 spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
     'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero  ...
     };
@@ -232,7 +232,7 @@ spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABA
 % % NG->IB Synaptic connections
 i=i+1;
 spec.connections(i).direction = 'NG->IBs';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABseed'};
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
 spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
     'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero ...
     };
