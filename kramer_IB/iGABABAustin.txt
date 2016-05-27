@@ -1,4 +1,4 @@
-%% iGABAB: synaptic GABA-B-ergic inhibitory current
+%% iGABABAustin: synaptic GABA-B-ergic inhibitory current
 % This is, very slightly, an original formulation of the GABA-B current.
 % The state variable [R] for GABAB is 'customized' here, in that, rather
 %     than the popular formulation of a 0.5 mM box 0.3 ms long for the
@@ -30,23 +30,30 @@
 % This was built using "iSYN.txt" as a template.
 % From Austin Soplata 2015
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Parameters
 gGABAB = [0.001];
 EGABAB = [-95];
 IC = [0.1];
 IC_noise = [0];
+
 % Connectivity
 width = inf   % fanout (connection distance)
 Nmax = max(Npre,Npost)
 srcpos = linspace(1,Nmax,Npre)'*ones(1,Npost)      % linear position (sources)
 dstpos = (linspace(1,Nmax,Npost)'*ones(1,Npre))'   % linear position (targets)
-netcon = (abs(srcpos-dstpos)<=width)'              % adjacency matrix (connect elements closer than width)
+netcon = (abs(srcpos-dstpos)<=width)              % adjacency matrix (connect elements closer than width)
+
 % Functions
-IGABAB(IN,g) = gGABAB.*(netcon*(g.^4./(g.^4 + 100))).*(IN-EGABAB)
+IGABAB(X,g) = gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(X-EGABAB)
+
 % ODEs
-r' = 0.5.*(2.*(1 + tanh(IN./4))).*(1-r) - 0.0012.*r;
-r(0) = IC+IC_noise.*rand(Npre,1);
+r' = 0.5.*(2.*(1 + tanh(Vpre./4))).*(1-r) - 0.0012.*r;
+r(0) = IC+IC_noise.*rand(Npre,1)';
 g' = 0.18.*r - 0.034.*g;
-g(0) = IC+IC_noise.*rand(Npre,1);
+g(0) = IC+IC_noise.*rand(Npre,1)';
+
+monitor functions % always record the synaptic current
+
 % Interface
-current => -IGABAB(OUT,g)
+current => -IGABAB(Vpost,g)
