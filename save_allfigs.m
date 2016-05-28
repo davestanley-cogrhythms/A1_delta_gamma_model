@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '7-get_delta'; 
+    currfigname = '7b-play_with_delta'; 
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[5]
+    for i=[1:2]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -27,8 +27,8 @@ function save_allfigs(currfname,currfigname)
         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
         %close
     end
-    
-    mycomment = ['Made a bunch of changes to get delta rhythm. 1) NG now synapse onto IB dendrites (essential). 2) Adjusted synaptic conductances. 3) Decreased eGABA to -95 (helpful but maybe not essential). Also randomized initial conditions.'];
+    %%
+    mycomment = ['Played around with delta. Found I could get similar traces with increasing gM and gCaH (Fig1) and increasing NMDA (Fig2 & other_figs). Other figs folder: Fig1-no random IC. Fig2 same as Fig2 in base folder. Fig3-50 cells. Fig4  Raster plot of 50 cells.'];
     currd = pwd;
     cd ..
     system('git add *');
