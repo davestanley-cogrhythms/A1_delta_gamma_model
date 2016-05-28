@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '6b-NG_swap_in_Austin'; 
+    currfigname = '7-get_delta'; 
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[4]
+    for i=[5]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['Replaced iGABABseed with iGABABAustin synapse.'];
+    mycomment = ['Made a bunch of changes to get delta rhythm. 1) NG now synapse onto IB dendrites (essential). 2) Adjusted synaptic conductances. 3) Decreased eGABA to -95 (helpful but maybe not essential). Also randomized initial conditions.'];
     currd = pwd;
     cd ..
     system('git add *');

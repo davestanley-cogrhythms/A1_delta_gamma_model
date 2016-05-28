@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -63,17 +63,19 @@ gsyn_hetero = 0;
 
 gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=5/N;
+gNMDAee=10/N;
 
-gAMPAei=1/Nng;      % IBa -> IBdb, 0(.04)
+gAMPAei=0.5/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
+gNMDAei=2/Nng;
 
-gGABAaii=0/Nng;
+gGABAaii=0.00/Nng;
 gGABAbii=gGABAaii/50;
-gGABAbii=0/Nng;
+gGABAbii=0.1/Nng;
 
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
+gGABAbie=0.35/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -90,7 +92,7 @@ tauGABAad=8;   % ms, GABAa decay time; Jung et al
 tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
 tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
 EAMPA=0;
-EGABA=-75;
+EGABA=-95;
 
 
 
@@ -108,7 +110,7 @@ ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
 IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
 ECa=125;     % calcium reversal potential
-IC_noise=.01;% fractional noise in initial conditions
+IC_noise=.25;% fractional noise in initial conditions
 if no_noise
     IC_noise= 0;
     IBda_Vnoise = 0;
@@ -231,7 +233,7 @@ spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABA
 
 % % NG->IB Synaptic connections
 i=i+1;
-spec.connections(i).direction = 'NG->IBs';                   % GABA_A
+spec.connections(i).direction = 'NG->IBda';                   % GABA_A
 spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
 spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
     'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero ...
@@ -247,7 +249,14 @@ switch sim_mode
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
         toc
-        PlotData(data);
+        PlotData(data,'plot_type','waveform');
+        
+        %PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+        %PlotData(data,'variable','ISYN','plot_type','waveform');
+        %PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+        %PlotData(data,'variable','INMDA','plot_type','waveform');
+        %PlotData(data,'variable','IGABAB','plot_type','waveform');
+        %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
 
 %         figl;
 %         subplot(311); plot(data.IBda_V); title('Apical dendrites');
