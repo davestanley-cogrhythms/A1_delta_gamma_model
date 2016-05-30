@@ -16,18 +16,18 @@ no_noise = 0;
 
 
 % number of cells per population
-N=2;   % Number of excitatory cells
-Nng=2;  % Number of FSNG cells
+N=5;   % Number of excitatory cells
+Nng=5;  % Number of FSNG cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd=2; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs=0.1;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.03;
+gRAN=.015;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
@@ -42,6 +42,14 @@ gsa=.3;     % IBs -> IBa
 
 % Gap junction connection
 ggja=.002;  % IBa -> IBa
+
+gsd=0;     % IBs -> IBda,IBdb
+gds=0;     % IBda,IBdb -> IBs
+gas=0;     % IBa -> IBs
+gsa=0;     % IBs -> IBa
+
+% Gap junction connection
+ggja=.000;  % IBa -> IBa
 
 % Synaptic connection strengths
 gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
