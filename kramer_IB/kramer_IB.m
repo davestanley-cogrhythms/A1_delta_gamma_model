@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -59,19 +59,6 @@ gGABAbii=0.1/Nng;
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
 gGABAbie=0.35/N;
-
-% % % % % % % % % % % % % % % % % % % % 
-gAMPAee=0/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=20/N;
-
-gAMPAei=0/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=0/Nng;
-
-gGABAaii=0/Nng;
-gGABAbii=0/Nng;
-
-gGABAaie=0/N;
-gGABAbie=0/N;
 
 
 
@@ -201,40 +188,40 @@ spec.connections(i).direction = 'IBa->IBs';
 spec.connections(i).mechanism_list = {'IBiCOM'};
 spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
 
-% 
-% % % IB Synaptic connections
-% i=i+1;
-% spec.connections(i).direction = 'IBa->IBda';
-% spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-% spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-%     'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-%     };
-% i=i+1;
-% spec.connections(i).direction = 'IBa->IBa';
-% spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
-% spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-% i=i+1;
-% spec.connections(i).direction = 'IBa->NG';
-% spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-% spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-%     'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-%     };
-% 
-% % % NG->NG Synaptic connections
-% i=i+1;
-% spec.connections(i).direction = 'NG->NG';                   % GABA_A
-% spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
-% spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-%     'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero  ...
-%     };
-% 
-% % % NG->IB Synaptic connections
-% i=i+1;
-% spec.connections(i).direction = 'NG->IBda';                   % GABA_A
-% spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
-% spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-%     'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero ...
-%     };
+
+% % IB Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'IBa->IBda';
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+    };
+i=i+1;
+spec.connections(i).direction = 'IBa->IBa';
+spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
+spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
+i=i+1;
+spec.connections(i).direction = 'IBa->NG';
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+    };
+
+% % NG->NG Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'NG->NG';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero  ...
+    };
+
+% % NG->IB Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'NG->IBda';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero ...
+    };
 
 
 
