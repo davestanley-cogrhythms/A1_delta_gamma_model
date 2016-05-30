@@ -43,14 +43,6 @@ gsa=.3;     % IBs -> IBa
 % Gap junction connection
 ggja=.002;  % IBa -> IBa
 
-gsd=0;     % IBs -> IBda,IBdb
-gds=0;     % IBda,IBdb -> IBs
-gas=0;     % IBa -> IBs
-gsa=0;     % IBs -> IBa
-
-% Gap junction connection
-ggja=.000;  % IBa -> IBa
-
 % Synaptic connection strengths
 gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
