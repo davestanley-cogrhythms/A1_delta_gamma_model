@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '7b-play_with_delta'; 
+    currfigname = '7c-test_long_run'; 
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -27,8 +27,8 @@ function save_allfigs(currfname,currfigname)
         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
         %close
     end
-    %%
-    mycomment = ['Played around with delta. Found I could get similar traces with increasing gM and gCaH (Fig1) and increasing NMDA (Fig2 & other_figs). Other figs folder: Fig1-no random IC. Fig2 same as Fig2 in base folder. Fig3-50 cells. Fig4  Raster plot of 50 cells.'];
+    
+    mycomment = ['System seems too driven by noise. Need to reduce or make more robust!'];
     currd = pwd;
     cd ..
     system('git add *');
