@@ -43,6 +43,9 @@ gsa=.3;     % IBs -> IBa
 % Gap junction connection
 ggja=.002;  % IBa -> IBa
 
+% Synapse heterogenity
+gsyn_hetero = 0;
+
 % Synaptic connection strengths
 gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
