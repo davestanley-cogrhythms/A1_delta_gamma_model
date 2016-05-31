@@ -24,7 +24,7 @@ Nng=5;  % Number of FSNG cells
 Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jfs=0.1;
+Jfs=0.0;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
