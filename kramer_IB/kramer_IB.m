@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -16,8 +16,8 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
-Nng=5;  % Number of FSNG cells
+N=2;   % Number of excitatory cells
+Nng=2;  % Number of FSNG cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -234,7 +234,7 @@ switch sim_mode
         % DynaSim code
         % data=SimulateModel(spec);
         tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
+        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',0);
         toc
         PlotData(data,'plot_type','waveform');
         
