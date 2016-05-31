@@ -47,9 +47,9 @@ ggja=.002;  % IBa -> IBa
 gsyn_hetero = 0;
 
 % Synaptic connection strengths
-gAMPAee=0/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=0/N;
+gNMDAee=5/N;
 
 gAMPAei=0.0/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
