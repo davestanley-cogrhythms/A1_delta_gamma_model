@@ -36,6 +36,7 @@ gGABAB = [0.001];
 EGABAB = [-95];
 IC = [0.1];
 IC_noise = [0];
+Tmax=4;         % Austin default
 
 % Connectivity
 width = inf   % fanout (connection distance)
@@ -45,10 +46,11 @@ dstpos = (linspace(1,Nmax,Npost)'*ones(1,Npre))'   % linear position (targets)
 netcon = (abs(srcpos-dstpos)<=width)              % adjacency matrix (connect elements closer than width)
 
 % Functions
-IGABAB(X,g) = gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(X-EGABAB)
+T(Vpre) = Tmax*1/2*(1 + tanh(Vpre./4))
+IGABAB(Vpost,g) = gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(Vpost-EGABAB)
 
 % ODEs
-r' = 0.5.*(2.*(1 + tanh(Vpre./4))).*(1-r) - 0.0012.*r;
+r' = 0.5.*T(Vpre).*(1-r) - 0.0012.*r;
 r(0) = IC+IC_noise.*rand(Npre,1)';
 g' = 0.18.*r - 0.034.*g;
 g(0) = IC+IC_noise.*rand(Npre,1)';
