@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -47,21 +47,21 @@ ggja=.002;  % IBa -> IBa
 gsyn_hetero = 0;
 
 % Synaptic connection strengths
-gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=20/N;
+gNMDAee=0/N;
 
-gAMPAei=0.5/Nng;      % IBa -> IBdb, 0(.04)
+gAMPAei=0.0/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAei=2/Nng;
+gNMDAei=0/Nng;
 
 gGABAaii=0.00/Nng;
 gGABAbii=gGABAaii/50;
-gGABAbii=0.1/Nng;
+gGABAbii=0.0/Nng;
 
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
-gGABAbie=0.35/N;
+gGABAbie=0.0/N;
 
 
 
