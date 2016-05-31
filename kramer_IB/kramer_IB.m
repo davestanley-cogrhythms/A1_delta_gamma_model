@@ -57,7 +57,7 @@ gNMDAei=1/Nng;
 
 gGABAaii=0.00/Nng;
 gGABAbii=gGABAaii/50;
-gGABAbii=0.0/Nng;
+gGABAbii=0.1/Nng;
 
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
