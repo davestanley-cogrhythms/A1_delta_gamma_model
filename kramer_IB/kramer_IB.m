@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -61,7 +61,7 @@ gGABAbii=0.1/Nng;
 
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
-gGABAbie=0.0/N;
+gGABAbie=0.15/N;
 
 
 
