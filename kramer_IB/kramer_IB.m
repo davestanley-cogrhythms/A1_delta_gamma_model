@@ -47,21 +47,21 @@ ggja=.002;  % IBa -> IBa
 gsyn_hetero = 0;
 
 % Synaptic connection strengths
-gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=5/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=5/N;
+gNMDAee=0.5/N;
 
 gAMPAei=0.5/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAei=1/Nng;
+gNMDAei=0.05/Nng;
 
-gGABAaii=0.00/Nng;
+gGABAaii=0.1/Nng;
 gGABAbii=gGABAaii/50;
 gGABAbii=0.1/Nng;
 
-gGABAaie=0/N;
+gGABAaie=0.35/N;
 gGABAbie=gGABAaie/50;
-gGABAbie=0.15/N;
+gGABAbie=0.35/N;
 
 
 
@@ -126,8 +126,8 @@ spec.populations(i).parameters = {...
   'stim',Jd,'onset',0,'V_noise',IBda_Vnoise,'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',4,'E_M',E_EKDR,...
-  'gCaH',4,'E_CaH',ECa,...
+  'gM',2,'E_M',E_EKDR,...
+  'gCaH',2,'E_CaH',ECa,...
   };
 
 i=i+1;
