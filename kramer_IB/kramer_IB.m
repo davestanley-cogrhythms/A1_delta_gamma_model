@@ -46,6 +46,20 @@ ggja=.002;  % IBa -> IBa
 % Synapse heterogenity
 gsyn_hetero = 0;
 
+% Synaptic connection strengths zeros
+gAMPAee=0;
+gNMDAee=0;
+
+gAMPAei=0;
+gNMDAei=0;
+
+gGABAaii=0;
+gGABAbii=0;
+
+gGABAaie=0;
+gGABAbie=0;
+
+
 % Synaptic connection strengths
 gAMPAee=5/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
@@ -161,7 +175,7 @@ i=i+1;
 spec.populations(i).name = 'NG';
 spec.populations(i).size = Nng;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR'};
+spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
   'stim',Jfs,'onset',0,'V_noise',NG_Vnoise,...
