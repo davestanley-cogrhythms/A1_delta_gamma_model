@@ -10,7 +10,7 @@ function dy = destexhe_GABAB_ODE(t,y)
     
     % Calculate neurotransmitter ammount
     % Assume a single AP causes a 0.5 mM box 0.3 ms long 
-    if t <= 0.3; NT_curr = 0.5;
+    if t <= .23*10; NT_curr = .5;
     else NT_curr = 0;
     end
     
