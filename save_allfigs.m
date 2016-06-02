@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '10c-GABAB_play_Tmax';
+    currfigname = '10d-GABAB_play_Tmax2';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:8]
+    for i=[1:3]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['Network for Tmax=4 (Figs1-4) and Tmax=0.5 (Figs5-8).'];
+    mycomment = ['This is a network with very strong NG->IB GABAB conductance, but wearker activation of GABAB by only a few NG APs.'];
     currd = pwd;
     cd ..
     system('git add *');

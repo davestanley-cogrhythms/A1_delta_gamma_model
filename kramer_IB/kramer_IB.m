@@ -51,9 +51,9 @@ gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
 gNMDAee=5/N;
 
-gAMPAei=0.5/Nng;      % IBa -> IBdb, 0(.04)
+gAMPAei=0.05/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAei=1/Nng;
+gNMDAei=0/Nng;
 
 gGABAaii=0.00/Nng;
 gGABAbii=gGABAaii/50;
@@ -61,7 +61,7 @@ gGABAbii=0.1/Nng;
 
 gGABAaie=0/N;
 gGABAbie=gGABAaie/50;
-gGABAbie=0.15/N;
+gGABAbie=10/N;
 
 
 
