@@ -36,7 +36,11 @@ gGABAB = [0.001];
 EGABAB = [-95];
 IC = [0.1];
 IC_noise = [0];
-Tmax=4;         % Austin default
+TmaxGABAB=0.5;         % Austin default
+K1GABAB=0.5;         % Destexhe default
+K2GABAB=0.0012;         % Destexhe default
+K3GABAB=0.18;         % Destexhe default
+K4GABAB=0.034;         % Destexhe default
 
 % Connectivity
 width = inf   % fanout (connection distance)
@@ -46,13 +50,13 @@ dstpos = (linspace(1,Nmax,Npost)'*ones(1,Npre))'   % linear position (targets)
 netcon = (abs(srcpos-dstpos)<=width)              % adjacency matrix (connect elements closer than width)
 
 % Functions
-T(Vpre) = Tmax*1/2*(1 + tanh(Vpre./4))
+T(Vpre) = TmaxGABAB*1/2*(1 + tanh(Vpre./4))
 IGABAB(Vpost,g) = gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(Vpost-EGABAB)
 
 % ODEs
-r' = 0.5.*T(Vpre).*(1-r) - 0.0012.*r;
+r' = K1GABAB.*T(Vpre).*(1-r) - K2GABAB.*r;
 r(0) = IC+IC_noise.*rand(Npre,1)';
-g' = 0.18.*r - 0.034.*g;
+g' = K3GABAB.*r - K4GABAB.*g;
 g(0) = IC+IC_noise.*rand(Npre,1)';
 
 monitor functions % always record the synaptic current
