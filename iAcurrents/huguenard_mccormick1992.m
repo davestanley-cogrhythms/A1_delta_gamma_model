@@ -33,8 +33,8 @@ b2tau = b1tau .* (V<-73) + 60 * (V>=-73);
 
 
 
-figure; subplot(211); plot(V,[a1inf b1inf]);
-subplot(212); plot(V,[a1tau b1tau]);
+figure; subplot(211); plot(V,[a1inf b1inf]); ylabel('x_{inf}'); xlabel('Vm'); title ('Huguenard iA 1');
+subplot(212); plot(V,[a1tau b1tau]); ylabel('Tau'); xlabel('Vm');
 
-figure; subplot(211); plot(V,[a2inf b2inf]);
-subplot(212); plot(V,[a2tau b2tau]);
+figure; subplot(211); plot(V,[a2inf b2inf]); ylabel('x_{inf}'); xlabel('Vm'); title ('Huguenard iA 2');
+subplot(212); plot(V,[a2tau b2tau]); ylabel('Tau'); xlabel('Vm');

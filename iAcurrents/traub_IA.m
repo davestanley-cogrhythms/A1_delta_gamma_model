@@ -22,5 +22,5 @@ ainf = aalpha .* atau;
 binf = balpha .* btau;
 
 
-figure; plot(V,[ainf.^4 binf]);
-figure; plot(V,[atau btau]);
+figure; subplot(211);plot(V,[ainf.^4 binf]); ylabel('x_{inf}'); xlabel('Vm'); title ('Traub 1991 iA');
+subplot(212); plot(V,[atau btau]); ylabel('Tau'); xlabel('Vm');

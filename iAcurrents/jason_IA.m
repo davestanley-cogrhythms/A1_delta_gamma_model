@@ -23,5 +23,5 @@ btau=19+1./(exp((V+46)/5)+exp((V+238)/(-37.5)))
 
 
 
-figure; plot(V,[ainf.^4 binf]);
-figure; plot(V,[atau btau]);
+figure; subplot(211); plot(V,[ainf.^4 binf]);  ylabel('x_{inf}'); xlabel('Vm'); title ('Jason iA');
+subplot(212); plot(V,[atau btau]); ylabel('Tau'); xlabel('Vm');

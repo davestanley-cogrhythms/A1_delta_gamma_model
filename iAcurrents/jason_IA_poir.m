@@ -28,5 +28,5 @@ ltau=max(2,.26./(V+50))
 
 
 
-figure; plot(V,[ninf linf]);
-figure; plot(V,[ntau ltau]);
+figure; subplot(211); plot(V,[ninf linf]); ylabel('x_{inf}'); xlabel('Vm'); title ('Jason iApoirazi');
+subplot(212); plot(V,[ntau ltau]); ylabel('Tau'); xlabel('Vm');
