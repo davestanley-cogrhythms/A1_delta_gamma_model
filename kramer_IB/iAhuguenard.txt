@@ -1,0 +1,44 @@
+% iAhuguenard - A current Mechanism
+% Taken from Huguenard & McCormick 1992 - Simulation of the Currents
+% Involved in Rhythmic Oscillations in Thalamic Relay Neurons (see pg 1376)
+% This is also used in Traub 2003 (pg 911) and Traub 2005 (pg 2214).
+% Coded by Dave Stanley June 2016
+% 
+% Huguenard, J.R., McCormick, D.A., 1992. Simulation of the currents involved in rhythmic oscillations in thalamic relay neurons. J. Neurophysiol. 68, 1373–1383.
+% Traub, R.D., Buhl, E.H., Gloveli, T., Whittington, M. a, 2003. Fast rhythmic bursting can be induced in layer 2/3 cortical neurons by enhancing persistent Na+ conductance or by blocking BK channels. J. Neurophysiol. 89, 909–921. doi:10.1152/jn.00573.2002
+% Traub, R.D., Contreras, D., Cunningham, M.O., Murray, H., LeBeau, F.E.N., Roopun, A., Bibbig, A., Wilent, W.B., Higley, M.J., Whittington, M. a, 2005. Single-column thalamocortical network model exhibiting gamma oscillations, sleep spindles, and epileptogenic bursts. J. Neurophysiol. 93, 2194–2232. doi:10.1152/jn.00983.2004
+% 
+
+gA = [0.75]
+E_A = [-75]
+IC = [0]
+IC_noise = [0.01]
+iA1_fract = 0.6; % Fraction of gA alotted to iA1. Remainder goes to iA2.
+                 % Default used in Huguenard et al is 0.6 for A1 and 0.4 for A2 (pg 1377)
+
+% IA 1
+a1inf(X)=1./(1+exp(-(X+60)/8.5));
+a1tau(X)=.37+1./(exp((X+35.8)/19.7)+exp((X+79.7)/-12.7));
+b1inf(X)=1./(1+exp((X+78)/6));
+b1tau(X)=(1./(exp((X+46)/5)+exp((X+238)/(-37.5)))) .* (X<-63) + 19 * (X>=-63);
+
+% IA 2
+a2inf(X)=1./(1+exp(-(X+36)/20));
+% a2tau(X)=.37+1./(exp((X+35.8)/19.7)+exp((X+79.7)/-12.7));  % same as a1tau; don't execute to save time
+% b2inf(X)=1./(1+exp((X+78)/6)); % same as b1inf; don't execute to save time
+b2tau(X) = b1tau(X) .* (X<-73) + 60 * (X>=-73);
+IA(X,a1,b1,a2,b2) = gA * ( iA1_fract*(a1.^4 .* b1) + (1-iA1_fract)*(a2.^4 .* b2) ) .* (X-E_A)
+
+a1' = (a1inf(X) - a1) ./ a1tau(X);
+b1' = (b1inf(X) - b1) ./ b1tau(X);
+a2' = (a2inf(X) - a2) ./ a1tau(X); % Activation: iA2 tau is same as iA1 tau
+b2' = (b1inf(X) - b2) ./ b2tau(X); % Inactivation: iA2 Inf is same as iA1 inf
+
+a1(0) = IC+IC_noise.*rand(Npop,1)
+b1(0) = IC+IC_noise.*rand(Npop,1)
+a2(0) = IC+IC_noise.*rand(Npop,1)
+b2(0) = IC+IC_noise.*rand(Npop,1)
+
+monitor functions % always record the synaptic current
+ 
+current => -IA(X,a1,b1,a2,b2)
