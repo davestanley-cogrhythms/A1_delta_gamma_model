@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['Plotting iA currents.'];
+    mycomment = ['iA current plots saved.'];
     currd = pwd;
     cd ..
     system('git add *');
