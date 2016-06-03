@@ -1,6 +1,6 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %%
-
+tic
 % Simulation mode
 sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IBdb inject
@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -24,7 +24,8 @@ Nng=5;  % Number of FSNG cells
 Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jfs=0.0;
+Jfs=.5;
+Jfs=0.5;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -61,20 +62,20 @@ gGABAbie=0;
 
 
 % Synaptic connection strengths
-gAMPAee=5/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.5/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=0.5/N;
+gNMDAee=5/N;
 
-gAMPAei=0.5/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAei=0.05/Nng;
+gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
+% gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
+gNMDAei=10/Nng;
 
-gGABAaii=0.1/Nng;
-gGABAbii=gGABAaii/50;
-gGABAbii=0.1/Nng;
-
-gGABAaie=0.35/N;
-gGABAbie=gGABAaie/50;
+gGABAaii=0.3/Nng;
+% gGABAbii=gGABAaii/50;
+gGABAbii=0.3/Nng;
+% 
+gGABAaie=0.1/N;
+% gGABAbie=gGABAaie/50;
 gGABAbie=0.35/N;
 
 
@@ -250,9 +251,9 @@ switch sim_mode
     case 1
         % DynaSim code
         % data=SimulateModel(spec);
-        tic
+        %tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
-        toc
+        %toc
         PlotData(data,'plot_type','waveform');
         
         %PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
@@ -289,7 +290,7 @@ end
 % PlotData(data,'plot_type','waveform');
 
 
-
+toc
 
 
 
