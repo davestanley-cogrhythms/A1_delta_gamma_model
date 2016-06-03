@@ -1,0 +1,12 @@
+stim = [-4.5]
+onset = [0]
+offset = inf
+
+stim2 = 0;
+onset2 = [0]
+offset2 = inf
+
+Itonic_paired(t) = stim*(t>onset & t<offset) + stim2*(t>onset2 & t<offset2)
+ 
+current => -Itonic_paired(t)
+ 
