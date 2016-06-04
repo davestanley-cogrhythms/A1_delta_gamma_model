@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -16,8 +16,8 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
-Nng=5;  % Number of FSNG cells
+N=2;   % Number of excitatory cells
+Nng=2;  % Number of FSNG cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -25,7 +25,7 @@ Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs1=1;
-Jfs2=1;
+Jfs2=-2;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -65,11 +65,11 @@ gGABAbie=0;
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 % gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-% gNMDAee=10/N;
+gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-% gNMDAei=10/Nng;
+gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
 % % gGABAbii=gGABAaii/50;
