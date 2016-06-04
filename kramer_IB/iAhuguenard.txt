@@ -15,6 +15,7 @@ IC = [0]
 IC_noise = [0.01]
 iA1_fract = 0.6; % Fraction of gA alotted to iA1. Remainder goes to iA2.
                  % Default used in Huguenard et al is 0.6 for A1 and 0.4 for A2 (pg 1377)
+taufact = 2;     % Speed up time constants 2x. See Traub 2003.
 
 % IA 1
 a1inf(X)=1./(1+exp(-(X+60)/8.5));
@@ -29,10 +30,10 @@ a2inf(X)=1./(1+exp(-(X+36)/20));
 b2tau(X) = b1tau(X) .* (X<-73) + 60 * (X>=-73);
 IA(X,a1,b1,a2,b2) = gA * ( iA1_fract*(a1.^4 .* b1) + (1-iA1_fract)*(a2.^4 .* b2) ) .* (X-E_A)
 
-a1' = (a1inf(X) - a1) ./ a1tau(X);
-b1' = (b1inf(X) - b1) ./ b1tau(X);
-a2' = (a2inf(X) - a2) ./ a1tau(X); % Activation: iA2 tau is same as iA1 tau
-b2' = (b1inf(X) - b2) ./ b2tau(X); % Inactivation: iA2 Inf is same as iA1 inf
+a1' = taufact * (a1inf(X) - a1) ./ a1tau(X);
+b1' = taufact * (b1inf(X) - b1) ./ b1tau(X);
+a2' = taufact * (a2inf(X) - a2) ./ a1tau(X); % Activation: iA2 tau is same as iA1 tau
+b2' = taufact * (b1inf(X) - b2) ./ b2tau(X); % Inactivation: iA2 Inf is same as iA1 inf
 
 a1(0) = IC+IC_noise.*rand(Npop,1)
 b1(0) = IC+IC_noise.*rand(Npop,1)
