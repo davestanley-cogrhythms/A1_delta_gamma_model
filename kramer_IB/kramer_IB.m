@@ -2,13 +2,13 @@
 %%
 tic
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 2;   % 1 - normal sim
                 % 2 - sim study IBdb inject
                 % 3 - sim study IBs inject
                 
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -16,8 +16,8 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
-Nng=5;  % Number of FSNG cells
+N=2;   % Number of excitatory cells
+Nng=2;  % Number of FSNG cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -25,7 +25,7 @@ Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs1=1;
-Jfs2=1;
+Jfs2=10;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -42,43 +42,19 @@ gas=.3;     % IBa -> IBs
 gsa=.3;     % IBs -> IBa
 
 % Gap junction connection
-ggja=0;
-ggja=.2/N;  % IBa -> IBa
 
 % Synapse heterogenity
 gsyn_hetero = 0;
 
 % Synaptic connection strengths zeros
-gAMPAee=0;
-gNMDAee=0;
-
-gAMPAei=0;
-gNMDAei=0;
-
 gGABAaii=0;
 gGABAbii=0;
 
-gGABAaie=0;
-gGABAbie=0;
-
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-% gNMDAee=10/N;
-% 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-% gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-% gNMDAei=10/Nng;
-% 
 gGABAaii=0.1/Nng;
 % % gGABAbii=gGABAaii/50;
 gGABAbii=.3/Nng;
-% % 
-gGABAaie=0.1/N;
-% % gGABAbie=gGABAaie/50;
-gGABAbie=.35/N;
-
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -133,54 +109,13 @@ spec=[];
 i=0;
 
 i=i+1;
-spec.populations(i).name = 'IBda';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-  'stim',Jd,'onset',0,'V_noise',IBda_Vnoise,'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',2,'E_M',E_EKDR,...
-  'gCaH',2,'E_CaH',ECa,...
-  };
-
-i=i+1;
-spec.populations(i).name = 'IBs';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-  'stim',Js,'onset',0,'V_noise',IBs_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',0,'E_M',E_EKDR,...
-  'gCaH',0,'E_CaH',ECa,...
-  };
-
-i=i+1;
-spec.populations(i).name = 'IBa';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-  'stim',Ja,'onset',0,'V_noise',IBa_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',2,'E_M',E_EKDR,...
-  };
-
-i=i+1;
 spec.populations(i).name = 'NG';
 spec.populations(i).size = Nng;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
 spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-  'stim',Jfs1,'onset',0,'offset',200,'stim2',Jfs2,'onset2',200,'offset2',Inf,...
+  'stim',Jfs1,'onset',0,'offset',100,'stim2',Jfs2,'onset2',100,'offset2',Inf,...
   'V_noise',NG_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
@@ -192,43 +127,6 @@ spec.populations(i).parameters = {...
 % % % % % % % % % % % %  Connections  % % % % % % % % % % % % %  
 i=0;
 
-% % Inter-compartmental connections
-i=i+1;
-spec.connections(i).direction = 'IBda->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBda';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBa';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBa->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
-
-
-% % IB Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'IBa->IBda';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-    'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-    };
-i=i+1;
-spec.connections(i).direction = 'IBa->IBa';
-spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
-spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-i=i+1;
-spec.connections(i).direction = 'IBa->NG';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-    'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-    };
-
 % % NG->NG Synaptic connections
 i=i+1;
 spec.connections(i).direction = 'NG->NG';                   % GABA_A
@@ -237,16 +135,6 @@ spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABA
     'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero,  ...
     'TmaxGABAB',TmaxGABAB ...
     };
-
-% % NG->IB Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'NG->IBda';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
-spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
-    'TmaxGABAB',TmaxGABAB ...
-    };
-
 
 
 switch sim_mode
@@ -273,7 +161,7 @@ switch sim_mode
         
     case 2
         
-        vary = {'IBda','stim',[-10 , -20 , -30, -40, -50]};
+        vary = {'NG','stim2',[0.5 0 -0.5 -1 -1.5 -2]};
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
