@@ -24,8 +24,8 @@ Nng=5;  % Number of FSNG cells
 Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jfs=.5;
-Jfs=0.5;
+Jfs1=.5;
+Jfs2=.5;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -104,7 +104,7 @@ IBda_Vnoise = .3;
 IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
-NG_Vnoise = .3;
+NG_Vnoise = 3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -176,12 +176,14 @@ i=i+1;
 spec.populations(i).name = 'NG';
 spec.populations(i).size = Nng;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-  'stim',Jfs,'onset',0,'V_noise',NG_Vnoise,...
+  'stim',Jfs1,'onset',0,'offset',200,'stim2',Jfs2,'onset2',200,'offset2',Inf,...
+  'V_noise',NG_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
+  'gA',0,'E_A',E_EKDR, ...
   };
 
 
