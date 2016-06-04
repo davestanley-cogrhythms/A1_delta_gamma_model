@@ -161,7 +161,7 @@ switch sim_mode
         
     case 2
         
-        vary = {'NG','stim2',[0.5 0 -0.5 -1 -1.5 -2]};
+        vary = {'NG','stim2',[-1 -1.5 -2 -2.5 -3 -3.5 -4]};
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
