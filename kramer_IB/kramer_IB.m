@@ -52,13 +52,10 @@ gsyn_hetero = 0;
 
 % Synaptic connection strengths zeros
 gGABAaii=0;
-gGABAbii=0;
 
 
 % % Synaptic connection strengths
-% gGABAaii=0.1/Nng;
-% % gGABAbii=gGABAaii/50;
-% gGABAbii=.3/Nng;
+gGABAaii=8/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 

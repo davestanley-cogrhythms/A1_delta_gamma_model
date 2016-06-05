@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '18a_FS_unconnected';
+    currfigname = '18b_FS_connected';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:6]
+    for i=[1:12]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -24,11 +24,11 @@ function save_allfigs(currfname,currfigname)
         set(gcf,'Position',[0.1076    0.4544    0.7243    0.3811]);
         set(gcf,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r200',fullfile(basepath,sp,savenames{i}))
-        print(gcf,'-dpng','-r75',fullfile(basepath,sp,savenames{i}))
+        print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
         %close
     end
     
-    mycomment = ['Play with noise levels. FS_Vnoise=3 (Fig1-2); 6 (F3-4); 9 (F5-6).'];
+    mycomment = ['Use fixed noise level (FS_Vnoise=9). Figs1-2 correspond to gGABAaii=[0.1, 0.5, 1, 2, 4, and 8].'];
     currd = pwd;
     cd ..
     system('git add *');
