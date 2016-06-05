@@ -85,7 +85,7 @@ IBda_Vnoise = .3;
 IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
-FS_Vnoise = 3;
+FS_Vnoise = 9;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
