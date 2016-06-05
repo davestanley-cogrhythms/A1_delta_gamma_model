@@ -1,5 +1,8 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %%
+
+clear 
+
 tic
 % Simulation mode
 sim_mode = 2;   % 1 - normal sim
@@ -16,8 +19,9 @@ no_noise = 0;
 
 
 % number of cells per population
-N=2;   % Number of excitatory cells
-Nng=2;  % Number of FSNG cells
+N=10;   % Number of excitatory cells
+Nng=10;  % Number of FSNG cells
+Nfs=10;
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -25,7 +29,7 @@ Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs1=1;
-Jfs2=100;
+Jfs2=-1;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -52,9 +56,9 @@ gGABAbii=0;
 
 
 % % Synaptic connection strengths
-gGABAaii=0.1/Nng;
+% gGABAaii=0.1/Nng;
 % % gGABAbii=gGABAaii/50;
-gGABAbii=.3/Nng;
+% gGABAbii=.3/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -81,7 +85,7 @@ IBda_Vnoise = .3;
 IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
-NG_Vnoise = 3;
+FS_Vnoise = 3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -109,17 +113,16 @@ spec=[];
 i=0;
 
 i=i+1;
-spec.populations(i).name = 'NG';
-spec.populations(i).size = Nng;
+spec.populations(i).name = 'FS';
+spec.populations(i).size = Nfs;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
   'stim',Jfs1,'onset',0,'offset',100,'stim2',Jfs2,'onset2',100,'offset2',Inf,...
-  'V_noise',NG_Vnoise,...
+  'V_noise',FS_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
-  'gA',80,'E_A',E_EKDR, ...
   };
 
 
@@ -129,11 +132,9 @@ i=0;
 
 % % NG->NG Synaptic connections
 i=i+1;
-spec.connections(i).direction = 'NG->NG';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+spec.connections(i).direction = 'FS->FS';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
 spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero,  ...
-    'TmaxGABAB',TmaxGABAB ...
     };
 
 
@@ -161,13 +162,12 @@ switch sim_mode
         
     case 2
         
-        vary = {'NG','stim2',[-1 -2 -3 -4 -5 -6]};
+        vary = {'FS','stim2',[1 0.5 0 -0.5 -1 -1.5]};
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
         PlotData(data,'plot_type','waveform');
-        %PlotData(data,'plot_type','rastergram');
-        PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
+        PlotData(data,'plot_type','power');
         
     case 3
         vary = {'IBs','stim',[4 -1 -6 -11 -16]};
