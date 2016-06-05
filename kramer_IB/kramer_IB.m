@@ -29,13 +29,15 @@ Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs1=1;
-Jfs2=-1;
+Jfs2=10;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.015;
-ERAN=0;
-tauRAN=2;
-lambda = 1000;
+FSgRAN=.015;
+FSERAN=0;
+FStauRAN=2;
+FSlambda = 40*10;  % 40 Hz * 100 cells
+FSfreq=40;
+FSac=40*10;
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
@@ -55,7 +57,7 @@ gGABAaii=0;
 
 
 % % Synaptic connection strengths
-gGABAaii=8/Nng;
+% gGABAaii=8/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -82,7 +84,7 @@ IBda_Vnoise = .3;
 IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
-FS_Vnoise = 9;
+FS_Vnoise = .3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -98,7 +100,7 @@ if no_noise
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
     IBa_Vnoise = 0;
-    gRAN=0;
+    FSgRAN=0;
 end
 
 IC_V = -65;
@@ -113,9 +115,10 @@ i=i+1;
 spec.populations(i).name = 'FS';
 spec.populations(i).size = Nfs;
 spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
+spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+  'gRAN',FSgRAN,'ERAN',FSERAN,'tauRAN',FStauRAN,'lambda',FSlambda,'freq',FSfreq,'ac',FSac...
   'stim',Jfs1,'onset',0,'offset',100,'stim2',Jfs2,'onset2',100,'offset2',Inf,...
   'V_noise',FS_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
@@ -159,7 +162,7 @@ switch sim_mode
         
     case 2
         
-        vary = {'FS','stim2',[1 0.5 0 -0.5 -1 -1.5]};
+        vary = {'FS','stim2',[1 0.5 0 -0.5 -1 -1.5]+.5};
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
