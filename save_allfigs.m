@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '16d-NG_iA';
+    currfigname = '17a_NG_gA_60';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['NG with iA=60 and sweep iApp through [-1 -1.5 -2 -2.5 -3 -3.5 -4] (after holding at +1 for 100sec)'];
+    mycomment = ['iApp sweep. gA=60. No NG->NG GABA connectivity.'];
     currd = pwd;
     cd ..
     system('git add *');

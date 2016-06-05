@@ -8,7 +8,7 @@ sim_mode = 2;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -25,7 +25,7 @@ Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs1=1;
-Jfs2=10;
+Jfs2=100;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -52,9 +52,9 @@ gGABAbii=0;
 
 
 % % Synaptic connection strengths
-gGABAaii=0.1/Nng;
+% gGABAaii=0.1/Nng;
 % % gGABAbii=gGABAaii/50;
-gGABAbii=.3/Nng;
+% gGABAbii=.3/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -161,12 +161,13 @@ switch sim_mode
         
     case 2
         
-        vary = {'NG','stim2',[-1 -1.5 -2 -2.5 -3 -3.5 -4]};
+        vary = {'NG','stim2',[-1 -2 -3 -4 -5 -6]};
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
         PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','rastergram');
+        PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
         
     case 3
         vary = {'IBs','stim',[4 -1 -6 -11 -16]};
