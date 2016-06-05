@@ -57,7 +57,7 @@ gGABAaii=0;
 
 
 % % Synaptic connection strengths
-% gGABAaii=8/Nng;
+gGABAaii=8/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 

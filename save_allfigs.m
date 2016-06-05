@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:12]
+    for i=[1:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['Added Poisson noise at 40 Hz. Scanned iIApp through [1 0.5 0 -0.5 -1 -1.5]+.5 '];
+    mycomment = ['Added Poisson noise at 40 Hz. Figs are no GABA_A (1-2) and GABA_A Added (3-4).  Scanned iIApp through [1 0.5 0 -0.5 -1 -1.5]+.5 '];
     currd = pwd;
     cd ..
     system('git add *');
