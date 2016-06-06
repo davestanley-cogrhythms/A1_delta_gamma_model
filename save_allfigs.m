@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '20a_adjust_FS_FS';
+    currfigname = '20b_adjust_FS_FS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:15]
+    for i=[1:3]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['Removed Poisson noise for now. Step through range of gGABAaii [0 0.5 1 2 4]. Trying to see max FS->FS conductance that can not cause "skipping" APs.'];
+    mycomment = ['Increased FS_Vnoise. Apparently the noise causes skipping APs as well.'];
     currd = pwd;
     cd ..
     system('git add *');
