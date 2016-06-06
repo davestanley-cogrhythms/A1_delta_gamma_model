@@ -29,16 +29,15 @@ Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jfs1=1;
-Jfs2=10;
+Jfs2=1;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-FSgRAN=0;
-% FSgRAN=.015;
+FSgRAN=.015;
 FSERAN=0;
 FStauRAN=2;
-FSlambda = 40*10;  % 40 Hz * 100 cells
+FSlambda = 0;  % 40 Hz * 100 cells
 FSfreq=40;
-FSac=40*10;
+FSac=200;   % 10 cells firing at ~20 Hz
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
@@ -56,7 +55,7 @@ gGABAaii=0;
 
 
 % % Synaptic connection strengths
-gGABAaii=4/Nng;
+gGABAaii=.2/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -83,7 +82,7 @@ IBda_Vnoise = .3;
 IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
-FS_Vnoise = 9;
+FS_Vnoise = .3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -161,13 +160,12 @@ switch sim_mode
         
     case 2
         
-        vary = {'FS','stim2',[1 0.5 0 -0.5 -1 -1.5]+.5};
-        tic
+        vary = {'FS','gRAN',[0 20 40 60 80 100]/1000};
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
-        toc
         PlotData(data,'plot_type','waveform');
-        PlotData(data,'plot_type','power');
         PlotData(data,'plot_type','rastergram');
+        PlotData(data,'plot_type','power');
+        
         
     case 3
         vary = {'IBs','stim',[4 -1 -6 -11 -16]};
