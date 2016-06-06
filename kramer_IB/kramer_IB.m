@@ -32,7 +32,8 @@ Jfs1=1;
 Jfs2=10;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-FSgRAN=.015;
+FSgRAN=0;
+% FSgRAN=.015;
 FSERAN=0;
 FStauRAN=2;
 FSlambda = 40*10;  % 40 Hz * 100 cells
@@ -47,8 +48,6 @@ gds=.4;     % IBda,IBdb -> IBs
 gas=.3;     % IBa -> IBs
 gsa=.3;     % IBs -> IBa
 
-% Gap junction connection
-
 % Synapse heterogenity
 gsyn_hetero = 0;
 
@@ -57,7 +56,7 @@ gGABAaii=0;
 
 
 % % Synaptic connection strengths
-gGABAaii=8/Nng;
+gGABAaii=4/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -168,6 +167,7 @@ switch sim_mode
         toc
         PlotData(data,'plot_type','waveform');
         PlotData(data,'plot_type','power');
+        PlotData(data,'plot_type','rastergram');
         
     case 3
         vary = {'IBs','stim',[4 -1 -6 -11 -16]};
