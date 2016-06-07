@@ -31,15 +31,15 @@ Jfs2=1;
 gRAN=.015;
 ERAN=0;
 tauRAN=2;
-lambda = 1000;
+lambda = 333;
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
 % compartmental connection strengths
 gsd=.2;     % IBs -> IBda,IBdb
 gds=.4;     % IBda,IBdb -> IBs
-gas=.3;     % IBa -> IBs
-gsa=.3;     % IBs -> IBa
+gas=.4;     % IBa -> IBs
+gsa=.4;     % IBs -> IBa
 
 % Gap junction connection
 ggja=0;
@@ -63,13 +63,13 @@ gGABAbie=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.2/N;      % IBa -> IBdb, 0(.04)
 % gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAee=10/N;
+% gNMDAee=5/N;
 % 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
+gAMPAei=0.5/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
-gNMDAei=10/Nng;
+% gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
 % % gGABAbii=gGABAaii/50;
@@ -77,7 +77,7 @@ gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
 % % gGABAbie=gGABAaie/50;
-gGABAbie=.35/N;
+gGABAbie=.5/N;
 
 
 
