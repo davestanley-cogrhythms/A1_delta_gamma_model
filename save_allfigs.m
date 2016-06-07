@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '25b_addFS';
+    currfigname = '26a_retuneFS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:4]
+    for i=[1]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -27,8 +27,8 @@ function save_allfigs(currfname,currfigname)
         print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
         %close
     end
-    %%
-    mycomment = ['Played around with network having NG iA current Fig1-2 full. Fig3-4 NMDA block.'];
+    
+    mycomment = ['Increased FSgRAN to 0.06 (from 0.015) and decreased gGABAafe to 0.7. The FS Poisson current injection was way too low previously (because I forgot to use the vary value).'];
     currd = pwd;
     cd ..
     system('git add *');
