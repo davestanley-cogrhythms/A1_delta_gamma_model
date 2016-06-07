@@ -35,9 +35,9 @@ Jfs2=1;
 FSgRAN=.015;
 FSERAN=0;
 FStauRAN=2;
-FSlambda = 0;  % 40 Hz * 100 cells
+FSlambda = 500;  % 40 Hz * 100 cells
 FSfreq=40;
-FSac=200;   % 10 cells firing at ~20 Hz
+FSac=500;   % 10 cells firing at ~20 Hz
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
@@ -55,7 +55,7 @@ gGABAaii=0;
 
 
 % % Synaptic connection strengths
-gGABAaii=.2/Nng;
+gGABAaii=1/Nng;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 

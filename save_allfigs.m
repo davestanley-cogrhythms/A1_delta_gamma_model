@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:16]
+    for i=[4:15]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -28,7 +28,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     
-    mycomment = ['Removed iApp and iNoise. Varied gGABAaii [0 0.5 1 .1 .2]. Now only Poisson input arriving at 40 Hz pulses - but its probably too sparse. See Fig16.'];
+    mycomment = ['Increased Poisson lambda to get smoother signal. Varied gGABAaii [0, .2, .5, 1].'];
     currd = pwd;
     cd ..
     system('git add *');
