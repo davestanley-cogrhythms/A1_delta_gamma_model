@@ -16,9 +16,9 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
-Nng=5;  % Number of FSNG cells
-Nfs=5;  % Number of FS cells
+N=10;   % Number of excitatory cells
+Nng=N;  % Number of FSNG cells
+Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
