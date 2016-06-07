@@ -27,7 +27,7 @@ Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jng1=2;     % NG current injection; step1
 Jng2=1;     % NG current injection; step2
-Jfs1=1;     % FS current injection; step1
+Jfs1=20;     % FS current injection; step1
 Jfs2=1;     % FS current injection; step2
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -94,7 +94,7 @@ gGABAbie=.5/N;
 
 gGABAaff=1/Nfs;
 
-gGABAafe=.7/N;
+gGABAafe=0.7/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -214,7 +214,7 @@ spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonic_paired','IB
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
   'gRAN',FSgRAN,'ERAN',FSERAN,'tauRAN',FStauRAN,'lambda',FSlambda,'freq',FSfreq,'ac',FSac...
-  'stim',Jfs1,'onset',0,'offset',100,'stim2',Jfs2,'onset2',100,'offset2',Inf,...
+  'stim',Jfs1,'onset',0,'offset',513,'stim2',Jfs2,'onset2',513,'offset2',Inf,...
   'V_noise',FS_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
