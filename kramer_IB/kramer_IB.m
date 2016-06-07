@@ -77,7 +77,7 @@ gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
 % % gGABAbie=gGABAaie/50;
-gGABAbie=.35/N;
+gGABAbie=.5/N;
 
 
 
