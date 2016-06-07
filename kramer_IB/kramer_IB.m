@@ -8,7 +8,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 
 % simulation controls
-tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -16,22 +16,34 @@ no_noise = 0;
 
 
 % number of cells per population
-N=10;   % Number of excitatory cells
-Nng=10;  % Number of FSNG cells
+N=5;   % Number of excitatory cells
+Nng=5;  % Number of FSNG cells
+Nfs=5;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
 Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jfs1=1;
-Jfs2=1;
+Jng1=1;     % NG current injection; step1
+Jng2=1;     % NG current injection; step2
+Jfs1=1;     % FS current injection; step1
+Jfs2=1;     % FS current injection; step2
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
+
+% Poisson to FS (gamma frequency)
+FSgRAN=.015;
+FSERAN=0;
+FStauRAN=2;
+FSlambda = 500;  % 40 Hz * 100 cells
+FSfreq=40;
+FSac=500;   % 10 cells firing at ~20 Hz
+
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
@@ -61,24 +73,28 @@ gGABAbii=0;
 gGABAaie=0;
 gGABAbie=0;
 
+gGABAaff=0;
+
+gGABAafe=0;
+
+
 
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAee=gAMPAee/50; % uS, PY->PY, maximal NMDA conductance
 gNMDAee=10/N;
-% 
+
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-% gNMDAei=gAMPAei/50; % uS, PY->PY, maximal NMDA conductance
 gNMDAei=10/Nng;
-% 
+
 gGABAaii=0.1/Nng;
-% % gGABAbii=gGABAaii/50;
 gGABAbii=.3/Nng;
-% % 
+
 gGABAaie=0.1/N;
-% % gGABAbie=gGABAaie/50;
 gGABAbie=.5/N;
 
+gGABAaff=1/Nfs;
+
+gGABAafe=2/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -106,6 +122,7 @@ IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
+FS_Vnoise = .3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -122,6 +139,7 @@ if no_noise
     IBdb_Vnoise = 0;
     IBa_Vnoise = 0;
     gRAN=0;
+    FSgRAN=0;
 end
 
 IC_V = -65;
@@ -180,11 +198,26 @@ spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
 spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
 spec.populations(i).parameters = {...
   'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-  'stim',Jfs1,'onset',0,'offset',200,'stim2',Jfs2,'onset2',200,'offset2',Inf,...
+  'stim',Jng1,'onset',0,'offset',200,'stim2',Jng2,'onset2',200,'offset2',Inf,...
   'V_noise',NG_Vnoise,...
   'gNaF',100,'E_NaF',ENa,...
   'gKDR',80,'E_KDR',E_EKDR,...
   'gA',60,'E_A',E_EKDR, ...
+  };
+
+
+i=i+1;
+spec.populations(i).name = 'FS';
+spec.populations(i).size = Nfs;
+spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
+spec.populations(i).parameters = {...
+  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+  'gRAN',FSgRAN,'ERAN',FSERAN,'tauRAN',FStauRAN,'lambda',FSlambda,'freq',FSfreq,'ac',FSac...
+  'stim',Jfs1,'onset',0,'offset',100,'stim2',Jfs2,'onset2',100,'offset2',Inf,...
+  'V_noise',FS_Vnoise,...
+  'gNaF',100,'E_NaF',ENa,...
+  'gKDR',80,'E_KDR',E_EKDR,...
   };
 
 
@@ -246,6 +279,22 @@ spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABA
     'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
     'TmaxGABAB',TmaxGABAB ...
     };
+
+% % FS->FS Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'FS->FS';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+spec.connections(i).parameters = {'g_SYN',gGABAaff,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    };
+
+
+% % FS->IB Synaptic connections
+i=i+1;
+spec.connections(i).direction = 'FS->IBda';                   % GABA_A
+spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+spec.connections(i).parameters = {'g_SYN',gGABAafe,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    };
+
 
 
 
