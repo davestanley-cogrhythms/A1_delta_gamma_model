@@ -6,6 +6,12 @@ sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IBdb inject
                 % 3 - sim study IBs inject
                 
+                
+% Cells to include in model
+include_IB = 1;
+include_FS = 1;
+include_NG = 1;
+
 
 % simulation controls
 tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -150,150 +156,173 @@ IC_V = -65;
 spec=[];
 i=0;
 
-i=i+1;
-spec.populations(i).name = 'IBda';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-  'stim',Jd,'onset',0,'V_noise',IBda_Vnoise,'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',2,'E_M',E_EKDR,...
-  'gCaH',2,'E_CaH',ECa,...
-  };
+if include_IB
+    i=i+1;
+    spec.populations(i).name = 'IBda';
+    spec.populations(i).size = N;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
+      'stim',Jd,'onset',0,'V_noise',IBda_Vnoise,'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',2,'E_M',E_EKDR,...
+      'gCaH',2,'E_CaH',ECa,...
+      };
 
-i=i+1;
-spec.populations(i).name = 'IBs';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-  'stim',Js,'onset',0,'V_noise',IBs_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',0,'E_M',E_EKDR,...
-  'gCaH',0,'E_CaH',ECa,...
-  };
+    i=i+1;
+    spec.populations(i).name = 'IBs';
+    spec.populations(i).size = N;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
+      'stim',Js,'onset',0,'V_noise',IBs_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',0,'E_M',E_EKDR,...
+      'gCaH',0,'E_CaH',ECa,...
+      };
 
-i=i+1;
-spec.populations(i).name = 'IBa';
-spec.populations(i).size = N;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-  'stim',Ja,'onset',0,'V_noise',IBa_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gM',2,'E_M',E_EKDR,...
-  };
+    i=i+1;
+    spec.populations(i).name = 'IBa';
+    spec.populations(i).size = N;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
+      'stim',Ja,'onset',0,'V_noise',IBa_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',2,'E_M',E_EKDR,...
+      };
 
-i=i+1;
-spec.populations(i).name = 'NG';
-spec.populations(i).size = Nng;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-  'stim',Jng1,'onset',0,'offset',100,'stim2',Jng2,'onset2',100,'offset2',Inf,...
-  'V_noise',NG_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  'gA',60,'E_A',E_EKDR, ...
-  };
+end
+
+if include_NG
+    i=i+1;
+    spec.populations(i).name = 'NG';
+    spec.populations(i).size = Nng;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'stim',Jng1,'onset',0,'offset',100,'stim2',Jng2,'onset2',100,'offset2',Inf,...
+      'V_noise',NG_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gA',60,'E_A',E_EKDR, ...
+      };
+end
 
 
-i=i+1;
-spec.populations(i).name = 'FS';
-spec.populations(i).size = Nfs;
-spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
-spec.populations(i).parameters = {...
-  'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-  'gRAN',FSgRAN,'ERAN',FSERAN,'tauRAN',FStauRAN,'lambda',FSlambda,'freq',FSfreq,'ac',FSac...
-  'stim',Jfs1,'onset',0,'offset',800,'stim2',Jfs2,'onset2',800,'offset2',Inf,...
-  'V_noise',FS_Vnoise,...
-  'gNaF',100,'E_NaF',ENa,...
-  'gKDR',80,'E_KDR',E_EKDR,...
-  };
+if include_FS
+    i=i+1;
+    spec.populations(i).name = 'FS';
+    spec.populations(i).size = Nfs;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'gRAN',FSgRAN,'ERAN',FSERAN,'tauRAN',FStauRAN,'lambda',FSlambda,'freq',FSfreq,'ac',FSac...
+      'stim',Jfs1,'onset',0,'offset',800,'stim2',Jfs2,'onset2',800,'offset2',Inf,...
+      'V_noise',FS_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      };
+end
 
 
 
 % % % % % % % % % % % %  Connections  % % % % % % % % % % % % %  
 i=0;
 
-% % Inter-compartmental connections
-i=i+1;
-spec.connections(i).direction = 'IBda->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBda';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBs->IBa';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
-i=i+1;
-spec.connections(i).direction = 'IBa->IBs';
-spec.connections(i).mechanism_list = {'IBiCOM'};
-spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
+% % IB->IB intracompartmental connections
+if include_IB
+    i=i+1;
+    spec.connections(i).direction = 'IBda->IBs';
+    spec.connections(i).mechanism_list = {'IBiCOM'};
+    spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
+    i=i+1;
+    spec.connections(i).direction = 'IBs->IBda';
+    spec.connections(i).mechanism_list = {'IBiCOM'};
+    spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
+    i=i+1;
+    spec.connections(i).direction = 'IBs->IBa';
+    spec.connections(i).mechanism_list = {'IBiCOM'};
+    spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
+    i=i+1;
+    spec.connections(i).direction = 'IBa->IBs';
+    spec.connections(i).mechanism_list = {'IBiCOM'};
+    spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
+end
 
 
-% % IB Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'IBa->IBda';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-    'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-    };
-i=i+1;
-spec.connections(i).direction = 'IBa->IBa';
-spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
-spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-i=i+1;
-spec.connections(i).direction = 'IBa->NG';
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-    'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-    };
+% % IB->IB recurrent synaptic and gap connections
+if include_IB
+    i=i+1;
+    spec.connections(i).direction = 'IBa->IBda';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        };
+    i=i+1;
+    spec.connections(i).direction = 'IBa->IBa';
+    spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
+    spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
+    i=i+1;
+end
+
+% % IB->NG
+if include_IB && include_NG
+    spec.connections(i).direction = 'IBa->NG';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        };
+end
 
 % % NG->NG Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'NG->NG';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
-spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero,  ...
-    'TmaxGABAB',TmaxGABAB ...
-    };
+if include_NG
+    i=i+1;
+    spec.connections(i).direction = 'NG->NG';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+    spec.connections(i).parameters = {'g_SYN',gGABAaii,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAbii,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero,  ...
+        'TmaxGABAB',TmaxGABAB ...
+        };
+end
 
 % % NG->IB Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'NG->IBda';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
-spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
-    'TmaxGABAB',TmaxGABAB ...
-    };
+if include_NG && include_IB
+    i=i+1;
+    spec.connections(i).direction = 'NG->IBda';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+    spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
+        'TmaxGABAB',TmaxGABAB ...
+        };
+end
 
 % % FS->FS Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'FS->FS';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-spec.connections(i).parameters = {'g_SYN',gGABAaff,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    };
+if include_FS
+    i=i+1;
+    spec.connections(i).direction = 'FS->FS';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gGABAaff,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
 
 
 % % FS->IB Synaptic connections
-i=i+1;
-spec.connections(i).direction = 'FS->IBda';                   % GABA_A
-spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-spec.connections(i).parameters = {'g_SYN',gGABAafe,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-    };
+if include_FS && include_IB
+    i=i+1;
+    spec.connections(i).direction = 'FS->IBda';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gGABAafe,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
 
 
 
