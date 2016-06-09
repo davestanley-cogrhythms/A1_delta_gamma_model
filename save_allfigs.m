@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '31a_delta_gamma';
+    currfigname = '32a_turn_on_FS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[1:9]
+    for i=[10:11]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -27,8 +27,8 @@ function save_allfigs(currfname,currfigname)
         print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
         %close
     end
-    %%
-    mycomment = ['Added switches for turning different cell types on or off.'];
+    
+    mycomment = ['Tried turning on FS cells after 1st transient delta cycle. Aperiodic pulse doesnt fire.'];
     currd = pwd;
     cd ..
     system('git add *');

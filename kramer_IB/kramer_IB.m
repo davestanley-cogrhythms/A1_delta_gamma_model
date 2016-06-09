@@ -33,7 +33,7 @@ Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
-Jfs1=1;     % FS current injection; step1
+Jfs1=20;     % FS current injection; step1
 Jfs2=1;     % FS current injection; step2
 
 % Poisson IPSPs to IBdb (basal dendrite)
