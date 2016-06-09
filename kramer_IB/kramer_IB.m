@@ -8,13 +8,13 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -33,7 +33,7 @@ Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jng1=2;     % NG current injection; step1
 Jng2=1;     % NG current injection; step2
-Jfs1=20;     % FS current injection; step1
+Jfs1=1;     % FS current injection; step1
 Jfs2=1;     % FS current injection; step2
 
 % Poisson IPSPs to IBdb (basal dendrite)
@@ -205,7 +205,7 @@ if include_NG
     spec.populations(i).name = 'NG';
     spec.populations(i).size = Nng;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+    spec.populations(i).mechanism_list = {'itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
       'stim',Jng1,'onset',0,'offset',100,'stim2',Jng2,'onset2',100,'offset2',Inf,...
@@ -222,11 +222,11 @@ if include_FS
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonic_paired','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'gRAN',FSgRAN,'ERAN',FSERAN,'tauRAN',FStauRAN,'lambda',FSlambda,'freq',FSfreq,'ac',FSac...
       'stim',Jfs1,'onset',0,'offset',700,'stim2',Jfs2,'onset2',700,'offset2',Inf,...
+      'PPstim',-10,'ap_pulse_num',5,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
@@ -333,7 +333,7 @@ switch sim_mode
         % DynaSim code
         % data=SimulateModel(spec);
         %tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
+        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',0);
         %toc
         PlotData(data,'plot_type','waveform');
         
