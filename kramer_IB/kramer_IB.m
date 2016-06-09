@@ -2,19 +2,19 @@
 %%
 tic
 % Simulation mode
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IBdb inject
                 % 3 - sim study IBs inject
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 
 
 % simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -31,7 +31,7 @@ Nfs=N;  % Number of FS cells
 Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jng1=2;     % NG current injection; step1
+Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs1=1;     % FS current injection; step1
 Jfs2=1;     % FS current injection; step2
@@ -93,7 +93,7 @@ gGABAbie=.5/N;
 
 gGABAaff=1/Nfs;
 
-gGABAafe=0.7/N;
+gGABAafe=1.6/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -218,8 +218,8 @@ if include_FS
     spec.populations(i).mechanism_list = {'iPeriodicPulses','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'stim',Jfs1,'onset',0,'offset',700,'stim2',Jfs2,'onset2',700,'offset2',Inf,...
-      'PPstim',PPstim,'ap_pulse_num',11,...
+      'stim',Jfs1,'onset',0,'offset',513,'stim2',Jfs2,'onset2',513,'offset2',Inf,...
+      'PPstim',PPstim,'ap_pulse_num',40,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
@@ -345,9 +345,7 @@ switch sim_mode
     case 2
         
         vary = {'FS','PPstim',[0 -3 -6 -9 -12 -15]};
-        tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
-        toc
         PlotData(data,'plot_type','waveform');
         PlotData(data,'plot_type','rastergram');
         
