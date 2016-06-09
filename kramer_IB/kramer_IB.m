@@ -2,7 +2,7 @@
 %%
 tic
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 2;   % 1 - normal sim
                 % 2 - sim study IBdb inject
                 % 3 - sim study IBs inject
                 
@@ -14,7 +14,7 @@ include_NG = 0;
 
 
 % simulation controls
-tspan=[0 250]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -42,15 +42,8 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 
-% Poisson to FS (gamma frequency)
-FSgRAN=.06;
-FSERAN=0;
-FStauRAN=2;
-FSlambda = 500;  % 40 Hz * 100 cells
-FSfreq=40;
-FSac=500;   % 10 cells firing at ~20 Hz
-
-
+% Periodic pulse stimulation to FS cells
+PPstim = -10;
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
 % compartmental connection strengths
@@ -128,7 +121,7 @@ IBs_Vnoise = .1;
 IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
-FS_Vnoise = .3;
+FS_Vnoise = 3;
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -226,7 +219,7 @@ if include_FS
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
       'stim',Jfs1,'onset',0,'offset',700,'stim2',Jfs2,'onset2',700,'offset2',Inf,...
-      'PPstim',-10,'ap_pulse_num',5,...
+      'PPstim',PPstim,'ap_pulse_num',11,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
@@ -333,7 +326,7 @@ switch sim_mode
         % DynaSim code
         % data=SimulateModel(spec);
         %tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',0);
+        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
         %toc
         PlotData(data,'plot_type','waveform');
         
@@ -351,12 +344,12 @@ switch sim_mode
         
     case 2
         
-        vary = {'IBda','stim',[-10 , -20 , -30, -40, -50]};
+        vary = {'FS','PPstim',[0 -3 -6 -9 -12 -15]};
         tic
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
         PlotData(data,'plot_type','waveform');
-        %PlotData(data,'plot_type','rastergram');
+        PlotData(data,'plot_type','rastergram');
         
     case 3
         vary = {'IBs','stim',[4 -1 -6 -11 -16]};
