@@ -28,13 +28,16 @@ Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=1; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd2=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
 Jng1=5;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
-Jfs1=20;     % FS current injection; step1
-Jfs2=1;     % FS current injection; step2
+Jfs=1;     % FS current injection; step1
+
+IB_offset1=95;
+IB_onset2=95;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -42,8 +45,21 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 
-% Periodic pulse stimulation to FS cells
-PPstim = -10;
+% Periodic pulse stimulation
+PPfreq = 40; % in Hz
+PPwidth = 2; % in ms
+PPonset = 100;    % ms, onset time
+PPoffset = Inf;   % ms, offset time
+ap_pulse_num = 22;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+IBPPstim = 0;
+NGPPstim = 0;
+FSPPstim = 0;
+IBPPstim = -5;
+% NGPPstim = -10;
+FSPPstim = -5;
+
+
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
 % compartmental connection strengths
@@ -90,9 +106,9 @@ gGABAbii=.3/Nng;
 gGABAaie=0.1/N;
 gGABAbie=.35/N;
 
-gGABAaff=1.2/Nfs;
+gGABAaff=0.5/Nfs;
 
-gGABAafe=.5/N;
+gGABAafe=1/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -153,10 +169,13 @@ if include_IB
     spec.populations(i).name = 'IBda';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-      'stim',Jd,'onset',0,'V_noise',IBda_Vnoise,'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
+      'PPstim',IBPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,...
+      'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
+      'stim',Jd1,'onset',0,'offset',IB_offset1,'stim2',Jd2,'onset2',IB_onset2,'offset2',Inf,...
+      'V_noise',IBda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
@@ -197,10 +216,11 @@ if include_NG
     spec.populations(i).name = 'NG';
     spec.populations(i).size = Nng;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'stim',Jng1,'onset',0,'offset',100,'stim2',Jng2,'onset2',100,'offset2',Inf,...
+      'PPstim',NGPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,...
+      'stim',Jng1,'onset',0,'offset',50,'stim2',Jng2,'onset2',50,'offset2',Inf,...
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
@@ -208,17 +228,16 @@ if include_NG
       };
 end
 
-
 if include_FS
     i=i+1;
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'stim',Jfs1,'onset',0,'offset',360,'stim2',Jfs2,'onset2',360,'offset2',Inf,...
-      'PPstim',PPstim,'ap_pulse_num',40,...
+      'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,...
+      'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
