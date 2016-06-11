@@ -9,7 +9,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 0;
+include_FS = 1;
 include_NG = 1;
 
 
@@ -31,7 +31,7 @@ Nfs=N;  % Number of FS cells
 Jd=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jng1=1;     % NG current injection; step1   % Do this to remove the first NG pulse
+Jng1=5;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs1=20;     % FS current injection; step1
 Jfs2=1;     % FS current injection; step2
@@ -81,8 +81,8 @@ gGABAafe=0;
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=10/N;
 % 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=10/Nng;
+gAMPAei=1/Nng;      % IBa -> IBdb, 0(.04)
+% gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=.3/Nng;
@@ -90,9 +90,9 @@ gGABAbii=.3/Nng;
 gGABAaie=0.1/N;
 gGABAbie=.35/N;
 
-gGABAaff=1/Nfs;
+gGABAaff=1.2/Nfs;
 
-gGABAafe=1.6/N;
+gGABAafe=.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -217,7 +217,7 @@ if include_FS
     spec.populations(i).mechanism_list = {'iPeriodicPulses','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'stim',Jfs1,'onset',0,'offset',513,'stim2',Jfs2,'onset2',513,'offset2',Inf,...
+      'stim',Jfs1,'onset',0,'offset',360,'stim2',Jfs2,'onset2',360,'offset2',Inf,...
       'PPstim',PPstim,'ap_pulse_num',40,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
