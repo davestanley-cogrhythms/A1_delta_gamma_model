@@ -28,7 +28,7 @@ Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=1; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
@@ -104,7 +104,7 @@ gGABAaii=0.1/Nng;
 gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=.35/N;
+gGABAbie=.5/N;
 
 gGABAaff=0.5/Nfs;
 
@@ -224,7 +224,7 @@ if include_NG
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',20,'E_A',E_EKDR, ...
+      'gA',60,'E_A',E_EKDR, ...
       };
 end
 
