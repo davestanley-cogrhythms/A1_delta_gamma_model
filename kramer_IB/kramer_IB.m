@@ -28,7 +28,7 @@ Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
