@@ -9,7 +9,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 0;
+include_FS = 1;
 include_NG = 1;
 
 
@@ -22,17 +22,17 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=10;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
-Jng1=1;     % NG current injection; step1   % Do this to remove the first NG pulse
+Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 
