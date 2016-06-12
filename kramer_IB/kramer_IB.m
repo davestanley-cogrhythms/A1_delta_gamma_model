@@ -22,13 +22,13 @@ no_noise = 0;
 
 
 % number of cells per population
-N=10;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=1; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=1.5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
 Js=1; % -4.5
 Ja=1;   % -6(-.4)
@@ -36,8 +36,8 @@ Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 
-IB_offset1=95;
-IB_onset2=95;
+IB_offset1=145;
+IB_onset2=145;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -48,16 +48,16 @@ lambda = 1000;
 % Periodic pulse stimulation
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
-PPonset = 100;    % ms, onset time
+PPonset = 150;    % ms, onset time
 PPoffset = Inf;   % ms, offset time
-ap_pulse_num = 22;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_num = 17;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-% IBPPstim = -5;
-% NGPPstim = -10;
-% FSPPstim = -5;
+IBPPstim = -10;
+% NGPPstim = -5;
+FSPPstim = -7;
 
 
 
@@ -94,11 +94,11 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=10/N;
+gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
+gNMDAee=5/N;
 % 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=10/Nng;
+gAMPAei=1/Nng;      % IBa -> IBdb, 0(.04)
+gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=.3/Nng;
@@ -106,9 +106,9 @@ gGABAbii=.3/Nng;
 gGABAaie=0.1/N;
 gGABAbie=.5/N;
 
-gGABAaff=0.5/Nfs;
+gGABAaff=0.4/Nfs;
 
-gGABAafe=1/N;
+gGABAafe=.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -224,7 +224,7 @@ if include_NG
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',60,'E_A',E_EKDR, ...
+      'gA',20,'E_A',E_EKDR, ...
       };
 end
 
