@@ -2,8 +2,8 @@
 %%
 tic
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
-                % 2 - sim study IBdb inject
+sim_mode = 2;   % 1 - normal sim
+                % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IBs inject
                 
                 
@@ -12,9 +12,8 @@ include_IB = 1;
 include_FS = 1;
 include_NG = 1;
 
-
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -22,13 +21,13 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=2;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=1.5; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=-.5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
@@ -156,6 +155,14 @@ if no_noise
 end
 
 IC_V = -65;
+
+
+% % % % % % % % % % % % % % % % Override some defaults
+switch sim_mode
+    case 2
+        include_IB = 1; include_FS = 0; include_NG = 0;
+        gAMPAee=0; gNMDAee=0;
+end
 
 
 % % % % % % % % % % % % %  Populations  % % % % % % % % % % % % %  
@@ -300,29 +307,29 @@ switch sim_mode
         %toc
         PlotData(data,'plot_type','waveform');
         
-        %PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
-        %PlotData(data,'variable','ISYN','plot_type','waveform');
-        %PlotData(data,'variable','iNMDA_s','plot_type','waveform');
-        %PlotData(data,'variable','INMDA','plot_type','waveform');
-        %PlotData(data,'variable','IGABAB','plot_type','waveform');
-        %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
-
-%         figl;
-%         subplot(311); plot(data.IBda_V); title('Apical dendrites');
-%         subplot(312); plot(data.IBs_V); title('Soma');
-%         subplot(313); plot(data.IBa_V); title('Axon');
         
     case 2
         
-        vary = {'FS','PPstim',[0 -3 -6 -9 -12 -15]};
+        vary = {
+            'IB','gCaH',[2 3 4];
+            'IB','gM',[1 2 4];
+            };
+
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         PlotData(data,'plot_type','waveform');
-        PlotData(data,'plot_type','rastergram');
+        PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
+        PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
 
 end
 
-% PlotData(data,'plot_type','waveform');
-
+%PlotData(data,'plot_type','rastergram');
+%PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+%PlotData(data,'variable','ISYN','plot_type','waveform');
+%PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+%PlotData(data,'variable','INMDA','plot_type','waveform');
+%PlotData(data,'variable','IGABAB','plot_type','waveform');
+%PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
+%PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
 
 toc
 
