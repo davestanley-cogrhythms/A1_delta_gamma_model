@@ -8,9 +8,9 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_FS = 0;
-include_NG = 1;
+include_IB = 1;
+include_FS = 1;
+include_NG = 0;
 
 
 % simulation controls
@@ -109,7 +109,7 @@ gGABAbie=.35/N;
 
 gGABAaff=0.4/Nfs;
 
-gGABAafe=.5/N;
+gGABAafe=1.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
