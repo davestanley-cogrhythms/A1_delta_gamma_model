@@ -8,13 +8,13 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_FS = 1;
+include_IB = 0;
+include_FS = 0;
 include_NG = 1;
 
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -52,21 +52,22 @@ PPonset = 150;    % ms, onset time
 PPoffset = Inf;   % ms, offset time
 ap_pulse_num = 17;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+% ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -10;
-% NGPPstim = -5;
-FSPPstim = -7;
+IBPPstim = -15;
+NGPPstim = -10;
+FSPPstim = -5;
 
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
 % compartmental connection strengths
-gsd=.2;     % IBs -> IBda,IBdb
+gsd=.4;     % IBs -> IBda,IBdb
 gds=.4;     % IBda,IBdb -> IBs
-gas=.3;     % IBa -> IBs
-gsa=.3;     % IBs -> IBa
+gas=.4;     % IBa -> IBs
+gsa=.4;     % IBs -> IBa
 
 % Gap junction connection
 ggja=0;
@@ -104,7 +105,7 @@ gGABAaii=0.1/Nng;
 gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=.5/N;
+gGABAbie=.35/N;
 
 gGABAaff=0.4/Nfs;
 
