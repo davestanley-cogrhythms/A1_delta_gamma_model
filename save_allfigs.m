@@ -6,7 +6,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     currfname = 'kramer_IB'; 
-    currfigname = '39b_IB_delta';
+    currfigname = '39d_IB_gamma2';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -15,7 +15,7 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[4:9]
+    for i=[1:3]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -28,7 +28,8 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     %%
-    mycomment = ['Tested IB cells when firing at delta. Plotted M and NMDA state variables (Fig.). Also showed state variables for isolated IB cells (Fig. 4,5).'];
+    mycomment = ['Tested IB cells again when firing at gamma. Found that cells
+        can be permanently locked in gamma after initial burst'];
     currd = pwd;
     cd ..
     system('git add *');

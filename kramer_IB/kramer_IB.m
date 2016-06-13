@@ -9,8 +9,8 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 0;
-include_NG = 1;
+include_FS = 1;
+include_NG = 0;
 
 
 % simulation controls
@@ -36,8 +36,8 @@ Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 
-IB_offset1=145;
-IB_onset2=145;
+IB_offset1=245;
+IB_onset2=245;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -48,17 +48,17 @@ lambda = 1000;
 % Periodic pulse stimulation
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
-PPonset = 150;    % ms, onset time
+PPonset = 250;    % ms, onset time
 PPoffset = Inf;   % ms, offset time
 ap_pulse_num = 17;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-% ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-% IBPPstim = -15;
+IBPPstim = -15;
 % NGPPstim = -10;
-% FSPPstim = -5;
+FSPPstim = -5;
 
 
 
@@ -109,7 +109,7 @@ gGABAbie=.35/N;
 
 gGABAaff=0.4/Nfs;
 
-gGABAafe=1.5/N;
+gGABAafe=.75/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
