@@ -310,15 +310,24 @@ switch sim_mode
         
     case 2
         
+        servermode=1;
+        
         vary = {
             'IB','gCaH',[2 3 4];
             'IB','gM',[1 2 4];
             };
-
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
-        PlotData(data,'plot_type','waveform');
-        PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
-        PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+        if servermode==0
+            data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+            PlotData(data,'plot_type','waveform');
+            PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
+            PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+        else
+            data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0, ...
+                'save_data_flag',1,'study_dir','demo_cluster_2', ...
+                'random_seed',1,'compile_flag',1,'vary',vary, ...
+                'cluster_flag',1,'verbose_flag',1,...
+                'plot_functions',@PlotData);
+        end
 
 end
 
