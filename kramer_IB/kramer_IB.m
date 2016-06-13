@@ -271,11 +271,11 @@ if include_IB
     spec.connections(i).direction = 'IBa->IBa';
     spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
-    i=i+1;
 end
 
 % % IB->NG
 if include_IB && include_NG
+    i=i+1;
     spec.connections(i).direction = 'IBa->NG';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
