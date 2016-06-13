@@ -29,9 +29,7 @@ Nfs=N;  % Number of FS cells
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
 Jd1=1.5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jd2=-1; % apical: 23.5(25.5), basal: 23.5(42.5)
-Js=1; % -4.5
-Ja=1;   % -6(-.4)
+Jd2=-.5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
@@ -56,9 +54,9 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -15;
+% IBPPstim = -15;
 % NGPPstim = -1.2;
-FSPPstim = -5;
+% FSPPstim = -5;
 
 
 
@@ -167,7 +165,7 @@ i=0;
 
 if include_IB
     i=i+1;
-    spec.populations(i).name = 'IBda';
+    spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
@@ -182,34 +180,6 @@ if include_IB
       'gM',2,'E_M',E_EKDR,...
       'gCaH',2,'E_CaH',ECa,...
       };
-
-    i=i+1;
-    spec.populations(i).name = 'IBs';
-    spec.populations(i).size = N;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
-    spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-      'stim',Js,'onset',0,'V_noise',IBs_Vnoise,...
-      'gNaF',100,'E_NaF',ENa,...
-      'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',0,'E_M',E_EKDR,...
-      'gCaH',0,'E_CaH',ECa,...
-      };
-
-    i=i+1;
-    spec.populations(i).name = 'IBa';
-    spec.populations(i).size = N;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBleak'};
-    spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
-      'stim',Ja,'onset',0,'V_noise',IBa_Vnoise,...
-      'gNaF',100,'E_NaF',ENa,...
-      'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',2,'E_M',E_EKDR,...
-      };
-
 end
 
 if include_NG
@@ -252,43 +222,24 @@ i=0;
 
 % % IB->IB intracompartmental connections
 if include_IB
-    i=i+1;
-    spec.connections(i).direction = 'IBda->IBs';
-    spec.connections(i).mechanism_list = {'IBiCOM'};
-    spec.connections(i).parameters = {'g_COM',gds,'comspan',.5};
-    i=i+1;
-    spec.connections(i).direction = 'IBs->IBda';
-    spec.connections(i).mechanism_list = {'IBiCOM'};
-    spec.connections(i).parameters = {'g_COM',gsd,'comspan',.5};
-    i=i+1;
-    spec.connections(i).direction = 'IBs->IBa';
-    spec.connections(i).mechanism_list = {'IBiCOM'};
-    spec.connections(i).parameters = {'g_COM',gsa,'comspan',.5};
-    i=i+1;
-    spec.connections(i).direction = 'IBa->IBs';
-    spec.connections(i).mechanism_list = {'IBiCOM'};
-    spec.connections(i).parameters = {'g_COM',gas,'comspan',.5};
 end
 
 
 % % IB->IB recurrent synaptic and gap connections
 if include_IB
     i=i+1;
-    spec.connections(i).direction = 'IBa->IBda';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).direction = 'IB->IB';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_SYN',gAMPAee,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'g_GAP',ggja,...
         };
-    i=i+1;
-    spec.connections(i).direction = 'IBa->IBa';
-    spec.connections(i).mechanism_list = {'IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_GAP',ggja,'fanout',inf};
 end
 
 % % IB->NG
 if include_IB && include_NG
     i=i+1;
-    spec.connections(i).direction = 'IBa->NG';
+    spec.connections(i).direction = 'IB->NG';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPAei,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         'gNMDA',gNMDAei,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
@@ -309,7 +260,7 @@ end
 % % NG->IB Synaptic connections
 if include_NG && include_IB
     i=i+1;
-    spec.connections(i).direction = 'NG->IBda';                   % GABA_A
+    spec.connections(i).direction = 'NG->IB';                   % GABA_A
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
     spec.connections(i).parameters = {'g_SYN',gGABAaie,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         'gGABAB',gGABAbie,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
@@ -330,7 +281,7 @@ end
 % % FS->IB Synaptic connections
 if include_FS && include_IB
     i=i+1;
-    spec.connections(i).direction = 'FS->IBda';                   % GABA_A
+    spec.connections(i).direction = 'FS->IB';                   % GABA_A
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gGABAafe,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
@@ -367,14 +318,6 @@ switch sim_mode
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         PlotData(data,'plot_type','waveform');
         PlotData(data,'plot_type','rastergram');
-        
-    case 3
-        vary = {'IBs','stim',[4 -1 -6 -11 -16]};
-        tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
-        toc
-        PlotData(data,'plot_type','waveform');
-        %PlotData(data,'plot_type','rastergram');
 
 end
 
