@@ -8,13 +8,13 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_FS = 0;
+include_IB = 1;
+include_FS = 1;
 include_NG = 1;
 
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -57,17 +57,17 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 IBPPstim = -15;
-NGPPstim = -1.2;
+% NGPPstim = -1.2;
 FSPPstim = -5;
 
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
 % compartmental connection strengths
-gsd=.4;     % IBs -> IBda,IBdb
+gsd=.2;     % IBs -> IBda,IBdb
 gds=.4;     % IBda,IBdb -> IBs
-gas=.4;     % IBa -> IBs
-gsa=.4;     % IBs -> IBa
+gas=.3;     % IBa -> IBs
+gsa=.3;     % IBs -> IBa
 
 % Gap junction connection
 ggja=0;
@@ -95,21 +95,21 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=.5/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=5/N;
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gNMDAee=10/N;
 % 
-gAMPAei=.5/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=5/Nng;
+gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
+gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
-% gGABAbii=.3/Nng;
+gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
 gGABAbie=.35/N;
 
 gGABAaff=0.4/Nfs;
 
-gGABAafe=.75/N;
+gGABAafe=.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -225,7 +225,7 @@ if include_NG
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',20,'E_A',E_EKDR, ...
+      'gA',60,'E_A',E_EKDR, ...
       };
 end
 
@@ -354,8 +354,6 @@ switch sim_mode
         %PlotData(data,'variable','iNMDA_s','plot_type','waveform');
         %PlotData(data,'variable','INMDA','plot_type','waveform');
         %PlotData(data,'variable','IGABAB','plot_type','waveform');
-        %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
-        %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
         %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
 
 %         figl;
