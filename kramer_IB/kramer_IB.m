@@ -57,7 +57,7 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 IBPPstim = -15;
-NGPPstim = -3;
+NGPPstim = -1.2;
 FSPPstim = -5;
 
 
@@ -225,7 +225,7 @@ if include_NG
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',60,'E_A',E_EKDR, ...
+      'gA',20,'E_A',E_EKDR, ...
       };
 end
 
