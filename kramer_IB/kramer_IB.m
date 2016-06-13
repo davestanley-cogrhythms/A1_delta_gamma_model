@@ -2,9 +2,9 @@
 %%
 tic
 % Simulation mode
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 3;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
-                % 3 - sim study IBs inject
+                % 3 - sim study IB disconnected; current injection
                 
                 
 % Cells to include in model
@@ -159,7 +159,7 @@ IC_V = -65;
 
 % % % % % % % % % % % % % % % % Override some defaults
 switch sim_mode
-    case 2
+    case {2,3}
         include_IB = 1; include_FS = 0; include_NG = 0;
         gAMPAee=0; gNMDAee=0;
 end
@@ -308,13 +308,18 @@ switch sim_mode
         PlotData(data,'plot_type','waveform');
         
         
-    case 2
-        
-        vary = {
+
+    case {2,3}
+        if sim_mode == 2
+            vary = {
             'IB','gCaH',[1 1.5 2];
             'IB','gM',[1 2 4];
             };
-
+        elseif sim_mode == 3
+            vary = {
+            'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5];
+            };
+        end
         data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         PlotData(data,'plot_type','waveform');
         PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
