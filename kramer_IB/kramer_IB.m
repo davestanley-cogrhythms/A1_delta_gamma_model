@@ -9,8 +9,8 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 1;
-include_NG = 0;
+include_FS = 0;
+include_NG = 1;
 
 
 % simulation controls
@@ -56,9 +56,9 @@ ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no ape
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -15;
-NGPPstim = -10;
-FSPPstim = -5;
+% IBPPstim = -15;
+% NGPPstim = -10;
+% FSPPstim = -5;
 
 
 
@@ -95,10 +95,10 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=.5/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
-gAMPAei=1/Nng;      % IBa -> IBdb, 0(.04)
+gAMPAei=.5/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
