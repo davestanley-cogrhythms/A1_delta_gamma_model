@@ -8,9 +8,9 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_FS = 1;
-include_NG = 0;
+include_IB = 0;
+include_FS = 0;
+include_NG = 1;
 
 
 % simulation controls
@@ -57,7 +57,7 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 IBPPstim = -15;
-% NGPPstim = -10;
+NGPPstim = -3;
 FSPPstim = -5;
 
 
@@ -102,7 +102,7 @@ gAMPAei=.5/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.3/Nng;
+% gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
 gGABAbie=.35/N;
@@ -225,7 +225,7 @@ if include_NG
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',20,'E_A',E_EKDR, ...
+      'gA',60,'E_A',E_EKDR, ...
       };
 end
 
@@ -354,6 +354,8 @@ switch sim_mode
         %PlotData(data,'variable','iNMDA_s','plot_type','waveform');
         %PlotData(data,'variable','INMDA','plot_type','waveform');
         %PlotData(data,'variable','IGABAB','plot_type','waveform');
+        %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
+        %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
         %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
 
 %         figl;
