@@ -2,9 +2,10 @@
 %%
 tic
 % Simulation mode
-sim_mode = 3;   % 1 - normal sim
+sim_mode = 4;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
+                % 4 - sim study IB connected; vary AMPA, NMDA injection
                 
                 
 % Cells to include in model
@@ -13,7 +14,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -21,7 +22,7 @@ no_noise = 0;
 
 
 % number of cells per population
-N=2;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
@@ -92,8 +93,8 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=10/N;
+gAMPAee=0.5/N;      % IBa -> IBdb, 0(.04)
+gNMDAee=1/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=10/Nng;
@@ -162,6 +163,8 @@ switch sim_mode
     case {2,3}
         include_IB = 1; include_FS = 0; include_NG = 0;
         gAMPAee=0; gNMDAee=0;
+    case 4
+        include_IB = 1; include_FS = 0; include_NG = 0;
 end
 
 
@@ -296,36 +299,38 @@ end
 
 
 
-
+% % % % % % % % % % % %  Set up vary  % % % % % % % % % % % % % 
 switch sim_mode
-
     case 1
-        % DynaSim code
-        % data=SimulateModel(spec);
-        %tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
-        %toc
-        PlotData(data,'plot_type','waveform');
-        
-        
-
-    case {2,3}
-        if sim_mode == 2
-            vary = {
-            'IB','gCaH',[1 1.5 2];
-            'IB','gM',[1 2 4];
-            };
-        elseif sim_mode == 3
-            vary = {
-            'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5];
-            };
-        end
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
-        PlotData(data,'plot_type','waveform');
-        PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
-        PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
-
+        vary = [];
+    case 2
+        vary = { 'IB','gCaH',[1 1.5 2];
+                 'IB','gM',[1 2 4]};
+    case 3
+        vary = { 'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5]};
+    case 4
+        vary = { 'IB->IB','g_SYN',[0, 0.1, 0.5 1]/N;            % AMPA conductance
+                 'IB->IB','gNMDA',[0 1 5]/N};                   % NMDA conductance
 end
+
+
+% % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+
+
+% % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
+switch sim_mode
+    case 1
+        PlotData(data,'plot_type','waveform');
+    case {2,3}
+        PlotData(data,'plot_type','waveform');
+        PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+        PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+    otherwise
+        PlotData(data,'plot_type','waveform');
+end
+
+
 
 %PlotData(data,'plot_type','rastergram');
 %PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
