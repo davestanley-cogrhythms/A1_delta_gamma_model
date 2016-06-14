@@ -2,10 +2,11 @@
 %%
 tic
 % Simulation mode
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 5;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
+                % 5 - sim study IB connected; gamma input
                 
                 
 % Cells to include in model
@@ -14,7 +15,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -38,7 +39,7 @@ IB_offset1=245;
 IB_onset2=245;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.005;
+gRAN=.015;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
@@ -54,9 +55,9 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-% IBPPstim = -15;
-% NGPPstim = -1.2;
-% FSPPstim = -5;
+IBPPstim = -15;
+NGPPstim = -1.2;
+FSPPstim = -5;
 
 
 
@@ -93,8 +94,8 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.5/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=1/N;
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=10/Nng;
@@ -163,9 +164,14 @@ switch sim_mode
     case {2,3}
         include_IB = 1; include_FS = 0; include_NG = 0;
         gAMPAee=0; gNMDAee=0;
+        IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
         N=2;
     case 4
         include_IB = 1; include_FS = 0; include_NG = 0;
+        IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
+    case 5
+        include_IB = 1; include_FS = 1; include_NG = 0;
+        IBPPstim = 0; NGPPstim = 0; FSPPstim = -5;
 end
 
 
@@ -312,6 +318,9 @@ switch sim_mode
     case 4
         vary = { 'IB->IB','g_SYN',[0, 0.1, 0.5 1]/N;            % AMPA conductance
                  'IB->IB','gNMDA',[0 1 5]/N};                   % NMDA conductance
+     case 5
+        vary = { 'IB','PPstim',[0, -2 -5 -10 -15];               % IBPPstim
+                 'FS->IB','g_SYN',[0.5 .65 .85 1 ]/N};         % gGABAafe
 end
 
 
