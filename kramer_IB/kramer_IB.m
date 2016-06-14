@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 5;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -14,7 +14,7 @@ sim_mode = 5;   % 1 - normal sim
 % Cells to include in model
 include_IB = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 
 % simulation controls
 tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -50,16 +50,16 @@ lambda = 1000;
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
-PPoffset = Inf;   % ms, offset time
+PPoffset = 850;   % ms, offset time
 %PPoffset=270;   % ms, offset time
 ap_pulse_num = 17;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+% ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -15;
-% NGPPstim = -1.2;
+IBPPstim = -10;
+NGPPstim = -1.2;
 FSPPstim = -5;
 
 
@@ -97,11 +97,11 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=4/N;
+gAMPAee=0.2/N;      % IBa -> IBdb, 0(.04)
+gNMDAee=5/N;
 % 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=10/Nng;
+gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
+% gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=.3/Nng;
@@ -111,7 +111,7 @@ gGABAbie=.35/N;
 
 gGABAaff=0.3/Nfs;
 
-gGABAafe=.5/N;
+gGABAafe=.7/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -129,7 +129,7 @@ tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
 tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
 EAMPA=0;
 EGABA=-95;
-TmaxGABAB=0.5;
+TmaxGABAB=0.2;
 
 
 
@@ -233,7 +233,7 @@ if include_IB
       'V_noise',IBda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',3,'E_M',E_EKDR,...
+      'gM',2,'E_M',E_EKDR,...
       'gCaH',2,'E_CaH',ECa,...
       };
 end
@@ -251,7 +251,7 @@ if include_NG
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',60,'E_A',E_EKDR, ...
+      'gA',20,'E_A',E_EKDR, ...
       };
 end
 
