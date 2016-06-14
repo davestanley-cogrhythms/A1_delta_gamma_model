@@ -2,7 +2,7 @@
 %%
 tic
 % Simulation mode
-sim_mode = 4;   % 1 - normal sim
+sim_mode = 2;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -38,7 +38,7 @@ IB_offset1=245;
 IB_onset2=245;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.015;
+gRAN=.005;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
@@ -163,6 +163,7 @@ switch sim_mode
     case {2,3}
         include_IB = 1; include_FS = 0; include_NG = 0;
         gAMPAee=0; gNMDAee=0;
+        N=2;
     case 4
         include_IB = 1; include_FS = 0; include_NG = 0;
 end
@@ -304,8 +305,8 @@ switch sim_mode
     case 1
         vary = [];
     case 2
-        vary = { 'IB','gCaH',[1 1.5 2];
-                 'IB','gM',[1 2 4]};
+        vary = { 'IB','gCaH',[.5 1 1.5 2];
+                 'IB','gM',[.5 1 2 4]};
     case 3
         vary = { 'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5]};
     case 4
