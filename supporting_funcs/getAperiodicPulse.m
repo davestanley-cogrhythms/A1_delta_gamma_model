@@ -19,9 +19,6 @@ s = zeros(size(t));
 pulse_period=1000/freq;
 s(1:round(pulse_period/dt):end) = 1;    % Add deltas
 
-% Remove anything outside of onset to offset
-s(t<onset | t>offset) = 0;
-
 % Set aperiodic pulse
 if ap_pulse_num > 0
     ap_ind_orig = 1+round(pulse_period/dt)*(ap_pulse_num-1);    % Index of the aperiodic pulse in the time series.
@@ -31,6 +28,8 @@ if ap_pulse_num > 0
     s(ap_ind_new) = 1;                  % Create pulse at the delayed location
 end
 
+% Remove anything outside of onset to offset
+s(t<onset | t>offset) = 0;
 
 % Build kernel
 kernel_length=4*width;                      % Length of kernel time series
