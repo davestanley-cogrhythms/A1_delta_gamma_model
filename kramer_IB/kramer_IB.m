@@ -97,8 +97,8 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAee=5/N;
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=10/Nng;
@@ -192,7 +192,7 @@ switch sim_mode
         include_IB = 1; include_FS = 1; include_NG = 0;
         FSPPstim = -5;
         
-        vary_mode = 2;
+        vary_mode = 3;
         switch vary_mode
             case 1
                 vary = { 'IB','PPstim',[0, -2 -5 -10 -15];     % IBPPstim
@@ -200,6 +200,9 @@ switch sim_mode
             case 2
                 vary = { 'IB->IB','g_SYN',[.5 1 2 5]/N;     % gAMPAee
                          'FS->IB','g_SYN',[.3 .5 .6, 1]/N}; % gGABAafe
+             case 3
+                vary = { 'IB->IB','gNMDA',[1 2 3]/N;               % IBPPstim
+                         'FS->IB','g_SYN',[.3 .5 .6]/N};         % gGABAafe
         end
     case 6                                                                  % IB cell with single gamma pulse
         include_IB = 1; include_FS = 1; include_NG = 0;
