@@ -98,7 +98,7 @@ gGABAafe=0;
 
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAee=5/N;
+gNMDAee=4/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=10/Nng;
@@ -198,8 +198,11 @@ switch sim_mode
                 vary = { 'IB','PPstim',[0, -2 -5 -10 -15];     % IBPPstim
                          'FS->IB','g_SYN',[0.5 .65 .85 1 ]/N}; % gGABAafe
             case 2
-                vary = { 'IB->IB','g_SYN',[.5 1 2 5]/N;     % gAMPAee
-                         'FS->IB','g_SYN',[.3 .5 .6, 1]/N}; % gGABAafe
+                vary = { 'IB->IB','g_SYN',[.2 .5 .3]/N;     % gAMPAee
+                         'FS->IB','g_SYN',[.8 1 1.3 1.5]/N}; % gGABAafe
+                     
+                 vary = { 'IB->IB','g_SYN',[.5 ]/N;     % gAMPAee
+                         'FS->IB','g_SYN',[.8]/N}; % gGABAafe
              case 3
                 vary = { 'IB->IB','gNMDA',[1 2 3]/N;               % IBPPstim
                          'FS->IB','g_SYN',[.3 .5 .6]/N};         % gGABAafe
@@ -230,7 +233,7 @@ if include_IB
       'V_noise',IBda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',2,'E_M',E_EKDR,...
+      'gM',3,'E_M',E_EKDR,...
       'gCaH',2,'E_CaH',ECa,...
       };
 end
