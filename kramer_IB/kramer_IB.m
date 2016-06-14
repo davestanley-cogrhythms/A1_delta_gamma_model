@@ -54,11 +54,11 @@ PPoffset = 850;   % ms, offset time
 %PPoffset=270;   % ms, offset time
 ap_pulse_num = 17;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-% ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -10;
+IBPPstim = -5;
 NGPPstim = -1.2;
 FSPPstim = -5;
 
@@ -97,7 +97,7 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.2/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
@@ -111,7 +111,7 @@ gGABAbie=.35/N;
 
 gGABAaff=0.3/Nfs;
 
-gGABAafe=.7/N;
+gGABAafe=.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
