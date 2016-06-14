@@ -2,11 +2,12 @@
 %%
 tic
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 6;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
                 % 5 - sim study IB connected; gamma input
+                % 6 - sim study gamma input; vary IB NMDA
                 
                 
 % Cells to include in model
@@ -169,9 +170,10 @@ switch sim_mode
     case 4
         include_IB = 1; include_FS = 0; include_NG = 0;
         IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
-    case 5
+    case {5,6}
         include_IB = 1; include_FS = 1; include_NG = 0;
         FSPPstim = -5;
+        
 end
 
 
@@ -321,6 +323,9 @@ switch sim_mode
      case 5
         vary = { 'IB','PPstim',[0, -2 -5 -10 -15];               % IBPPstim
                  'FS->IB','g_SYN',[0.5 .65 .85 1 ]/N};         % gGABAafe
+     case 6
+        vary = { 'IB->IB','gNMDA',[1 2 3]/N;               % IBPPstim
+                 'FS->IB','g_SYN',[.3 .5 .6]/N};         % gGABAafe
 end
 
 
@@ -336,6 +341,9 @@ switch sim_mode
         PlotData(data,'plot_type','waveform');
         PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
         PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+        
+    case {5,6}
+        PlotData(data,'plot_type','waveform','variable','IB_V');
     otherwise
         PlotData(data,'plot_type','waveform');
 end
