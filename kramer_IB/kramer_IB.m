@@ -2,7 +2,7 @@
 %%
 tic
 % Simulation mode
-sim_mode = 5;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -12,7 +12,7 @@ sim_mode = 5;   % 1 - normal sim
 % Cells to include in model
 include_IB = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 
 % simulation controls
 tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -55,7 +55,7 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -15;
+IBPPstim = -5;
 NGPPstim = -1.2;
 FSPPstim = -5;
 
@@ -106,7 +106,7 @@ gGABAbii=.3/Nng;
 gGABAaie=0.1/N;
 gGABAbie=.35/N;
 
-gGABAaff=0.4/Nfs;
+gGABAaff=0.3/Nfs;
 
 gGABAafe=.5/N;
 
@@ -171,7 +171,7 @@ switch sim_mode
         IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
     case 5
         include_IB = 1; include_FS = 1; include_NG = 0;
-        IBPPstim = 0; NGPPstim = 0; FSPPstim = -5;
+        FSPPstim = -5;
 end
 
 
