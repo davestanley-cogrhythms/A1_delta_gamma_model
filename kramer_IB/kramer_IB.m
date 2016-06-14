@@ -58,7 +58,7 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -5;
+IBPPstim = -15;
 % NGPPstim = -1.2;
 FSPPstim = -5;
 
@@ -98,7 +98,7 @@ gGABAafe=0;
 
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=5/N;
+% gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=10/Nng;
@@ -192,7 +192,7 @@ switch sim_mode
         include_IB = 1; include_FS = 1; include_NG = 0;
         FSPPstim = -5;
         
-        vary_mode = 3;
+        vary_mode = 2;
         switch vary_mode
             case 1
                 vary = { 'IB','PPstim',[0, -2 -5 -10 -15];     % IBPPstim
