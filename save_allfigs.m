@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '44j_s5v1_gamma_redo';
+    currfigname = '44k_kr_44i_too_weak';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -16,8 +16,8 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    multiplot_on = 1;
-    for i=[2]
+    multiplot_on = 0;
+    for i=[1:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -37,7 +37,7 @@ function save_allfigs(currfname,currfigname)
         print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['Got everything working. Its better if IBPPstim is weaker and IB cells dont fire. IB doublet messes up AP pulse.'];
+    mycomment = ['doesnt work.'];
     currd = pwd;
     cd ..
     system('git add *');

@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 5;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -18,7 +18,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -59,8 +59,8 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -2;
-% NGPPstim = -5;
+IBPPstim = -3;
+NGPPstim = -5;
 FSPPstim = -5;
 
 % Steps for tuning
@@ -116,14 +116,14 @@ gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.3/Nng;
+gGABAbii=.1/Nng;
 % % 
 gGABAaie=0.1/N;
 gGABAbie=0.35/N;
 
 gGABAaff=0.5/Nfs;
 
-gGABAafe=.5/N;
+gGABAafe=.25/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
