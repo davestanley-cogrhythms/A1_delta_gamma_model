@@ -2,15 +2,15 @@
 %%
 tic
 % Simulation mode
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IBs inject
                 
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 1;
-include_NG = 1;
+include_FS = 0;
+include_NG = 0;
 
 % simulation controls
 tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -310,14 +310,14 @@ switch sim_mode
         
     case 2
         
-        servermode=1;
+        servermode=0;
         
         vary = {
-            'IB','gCaH',[2 3 4];
-            'IB','gM',[1 2 4];
+            'IB','gCaH',[2 3];
+            'IB','gM',[1 2];
             };
         if servermode==0
-            data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+            data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',1);
             PlotData(data,'plot_type','waveform');
             PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
             PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
@@ -325,7 +325,7 @@ switch sim_mode
             data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0, ...
                 'save_data_flag',1,'study_dir','demo_cluster_2', ...
                 'random_seed',1,'compile_flag',1,'vary',vary, ...
-                'cluster_flag',1,'verbose_flag',1,...
+                'cluster_flag',0,'verbose_flag',1,...
                 'plot_functions',@PlotData);
         end
 
