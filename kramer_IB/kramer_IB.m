@@ -13,9 +13,9 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 
 % simulation controls
 tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -85,6 +85,7 @@ gsa=.3;     % IBs -> IBa
 % Gap junction connection
 ggja=0;
 ggja=.2/N;  % IBa -> IBa
+ggjFS=.2/Nfs;  % IBa -> IBa
 
 % Synapse heterogenity
 gsyn_hetero = 0;
@@ -120,7 +121,7 @@ gGABAbii=.3/Nng;
 gGABAaie=0.1/N;
 gGABAbie=0.35/N;
 
-gGABAaff=0.4/Nfs;
+gGABAaff=0.5/Nfs;
 
 gGABAafe=.5/N;
 
@@ -344,8 +345,9 @@ end
 if include_FS
     i=i+1;
     spec.connections(i).direction = 'FS->FS';                   % GABA_A
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_SYN',gGABAaff,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'g_GAP',ggjFS,...
         };
 end
 
