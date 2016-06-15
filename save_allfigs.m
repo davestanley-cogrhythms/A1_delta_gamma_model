@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '44g_s5v1_gamma';
+    currfigname = '44h_addNGgamma';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -16,13 +16,13 @@ function save_allfigs(currfname,currfigname)
     basepath = '.';
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
-    for i=[2:3]
+    for i=[1:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
         %xlim([-1.5 2.2]);
         %ylabel('Avg z-score |\Delta FFC|')
-%         set(gcf,'Position',[0.1076    0.4544    0.7243    0.3811]);
+        set(gcf,'Position',[0.1076    0.4544    0.7243    0.3811]);
         set(gcf,'PaperPositionMode','auto');
 %         print(gcf,'-dpng','-r200',fullfile(basepath,sp,savenames{i}))
         print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
@@ -31,7 +31,7 @@ function save_allfigs(currfname,currfigname)
         %close
     end
     %%
-    mycomment = ['Varied gamma inputs to IB cells only; see how perturbed delta.'];
+    mycomment = ['For suppressed_but_noAP set NGPPstim = -5; too much GABA B for AP. Lowered NGPPstim to -1.5 for the other; not enough suppression.'];
     currd = pwd;
     cd ..
     system('git add *');

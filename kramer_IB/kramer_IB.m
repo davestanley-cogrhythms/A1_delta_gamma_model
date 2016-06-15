@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 5;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -18,7 +18,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -60,7 +60,7 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 IBPPstim = -5;
-% NGPPstim = -5;
+NGPPstim = -1.5;
 FSPPstim = -5;
 
 % Steps for tuning
@@ -208,6 +208,9 @@ switch sim_mode
             case 1
                 vary = { 'IB','PPstim',[-1 -2 -5 -7];     % IBPPstim
                          'FS->IB','g_SYN',[.1 .2 .5 .7 1]/N}; % gGABAafe
+                     
+                 vary = { 'IB','PPstim',[-5 ];     % IBPPstim
+                         'FS->IB','g_SYN',[.5 ]/N}; % gGABAafe
             case 2
                 vary = { 'IB->IB','g_SYN',[.2 .5 .3]/N;     % gAMPAee
                          'FS->IB','g_SYN',[.8 1 1.3 1.5]/N}; % gGABAafe
