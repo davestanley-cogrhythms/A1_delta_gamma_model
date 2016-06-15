@@ -17,7 +17,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -50,7 +50,7 @@ lambda = 1000;
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
-PPoffset = 850;   % ms, offset time
+PPoffset = 1850;   % ms, offset time
 %PPoffset=270;   % ms, offset time
 ap_pulse_num = 17;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
@@ -58,10 +58,20 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -5;
-NGPPstim = -1.2;
-FSPPstim = -5;
+% IBPPstim = -10;
+% NGPPstim = -5;
+% FSPPstim = -5;
 
+% Steps for tuning
+%     1) Get delta oscillation
+%     2) Get delta oscillation with NG firing at gamma. This NG gamma
+%     should start after GABA B has decayed a bit. The later the
+%     better, since this will cause GABA B to decay faster. It's okay if
+%     the IB cells still start bursting.
+%     3) Add FS inputs. This will provide the remainder of the inhibition
+%     that stops the IB cells from bursting again. It's okay to put in too
+%     much so that it interrupts the first IB burst.
+% 
 
 
 % % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
@@ -97,19 +107,19 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.2/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.3/Nng;
+gGABAbii=.2/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=.35/N;
+gGABAbie=0.55/N;
 
-gGABAaff=0.3/Nfs;
+gGABAaff=0.4/Nfs;
 
 gGABAafe=.5/N;
 
