@@ -223,7 +223,8 @@ switch sim_mode
         include_IB = 0; include_FS = 0; include_NG = 1;
         vary = { 'NG','PPstim',[-2 -3.5 -5 -6.5 -8]; % AMPA conductance
                  'NG->NG','g_SYN',[.1 .3 .6 1 2]/Nng};        % NMDA conductance
-             
+        vary = { 'NG','PPstim',[-3.5 -5 ]; % AMPA conductance
+                 'NG->NG','g_SYN',[.3 .6 ]/Nng};        % NMDA conductance
 %          vary = [];
     
         

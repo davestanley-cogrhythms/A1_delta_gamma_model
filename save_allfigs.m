@@ -5,9 +5,9 @@ function save_allfigs(currfname,currfigname)
     % % For loop for saving figs
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
-    clear all       % Clear memory for large data sets before saving figs.
+    %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '44b_NG_gamma_vs_GABAB';
+    currfigname = '44c_NG_gamma_vs_GABAB';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -24,13 +24,14 @@ function save_allfigs(currfname,currfigname)
         %ylabel('Avg z-score |\Delta FFC|')
         %set(gcf,'Position',[0.1076    0.4544    0.7243    0.3811]);
 %         set(gcf,'PaperPositionMode','auto');
-        print(gcf,'-dpng','-r200',fullfile(basepath,sp,savenames{i}))
+%         print(gcf,'-dpng','-r200',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
+          print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
         %close
     end
     %%
-    mycomment = ['Measured NG response to gamma vs GABA B strength.'];
+    mycomment = ['As before, simplified  (fewer parameters).'];
     currd = pwd;
     cd ..
     system('git add *');
