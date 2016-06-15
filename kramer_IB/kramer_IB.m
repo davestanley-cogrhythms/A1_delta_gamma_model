@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 7;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -13,8 +13,8 @@ sim_mode = 7;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_FS = 0;
+include_IB = 1;
+include_FS = 1;
 include_NG = 1;
 
 % simulation controls
@@ -60,7 +60,7 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -10;
-NGPPstim = -5;
+% NGPPstim = -5;
 % FSPPstim = -5;
 
 % Steps for tuning
@@ -118,7 +118,7 @@ gGABAaii=0.1/Nng;
 gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.55/N;
+gGABAbie=0.35/N;
 
 gGABAaff=0.4/Nfs;
 
