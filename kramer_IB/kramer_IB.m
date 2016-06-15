@@ -3,17 +3,18 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 7;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
                 % 5 - sim study IB connected; gamma input
-                % 6 - sim study gamma input; vary IB NMDA
+                % 6 - sim study IB connected; single pulse
+                % 7 - sim study NG; gamma input
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_FS = 1;
+include_IB = 0;
+include_FS = 0;
 include_NG = 1;
 
 % simulation controls
@@ -59,7 +60,7 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -10;
-% NGPPstim = -5;
+NGPPstim = -5;
 % FSPPstim = -5;
 
 % Steps for tuning
@@ -114,7 +115,7 @@ gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.2/Nng;
+gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
 gGABAbie=0.55/N;
@@ -139,7 +140,7 @@ tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
 tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
 EAMPA=0;
 EGABA=-95;
-TmaxGABAB=0.2;
+TmaxGABAB=0.5;
 
 
 
@@ -198,9 +199,8 @@ switch sim_mode
         vary = { 'IB->IB','g_SYN',[0, 0.1, 0.5 1]/N; % AMPA conductance
                  'IB->IB','gNMDA',[0 1 5]/N};        % NMDA conductance
         
-    case 5                                                                  % IB cell with gamma input train
+    case 5                                                                  % IB and FS cells
         include_IB = 1; include_FS = 1; include_NG = 0;
-        FSPPstim = -5;
         
         vary_mode = 2;
         switch vary_mode
@@ -210,9 +210,6 @@ switch sim_mode
             case 2
                 vary = { 'IB->IB','g_SYN',[.2 .5 .3]/N;     % gAMPAee
                          'FS->IB','g_SYN',[.8 1 1.3 1.5]/N}; % gGABAafe
-                     
-                 vary = { 'IB->IB','g_SYN',[.5 ]/N;     % gAMPAee
-                         'FS->IB','g_SYN',[.8]/N}; % gGABAafe
              case 3
                 vary = { 'IB->IB','gNMDA',[1 2 3]/N;               % IBPPstim
                          'FS->IB','g_SYN',[.3 .5 .6]/N};         % gGABAafe
@@ -221,6 +218,14 @@ switch sim_mode
         include_IB = 1; include_FS = 1; include_NG = 0;
         FSPPstim = -5;
         PPoffset=270;
+
+    case 7                                                                  % NG only, no gamma
+        include_IB = 0; include_FS = 0; include_NG = 1;
+        vary = { 'NG','PPstim',[-2 -3.5 -5 -6.5 -8]; % AMPA conductance
+                 'NG->NG','g_SYN',[.1 .3 .6 1 2]/Nng};        % NMDA conductance
+             
+%          vary = [];
+    
         
 end
 
