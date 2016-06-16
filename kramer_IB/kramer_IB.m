@@ -59,7 +59,7 @@ ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aper
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -3;
+IBPPstim = -2;
 NGPPstim = -5;
 FSPPstim = -5;
 
@@ -116,14 +116,14 @@ gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=10/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.1/Nng;
+gGABAbii=.3/Nng;
 % % 
 gGABAaie=0.1/N;
 gGABAbie=0.35/N;
 
 gGABAaff=0.5/Nfs;
 
-gGABAafe=.25/N;
+gGABAafe=.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
