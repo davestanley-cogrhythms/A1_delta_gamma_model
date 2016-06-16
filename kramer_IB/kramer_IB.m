@@ -18,7 +18,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -51,16 +51,16 @@ lambda = 1000;
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
-PPoffset = 1850;   % ms, offset time
+PPoffset = 2350;   % ms, offset time
 %PPoffset=270;   % ms, offset time
-ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 % ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -3;
-NGPPstim = -3;
+% IBPPstim = -3;
+NGPPstim = -2.2;
 FSPPstim = -5;
 
 % Steps for tuning
