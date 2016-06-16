@@ -53,13 +53,13 @@ PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
 PPoffset = 1850;   % ms, offset time
 %PPoffset=270;   % ms, offset time
-ap_pulse_num = 22;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+% ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-IBPPstim = -2;
+IBPPstim = -5;
 NGPPstim = -5;
 FSPPstim = -5;
 
@@ -109,21 +109,21 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.2/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
-% gNMDAei=10/Nng;
+gNMDAei=1/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.3/Nng;
+gGABAbii=.15/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.35/N;
+gGABAbie=0.55/N;
 
 gGABAaff=0.5/Nfs;
 
-gGABAafe=.5/N;
+gGABAafe=.8/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -251,7 +251,7 @@ if include_IB
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
-      'gCaH',2,'E_CaH',ECa,...
+      'gCaH',1,'E_CaH',ECa,...
       };
 end
 
