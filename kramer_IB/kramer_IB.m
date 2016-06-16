@@ -59,9 +59,9 @@ ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no ape
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
-% IBPPstim = -5;
-NGPPstim = -4;
-% FSPPstim = -5;
+IBPPstim = -3;
+NGPPstim = -3;
+FSPPstim = -5;
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -116,14 +116,14 @@ gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=1/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.15/Nng;
+gGABAbii=.05/Nng;
 % % 
 gGABAaie=0.1/N;
 gGABAbie=0.55/N;
 
 gGABAaff=0.5/Nfs;
 
-gGABAafe=.8/N;
+gGABAafe=.5/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
