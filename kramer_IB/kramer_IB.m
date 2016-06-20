@@ -18,7 +18,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -51,16 +51,16 @@ lambda = 1000;
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
-PPoffset = 2350;   % ms, offset time
+PPoffset = tspan(end)-150;   % ms, offset time
 %PPoffset=270;   % ms, offset time
-ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 % ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -3;
-NGPPstim = -2.2;
+NGPPstim = -4;
 FSPPstim = -5;
 
 % Steps for tuning
@@ -84,6 +84,7 @@ gsa=.3;     % IBs -> IBa
 
 % Gap junction connection
 ggja=0;
+ggjFS=0;
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
 
@@ -109,21 +110,21 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
-gAMPAei=0.3/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=1/Nng;
+gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
+gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=.05/Nng;
+gGABAbii=0.3/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.55/N;
+gGABAbie=0.3/N;
 
 gGABAaff=0.5/Nfs;
 
-gGABAafe=.5/N;
+gGABAafe=.4/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -251,7 +252,7 @@ if include_IB
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
-      'gCaH',1,'E_CaH',ECa,...
+      'gCaH',2,'E_CaH',ECa,...
       };
 end
 
