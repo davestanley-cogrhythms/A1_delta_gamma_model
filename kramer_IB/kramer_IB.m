@@ -26,7 +26,7 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=15;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
@@ -55,7 +55,7 @@ PPoffset = tspan(end)-150;   % ms, offset time
 %PPoffset=270;   % ms, offset time
 ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-% ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
