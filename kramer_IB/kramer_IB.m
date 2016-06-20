@@ -60,8 +60,8 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -3;
-NGPPstim = -4;
-FSPPstim = -5;
+% NGPPstim = -4;
+% FSPPstim = -5;
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -111,10 +111,10 @@ gGABAafe=0;
 
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=5/N;
+% gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=5/Nng;
+% gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=0.3/Nng;
