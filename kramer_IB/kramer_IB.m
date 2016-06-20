@@ -53,15 +53,15 @@ PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
 PPoffset = tspan(end)-150;   % ms, offset time
 %PPoffset=270;   % ms, offset time
-ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
 ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 % ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -3;
-% NGPPstim = -4;
-% FSPPstim = -5;
+NGPPstim = -4;
+FSPPstim = -5;
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -111,16 +111,16 @@ gGABAafe=0;
 
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAee=5/N;
+gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-% gNMDAei=5/Nng;
+gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=0.3/Nng;
+gGABAbii=0.25/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.3/N;
+gGABAbie=0.25/N;
 
 gGABAaff=0.5/Nfs;
 
