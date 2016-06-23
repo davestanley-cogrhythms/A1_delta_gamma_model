@@ -14,7 +14,7 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 0;
+include_FS = 1;
 include_NG = 1;
 
 % simulation controls
@@ -60,8 +60,8 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -3;
-% NGPPstim = -4;
-% FSPPstim = -5;
+NGPPstim = -4;
+FSPPstim = -5;
 
 % Steps for tuning
 %     1) Get delta oscillation
