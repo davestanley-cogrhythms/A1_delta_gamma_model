@@ -47,6 +47,8 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 
+gRAN=0;
+
 % Periodic pulse stimulation
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
