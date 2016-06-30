@@ -32,14 +32,14 @@ Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=0; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=-2; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 
-IB_offset1=245;
-IB_onset2=245;
+IB_offset1=30;
+IB_onset2=30;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -187,13 +187,23 @@ switch sim_mode
         IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
         N=2;
         
-        vary_mode = 2;
+        vary_mode = 3;
         switch vary_mode 
             case 1
                 vary = { 'IB','gCaH',[.5 1 1.5 2];
                      'IB','gM',[.5 1 2 4]};
             case 2
                 vary = { 'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5]};
+            case 3
+                vary = { 'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5];
+                         'IB','gAR',[0 1 10 100]
+                };
+                vary = { 'IB','stim2',[-0.5 -0.6 -0.7 -0.8 -0.9 -1];
+                         'IB','gAR',[0]
+                };
+%                 vary = { 'IB','stim2',[4 3 2  1  0 ];
+%                          'IB','gAR',[0 0]
+%                 };
         end
         
     case 4                                                                  % IB only, no gamma
