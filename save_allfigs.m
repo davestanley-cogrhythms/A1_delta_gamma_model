@@ -17,7 +17,8 @@ function save_allfigs(currfname,currfigname)
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
     multiplot_on = 1;
-    for i=[1,3,[4:7]]
+    do_pdf = 0;
+    for i=[1:8]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -36,9 +37,14 @@ function save_allfigs(currfname,currfigname)
 %             set(gcf,'Position',[0.8257    0.1256    0.1743    0.7689]);         % Size to compare Carracedo
                                                                                 % To get only 1 cell trace, run: data(1).model.specification.populations(1).size=1;
         end
-        set(gcf,'PaperPositionMode','auto');
-        print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
-%         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
+        if ~do_pdf
+            set(gcf,'PaperPositionMode','auto');
+            print(gcf,'-dpng','-r50',fullfile(basepath,sp,savenames{i}))
+    %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
+        else
+            set(gcf,'PaperPositionMode','manual');
+            print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
+        end
     end
     %%
     mycomment = ['Increased gAR more and also gCa and gM, in order to make cells more bursty.'];
