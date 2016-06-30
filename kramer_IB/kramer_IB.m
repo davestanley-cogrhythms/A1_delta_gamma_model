@@ -32,7 +32,7 @@ Nfs=N;  % Number of FS cells
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
