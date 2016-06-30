@@ -198,12 +198,9 @@ switch sim_mode
                 vary = { 'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5];
                          'IB','gAR',[0 1 10 100]
                 };
-                vary = { 'IB','stim2',[-0.5 -0.6 -0.7 -0.8 -0.9 -1];
-                         'IB','gAR',[0]
+                vary = { 'IB','stim2',[2  1 .5 0 -.2 -.5 ];
+                         'IB','gAR',[5]
                 };
-%                 vary = { 'IB','stim2',[4 3 2  1  0 ];
-%                          'IB','gAR',[0 0]
-%                 };
         end
         
     case 4                                                                  % IB only, no gamma
