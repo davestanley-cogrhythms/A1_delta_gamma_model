@@ -26,7 +26,7 @@ no_noise = 0;
 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=2;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
@@ -110,21 +110,21 @@ gGABAafe=0;
 
 
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+% gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 % gNMDAee=5/N;
 % 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
+% gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 % gNMDAei=5/Nng;
 % 
-gGABAaii=0.1/Nng;
-gGABAbii=0.3/Nng;
+% gGABAaii=0.1/Nng;
+% gGABAbii=0.3/Nng;
 % % 
-gGABAaie=0.1/N;
-gGABAbie=0.3/N;
-
-gGABAaff=0.5/Nfs;
-
-gGABAafe=.4/N;
+% gGABAaie=0.1/N;
+% gGABAbie=0.3/N;
+% 
+% gGABAaff=0.5/Nfs;
+% 
+% gGABAafe=.4/N;
 
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -239,6 +239,7 @@ i=0;
 
 gAR_d=155; % 155, IBda - max conductance of h-channel
 gAR_d=3; % 155, IBda - max conductance of h-channel
+gAR_d=0; % 155, IBda - max conductance of h-channel
 
 if include_IB
     i=i+1;
