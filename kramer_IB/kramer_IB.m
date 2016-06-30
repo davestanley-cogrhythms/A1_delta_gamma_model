@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 2;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -187,7 +187,7 @@ switch sim_mode
         IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
         N=2;
         
-        vary_mode = 1;
+        vary_mode = 2;
         switch vary_mode 
             case 1
                 vary = { 'IB','gCaH',[.5 1 1.5 2];
@@ -382,8 +382,8 @@ switch sim_mode
         PlotData(data,'plot_type','waveform');
     case {2,3}
         PlotData(data,'plot_type','waveform');
-        PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
-        PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+        PlotData(data,'variable','IB_IBiMMich_mM','plot_type','waveform');
+        PlotData(data,'variable','IB_IBiAR_mAR','plot_type','waveform');
         
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
