@@ -14,11 +14,11 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 1;
-include_NG = 1;
+include_FS = 0;
+include_NG = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -26,7 +26,7 @@ no_noise = 0;
 
 
 % number of cells per population
-N=25;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
@@ -60,8 +60,8 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -3;
-NGPPstim = -4;
-FSPPstim = -5;
+% NGPPstim = -4;
+% FSPPstim = -5;
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -111,10 +111,10 @@ gGABAafe=0;
 
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=5/N;
+% gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=5/Nng;
+% gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=0.3/Nng;
@@ -237,12 +237,17 @@ end
 spec=[];
 i=0;
 
+gAR_d=155; % 155, IBda - max conductance of h-channel
+gAR_d=3; % 155, IBda - max conductance of h-channel
+
 if include_IB
     i=i+1;
     spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    %spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+        warning('Uncomment this later');
+    spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBiAR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
       'PPstim',IBPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,...
@@ -253,6 +258,7 @@ if include_IB
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
       'gCaH',2,'E_CaH',ECa,...
+      'gAR',gAR_d,'E_AR',IB_Eh,'AR_V12',-87.5,'AR_k',-5.5,'c_ARaM',2.75,'c_ARbM',3,'AR_L',1,'AR_R',1,...
       };
 end
 
