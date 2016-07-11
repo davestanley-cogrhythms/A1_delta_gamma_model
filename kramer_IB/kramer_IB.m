@@ -14,11 +14,11 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_FS = 1;
+include_FS = 0;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -26,7 +26,7 @@ no_noise = 0;
 
 
 % number of cells per population
-N=25;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
@@ -60,8 +60,8 @@ IBPPstim = 0;
 NGPPstim = 0;
 FSPPstim = 0;
 % IBPPstim = -3;
-NGPPstim = -4;
-FSPPstim = -5;
+% NGPPstim = -4;
+% FSPPstim = -5;
 
 % Steps for tuning
 %     1) Get delta oscillation
