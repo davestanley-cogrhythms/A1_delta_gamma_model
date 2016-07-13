@@ -1,15 +1,23 @@
 
-function s3 = getAperiodicPulse(freq,width,T,dt,onset,offset,ap_pulse_num,ap_pulse_delay,Npop)
+function s3 = getAperiodicPulse(freq,width,T,dt,onset,offset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise)
 
-if nargin < 5
-    onset = 0;
-    offset = Inf;
-end
-
-if nargin < 7
-    ap_pulse_num = 0;
-    ap_pulse_delay = 0;
-end
+% Comment this out because it gets confusing.
+% if nargin < 5
+%     onset = 0;
+%     offset = Inf;
+% end
+% if nargin < 7
+%     ap_pulse_num = 0;
+%     ap_pulse_delay = 0;
+% end
+% if nargin < 10
+%     kernel_type = 1;  % Options for kernel type are:
+%                                 % 1-Gaussian
+%                                 % 2-Double exponential - width is decay time; width2 is rise
+% end
+% if nargin < 11
+%     width2_rise = 0.5; % 0.5 ms by default
+% end
 
 plot_demo_on = 0;  % Plot if desired
 
@@ -32,13 +40,29 @@ end
 s(t<onset | t>offset) = 0;
 
 % Build kernel
-kernel_length=4*width;                      % Length of kernel time series
-t2 = -kernel_length:dt:kernel_length-dt;    % Generate time vector
-%kernel = 1/(width*sqrt(2*pi)) * exp(-t.^2/2/width^2);
-kernel = 1 * exp(-t2.^2/2/width^2);      % Build kernel. Peaks at 1.0.
+if kernel_type < 1.5
+        kernel_length=4*width;                      % Length of kernel time series
+        t2 = -kernel_length:dt:kernel_length-dt;    % Generate time vector
+        %kernel = 1/(width*sqrt(2*pi)) * exp(-t.^2/2/width^2);
+        kernel = 1 * exp(-t2.^2/2/width^2);      % Build kernel. Peaks at 1.0.
+elseif kernel_type < 2.5
+        kernel_length=8*width;                      % Length of kernel time series
+        t2 = -kernel_length:dt:kernel_length-dt;    % Generate time vector
+        t2(1:floor(kernel_length/dt) + 1) = 0;
+        kernel = (exp(-t2/width) - exp(-t2/width2_rise)) * (width*width2_rise)/(width-width2_rise);     % This normalization constant is wrong
+        kernel = kernel / max(kernel);          % Do normalization manually for now.
+else
+        % For debugging; should not reach this!!
+        kernel_length=4*width;                      % Length of kernel time series
+        t2 = -kernel_length:dt:kernel_length-dt;    % Generate time vector
+        %kernel = 1/(width*sqrt(2*pi)) * exp(-t.^2/2/width^2);
+        kernel = 1 * exp(-t2.^2/2/width^2);      % Build kernel. Peaks at 1.0.
+        kernel = kernel * -1;
+end
+
 
 % Convolve kernel with deltas
-s2=conv(s,kernel);
+s2=conv(s,kernel(:));
 N2=length(s2); N=length(s);
 starting = round((N2-N)/2);
 s3=s2(1+starting:N+starting);       % Each edge we're dropping should be half the difference in the length of the two vectors.

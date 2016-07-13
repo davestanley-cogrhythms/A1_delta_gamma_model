@@ -17,7 +17,7 @@ function save_allfigs(currfname,currfigname)
     % basepath = '~/figs_tosave';
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:2]
+    for i=[2:2]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
