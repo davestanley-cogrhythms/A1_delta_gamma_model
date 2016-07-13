@@ -25,7 +25,7 @@ ap_pulse_delay2 = 12.5;  % ms, the amount the spike should be delayed. 0 for no 
 kernel_type2 = 2;       % Double exponential
 width2_rise2 = 2.5;     % 2.5 = 10*0.25; 10x ampa rise time of .25 ms
 
-s3=getAperiodicPulse(PPfreq2,PPwidth2,T2,dt2,PPonset2,PPoffset2,ap_pulse_num2,ap_pulse_delay2,Npop,kernel_type2,width2_rise2);
+s3=getAperiodicPulseFast(PPfreq2,PPwidth2,T2,dt2,PPonset2,PPoffset2,ap_pulse_num2,ap_pulse_delay2,Npop,kernel_type2,width2_rise2);
 
 
 Iext(X)=PPstim2*s3(k,:)
