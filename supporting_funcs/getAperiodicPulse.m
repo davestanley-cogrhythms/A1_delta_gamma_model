@@ -1,5 +1,5 @@
 
-function s3 = getAperiodicPulse(freq,width,T,dt,onset,offset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise)
+function s3 = getAperiodicPulse(freq,width,shift,T,dt,onset,offset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise)
 
 % Comment this out because it gets confusing.
 % if nargin < 5
@@ -25,11 +25,11 @@ plot_demo_on = 0;  % Plot if desired
 t=(0:dt:T)';                            % Generate times vector
 s = zeros(size(t));
 pulse_period=1000/freq;
-s(1:round(pulse_period/dt):end) = 1;    % Add deltas
+s((1+round(shift/dt)):round(pulse_period/dt):end) = 1;    % Add deltas, allowing for shift
 
 % Set aperiodic pulse
 if ap_pulse_num > 0
-    ap_ind_orig = 1+round(pulse_period/dt)*(ap_pulse_num-1);    % Index of the aperiodic pulse in the time series.
+    ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(ap_pulse_num-1);    % Index of the aperiodic pulse in the time series.
     ap_ind_new = ap_ind_orig+round(ap_pulse_delay/dt);          % Index of where it should appear after the delay.
     if ap_ind_new > length(s) || ap_ind_orig > length(s); error('Aperiodic spike placement would be outside of simulation time.'); end
     s(ap_ind_orig) = 0;                 % Delete the original pulse
