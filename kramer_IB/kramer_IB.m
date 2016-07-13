@@ -47,7 +47,10 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 
-% Periodic pulse stimulation
+% % Periodic pulse stimulation
+pulse_mode = 1;
+switch pulse_mode
+    case 1                  % Gamma stimulation
 PPfreq = 40; % in Hz
 PPwidth = 2; % in ms
 PPonset = 250;    % ms, onset time
@@ -65,13 +68,41 @@ FSPPstim = 0;
 % NGPPstim = -4;
 % FSPPstim = -5;
 
-% Periodic pulse stimulation2 (IB delta median)
-kernel_type2 = 2;
-PPfreq_delta = 8;
-PPonset2 = 0;
-PPoffset2 = tspan(end)-0;
-IBPPstim2 = 0;
-% IBPPstim2 = -3;
+    case 2                  % Median nerve stimulation at delta (possibly not used...)
+        PPfreq = 4; % in Hz
+        PPwidth = 10; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-0;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        width2_rise = 2.5;  % Not used for Gaussian pulse
+        kernel_type = 2;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        FSPPstim = 0;
+        IBPPstim = -3;
+        % NGPPstim = -4;
+        % FSPPstim = -5;
+    case 3                  % Auditory stimulation at delta (possibly not used...)
+        PPfreq = 4; % in Hz
+        PPwidth = 3; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-0;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        width2_rise = 0.75;  % Not used for Gaussian pulse
+        kernel_type = 2;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        FSPPstim = 0;
+        % IBPPstim = -3;
+        % NGPPstim = -4;
+        % FSPPstim = -5;
+        
+end
+
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -252,11 +283,10 @@ if include_IB
     spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','iPeriodicPulses2DeltaMedian','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
       'PPstim', IBPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
-      'PPstim2',IBPPstim2,'PPfreq2',PPfreq_delta,'kernel_type2',kernel_type2,           'PPonset2',PPonset2,'PPoffset2',PPoffset2,...      % 'PPfreq2',PPfreq_delta,'PPwidth2',PPwidth2,'PPonset2',PPonset2,'PPoffset2',PPoffset2,'ap_pulse_num2',0,            'ap_pulse_delay2',0,             'kernel_type2',kernel_type2,'width2_rise2',width2_rise2,...
       'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',Jd1,'onset',0,'offset',IB_offset1,'stim2',Jd2,'onset2',IB_onset2,'offset2',Inf,...
       'V_noise',IBda_Vnoise,...
