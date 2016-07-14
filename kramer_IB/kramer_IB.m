@@ -3,13 +3,14 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 8;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
                 % 5 - sim study IB connected; gamma input
                 % 6 - sim study IB connected; single pulse
                 % 7 - sim study NG; gamma input
+                % 8 - sim study Median Nerve phase
                 
                 
 % Cells to include in model
@@ -48,31 +49,31 @@ tauRAN=2;
 lambda = 1000;
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 2;
 switch pulse_mode
     case 1                  % Gamma stimulation
-PPfreq = 40; % in Hz
-PPwidth = 2; % in ms
-PPshift = 0; % in ms
-PPonset = 250;    % ms, onset time
-PPoffset = tspan(end)-150;   % ms, offset time
-%PPoffset=270;   % ms, offset time
-ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
-ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-width2_rise = 0.25;  % Not used for Gaussian pulse
-kernel_type = 1;
-IBPPstim = 0;
-NGPPstim = 0;
-FSPPstim = 0;
-% IBPPstim = -3;
-% NGPPstim = -4;
-% FSPPstim = -5;
-
-    case 2                  % Median nerve stimulation at delta
-        PPfreq = 4; % in Hz
-        PPwidth = 10; % in ms
+        PPfreq = 40; % in Hz
+        PPwidth = 2; % in ms
         PPshift = 0; % in ms
+        PPonset = 250;    % ms, onset time
+        PPoffset = tspan(end)-150;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        width2_rise = 0.25;  % Not used for Gaussian pulse
+        kernel_type = 1;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        FSPPstim = 0;
+        % IBPPstim = -3;
+        % NGPPstim = -4;
+        % FSPPstim = -5;
+
+    case 2                  % Median nerve stimulation
+        PPfreq = 1/tspan(end); % 1 spike per cycle. 
+        PPwidth = 10; % in ms
+        PPshift = 600; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
         %PPoffset=270;   % ms, offset time
@@ -272,7 +273,27 @@ switch sim_mode
         vary = { 'NG','PPstim',[-3.5 -5 ]; % AMPA conductance
                  'NG->NG','g_SYN',[.3 .6 ]/Nng};        % NMDA conductance
 %          vary = [];
-    
+
+    case 8
+        PPfreq = 1/tspan(end); % 1 spike per cycle. 
+        PPwidth = 10; % in ms
+        PPshift = 600; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-0;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        width2_rise = 2.5;  % Not used for Gaussian pulse
+        kernel_type = 2;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        FSPPstim = 0;
+        IBPPstim = -3;
+        % NGPPstim = -4;
+        % FSPPstim = -5;
+
+        vary = { 'IB','PPstim',[-2 -5 -10];   
+                 'IB','PPshift',[350 400 575 650 750]}; 
+%         vary = [];
         
 end
 
