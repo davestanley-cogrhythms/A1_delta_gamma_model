@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 8;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -19,7 +19,7 @@ include_FS = 0;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 3500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % No noise simulation
@@ -71,9 +71,9 @@ switch pulse_mode
         % FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
-        PPfreq = 1/tspan(end); % 1 spike per cycle. 
+        PPfreq = 2; % 2 Hz delta
         PPwidth = 10; % in ms
-        PPshift = 600; % in ms
+        PPshift = 400; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
         %PPoffset=270;   % ms, offset time
@@ -84,7 +84,7 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         FSPPstim = 0;
-        IBPPstim = -3;
+        IBPPstim = -5;
         % NGPPstim = -4;
         % FSPPstim = -5;
     case 3                  % Auditory stimulation at delta (possibly not used...)
