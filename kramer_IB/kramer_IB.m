@@ -11,23 +11,26 @@ sim_mode = 1;   % 1 - normal sim
                 % 6 - sim study IB connected; single pulse
                 % 7 - sim study NG; gamma input
                 % 8 - sim study Median Nerve phase
+                % 9 - sim study FS-RS circuit vary RS stim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_FS = 0;
-include_NG = 1;
+include_IB = 0;
+include_RS = 1;
+include_FS = 1;
+include_NG = 0;
 
 % simulation controls
-tspan=[0 3500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
-% No noise simulation
+% Simulation switches
 no_noise = 0;
-
+no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
+Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 
@@ -38,19 +41,40 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
+JRS1 = 5;
+JRS2 = -1;
+    
 
 IB_offset1=245;
 IB_onset2=245;
+RS_offset1=0;
+RS_onset2=0;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
+RSgRAN=0.015;
 
 % % Periodic pulse stimulation
 pulse_mode = 2;
 switch pulse_mode
+    case 0                  % No stimulation
+        PPfreq = 4; % in Hz
+        PPwidth = 3; % in ms
+        PPshift = 0; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-0;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        width2_rise = 0.75;  % Not used for Gaussian pulse
+        kernel_type = 2;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        RSPPstim = 0;
+        FSPPstim = 0;
     case 1                  % Gamma stimulation
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -65,10 +89,12 @@ switch pulse_mode
         kernel_type = 1;
         IBPPstim = 0;
         NGPPstim = 0;
+        RSPPstim = 0;
         FSPPstim = 0;
         % IBPPstim = -3;
-        % NGPPstim = -4;
-        % FSPPstim = -5;
+        RSPPstim = -3;
+        NGPPstim = -4;
+%         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
@@ -83,8 +109,10 @@ switch pulse_mode
         kernel_type = 2;
         IBPPstim = 0;
         NGPPstim = 0;
+        RSPPstim = 0;
         FSPPstim = 0;
         IBPPstim = -5;
+        % RSPPstim = -5;
         % NGPPstim = -4;
         % FSPPstim = -5;
     case 3                  % Auditory stimulation at delta (possibly not used...)
@@ -100,8 +128,10 @@ switch pulse_mode
         kernel_type = 2;
         IBPPstim = 0;
         NGPPstim = 0;
+        RSPPstim = 0;
         FSPPstim = 0;
         % IBPPstim = -3;
+        % RSPPstim = -3;
         % NGPPstim = -4;
         % FSPPstim = -5;
         
@@ -128,8 +158,10 @@ gas=.3;     % IBa -> IBs
 gsa=.3;     % IBs -> IBa
 
 % Gap junction connection
+ggjaRS=0;
 ggja=0;
 ggjFS=0;
+ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
 
@@ -153,7 +185,22 @@ gGABAaff=0;
 
 gGABAafe=0;
 
+% IB and NG to RS connections
+gAMPA_ibrs = 0;
+gNMDAee_ibrs = 0;
+gGABAa_ngrs = 0;
+gGABAb_ngrs = 0;
 
+% RS-FS circuit
+gAMPA_rsrs=0;
+gAMPA_rsfs=0;
+gGABAa_fsrs=0;
+
+% FS circuit and FS->IB connections
+gGABAaff=0;
+gGABAafe=0;
+
+if ~no_synapses
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
@@ -167,10 +214,21 @@ gGABAbii=0.3/Nng;
 gGABAaie=0.1/N;
 gGABAbie=0.3/N;
 
-gGABAaff=0.5/Nfs;
+% IB and NG to RS connections
+gAMPA_ibrs = 0.1/Nrs;
+gNMDAee_ibrs = 5/Nrs;
+gGABAa_ngrs = 0.1/Nrs;
+gGABAb_ngrs = 0.3/Nng;
 
+% RS-FS circuit
+gAMPA_rsrs=0.1/Nrs;
+gAMPA_rsfs=0.3/Nfs;
+gGABAa_fsrs=0.2/Nrs;
+gGABAaff=0.2/Nfs;
+
+% FS circuit and FS->IB connections
 gGABAafe=.4/N;
-
+end
 
 % % % % % % % % % % % % % % % % % % % % % % 
 
@@ -198,6 +256,8 @@ IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
+RSda_Vnoise = .3;
+
 
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
@@ -225,7 +285,7 @@ switch sim_mode
     case 1                                                                  % Everything default, single simulation
         vary = [];
     case 2                                                                  % IB only, no synapse, no gamma
-        include_IB = 1; include_FS = 0; include_NG = 0;
+        include_IB = 1; include_FS = 0; include_NG = 0; include_RS = 0;
         gAMPAee=0; gNMDAee=0;
         IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
         N=2;
@@ -240,14 +300,14 @@ switch sim_mode
         end
         
     case 4                                                                  % IB only, no gamma
-        include_IB = 1; include_FS = 0; include_NG = 0;
+        include_IB = 1; include_FS = 0; include_NG = 0; include_RS = 0;
         IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
         
         vary = { 'IB->IB','g_SYN',[0, 0.1, 0.5 1]/N; % AMPA conductance
                  'IB->IB','gNMDA',[0 1 5]/N};        % NMDA conductance
         
     case 5                                                                  % IB, FS, and NG cells.
-        include_IB = 1; include_FS = 1; include_NG = 1;
+        include_IB = 1; include_FS = 1; include_NG = 1; include_RS = 0;
         
         vary_mode = 1;
         switch vary_mode
@@ -262,12 +322,12 @@ switch sim_mode
                          'FS->IB','g_SYN',[.3 .5 .6]/N};         % gGABAafe
         end
     case 6                                                                  % IB cell with single gamma pulse
-        include_IB = 1; include_FS = 1; include_NG = 0;
+        include_IB = 1; include_FS = 1; include_NG = 0; include_RS = 0;
         FSPPstim = -5;
         PPoffset=270;
 
     case 7                                                                  % NG only, no gamma
-        include_IB = 0; include_FS = 0; include_NG = 1;
+        include_IB = 0; include_FS = 0; include_NG = 1; include_RS = 0;
         vary = { 'NG','PPstim',[-2 -3.5 -5 -6.5 -8]; % AMPA conductance
                  'NG->NG','g_SYN',[.1 .3 .6 1 2]/Nng};        % NMDA conductance
         vary = { 'NG','PPstim',[-3.5 -5 ]; % AMPA conductance
@@ -294,6 +354,11 @@ switch sim_mode
         vary = { 'IB','PPstim',[-2 -5 -10];   
                  'IB','PPshift',[350 400 575 650 750]}; 
 %         vary = [];
+
+    case 9
+        include_IB = 0; include_FS = 1; include_NG = 0; include_RS = 1;
+        vary = { 'RS','stim',[-2 -5 -10];
+                 }; 
         
 end
 
@@ -318,6 +383,25 @@ if include_IB
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
       'gCaH',2,'E_CaH',ECa,...
+      };
+end
+
+if include_RS
+    i=i+1;
+    spec.populations(i).name = 'RS';
+    spec.populations(i).size = Nrs;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
+      'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
+      'stim',JRS1,'onset',0,'offset',RS_offset1,'stim2',JRS2,'onset2',RS_onset2,'offset2',Inf,...
+      'V_noise',RSda_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',2,'E_M',E_EKDR,...
+      'gCaH',.5,'E_CaH',ECa,...
       };
 end
 
@@ -358,12 +442,7 @@ end
 
 % % % % % % % % % % % %  Connections  % % % % % % % % % % % % %  
 i=0;
-
-% % IB->IB intracompartmental connections
-if include_IB
-end
-
-
+% % % % %  IB Cells  % % % % %
 % % IB->IB recurrent synaptic and gap connections
 if include_IB
     i=i+1;
@@ -385,6 +464,17 @@ if include_IB && include_NG
         };
 end
 
+% % IB->RS
+if include_IB && include_RS
+    i=i+1;
+    spec.connections(i).direction = 'IB->RS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_ibrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        };
+end
+
+% % % % %  NG Cells  % % % % %
 % % NG->NG Synaptic connections
 if include_NG
     i=i+1;
@@ -407,6 +497,38 @@ if include_NG && include_IB
         };
 end
 
+% % NG->RS Synaptic connections
+if include_NG && include_RS
+    i=i+1;
+    spec.connections(i).direction = 'NG->RS';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_ngrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAb_ngrs,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
+        'TmaxGABAB',TmaxGABAB ...
+        };
+end
+
+
+% % % % %  RS Cells  % % % % %
+% % RS->RS recurrent synaptic and gap connections
+if include_RS
+    i=i+1;
+    spec.connections(i).direction = 'RS->RS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'g_GAP',ggjaRS,...
+        };
+end
+
+if include_RS && include_FS
+    i=i+1;
+    spec.connections(i).direction = 'RS->FS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
+% % % % %  FS Cells  % % % % %
 % % FS->FS Synaptic connections
 if include_FS
     i=i+1;
@@ -427,6 +549,15 @@ if include_FS && include_IB
         };
 end
 
+% % FS->RS Synaptic connections
+if include_FS && include_RS
+    i=i+1;
+    spec.connections(i).direction = 'FS->RS';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_fsrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
+
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
 data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
@@ -443,6 +574,10 @@ switch sim_mode
         
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
+    case 9
+        PlotData(data,'plot_type','waveform','variable','RS_V');
+        PlotData(data,'plot_type','waveform','variable','FS_V');
+        PlotData(data,'plot_type','power');
     otherwise
         PlotData(data,'plot_type','waveform');
 end
