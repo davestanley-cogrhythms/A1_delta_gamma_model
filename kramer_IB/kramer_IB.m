@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -15,18 +15,18 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
 no_noise = 0;
-no_synapses = 0;
+no_synapses = 1;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
@@ -42,11 +42,11 @@ Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
-JRS2 = -1;
+JRS2 = 1.5;
     
 
-IB_offset1=245;
-IB_onset2=245;
+IB_offset1=0;
+IB_onset2=0;
 RS_offset1=0;
 RS_onset2=0;
 
@@ -74,7 +74,6 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
-        FSPPstim = 0;
     case 1                  % Gamma stimulation
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -90,11 +89,9 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
-        FSPPstim = 0;
         % IBPPstim = -3;
         RSPPstim = -3;
         NGPPstim = -4;
-%         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
@@ -110,11 +107,9 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
-        FSPPstim = 0;
-        IBPPstim = -5;
+        % IBPPstim = -5;
         % RSPPstim = -5;
         % NGPPstim = -4;
-        % FSPPstim = -5;
     case 3                  % Auditory stimulation at delta (possibly not used...)
         PPfreq = 4; % in Hz
         PPwidth = 3; % in ms
@@ -129,11 +124,9 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
-        FSPPstim = 0;
         % IBPPstim = -3;
         % RSPPstim = -3;
         % NGPPstim = -4;
-        % FSPPstim = -5;
         
 end
 
@@ -347,10 +340,8 @@ switch sim_mode
         kernel_type = 2;
         IBPPstim = 0;
         NGPPstim = 0;
-        FSPPstim = 0;
         IBPPstim = -3;
         % NGPPstim = -4;
-        % FSPPstim = -5;
 
         vary = { 'IB','PPstim',[-2 -5 -10];   
                  'IB','PPshift',[350 400 575 650 750]}; 
@@ -428,10 +419,9 @@ if include_FS
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
