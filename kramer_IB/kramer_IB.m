@@ -223,8 +223,9 @@ gGABAb_ngrs = 0.3/Nng;
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
 gAMPA_rsfs=0.3/Nfs;
+gGABAaff=0.5/Nfs;
 gGABAa_fsrs=0.2/Nrs;
-gGABAaff=0.2/Nfs;
+
 
 % FS circuit and FS->IB connections
 gGABAafe=.4/N;
@@ -357,7 +358,7 @@ switch sim_mode
 
     case 9
         include_IB = 0; include_FS = 1; include_NG = 0; include_RS = 1;
-        vary = { 'RS','stim2',[-2 -1 0 1 2];
+        vary = { 'RS','stim2',[-2 -1 0 1];
                  }; 
         
 end
@@ -576,7 +577,7 @@ switch sim_mode
         PlotData(data,'plot_type','waveform','variable','IB_V');
     case 9
         PlotData(data,'plot_type','waveform','variable','RS_V');
-        PlotData(data,'plot_type','power');
+        %PlotData(data,'plot_type','power');
     otherwise
         PlotData(data,'plot_type','waveform');
 end
