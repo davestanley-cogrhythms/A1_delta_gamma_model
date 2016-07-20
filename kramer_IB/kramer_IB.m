@@ -222,9 +222,9 @@ gGABAb_ngrs = 0.3/Nng;
 
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
-gAMPA_rsfs=0.3/Nfs;
+gAMPA_rsfs=0.5/Nfs;
 gGABAaff=0.5/Nfs;
-gGABAa_fsrs=0.2/Nrs;
+gGABAa_fsrs=0.3/Nrs;
 
 
 % FS circuit and FS->IB connections
