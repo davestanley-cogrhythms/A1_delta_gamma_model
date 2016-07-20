@@ -215,7 +215,7 @@ gGABAbie=0.3/N;
 
 % IB and NG to RS connections
 gAMPA_ibrs = 0.1/Nrs;
-gNMDA_ibrs = 1.0/Nrs;
+gNMDA_ibrs = 1.5/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
 gGABAb_ngrs = 0.3/Nng;
 
