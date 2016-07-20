@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.015;
 
 % % Periodic pulse stimulation
-pulse_mode = 2;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -74,6 +74,7 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
+        FSPPstim = 0;
     case 1                  % Gamma stimulation
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -89,9 +90,11 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
+        FSPPstim = 0;
         % IBPPstim = -3;
         RSPPstim = -3;
         NGPPstim = -4;
+%         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
@@ -107,9 +110,11 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
-        % IBPPstim = -5;
+        FSPPstim = 0;
+        IBPPstim = -5;
         % RSPPstim = -5;
         % NGPPstim = -4;
+        % FSPPstim = -5;
     case 3                  % Auditory stimulation at delta (possibly not used...)
         PPfreq = 4; % in Hz
         PPwidth = 3; % in ms
@@ -124,12 +129,13 @@ switch pulse_mode
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
+        FSPPstim = 0;
         % IBPPstim = -3;
         % RSPPstim = -3;
         % NGPPstim = -4;
+        % FSPPstim = -5;
         
 end
-
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -328,6 +334,7 @@ switch sim_mode
                  'NG->NG','g_SYN',[.3 .6 ]/Nng};        % NMDA conductance
 %          vary = [];
 
+
     case 8
         PPfreq = 1/tspan(end); % 1 spike per cycle. 
         PPwidth = 10; % in ms
@@ -340,8 +347,10 @@ switch sim_mode
         kernel_type = 2;
         IBPPstim = 0;
         NGPPstim = 0;
+        FSPPstim = 0;
         IBPPstim = -3;
         % NGPPstim = -4;
+        % FSPPstim = -5;
 
         vary = { 'IB','PPstim',[-2 -5 -10];   
                  'IB','PPshift',[350 400 575 650 750]}; 
@@ -419,9 +428,10 @@ if include_FS
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
