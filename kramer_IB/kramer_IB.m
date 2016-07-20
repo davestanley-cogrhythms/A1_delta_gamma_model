@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -357,7 +357,7 @@ switch sim_mode
 
     case 9
         include_IB = 0; include_FS = 1; include_NG = 0; include_RS = 1;
-        vary = { 'RS','stim',[-2 -5 -10];
+        vary = { 'RS','stim2',[-2 -1 0 1 2];
                  }; 
         
 end
@@ -576,7 +576,6 @@ switch sim_mode
         PlotData(data,'plot_type','waveform','variable','IB_V');
     case 9
         PlotData(data,'plot_type','waveform','variable','RS_V');
-        PlotData(data,'plot_type','waveform','variable','FS_V');
         PlotData(data,'plot_type','power');
     otherwise
         PlotData(data,'plot_type','waveform');
