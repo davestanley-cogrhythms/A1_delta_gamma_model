@@ -15,10 +15,10 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 
 % simulation controls
 tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -26,7 +26,7 @@ dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
 no_noise = 0;
-no_synapses = 0;
+no_synapses = 1;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
@@ -42,7 +42,7 @@ Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
-JRS2 = 1.5;
+JRS2 = 0;
     
 
 IB_offset1=245;
@@ -55,10 +55,10 @@ gRAN=.015;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
-RSgRAN=0.015;
+RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -217,7 +217,7 @@ gGABAbie=0.3/N;
 gAMPA_ibrs = 0.1/Nrs;
 gNMDA_ibrs = 1.0/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
-gGABAb_ngrs = 0.2/Nng;
+gGABAb_ngrs = 0.1/Nng;
 
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
