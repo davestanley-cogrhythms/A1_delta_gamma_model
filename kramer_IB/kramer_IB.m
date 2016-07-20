@@ -26,7 +26,7 @@ dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
 no_noise = 0;
-no_synapses = 1;
+no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
@@ -45,10 +45,10 @@ JRS1 = 5;
 JRS2 = 1.5;
     
 
-IB_offset1=0;
-IB_onset2=0;
-RS_offset1=0;
-RS_onset2=0;
+IB_offset1=245;
+IB_onset2=245;
+RS_offset1=245;
+RS_onset2=245;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -180,7 +180,7 @@ gGABAafe=0;
 
 % IB and NG to RS connections
 gAMPA_ibrs = 0;
-gNMDAee_ibrs = 0;
+gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
 
@@ -209,7 +209,7 @@ gGABAbie=0.3/N;
 
 % IB and NG to RS connections
 gAMPA_ibrs = 0.1/Nrs;
-gNMDAee_ibrs = 5/Nrs;
+gNMDA_ibrs = 1.0/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
 gGABAb_ngrs = 0.3/Nng;
 
@@ -461,7 +461,7 @@ if include_IB && include_RS
     spec.connections(i).direction = 'IB->RS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_ibrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDAee,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'gNMDA',gNMDA_ibrs,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
