@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.015;
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -92,8 +92,8 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         % IBPPstim = -3;
-        RSPPstim = -3;
-        NGPPstim = -4;
+        RSPPstim = -5;
+%         NGPPstim = -4;
 %         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
@@ -201,7 +201,7 @@ gGABAafe=0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.3/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
@@ -215,9 +215,9 @@ gGABAbie=0.3/N;
 
 % IB and NG to RS connections
 gAMPA_ibrs = 0.1/Nrs;
-gNMDA_ibrs = 1.5/Nrs;
+gNMDA_ibrs = 1.0/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
-gGABAb_ngrs = 0.3/Nng;
+gGABAb_ngrs = 0.2/Nng;
 
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
