@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -82,7 +82,7 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-150;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 38;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
@@ -93,7 +93,7 @@ switch pulse_mode
         FSPPstim = 0;
         % IBPPstim = -3;
         RSPPstim = -7;
-        NGPPstim = -4;
+        NGPPstim = -5;
 %         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
@@ -227,7 +227,7 @@ gGABAa_fsrs=0.3/Nrs;
 
 
 % FS circuit and FS->IB connections
-gGABAafe=.4/N;
+gGABAafe=.5/N;
 end
 
 % % % % % % % % % % % % % % % % % % % % % % 
