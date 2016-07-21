@@ -196,7 +196,7 @@ gAMPA_rsng = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.3/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
@@ -222,7 +222,7 @@ gGABAaff=1/Nfs;
 gGABAa_fsrs=1/Nrs;
 
 % RS to IB circuit
-gGABAafe=.0/N;
+gGABAafe=.3/N;
 gAMPA_rsng = 0.0/Nng;
 end
 
