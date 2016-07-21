@@ -91,9 +91,9 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
-        % IBPPstim = -3;
+        IBPPstim = -1;
         RSPPstim = -7;
-        NGPPstim = -5;
+        NGPPstim = -6;
 %         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
@@ -201,17 +201,17 @@ gGABAafe=0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.4/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=3/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=0.2/Nng;
+gGABAbii=0.3/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.2/N;
+gGABAbie=0.3/N;
 
 % IB and NG to RS connections
 gAMPA_ibrs = 0.1/Nrs;
@@ -227,7 +227,7 @@ gGABAa_fsrs=0.3/Nrs;
 
 
 % FS circuit and FS->IB connections
-gGABAafe=.5/N;
+gGABAafe=.7/N;
 end
 
 % % % % % % % % % % % % % % % % % % % % % % 
