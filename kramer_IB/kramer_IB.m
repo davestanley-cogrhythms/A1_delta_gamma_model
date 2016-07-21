@@ -38,7 +38,7 @@ Nfs=N;  % Number of FS cells
 % tonic input currents
 Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
+Jng1=-2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -84,7 +84,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
