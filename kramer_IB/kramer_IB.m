@@ -15,13 +15,13 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -42,7 +42,7 @@ Jng1=-2;     % NG current injection; step1   % Do this to remove the first NG pu
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
-JRS2 = -1.0;
+JRS2 = 0.0;
     
 
 IB_offset1=245;
@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -82,7 +82,7 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-150;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 38;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 15;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
@@ -92,7 +92,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         % IBPPstim = -3;
-        RSPPstim = -7;
+        RSPPstim = -5;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
 
@@ -111,7 +111,7 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
-        IBPPstim = -5;
+        IBPPstim = -2;
         % RSPPstim = -5;
         % NGPPstim = -4;
         % FSPPstim = -5;
@@ -212,14 +212,14 @@ gGABAbie=.5/N;
 gAMPA_ibrs = 0.1/Nrs;
 gNMDA_ibrs = 3.0/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
-gGABAb_ngrs = 0.5/Nng;
+gGABAb_ngrs = 0.4/Nng;
 
 
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
-gAMPA_rsfs=0.5/Nfs;
-gGABAaff=0.5/Nfs;
-gGABAa_fsrs=0.5/Nrs;
+gAMPA_rsfs=1/Nfs;
+gGABAaff=1/Nfs;
+gGABAa_fsrs=1/Nrs;
 
 % RS to IB circuit
 gGABAafe=.0/N;
