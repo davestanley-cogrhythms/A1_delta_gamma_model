@@ -38,11 +38,11 @@ Nfs=N;  % Number of FS cells
 % tonic input currents
 Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jng1=2;     % NG current injection; step1   % Do this to remove the first NG pulse
+Jng1=-2;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
-JRS2 = 0;
+JRS2 = -1.0;
     
 
 IB_offset1=245;
@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -93,7 +93,7 @@ switch pulse_mode
         FSPPstim = 0;
         % IBPPstim = -3;
         RSPPstim = -7;
-        NGPPstim = -4;
+%         NGPPstim = -4;
 %         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
@@ -168,6 +168,7 @@ ggjFS=.2/Nfs;  % IBa -> IBa
 gsyn_hetero = 0;
 
 % Synaptic connection strengths zeros
+% % Synaptic connection strengths
 gAMPAee=0;
 gNMDAee=0;
 
@@ -180,54 +181,49 @@ gGABAbii=0;
 gGABAaie=0;
 gGABAbie=0;
 
-gGABAaff=0;
-
-gGABAafe=0;
-
-% IB and NG to RS connections
 gAMPA_ibrs = 0;
 gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
 
-% RS-FS circuit
 gAMPA_rsrs=0;
 gAMPA_rsfs=0;
+gGABAaff=0;
 gGABAa_fsrs=0;
 
-% FS circuit and FS->IB connections
-gGABAaff=0;
 gGABAafe=0;
+gAMPA_rsng = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.4/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=0.2/Nng;
+gGABAbii=.5/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.2/N;
+gGABAbie=.5/N;
 
-% IB and NG to RS connections
+% IB to RS circuit 
 gAMPA_ibrs = 0.1/Nrs;
-gNMDA_ibrs = 1.0/Nrs;
+gNMDA_ibrs = 3.0/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
-gGABAb_ngrs = 0.1/Nng;
+gGABAb_ngrs = 0.5/Nng;
+
 
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
-gAMPA_rsfs=0.3/Nfs;
+gAMPA_rsfs=0.5/Nfs;
 gGABAaff=0.5/Nfs;
-gGABAa_fsrs=0.3/Nrs;
+gGABAa_fsrs=0.5/Nrs;
 
-
-% FS circuit and FS->IB connections
-gGABAafe=.4/N;
+% RS to IB circuit
+gGABAafe=.0/N;
+gAMPA_rsng = 0.0/Nng;
 end
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -401,8 +397,8 @@ if include_RS
       'V_noise',RSda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',2,'E_M',E_EKDR,...
-      'gCaH',.5,'E_CaH',ECa,...
+      'gM',1,'E_M',E_EKDR,...
+      'gCaH',0,'E_CaH',ECa,...
       };
 end
 
@@ -526,6 +522,14 @@ if include_RS && include_FS
     spec.connections(i).direction = 'RS->FS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
+if include_RS && include_NG
+    i=i+1;
+    spec.connections(i).direction = 'RS->NG';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsng,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
 
