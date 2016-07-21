@@ -21,7 +21,7 @@ include_FS = 1;
 include_NG = 1;
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -29,7 +29,7 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=15;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -38,7 +38,7 @@ Nfs=N;  % Number of FS cells
 % tonic input currents
 Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jng1=-2;     % NG current injection; step1   % Do this to remove the first NG pulse
+Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
@@ -84,7 +84,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
