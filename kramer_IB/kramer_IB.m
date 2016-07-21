@@ -15,10 +15,10 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 
 % simulation controls
 tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -26,7 +26,7 @@ dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
 no_noise = 0;
-no_synapses = 1;
+no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -82,9 +82,9 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-150;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 38;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -92,8 +92,8 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         % IBPPstim = -3;
-        RSPPstim = -5;
-%         NGPPstim = -4;
+        RSPPstim = -7;
+        NGPPstim = -4;
 %         FSPPstim = -5;
 
     case 2                  % Median nerve stimulation
@@ -201,17 +201,17 @@ gGABAafe=0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.3/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.4/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
 gNMDAei=5/Nng;
 % 
 gGABAaii=0.1/Nng;
-gGABAbii=0.3/Nng;
+gGABAbii=0.2/Nng;
 % % 
 gGABAaie=0.1/N;
-gGABAbie=0.3/N;
+gGABAbie=0.2/N;
 
 % IB and NG to RS connections
 gAMPA_ibrs = 0.1/Nrs;
@@ -221,7 +221,7 @@ gGABAb_ngrs = 0.1/Nng;
 
 % RS-FS circuit
 gAMPA_rsrs=0.1/Nrs;
-gAMPA_rsfs=0.5/Nfs;
+gAMPA_rsfs=0.3/Nfs;
 gGABAaff=0.5/Nfs;
 gGABAa_fsrs=0.3/Nrs;
 
