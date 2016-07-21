@@ -42,7 +42,7 @@ Jng1=-2;     % NG current injection; step1   % Do this to remove the first NG pu
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
-JRS2 = 0.0;
+JRS2 = -0.5;
     
 
 IB_offset1=245;
@@ -58,7 +58,7 @@ lambda = 1000;
 RSgRAN=0.005;
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -82,7 +82,7 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-150;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 15;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 30;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
@@ -222,7 +222,7 @@ gGABAaff=1/Nfs;
 gGABAa_fsrs=1/Nrs;
 
 % RS to IB circuit
-gGABAafe=.3/N;
+% gGABAafe=.3/N;
 gAMPA_rsng = 0.0/Nng;
 end
 
