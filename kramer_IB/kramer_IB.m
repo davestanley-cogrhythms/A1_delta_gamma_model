@@ -15,10 +15,12 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_NG = 1;
+include_IB = 0;
+include_RS = 0;
+include_FS = 0;
+include_NG = 0;
+include_supRS = 1;
+include_supFS = 1;
 
 % simulation controls
 tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -29,7 +31,7 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=15;   % Number of excitatory cells
+N=20;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -43,7 +45,9 @@ Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
 JRS2 = 0;
-    
+supJRS1 = 5;
+supJRS2 = 0;
+supJfs = 1;
 
 IB_offset1=245;
 IB_onset2=245;
@@ -56,6 +60,9 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 RSgRAN=0.005;
+supRSgRAN = 0.0025;
+
+
 
 % % Periodic pulse stimulation
 pulse_mode = 1;
@@ -75,6 +82,7 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
+        supRSPPstim = 0;
     case 1                  % Gamma stimulation
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -91,10 +99,12 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
+        supRSPPstim = 0;
         IBPPstim = -1;
         RSPPstim = -7;
         NGPPstim = -6;
 %         FSPPstim = -5;
+%         supRSPPstim = -7;
 
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
@@ -111,10 +121,12 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
+        supRSPPstim = 0;
         IBPPstim = -5;
         % RSPPstim = -5;
         % NGPPstim = -4;
         % FSPPstim = -5;
+        % supRSPPstim = -5;
     case 3                  % Auditory stimulation at delta (possibly not used...)
         PPfreq = 4; % in Hz
         PPwidth = 3; % in ms
@@ -130,10 +142,12 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
+        supRSPPstim = 0;
         % IBPPstim = -3;
         % RSPPstim = -3;
         % NGPPstim = -4;
         % FSPPstim = -5;
+        % supRSPPstim = -3;
         
 end
 
@@ -257,6 +271,8 @@ IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
 RSda_Vnoise = .3;
+supRSda_Vnoise = .3;
+supFS_Vnoise = 3;
 
 
 % constant biophysical parameters
@@ -434,6 +450,41 @@ if include_FS
       'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      };
+end
+
+
+if include_supRS
+    i=i+1;
+    spec.populations(i).name = 'supRS';
+    spec.populations(i).size = Nrs;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
+      'PPstim', supRSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'gRAN',supRSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
+      'stim',supJRS1,'onset',0,'offset',RS_offset1,'stim2',supJRS2,'onset2',RS_onset2,'offset2',Inf,...
+      'V_noise',supRSda_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',2,'E_M',E_EKDR,...
+      'gCaH',.5,'E_CaH',ECa,...
+      };
+end
+
+if include_supFS
+    i=i+1;
+    spec.populations(i).name = 'supFS';
+    spec.populations(i).size = Nfs;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'stim',supJfs,'onset',0,'offset',Inf,...
+      'V_noise',supFS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
       };
