@@ -15,10 +15,10 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_RS = 0;
-include_FS = 0;
-include_NG = 0;
+include_IB = 1;
+include_RS = 1;
+include_FS = 1;
+include_NG = 1;
 include_supRS = 1;
 include_supFS = 1;
 
@@ -35,6 +35,8 @@ N=10;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
+NsupRS = 10; 
+NsupFS = NsupRS;
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -60,16 +62,16 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;
 RSgRAN=0.005;
-supRSgRAN = 0.003;
+supRSgRAN = 0.002;
 
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 3;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
-        PPwidth = 3; % in ms
+        PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
@@ -129,15 +131,15 @@ switch pulse_mode
         % supRSPPstim = -5;
     case 3                  % Auditory stimulation at delta (possibly not used...)
         PPfreq = 4; % in Hz
-        PPwidth = 3; % in ms
+        PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-0;   % ms, offset time
+        PPoffset = tspan(end)-10;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.75;  % Not used for Gaussian pulse
-        kernel_type = 2;
+        kernel_type = 1;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -147,7 +149,7 @@ switch pulse_mode
         % RSPPstim = -3;
         % NGPPstim = -4;
         % FSPPstim = -5;
-        % supRSPPstim = -3;
+        supRSPPstim = -1;
         
 end
 
@@ -238,12 +240,18 @@ gNMDA_ibrs = 1.0/Nrs;
 gGABAa_ngrs = 0.1/Nrs;
 gGABAb_ngrs = 0.1/Nng;
 
-% RS-FS circuit
+% RS-FS circuit (both deep and supraficial connections ATM)
 gAMPA_rsrs=0.1/Nrs;
 gAMPA_rsfs=0.3/Nfs;
 gGABAaff=0.5/Nfs;
 gGABAa_fsrs=0.3/Nrs;
 
+% Deep -> Supra connections
+gAMPA_IBsupRS = 0.01/NsupRS;
+gNMDA_IBsupRS = 0.01/NsupRS;
+gAMPA_IBsupFS = 0.01/NsupFS;
+gNMDA_IBsupFS = 0.01/NsupFS;
+gAMPA_RSsupRS = 0.02/NsupRS;
 
 % FS circuit and FS->IB connections
 gGABAafe=.7/N;
@@ -464,7 +472,7 @@ end
 if include_supRS
     i=i+1;
     spec.populations(i).name = 'supRS';
-    spec.populations(i).size = Nrs;
+    spec.populations(i).size = NsupRS;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
@@ -483,7 +491,7 @@ end
 if include_supFS
     i=i+1;
     spec.populations(i).name = 'supFS';
-    spec.populations(i).size = Nfs;
+    spec.populations(i).size = NsupFS;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
@@ -616,7 +624,7 @@ if include_FS && include_RS
         };
 end
 
-% % % % % % % % % % % %  Supraficial connections % % % % % % % % % % % % % 
+% % % % % % % % % % % %  Supraficial connections (RS-FS) % % % % % % % % % % % % % 
 % % % % %  supRS Cells  % % % % %
 % % supRS->supRS recurrent synaptic and gap connections
 if include_supRS
@@ -657,6 +665,35 @@ if include_supFS && include_supRS
         };
 end
 
+% % % % % % % % % % % %  Deep->Supraficial connections % % % % % % % % % % % % % 
+% % IB->supRS
+if include_IB && include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'IB->supRS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_IBsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_IBsupRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        };
+end
+
+% % IB->supFS
+if include_IB && include_supFS
+    i=i+1;
+    spec.connections(i).direction = 'IB->supFS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_IBsupFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_IBsupFS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        };
+end
+
+% % RS->supRS
+if include_RS && include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'RS->supRS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_RSsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
