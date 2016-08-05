@@ -174,9 +174,14 @@ gsa=.3;     % IBs -> IBa
 ggjaRS=0;
 ggja=0;
 ggjFS=0;
+% % Deep cells
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
+% % Sup cells
+ggjasupRS=.02/N;  % RS -> RS
+ggjsupFS=.02/Nfs;  % IBa -> IBa
+
 
 % Synapse heterogenity
 gsyn_hetero = 0;
@@ -572,6 +577,7 @@ if include_RS
         };
 end
 
+% % RS->FS synaptic connection
 if include_RS && include_FS
     i=i+1;
     spec.connections(i).direction = 'RS->FS';
@@ -609,6 +615,48 @@ if include_FS && include_RS
     spec.connections(i).parameters = {'g_SYN',gGABAa_fsrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
+
+% % % % % % % % % % % %  Supraficial connections % % % % % % % % % % % % % 
+% % % % %  supRS Cells  % % % % %
+% % supRS->supRS recurrent synaptic and gap connections
+if include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'supRS->supRS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'g_GAP',ggjasupRS,...
+        };
+end
+
+% % supRS->supFS synaptic connection
+if include_supRS && include_supFS
+    i=i+1;
+    spec.connections(i).direction = 'supRS->supFS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
+% % % % %  supFS Cells  % % % % %
+% % supFS->supFS Synaptic connections
+if include_supFS
+    i=i+1;
+    spec.connections(i).direction = 'supFS->supFS';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).parameters = {'g_SYN',gGABAaff,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'g_GAP',ggjsupFS,...
+        };
+end
+
+% % supFS->supRS Synaptic connections
+if include_supFS && include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'supFS->supRS';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_fsrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
+
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
