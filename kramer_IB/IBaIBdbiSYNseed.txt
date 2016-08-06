@@ -12,7 +12,7 @@ Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
 Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
 mask = (abs(Xpre-Xpost)<=fanout)
 
-gsyn=unifrnd(g_SYN-g_SYN_hetero,g_SYN+g_SYN_hetero,[Npre 1])'
+gsyn=unifrnd(g_SYN-g_SYN_hetero,g_SYN+g_SYN_hetero,[Npost 1])'
 ISYN(X,s) = (gsyn.*(s*mask).*(X-E_SYN))
  
 s' = -s./tauDx + ((1-s)/tauRx).*(1+tanh(Vpre/10));
