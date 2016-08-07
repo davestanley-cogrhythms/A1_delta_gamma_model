@@ -31,12 +31,12 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=10;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
-NsupRS = 10; 
-NsupFS = NsupRS;
+NsupRS = 30; 
+NsupFS = 5;
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -181,8 +181,8 @@ ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
 % % Sup cells
-ggjasupRS=.02/N;  % RS -> RS
-ggjsupFS=.02/Nfs;  % IBa -> IBa
+ggjasupRS=.02/NsupRS;  % RS -> RS
+ggjsupFS=.02/NsupFS;  % IBa -> IBa
 
 
 % Synapse heterogenity
@@ -225,33 +225,39 @@ if ~no_synapses
 gAMPAee=3/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
-gAMPAei=0.1/Nng;      % IBa -> IBdb, 0(.04)
-gNMDAei=5/Nng;
+gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
+gNMDAei=5/N;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=0.3/Nng;
 % % 
-gGABAaie=0.1/N;
-gGABAbie=0.3/N;
+gGABAaie=0.1/Nng;
+gGABAbie=0.3/Nng;
 
 % IB and NG to RS connections
-gAMPA_ibrs = 0.1/Nrs;
-gNMDA_ibrs = 1.0/Nrs;
-gGABAa_ngrs = 0.1/Nrs;
+gAMPA_ibrs = 0.1/N;
+gNMDA_ibrs = 1.0/N;
+gGABAa_ngrs = 0.1/Nng;
 gGABAb_ngrs = 0.1/Nng;
 
-% RS-FS circuit (both deep and supraficial connections ATM)
+% RS-FS circuit (deep connections)
 gAMPA_rsrs=0.1/Nrs;
-gAMPA_rsfs=0.3/Nfs;
+gAMPA_rsfs=0.3/Nrs;
 gGABAaff=0.5/Nfs;
-gGABAa_fsrs=0.3/Nrs;
+gGABAa_fsrs=0.3/Nfs;
+
+% RS-FS circuit (supra connections)
+gAMPA_supRSsupRS=0.1/NsupRS;
+gAMPA_supRSsupFS=0.3/NsupRS;
+gGABA_supFSsupFS=0.5/NsupFS;
+gGABAa_supFSsupRS=0.3/NsupFS;
 
 % Deep -> Supra connections
-gAMPA_IBsupRS = 0.01/NsupRS;
-gNMDA_IBsupRS = 0.01/NsupRS;
-gAMPA_IBsupFS = 0.01/NsupFS;
-gNMDA_IBsupFS = 0.01/NsupFS;
-gAMPA_RSsupRS = 0.02/NsupRS;
+gAMPA_IBsupRS = 0.01/N;
+gNMDA_IBsupRS = 0.01/N;
+gAMPA_IBsupFS = 0.01/N;
+gNMDA_IBsupFS = 0.01/N;
+gAMPA_RSsupRS = 0.02/Nrs;
 
 % FS circuit and FS->IB connections
 gGABAafe=.7/N;
@@ -631,7 +637,7 @@ if include_supRS
     i=i+1;
     spec.connections(i).direction = 'supRS->supRS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_rsrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         'g_GAP',ggjasupRS,...
         };
 end
@@ -641,7 +647,7 @@ if include_supRS && include_supFS
     i=i+1;
     spec.connections(i).direction = 'supRS->supFS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSsupFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
 
@@ -651,7 +657,7 @@ if include_supFS
     i=i+1;
     spec.connections(i).direction = 'supFS->supFS';                   % GABA_A
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gGABAaff,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABA_supFSsupFS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         'g_GAP',ggjsupFS,...
         };
 end
@@ -661,7 +667,7 @@ if include_supFS && include_supRS
     i=i+1;
     spec.connections(i).direction = 'supFS->supRS';                   % GABA_A
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_fsrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_supFSsupRS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 
