@@ -15,15 +15,15 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_NG = 1;
+include_IB = 0;
+include_RS = 0;
+include_FS = 0;
+include_NG = 0;
 include_supRS = 1;
 include_supFS = 1;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -48,7 +48,7 @@ Jfs=1;     % FS current injection; step1
 JRS1 = 5;
 JRS2 = 0;
 supJRS1 = 5;
-supJRS2 = 0;
+supJRS2 = -.5;
 supJfs = 1;
 
 IB_offset1=245;
@@ -67,7 +67,7 @@ supRSgRAN = 0.002;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 3;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -211,13 +211,26 @@ gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
 
-% RS-FS circuit
+% RS-FS circuit (deep connections)
 gAMPA_rsrs=0;
 gAMPA_rsfs=0;
+gGABAaff=0;
 gGABAa_fsrs=0;
 
+% RS-FS circuit (supra connections)
+gAMPA_supRSsupRS=0;
+gAMPA_supRSsupFS=0;
+gGABA_supFSsupFS=0;
+gGABAa_supFSsupRS=0;
+
+% Deep -> Supra connections
+gAMPA_IBsupRS = 0;
+gNMDA_IBsupRS = 0;
+gAMPA_IBsupFS = 0;
+gNMDA_IBsupFS = 0;
+gAMPA_RSsupRS = 0;
+
 % FS circuit and FS->IB connections
-gGABAaff=0;
 gGABAafe=0;
 
 if ~no_synapses
@@ -248,9 +261,9 @@ gGABAa_fsrs=0.3/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/NsupRS;
-gAMPA_supRSsupFS=0.3/NsupRS;
+gAMPA_supRSsupFS=2/NsupRS;        % Increased by 4x due to sparse firing of sup principle cells.
 gGABA_supFSsupFS=0.5/NsupFS;
-gGABAa_supFSsupRS=0.3/NsupFS;
+gGABAa_supFSsupRS=0.1/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
 
 % Deep -> Supra connections
 gAMPA_IBsupRS = 0.01/N;
