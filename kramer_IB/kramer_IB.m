@@ -16,14 +16,14 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 0;
-include_RS = 1;
-include_FS = 1;
+include_RS = 0;
+include_FS = 0;
 include_NG = 0;
 include_supRS = 1;
 include_supFS = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -48,7 +48,7 @@ Jfs=1;     % FS current injection; step1
 JRS1 = 5;
 JRS2 = 0;
 supJRS1 = 5;
-supJRS2 = 0;
+supJRS2 = -2;
 supJfs = 1;
 
 IB_offset1=245;
@@ -254,6 +254,12 @@ gGABAa_ngrs = 0.1/Nng;
 gGABAb_ngrs = 0.1/Nng;
 
 % RS-FS circuit (deep connections)
+% % % % This configuration gives slightly closer to 40 Hz when stimulating at JRS = -2 % % % % 
+% gAMPA_rsrs=0.1/Nrs;
+% gAMPA_rsfs=1/Nrs;
+% gGABAaff=0.3/Nfs;
+% gGABAa_fsrs=0.2/Nfs;
+% % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
 gAMPA_rsfs=0.3/Nrs;
 gGABAaff=0.5/Nfs;
@@ -262,9 +268,9 @@ gGABAa_fsrs=0.3/Nfs;
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
         gNMDA_supRSsupRS=0.0/(NsupRS);
-gAMPA_supRSsupFS=0.3/(NsupRS);        % Increased by 4x due to sparse firing of sup principle cells.
+gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principle cells.
 gGABA_supFSsupFS=0.5/NsupFS;
-gGABAa_supFSsupRS=0.3/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
+gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
 
 % Deep -> Supra connections
 gAMPA_IBsupRS = 0.01/N;
@@ -406,8 +412,7 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        include_IB = 0; include_FS = 1; include_NG = 0; include_RS = 1;
-        vary = { 'RS','stim2',[-2 -1 0 1];
+        vary = { 'supRS','stim2',[-2 -1 0 1];
                  }; 
         
 end
@@ -733,7 +738,7 @@ switch sim_mode
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
     case 9
-        PlotData(data,'plot_type','waveform','variable','RS_V');
+        PlotData(data,'plot_type','waveform','variable','supRS_V');
         %PlotData(data,'plot_type','power');
     otherwise
         PlotData(data,'plot_type','waveform');
