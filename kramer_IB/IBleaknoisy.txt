@@ -2,13 +2,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Parameters
 g_l=1;    % mS/cm^2
-%E_l=-70;
-%E_l_noise = 500;
-%E_l = E_l + E_l_noise*randn(1,Npop); % mV
-E_l = -67 + 5*randn(1,Npop); % mV
+E_l=[-67];                        % E_l mean
+E_l_std = [0];                    % E_l standard deviation. No noise by default.
 
 % Functions
-Ileak(IN) = g_l.*(IN-E_l)
+E_l_randomized = E_l + E_l_std*randn(1,Npop); % mV
+Ileak(IN) = g_l.*(IN-E_l_randomized)
 
 % Interface
 current => -Ileak(IN)
