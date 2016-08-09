@@ -59,7 +59,5 @@ r(0) = IC+IC_noise.*rand(Npre,1)';
 g' = K3GABAB.*r - K4GABAB.*g;
 g(0) = IC+IC_noise.*rand(Npre,1)';
 
-monitor functions % always record the synaptic current
-
 % Interface
 current => -IGABAB(Vpost,g)
