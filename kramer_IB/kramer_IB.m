@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -15,15 +15,15 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_RS = 0;
-include_FS = 0;
-include_NG = 0;
+include_IB = 1;
+include_RS = 1;
+include_FS = 1;
+include_NG = 1;
 include_supRS = 1;
 include_supFS = 1;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -31,12 +31,12 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=10;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 NsupRS = 30; 
-NsupFS = 5;
+NsupFS = N;
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
@@ -93,7 +93,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -229,6 +229,8 @@ gNMDA_IBsupRS = 0;
 gAMPA_IBsupFS = 0;
 gNMDA_IBsupFS = 0;
 gAMPA_RSsupRS = 0;
+gGABAa_NGsupRS=0;
+gGABAb_NGsupRS=0;
 
 % FS circuit and FS->IB connections
 gGABAafe=0;
@@ -272,12 +274,14 @@ gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of su
 gGABA_supFSsupFS=0.5/NsupFS;
 gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
 
-% Deep -> Supra connections
-gAMPA_IBsupRS = 0.01/N;
-gNMDA_IBsupRS = 0.01/N;
-gAMPA_IBsupFS = 0.01/N;
-gNMDA_IBsupFS = 0.01/N;
-gAMPA_RSsupRS = 0.02/Nrs;
+% Deep -> Supra connections (including NG - really should model this separately!)
+% gAMPA_IBsupRS = 0.01/N;
+gNMDA_IBsupRS = 0.2/N;
+% gAMPA_IBsupFS = 0.01/N;
+% gNMDA_IBsupFS = 0.1/N;
+gAMPA_RSsupRS = 0.1/Nrs;
+% gGABAa_NGsupRS=0.01/Nng;
+gGABAb_NGsupRS=0.05/Nng;
 
 % FS circuit and FS->IB connections
 gGABAafe=.7/N;
@@ -528,8 +532,6 @@ if include_supFS
       };
 end
 
-
-
 % % % % % % % % % % % %  Connections  % % % % % % % % % % % % %  
 i=0;
 % % % % %  IB Cells  % % % % %
@@ -688,6 +690,18 @@ if include_supFS && include_supRS
     spec.connections(i).direction = 'supFS->supRS';                   % GABA_A
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gGABAa_supFSsupRS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
+
+
+% % NG->supRS Synaptic connections           % Exactly the same as Deep NG->RS connection
+if include_NG && include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'NG->supRS';                   % GABA_A
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_NGsupRS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAb_NGsupRS,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
+        'TmaxGABAB',TmaxGABAB ...
         };
 end
 
