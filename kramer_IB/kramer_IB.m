@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
