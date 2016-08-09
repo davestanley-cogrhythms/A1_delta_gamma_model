@@ -23,7 +23,7 @@ include_supRS = 1;
 include_supFS = 1;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -66,7 +66,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 3;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -128,8 +128,8 @@ switch pulse_mode
         % NGPPstim = -4;
         % FSPPstim = -5;
         % supRSPPstim = -5;
-    case 3                  % Auditory stimulation at delta (possibly not used...)
-        PPfreq = 4; % in Hz
+    case 3                  % Auditory stimulation at 10Hz (possibly not used...)
+        PPfreq = 10; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
@@ -148,7 +148,7 @@ switch pulse_mode
         % RSPPstim = -3;
         % NGPPstim = -4;
         % FSPPstim = -5;
-        supRSPPstim = -1;
+        supRSPPstim = -3;
         
 end
 
