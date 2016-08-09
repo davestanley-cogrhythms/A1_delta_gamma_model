@@ -35,7 +35,7 @@ N=5;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
-NsupRS = 5; 
+NsupRS = 30; 
 NsupFS = 5;
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
@@ -48,7 +48,7 @@ Jfs=1;     % FS current injection; step1
 JRS1 = 5;
 JRS2 = 0;
 supJRS1 = 5;
-supJRS2 = -2;
+supJRS2 = 1;
 supJfs = 1;
 
 IB_offset1=245;
@@ -180,7 +180,7 @@ ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
 % % Sup cells
-ggjasupRS=.2/(NsupRS);  % RS -> RS
+ggjasupRS=.00/(NsupRS);  % RS -> RS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjsupFS=.2/NsupFS;  % IBa -> IBa
 
 
@@ -501,7 +501,7 @@ if include_supRS
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'g_l',gl,'E_l',-67,'E_l_std',0,...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'g_l',gl,'E_l',-67,'E_l_std',5,...
       'PPstim', supRSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'gRAN',supRSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',supJRS1,'onset',0,'offset',RS_offset1,'stim2',supJRS2,'onset2',RS_onset2,'offset2',Inf,...
