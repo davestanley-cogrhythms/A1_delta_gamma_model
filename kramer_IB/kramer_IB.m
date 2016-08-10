@@ -48,7 +48,7 @@ Jfs=1;     % FS current injection; step1
 JRS1 = 5;
 JRS2 = 0;
 supJRS1 = 5;
-supJRS2 = 1;
+supJRS2 = 0.75;
 supJfs = 1;
 
 IB_offset1=245;
@@ -279,7 +279,7 @@ gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation
 gNMDA_IBsupRS = 0.2/N;
 % gAMPA_IBsupFS = 0.01/N;
 % gNMDA_IBsupFS = 0.1/N;
-gAMPA_RSsupRS = 0.1/Nrs;
+gAMPA_RSsupRS = 0.15/Nrs;
 % gGABAa_NGsupRS=0.01/Nng;
 gGABAb_NGsupRS=0.05/Nng;
 
@@ -744,6 +744,8 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 switch sim_mode
     case 1
         PlotData(data,'plot_type','waveform');
+        PlotData(data,'plot_type','rastergram');
+        PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');
         PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
@@ -769,6 +771,24 @@ end
 %PlotData(data,'variable','iGABABAustin_g','plot_type','waveform');
 %PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
 
+% Remove some entries from data structure
+%%
+data2=data;
+% str = data2.labels; str = str(~strcmp_anysubstring(str,'IB_')); data2.labels = str;     % Remove IB
+str = data2.labels; str = str(~strcmp_anysubstring(str,'NG_')); data2.labels = str;     % Remove NG
+% str = data2.labels; str = str( ~(strcmp_anysubstring(str,'RS') & ~strcmp_anysubstring(str,'supRS')) ); data2.labels = str;     % Remove RS (but not supRS)
+str = data2.labels; str = str( ~(strcmp_anysubstring(str,'FS') & ~strcmp_anysubstring(str,'supFS')) ); data2.labels = str;     % Remove FS (but not supFS)
+% str = data2.labels; str = str(~strcmp_anysubstring(str,'supRS')); data2.labels = str;     % Remove supRS
+% str = data2.labels; str = str(~strcmp_anysubstring(str,'supFS')); data2.labels = str;     % Remove supFS
+
+%%
+PlotData(data2,'plot_type','waveform');
+PlotData(data2,'plot_type','rastergram');
+PlotFR(data2);
+
+
+
+%%
 toc
 
 
