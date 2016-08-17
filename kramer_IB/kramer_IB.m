@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -421,7 +421,7 @@ switch sim_mode
                  }; 
              
      case 10
-        vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[10,20,30,40,50,60,80,100];
+        vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[1,2,4,8];
                  }; 
         
 end

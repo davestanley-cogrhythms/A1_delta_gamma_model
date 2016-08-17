@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:8]
+    for i=[1:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['Provided a range of frequencies of auditory inputs around gamma (10-100Hz). Tested response of gamma resonant network.'];
+    mycomment = ['Stimmed auditory input at peri-delta frequencies (1-8 Hz). Network doesnt resonate well at delta.'];
     
 
     % Write to a text file
