@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 10;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -12,6 +12,7 @@ sim_mode = 1;   % 1 - normal sim
                 % 7 - sim study NG; gamma input
                 % 8 - sim study Median Nerve phase
                 % 9 - sim study FS-RS circuit vary RS stim
+                % 10 - Vary iPeriodicPulses in all cells
                 
                 
 % Cells to include in model
@@ -19,8 +20,8 @@ include_IB = 1;
 include_RS = 1;
 include_FS = 1;
 include_NG = 1;
-include_supRS = 1;
-include_supFS = 1;
+include_supRS = 0;
+include_supFS = 0;
 
 % simulation controls
 tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -31,7 +32,7 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=10;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -66,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 3;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -418,6 +419,10 @@ switch sim_mode
     case 9
         vary = { 'supRS','stim2',[-2 -1 0 1];
                  }; 
+             
+     case 10
+        vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[10,20,30,40,50,60,80,100];
+                 }; 
         
 end
 
@@ -744,8 +749,8 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 switch sim_mode
     case 1
         PlotData(data,'plot_type','waveform');
-        PlotData(data,'plot_type','rastergram');
-        PlotFR(data);
+%         PlotData(data,'plot_type','rastergram');
+%         PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');
         PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
@@ -772,19 +777,19 @@ end
 %PlotData(data,'variable','IBiMMich_mM','plot_type','waveform');
 
 % Remove some entries from data structure
-%%
-data2=data;
-% str = data2.labels; str = str(~strcmp_anysubstring(str,'IB_')); data2.labels = str;     % Remove IB
-str = data2.labels; str = str(~strcmp_anysubstring(str,'NG_')); data2.labels = str;     % Remove NG
-% str = data2.labels; str = str( ~(strcmp_anysubstring(str,'RS') & ~strcmp_anysubstring(str,'supRS')) ); data2.labels = str;     % Remove RS (but not supRS)
-str = data2.labels; str = str( ~(strcmp_anysubstring(str,'FS') & ~strcmp_anysubstring(str,'supFS')) ); data2.labels = str;     % Remove FS (but not supFS)
-% str = data2.labels; str = str(~strcmp_anysubstring(str,'supRS')); data2.labels = str;     % Remove supRS
-% str = data2.labels; str = str(~strcmp_anysubstring(str,'supFS')); data2.labels = str;     % Remove supFS
-
-%%
-PlotData(data2,'plot_type','waveform');
-PlotData(data2,'plot_type','rastergram');
-PlotFR(data2);
+% %%
+% data2=data;
+% % str = data2.labels; str = str(~strcmp_anysubstring(str,'IB_')); data2.labels = str;     % Remove IB
+% str = data2.labels; str = str(~strcmp_anysubstring(str,'NG_')); data2.labels = str;     % Remove NG
+% % str = data2.labels; str = str( ~(strcmp_anysubstring(str,'RS') & ~strcmp_anysubstring(str,'supRS')) ); data2.labels = str;     % Remove RS (but not supRS)
+% str = data2.labels; str = str( ~(strcmp_anysubstring(str,'FS') & ~strcmp_anysubstring(str,'supFS')) ); data2.labels = str;     % Remove FS (but not supFS)
+% % str = data2.labels; str = str(~strcmp_anysubstring(str,'supRS')); data2.labels = str;     % Remove supRS
+% % str = data2.labels; str = str(~strcmp_anysubstring(str,'supFS')); data2.labels = str;     % Remove supFS
+% 
+% %%
+% PlotData(data2,'plot_type','waveform');
+% PlotData(data2,'plot_type','rastergram');
+% PlotFR(data2);
 
 
 
