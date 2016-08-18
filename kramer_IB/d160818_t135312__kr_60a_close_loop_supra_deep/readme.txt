@@ -1,0 +1,1 @@
+60a_close_loop_supra_deep Closed the loop between deep and supraficial layers. Got AP delta transient when delay was set to 13 ms (shown here). However, didnt work for 11ms delay (current code version). Also, there is some weird effect whereby open loop AP doesnt occur any more when supra layers N=30, but does when N=5.

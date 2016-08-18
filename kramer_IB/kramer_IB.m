@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 10;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -20,11 +20,11 @@ include_IB = 1;
 include_RS = 1;
 include_FS = 1;
 include_NG = 1;
-include_supRS = 0;
-include_supFS = 0;
+include_supRS = 1;
+include_supFS = 1;
 
 % simulation controls
-tspan=[0 4000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 2;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -94,7 +94,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 44;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -233,6 +233,11 @@ gAMPA_RSsupRS = 0;
 gGABAa_NGsupRS=0;
 gGABAb_NGsupRS=0;
 
+% Supra -> Deep connections
+gAMPA_supRSRS = 0;
+gAMPA_supRSIB = 0;
+
+
 % FS circuit and FS->IB connections
 gGABAafe=0;
 
@@ -283,6 +288,10 @@ gNMDA_IBsupRS = 0.2/N;
 gAMPA_RSsupRS = 0.15/Nrs;
 % gGABAa_NGsupRS=0.01/Nng;
 gGABAb_NGsupRS=0.05/Nng;
+
+% Supra -> Deep connections
+gAMPA_supRSRS = 0.15/NsupRS;
+gAMPA_supRSIB = 0.15/NsupRS;
 
 % FS circuit and FS->IB connections
 gGABAafe=.7/N;
@@ -739,6 +748,29 @@ if include_RS && include_supRS
     spec.connections(i).parameters = {'g_SYN',gAMPA_RSsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
+
+
+
+
+% % % % % % % % % % % %  Supraficial->Deep connections % % % % % % % % % % % % % 
+% % supRS->RS
+if include_RS && include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'supRS->RS';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
+% % supRS->IB
+if include_RS && include_supRS
+    i=i+1;
+    spec.connections(i).direction = 'supRS->IB';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSIB,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
