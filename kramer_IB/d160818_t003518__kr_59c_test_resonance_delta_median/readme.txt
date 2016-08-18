@@ -1,0 +1,1 @@
+59c_test_resonance_delta_median Stimmed median nerve input at peri-delta frequencies (1-8 Hz). Network doesnt resonate well at delta.
