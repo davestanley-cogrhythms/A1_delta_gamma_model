@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 2;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -111,7 +111,7 @@ switch pulse_mode
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
         PPwidth = 10; % in ms
-        PPshift = 400; % in ms
+        PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
         %PPoffset=270;   % ms, offset time
