@@ -1,0 +1,1 @@
+61a_play Wrote some code to test having NMDA synapses in the gamma network. Found it produces some ramp-up of spiking activity. See Fig. 7.

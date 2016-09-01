@@ -16,10 +16,10 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_NG = 1;
+include_IB = 0;
+include_RS = 0;
+include_FS = 0;
+include_NG = 0;
 include_supRS = 1;
 include_supFS = 1;
 
@@ -217,6 +217,9 @@ gAMPA_rsfs=0;
 gGABAaff=0;
 gGABAa_fsrs=0;
 
+gNMDA_RSRS=0;
+gNMDA_RSFS=0;
+
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0;
 gNMDA_supRSsupRS=0;
@@ -273,12 +276,17 @@ gAMPA_rsfs=0.3/Nrs;
 gGABAaff=0.5/Nfs;
 gGABAa_fsrs=0.3/Nfs;
 
+% gNMDA_RSRS=1/Nrs;
+% gNMDA_RSFS=1/Nrs;
+
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
-        gNMDA_supRSsupRS=0.0/(NsupRS);
+        gNMDA_supRSsupRS=7/(NsupRS);
 gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principle cells.
 gGABA_supFSsupFS=0.5/NsupFS;
-gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
+gGABAa_supFSsupRS=0.5/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
+
+gNMDA_supRSsupFS=1/Nrs;
 
 % Deep -> Supra connections (including NG - really should model this separately!)
 % gAMPA_IBsupRS = 0.01/N;
@@ -620,8 +628,9 @@ end
 if include_RS
     i=i+1;
     spec.connections(i).direction = 'RS->RS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_RSRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         'g_GAP',ggjaRS,...
         };
 end
@@ -630,8 +639,9 @@ end
 if include_RS && include_FS
     i=i+1;
     spec.connections(i).direction = 'RS->FS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_RSFS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
