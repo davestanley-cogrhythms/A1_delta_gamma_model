@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -32,7 +32,7 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=25;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -94,7 +94,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 45;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.25;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -426,7 +426,8 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'FS','stim',[-2 -1 0 1];
+        vary = { 'FS','stim',[-2 -1 0];
+                 'FS','E_l_std',[0,3,6,9];
                  }; 
              
      case 10
@@ -500,9 +501,9 @@ if include_FS
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',0,'g_l',0.1,...
       'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
