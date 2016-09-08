@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,12 +16,12 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
+include_IB = 0;
+include_RS = 0;
 include_FS = 1;
-include_NG = 1;
-include_supRS = 1;
-include_supFS = 1;
+include_NG = 0;
+include_supRS = 0;
+include_supFS = 0;
 
 % simulation controls
 tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -426,7 +426,7 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'supRS','stim2',[-2 -1 0 1];
+        vary = { 'FS','stim',[-2 -1 0 1];
                  }; 
              
      case 10
@@ -791,7 +791,7 @@ switch sim_mode
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
     case 9
-        PlotData(data,'plot_type','waveform','variable','supRS_V');
+        PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
     otherwise
         PlotData(data,'plot_type','waveform');
