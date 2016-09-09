@@ -426,8 +426,9 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'FS','stim',[-2 -1 0];
-                 'FS','E_l_std',[0,3,6,9];
+        vary = { 'FS','stim',[0];
+                 %'FS','E_l_std',[0,1.5,3,4.5,6];
+                 'FS','V_noise',linspace(0,50,5);
                  }; 
              
      case 10
