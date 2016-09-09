@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -426,8 +426,8 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { ... 'RS','stim',[-.5];
-                 'RS','PPstim',linspace(1,7,7);
+        vary = { 'RS','stim',linspace(-2.5,-0.5,7);
+                 'RS','PPstim',linspace(5,5,1);
                  'RS','E_l_std',linspace(5,5,1);
                  %'FS','V_noise',linspace(0,50,5);
                  
@@ -468,12 +468,12 @@ if include_RS
     spec.populations(i).name = 'RS';
     spec.populations(i).size = Nrs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',0,'g_l',gl,...
       'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
-      'stim',JRS1,'onset',0,'offset',RS_offset1,'stim2',JRS2,'onset2',RS_onset2,'offset2',Inf,...
+      'stim',JRS1,'onset',0,'offset',Inf,...
       'V_noise',RSda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
