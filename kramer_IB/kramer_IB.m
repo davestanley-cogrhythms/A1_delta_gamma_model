@@ -3,6 +3,7 @@
 tic
 clear
 % Simulation mode
+compile_flag = 1;
 sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
@@ -16,15 +17,15 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_RS = 1;
-include_FS = 1;
-include_NG = 0;
+include_IB = 1;
+include_RS = 0;
+include_FS = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -32,7 +33,7 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=25;   % Number of excitatory cells
+N=2;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -41,8 +42,8 @@ NsupFS = N;
 
 % % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
 % tonic input currents
-Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd1=0.5; % apical: 23.5(25.5), basal: 23.5(42.5)
+Jd2=0.5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
@@ -58,7 +59,7 @@ RS_offset1=245;
 RS_onset2=245;
 
 % Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.015;
+gRAN=.00;
 ERAN=0;
 tauRAN=2;
 lambda = 1000;
@@ -67,7 +68,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -85,8 +86,8 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-    case 1                  % Gamma stimulation
-        PPfreq = 40; % in Hz
+    case 1                  % Inhibitory IPSP stimulation 
+        PPfreq = 3; % in Hz
         PPwidth = 8; % in ms
         PPshift = 0; % in ms
         PPonset = 50;    % ms, onset time
@@ -102,7 +103,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -1;
+        IBPPstim = 5;
         RSPPstim = -7;
         NGPPstim = -6;
 %         FSPPstim = -5;
@@ -243,7 +244,7 @@ gGABAafe=0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=3/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=.3/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
@@ -425,8 +426,8 @@ switch sim_mode
                  'IB','PPshift',[350 400 575 650 750]}; 
 %         vary = [];
 
-    case 9
-        vary = { 'RS','stim',linspace(-2.5,-0.5,7);
+    case 9             
+             vary = { 'IB','gAR',linspace(0,5,5);
                  %'RS','PPstim',linspace(5,5,1);
                  %'RS','E_l_std',linspace(5,5,1);
                  %'FS','V_noise',linspace(0,50,5);
@@ -449,7 +450,7 @@ if include_IB
     spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBiAR'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
       'PPstim', IBPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
@@ -460,6 +461,7 @@ if include_IB
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
       'gCaH',2,'E_CaH',ECa,...
+      'gAR',2,'E_AR',-25,...
       };
 end
 
@@ -778,7 +780,7 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',compile_flag,'vary',vary);
 
 
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
