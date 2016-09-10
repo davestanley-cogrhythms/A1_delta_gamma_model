@@ -87,7 +87,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
     case 1                  % Inhibitory IPSP stimulation 
-        PPfreq = 3; % in Hz
+        PPfreq = 40; % in Hz
         PPwidth = 8; % in ms
         PPshift = 0; % in ms
         PPonset = 50;    % ms, onset time

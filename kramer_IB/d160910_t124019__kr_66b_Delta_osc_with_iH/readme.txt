@@ -1,0 +1,1 @@
+66b_Delta_osc_with_iH With iH present, stimulation at 40 Hz is not excitatory.
