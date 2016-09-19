@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,15 +16,15 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
-include_RS = 1;
-include_FS = 1;
-include_NG = 0;
+include_IB = 1;
+include_RS = 0;
+include_FS = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -32,10 +32,10 @@ no_noise = 0;
 no_synapses = 0;
 
 % number of cells per population
-N=25;   % Number of excitatory cells
-Nrs=N; % Number of RS cells
+N=5;   % Number of excitatory cells
+Nrs=25; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=N;  % Number of FS cells
+Nfs=25;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -46,8 +46,8 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
-JRS1 = -.5;
-JRS2 = -.5;
+JRS1 = 5;
+JRS2 = 0;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -468,12 +468,12 @@ if include_RS
     spec.populations(i).name = 'RS';
     spec.populations(i).size = Nrs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','IBitonic','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',5,'g_l',gl,...
       'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
-      'stim',JRS1,'onset',0,'offset',Inf,...
+      'stim',JRS1,'onset',0,'offset',RS_offset1,'stim2',JRS2,'onset2',RS_onset2,'offset2',Inf,...
       'V_noise',RSda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
