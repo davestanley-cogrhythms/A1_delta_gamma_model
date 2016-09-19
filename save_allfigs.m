@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '67e_redid_hetero_unifrnd';
+    currfigname = '67f_sweep_Iapp_nogamma';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:6]
+    for i=[4:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Added NMDA current. Did single sim at Iapp [0.75]. Figs 1-3 weak NMDA (=1). Figs 4-6, gNMDA_RSRS=3/Nrs;'];
+    mycomment = ['Did a quick sweep withno gamma input, to verify everything works. Swept Iapp from [  -1.5000   -0.9167   -0.3333    0.2500    0.8333    1.4167    2.0000]. No NMDA: gNMDA_RSRS=0/Nrs;'];
     
 
     % Write to a text file
