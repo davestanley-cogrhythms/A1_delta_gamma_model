@@ -270,8 +270,8 @@ gAMPA_ibrs = 0.1/N;
 % % % % END % % % % 
 gAMPA_rsrs=0.2/Nrs;
 gAMPA_rsfs=0.6/Nrs;
-gGABAaff=1/Nfs;
-gGABAa_fsrs=2/Nfs;
+gGABAaff=.5/Nfs;
+gGABAa_fsrs=4/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
