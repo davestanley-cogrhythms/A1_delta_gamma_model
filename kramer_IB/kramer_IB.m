@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -46,8 +46,8 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1.5;     % FS current injection; step1
-JRS1 = -1;
-JRS2 = -1;
+JRS1 = .75;
+JRS2 = .75;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -103,7 +103,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
 %         IBPPstim = -1;
-        RSPPstim = -7;
+        RSPPstim = -3;
         NGPPstim = -6;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
@@ -269,6 +269,7 @@ gAMPA_ibrs = 0.1/N;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
+    gNMDA_RSRS=3/Nrs;
 gAMPA_rsfs=0.3/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=.3/Nfs;
@@ -622,8 +623,9 @@ end
 if include_RS
     i=i+1;
     spec.connections(i).direction = 'RS->RS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_RSRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         'g_GAP',ggjaRS,...
         };
 end
@@ -782,8 +784,8 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
 switch sim_mode
     case 1
-        PlotData(data,'plot_type','waveform');
-%         PlotData(data,'plot_type','rastergram');
+%         PlotData(data,'plot_type','waveform');
+        PlotData(data,'plot_type','rastergram');
 %         PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');

@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '67d_redid_hetero_unifrnd';
+    currfigname = '67e_redid_hetero_unifrnd';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Turn on 40 Hz pulse. Lowered gGABAa_fsrs to .3/Nfs. Sweep Iapp [-1.5000   -0.9167   -0.3333    0.2500    0.8333    1.4167    2.0000]. Figs 1-3 RS PPstim = -3; Figs 4-6 RS PPstim = -5'];
+    mycomment = ['Added NMDA current. Did single sim at Iapp [0.75]. Figs 1-3 weak NMDA (=1). Figs 4-6, gNMDA_RSRS=3/Nrs;'];
     
 
     % Write to a text file
