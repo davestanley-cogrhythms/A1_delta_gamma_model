@@ -271,7 +271,7 @@ gAMPA_ibrs = 0.1/N;
 gAMPA_rsrs=0.1/Nrs;
 gAMPA_rsfs=0.3/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=.5/Nfs;
+gGABAa_fsrs=.3/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -426,8 +426,8 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'RS','stim2',linspace(-1,-1,1); ...
-                 'RS','PPstim',linspace(-6,0,7); ...
+        vary = { 'RS','stim2',linspace(-1.5,2,7); ...
+                 'RS','PPstim',linspace(-3,-3,1); ...
                  
                  }; 
              
