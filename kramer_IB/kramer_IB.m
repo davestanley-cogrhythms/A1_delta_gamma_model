@@ -93,7 +93,7 @@ switch pulse_mode
         PPoffset = tspan(end)-50;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 45;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
@@ -102,7 +102,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -1;
+%         IBPPstim = -1;
         RSPPstim = -7;
         NGPPstim = -6;
 %         FSPPstim = -5;
@@ -243,7 +243,7 @@ gGABAafe=0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=3/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAee=5/N;
 % 
 gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
@@ -294,7 +294,7 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % FS circuit and FS->IB connections
-gGABAafe=.7/N;
+gGABAafe=.4/N;
 end
 
 % % % % % % % % % % % % % % % % % % % % % % 
