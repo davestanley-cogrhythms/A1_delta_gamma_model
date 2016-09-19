@@ -46,8 +46,8 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1.5;     % FS current injection; step1
-JRS1 = 2;
-JRS2 = 2;
+JRS1 = -1;
+JRS2 = -1;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -426,8 +426,8 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'RS','stim2',linspace(-1.5,2,7); ...
-                 'RS','PPstim',linspace(-2,-2,1); ...
+        vary = { 'RS','stim2',linspace(-1,-1,1); ...
+                 'RS','PPstim',linspace(-6,0,7); ...
                  
                  }; 
              
@@ -798,6 +798,23 @@ switch sim_mode
         
         PlotData(data,'plot_type','rastergram','variable','RS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
+        
+
+        % % For plotting average synaptic responses of FS cells.
+        temp2 = [];
+        for i = 1:length(data);
+            temp = data(i).RS_FS_IBaIBdbiSYNseed_s;
+            temp2 = [temp2, mean(temp,2)];
+        end
+        
+        figure('units','normalized','outerposition',[0 0 1 1]); subplot(121); plott_matrix3D(temp2,'active_dim',3,'do_shift',-.5); xlabel('time'); ylabel('Mean FS->RS synaptic response'); title('Responses for sims 1-7');
+        subplot(122); bar(std(temp2)); ylabel('Std of LEFT'); xlabel('Simulation #');
+
+
+
+
+        
+        
     otherwise
         PlotData(data,'plot_type','waveform');
 end

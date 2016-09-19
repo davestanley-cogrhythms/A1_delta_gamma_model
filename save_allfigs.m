@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '67a_redid_hetero_unifrnd';
+    currfigname = '67b_redid_hetero_unifrnd';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[]
+    for i=[1:3]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Made Eleak_noisy be unifrnd instead of randn. Still stepping through IApps. Figs 1-4 - accidentally did super high FS->RS. Not bad. gGABAaff=.5/Nfs; gGABAa_fsrs=5/Nfs. Figs 5-6 used more reasonable FS->RS. gGABAaff=.5/Nfs; gGABAa_fsrs=.5/Nfs;'];
+    mycomment = ['Turn on 40 Hz pulse. Iapp = -1 (2nd from top in previous sweep). RS PPstim = [    -6    -5    -4    -3    -2    -1     0]'];
     
 %%
     % Write to a text file
