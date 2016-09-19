@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[2:3]
+    for i=[1:2]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Restored gamma oscillator. Readjusting connectivity. gGABAaff=1/Nfs; gGABAa_fsrs=1/Nfs;.'];
+    mycomment = ['Restored gamma oscillator. Increased FS->RS connectivity. gGABAaff=1/Nfs; gGABAa_fsrs=2/Nfs;.'];
     
 
     % Write to a text file

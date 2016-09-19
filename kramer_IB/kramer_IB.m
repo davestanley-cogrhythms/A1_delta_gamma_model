@@ -271,7 +271,7 @@ gAMPA_ibrs = 0.1/N;
 gAMPA_rsrs=0.2/Nrs;
 gAMPA_rsfs=0.6/Nrs;
 gGABAaff=1/Nfs;
-gGABAa_fsrs=1/Nfs;
+gGABAa_fsrs=2/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -792,13 +792,18 @@ switch sim_mode
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
     case 9
-        PlotData(data,'plot_type','waveform');
+        %PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
+        
+        PlotData(data,'plot_type','rastergram','variable','RS_V');
+        PlotData(data,'plot_type','rastergram','variable','FS_V');
     otherwise
         PlotData(data,'plot_type','waveform');
 end
 
 
+%         PlotData(data,'plot_type','waveform','variable','RS_V');
+%         PlotData(data,'plot_type','waveform','variable','FS_V');
 
 %PlotData(data,'plot_type','rastergram');
 %PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
