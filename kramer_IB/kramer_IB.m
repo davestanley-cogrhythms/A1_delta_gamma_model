@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -268,10 +268,10 @@ gAMPA_ibrs = 0.1/N;
 % gGABAaff=0.3/Nfs;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
-gAMPA_rsrs=0.2/Nrs;
-gAMPA_rsfs=0.6/Nrs;
+gAMPA_rsrs=0.1/Nrs;
+gAMPA_rsfs=0.3/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=2/Nfs;
+gGABAa_fsrs=.5/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -426,7 +426,8 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'RS','stim2',linspace(-1.5,.5,7);
+        vary = { 'RS','stim2',linspace(-1.5,2,7); ...
+                 'RS','PPstim',linspace(-2,-2,1); ...
                  
                  }; 
              
@@ -503,7 +504,7 @@ if include_FS
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',10,'g_l',0.1,...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',20,'g_l',0.1,...
       'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
