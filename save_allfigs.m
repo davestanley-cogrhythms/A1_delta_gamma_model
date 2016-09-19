@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '66d_play_gamma_hetero';
+    currfigname = '66e_play_gamma_hetero';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[3:6]
+    for i=[1:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Restored gamma oscillator. Increased FS->RS connectivity. Figs 3-4 gGABAaff=1/Nfs; gGABAa_fsrs=4/Nfs; Figs 5-6 gGABAaff=.5/Nfs; gGABAa_fsrs=4/Nfs.'];
+    mycomment = ['Added gamma stim. Increased FS->RS connectivity. Figs 1-2 gGABAaff=.5/Nfs; gGABAa_fsrs=4/Nfs; Figs 3-4 gGABAaff=.5/Nfs; gGABAa_fsrs=2/Nfs;'];
     
 
     % Write to a text file

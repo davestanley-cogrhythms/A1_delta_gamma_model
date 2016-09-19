@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -271,7 +271,7 @@ gAMPA_ibrs = 0.1/N;
 gAMPA_rsrs=0.2/Nrs;
 gAMPA_rsfs=0.6/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=4/Nfs;
+gGABAa_fsrs=2/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
