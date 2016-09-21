@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '67f_sweep_Iapp_nogamma';
+    currfigname = '67g_sweep_Iapp_gamma_AP';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[4:4]
+    for i=[8,9]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Did a quick sweep withno gamma input, to verify everything works. Swept Iapp from [  -1.5000   -0.9167   -0.3333    0.2500    0.8333    1.4167    2.0000]. No NMDA: gNMDA_RSRS=0/Nrs;'];
+    mycomment = ['Put gamma input back in. Sweep Iapp as before. But this time, add aperiodic pulse. Figs 1-4 no NMDA; Figs 5-8 with NMDA'];
     
 
     % Write to a text file

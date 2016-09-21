@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -92,9 +92,9 @@ switch pulse_mode
         PPonset = 50;    % ms, onset time
         PPoffset = tspan(end)-50;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 45;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 30;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
         IBPPstim = 0;
@@ -269,7 +269,7 @@ gAMPA_ibrs = 0.1/N;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=0/Nrs;
+    gNMDA_RSRS=3/Nrs;
 gAMPA_rsfs=0.3/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=.3/Nfs;
@@ -428,7 +428,7 @@ switch sim_mode
 
     case 9
         vary = { 'RS','stim2',linspace(-1.5,2,7); ...
-                 'RS','PPstim',linspace(0,0,1); ...
+                 'RS','PPstim',linspace(-3,-3,1); ...
                  
                  }; 
              

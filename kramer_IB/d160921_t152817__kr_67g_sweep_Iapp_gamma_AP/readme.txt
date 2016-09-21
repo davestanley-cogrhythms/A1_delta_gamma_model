@@ -1,0 +1,1 @@
+67g_sweep_Iapp_gamma_AP Put gamma input back in. Sweep Iapp as before. But this time, add aperiodic pulse. Figs 1-3 no NMDA; Figs 4,8,9 with NMDA
