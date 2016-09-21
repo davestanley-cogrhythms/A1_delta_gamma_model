@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -269,8 +269,9 @@ gAMPA_ibrs = 0.1/N;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=3/Nrs;
+    gNMDA_RSRS=2/Nrs;
 gAMPA_rsfs=0.3/Nrs;
+    gNMDA_rsfs=1/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=.3/Nfs;
 
@@ -427,8 +428,8 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'RS','stim2',linspace(1.5,1.5,1); ...
-                 'RS','PPstim',linspace(-7,-1,7); ...
+        vary = { 'RS','stim2',linspace(-1.5,2,7); ...
+                 'RS','PPstim',linspace(0,0,1); ...
                  
                  }; 
              
@@ -634,8 +635,9 @@ end
 if include_RS && include_FS
     i=i+1;
     spec.connections(i).direction = 'RS->FS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_rsfs,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
