@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -46,8 +46,8 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1.5;     % FS current injection; step1
-JRS1 = .75;
-JRS2 = .75;
+JRS1 = 1.5;
+JRS2 = 1.5;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -103,7 +103,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
 %         IBPPstim = -1;
-        RSPPstim = -3;
+        RSPPstim = -4;
         NGPPstim = -6;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;

@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '67h_sweep_RS_PPstim_gammaAP';
+    currfigname = '68a_full_delta_gamma_hetero_network';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[10:12]
+    for i=[1:5]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Put gamma input back in. Sweep RS PPStim. Using Iapp to be so low as to not produce spontaneous gamma. Sweep range from -1 to -7. IApp held constant at 1.5 (no spontaneous firing!)'];
+    mycomment = ['Single simulation with everything properly tuned. RS-RS NMDA is present and RS PPStim and iApp are tuned appropriately. Figs 1-3 PPStim on; Figs 4-5 PPStim off.'];
     
 
     % Write to a text file
