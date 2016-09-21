@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -103,7 +103,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
 %         IBPPstim = -1;
-        RSPPstim = -4;
+        RSPPstim = -5;
         NGPPstim = -6;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
