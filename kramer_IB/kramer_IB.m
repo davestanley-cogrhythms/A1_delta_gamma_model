@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,10 +16,10 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -432,6 +432,9 @@ switch sim_mode
                  'RS','PPstim',linspace(-7,-1,7); ...
                  
                  }; 
+             
+         vary = { ...
+                 'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
              
      case 10
         vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[1,2,4,8];
