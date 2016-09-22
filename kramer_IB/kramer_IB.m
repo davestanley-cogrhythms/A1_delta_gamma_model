@@ -16,15 +16,15 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
+include_IB = 0;
+include_RS = 0;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -43,19 +43,19 @@ NsupFS = N;
 % tonic input currents
 Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jng1=-1;     % NG current injection; step1   % Do this to remove the first NG pulse
+Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1.5;     % FS current injection; step1
-JRS1 = 1.5;
+JRS1 = 3;
 JRS2 = 1.5;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
 
-IB_offset1=5;
-IB_onset2=5;
-RS_offset1=5;
-RS_onset2=5;
+IB_offset1=245;
+IB_onset2=245;
+RS_offset1=245;
+RS_onset2=245;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -89,12 +89,12 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 8; % in ms
         PPshift = 0; % in ms
-        PPonset = 50;    % ms, onset time
+        PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-50;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 30;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
         IBPPstim = 0;
@@ -103,8 +103,8 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
 %         IBPPstim = -1;
-        RSPPstim = -5;
-        NGPPstim = -6;
+        RSPPstim = -3;
+%         NGPPstim = -6;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
 
@@ -256,7 +256,7 @@ gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
 % IB and NG to RS connections
-gAMPA_ibrs = 0.1/N;
+% gAMPA_ibrs = 0.1/N;
 % gNMDA_ibrs = 0.5/N;
 % gGABAa_ngrs = 0.1/Nng;
 % gGABAb_ngrs = 0.1/Nng;
@@ -269,9 +269,9 @@ gAMPA_ibrs = 0.1/N;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=2/Nrs;
+    gNMDA_RSRS=3/Nrs;
 gAMPA_rsfs=0.3/Nrs;
-    gNMDA_rsfs=1/Nrs;
+    gNMDA_rsfs=3/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=.3/Nfs;
 
@@ -296,7 +296,7 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % FS circuit and FS->IB connections
-% gGABAafe=.4/N;
+gGABAafe=.4/Nfs;
 end
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -428,13 +428,21 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'RS','stim2',linspace(1.5,1.5,1); ...
-                 'RS','PPstim',linspace(-7,-1,7); ...
+        vary = { 'RS','stim2',linspace(-2,1.5,2); ...
+                 %'RS','PPstim',linspace(-7,-1,7); ...
                  
                  }; 
              
-         vary = { ...
-                 'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
+%          vary = { ...
+%                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
+
+
+        vary = { 'FS','stim',linspace(-.5,-.5,1); ...
+                 'FS->FS','g_SYN',linspace(.2,2,8)/Nfs; ...
+                 }; 
+
+             
+             
              
      case 10
         vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[1,2,4,8];
@@ -480,8 +488,8 @@ if include_RS
       'V_noise',RSda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',2,'E_M',E_EKDR,...
-      'gCaH',.5,'E_CaH',ECa,...
+      'gM',0.5,'E_M',E_EKDR,...
+      'gCaH',0,'E_CaH',ECa,...
       };
 end
 
@@ -783,15 +791,18 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',1);
+% SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
+%     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
+toc;
 
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
 switch sim_mode
     case 1
 %         PlotData(data,'plot_type','waveform');
         PlotData(data,'plot_type','rastergram');
-%         PlotFR(data);
+        PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');
         PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
@@ -800,25 +811,35 @@ switch sim_mode
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
     case 9
+        %%
         %PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
         
-        PlotData(data,'plot_type','rastergram','variable','RS_V');
+        %PlotData(data,'plot_type','rastergram','variable','RS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
         
-
-        % % For plotting average synaptic responses of FS cells.
+        %PlotData(data,'plot_type','waveform','variable','FS_V');
+        
+        % For plotting average synaptic responses of FS cells.
         temp2 = [];
         for i = 1:length(data);
-            temp = data(i).RS_FS_IBaIBdbiSYNseed_s;
+            temp = data(i).FS_FS_IBaIBdbiSYNseed_s;
             temp2 = [temp2, mean(temp,2)];
         end
         
-        figure('units','normalized','outerposition',[0 0 1 1]); subplot(121); plott_matrix3D(temp2,'active_dim',3,'do_shift',-.5); xlabel('time'); ylabel('Mean FS->RS synaptic response'); title('Responses for sims 1-7');
+        figure('units','normalized','outerposition',[0 0 1 1]); subplot(121); plott_matrix3D(data(1).time,temp2,'active_dim',3,'do_shift',-.125); xlabel('time'); ylabel('Mean FS->RS synaptic response'); title('Responses for sims 1-7');
         subplot(122); bar(std(temp2)); ylabel('Std of LEFT'); xlabel('Simulation #');
 
-
-
+        %%
+        % For plotting average voltage responses of FS cells.
+        temp2 = [];
+        for i = 1:length(data);
+            temp = data(i).FS_V;
+            temp2 = [temp2, mean(temp,2)];
+        end
+        
+        figure('units','normalized','outerposition',[0 0 1 1]); subplot(121); plott_matrix3D(data(1).time,temp2,'active_dim',3,'do_shift',-10); xlabel('time'); ylabel('Mean FS->RS synaptic response'); title('Responses for sims 1-7');
+        subplot(122); bar(std(temp2)); ylabel('Std of LEFT'); xlabel('Simulation #');
 
         
         
@@ -857,8 +878,6 @@ end
 
 
 %%
-toc
-
 
 
 
