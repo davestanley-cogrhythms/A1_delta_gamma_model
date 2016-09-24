@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -437,8 +437,8 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'FS','stim',linspace(-3,1.5,12); ...
-                 'FS->FS','g_SYN',linspace(0.75,0.75,1)/Nfs; ...
+        vary = { 'FS','stim',linspace(-3,1.5,2); ...
+                 'FS','PPstim',linspace(0,-3,2); ...
                  }; 
 
              
@@ -816,30 +816,12 @@ switch sim_mode
         %PlotData(data,'plot_type','power');
         
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
+        data2 = CalcAverages(data);
+        PlotData(data2,'plot_type','waveform','variable','FS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
+        PlotFR2(data,'variable','FS_V');
         
-        %PlotData(data,'plot_type','waveform','variable','FS_V');
         
-        % For plotting average synaptic responses of FS cells.
-        temp2 = [];
-        for i = 1:length(data);
-            temp = data(i).FS_FS_IBaIBdbiSYNseed_s;
-            temp2 = [temp2, mean(temp,2)];
-        end
-        
-        figure('units','normalized','outerposition',[0 0 1 1]); subplot(121); plott_matrix3D(data(1).time,temp2,'active_dim',3,'do_shift',-.125); xlabel('time'); ylabel('Mean FS->RS synaptic response'); title('Responses for sims 1-7');
-        subplot(122); bar(std(temp2)); ylabel('Std of LEFT'); xlabel('Simulation #');
-
-        %%
-        % For plotting average voltage responses of FS cells.
-        temp2 = [];
-        for i = 1:length(data);
-            temp = data(i).FS_V;
-            temp2 = [temp2, mean(temp,2)];
-        end
-        
-        figure('units','normalized','outerposition',[0 0 1 1]); subplot(121); plott_matrix3D(data(1).time,temp2,'active_dim',3,'do_shift',-10); xlabel('time'); ylabel('Mean FS->RS synaptic response'); title('Responses for sims 1-7');
-        subplot(122); bar(std(temp2)); ylabel('Std of LEFT'); xlabel('Simulation #');
 
         
         
