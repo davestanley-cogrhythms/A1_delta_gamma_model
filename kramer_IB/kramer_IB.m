@@ -271,7 +271,7 @@ gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=3/Nrs;
 gAMPA_rsfs=0.3/Nrs;
     gNMDA_rsfs=3/Nrs;
-gGABAaff=1.0/Nfs;
+gGABAaff=.5/Nfs;
 gGABAa_fsrs=.3/Nfs;
 
 % RS-FS circuit (supra connections)
@@ -436,7 +436,7 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'FS','stim',linspace(-1.5,1.5,4); ...
+        vary = { 'FS','stim',linspace(0.5,1.5,4); ...
                  'FS','PPstim',linspace(0,-8,4); ...
                  }; 
 
