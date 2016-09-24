@@ -17,7 +17,7 @@ sim_mode = 9;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 0;
-include_RS = 0;
+include_RS = 1;
 include_FS = 1;
 include_NG = 0;
 include_supRS = 0;
@@ -45,7 +45,7 @@ Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
-Jfs=1.5;     % FS current injection; step1
+Jfs=1.25;     % FS current injection; step1
 JRS1 = 3;
 JRS2 = 1.5;
 supJRS1 = 5;
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -436,8 +436,8 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'FS','stim',linspace(0.5,1.5,4); ...
-                 'FS','PPstim',linspace(0,-8,4); ...
+        vary = { 'RS','stim2',linspace(-1.5,2,8); ...
+                 %'RS','PPstim',linspace(0,-8,4); ...
                  }; 
 
              
@@ -816,9 +816,12 @@ switch sim_mode
         
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
         data2 = CalcAverages(data);
+        PlotData(data2,'plot_type','waveform','variable','RS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+        PlotData(data,'plot_type','rastergram','variable','RS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
+        PlotFR2(data,'variable','RS_V');
         PlotFR2(data,'variable','FS_V');
         
         
