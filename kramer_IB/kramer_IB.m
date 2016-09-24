@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -437,8 +437,8 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'FS','stim',linspace(-3,1.5,2); ...
-                 'FS','PPstim',linspace(0,-3,2); ...
+        vary = { 'FS','stim',linspace(-5,1.5,8); ...
+                 'FS','PPstim',linspace(0,0,1); ...
                  }; 
 
              
@@ -818,6 +818,7 @@ switch sim_mode
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
         data2 = CalcAverages(data);
         PlotData(data2,'plot_type','waveform','variable','FS_V');
+        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
         PlotFR2(data,'variable','FS_V');
         
