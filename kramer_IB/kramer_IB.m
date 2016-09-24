@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -429,7 +429,7 @@ switch sim_mode
 
     case 9
         vary = { 'RS','stim2',linspace(-2,1.5,2); ...
-                 %'RS','PPstim',linspace(-7,-1,7); ...
+                 'RS','PPstim',linspace(-7,-1,7); ...
                  
                  }; 
              
@@ -437,8 +437,8 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'FS','stim',linspace(-5,1.5,8); ...
-                 'FS','PPstim',linspace(0,0,1); ...
+        vary = { 'FS','stim',linspace(-1.5,1.5,4); ...
+                 'FS','PPstim',linspace(0,-8,4); ...
                  }; 
 
              
