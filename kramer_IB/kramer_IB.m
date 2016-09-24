@@ -201,7 +201,6 @@ gGABAbii=0;
 gGABAaie=0;
 gGABAbie=0;
 
-gGABAaff=0;
 
 gGABAafe=0;
 
@@ -272,7 +271,7 @@ gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=3/Nrs;
 gAMPA_rsfs=0.3/Nrs;
     gNMDA_rsfs=3/Nrs;
-gGABAaff=.5/Nfs;
+gGABAaff=1.0/Nfs;
 gGABAa_fsrs=.3/Nfs;
 
 % RS-FS circuit (supra connections)
