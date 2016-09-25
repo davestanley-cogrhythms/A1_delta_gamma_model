@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '73d_Remove_NMDA_sweep_iApp_PPStim';
+    currfigname = '73e_inc_gRSFS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -42,8 +42,8 @@ function save_allfigs(currfname,currfigname)
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
-    %%
-    mycomment = ['RS and FS cells; No NMDA; instead vary iApp and PPStim to RS cells. stim2: [2, 1.5, 1, 0.5. PPstim: [-5,-4,-3,-2].'];
+    
+    mycomment = ['RS and FS cells; No NMDA; no iM; same as prev sim, but increased gAMPA_rsfs from 0.3 to 0.5.'];
     
 
     % Write to a text file

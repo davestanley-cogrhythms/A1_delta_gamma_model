@@ -1,0 +1,1 @@
+73e_inc_gRSFS RS and FS cells; No NMDA; no iM; same as prev sim, but increased gAMPA_rsfs from 0.3 to 0.5.

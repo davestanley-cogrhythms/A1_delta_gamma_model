@@ -269,7 +269,7 @@ gGABAbie=0.3/Nng;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=0/Nrs;
-gAMPA_rsfs=0.3/Nrs;
+gAMPA_rsfs=0.5/Nrs;
     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=.5/Nfs;
