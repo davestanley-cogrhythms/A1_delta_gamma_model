@@ -268,11 +268,11 @@ gGABAbie=0.3/Nng;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=3/Nrs;
+    gNMDA_RSRS=0/Nrs;
 gAMPA_rsfs=0.3/Nrs;
-    gNMDA_rsfs=3/Nrs;
+    gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=.3/Nfs;
+gGABAa_fsrs=.5/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -436,8 +436,8 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'RS','PPstim',linspace(0,-5,12); ...
-                 'FS->RS','g_SYN',linspace(0.5,.5,1)/Nfs;...
+        vary = { 'RS','stim2',linspace(2,0.5,4); ...
+                 'RS','PPstim',linspace(-5,-2,4); ...
                  }; 
 
              
@@ -486,7 +486,7 @@ if include_RS
       'V_noise',RSda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',0.5,'E_M',E_EKDR,...
+      'gM',0.0,'E_M',E_EKDR,...
       'gCaH',0,'E_CaH',ECa,...
       };
 end
@@ -818,10 +818,10 @@ switch sim_mode
         PlotData(data2,'plot_type','waveform','variable','RS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-%         PlotData(data,'plot_type','rastergram','variable','RS_V');
-%         PlotData(data,'plot_type','rastergram','variable','FS_V');
-        PlotFR2(data,'variable','RS_V'); PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-        PlotFR2(data,'variable','FS_V'); PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+        PlotData(data,'plot_type','rastergram','variable','RS_V');
+        PlotData(data,'plot_type','rastergram','variable','FS_V');
+        PlotFR2(data,'variable','RS_V'); %PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+        PlotFR2(data,'variable','FS_V'); %PlotFR2(data,'variable','FS_V','plot_type','meanFR');
         
         
 
