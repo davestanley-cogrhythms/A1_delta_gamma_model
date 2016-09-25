@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -94,7 +94,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 30;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
         IBPPstim = 0;
@@ -267,12 +267,13 @@ gGABAbie=0.3/Nng;
 % gGABAaff=0.3/Nfs;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
+% #mysynapses
 gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=5/Nrs;
-gAMPA_rsfs=0.5/Nrs;
+gAMPA_rsfs=0.8/Nrs;
     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=.5/Nfs;
+gGABAa_fsrs=.6/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -481,7 +482,7 @@ if include_RS
       'V_noise',RSda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',0.0,'E_M',E_EKDR,...
+      'gM',0.5,'E_M',E_EKDR,...
       'gCaH',0,'E_CaH',ECa,...
       };
 end

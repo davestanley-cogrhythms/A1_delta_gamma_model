@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '73f_vary_gFSRS_and_gRSFS';
+    currfigname = '73g_play_gRSFS_single_sims';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:16]
+    for i=[1:9]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -43,14 +43,14 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['RS and FS cells; Varied synaptic strengths. JRS2=1.5 and RS_PPStim = -3. RS->FS linspace(0.2,1.2,4)/Nfs; FS->RS linspace(0.2,.8,4)/Nfs;...'];
+    mycomment = ['RS and FS cells; Played with gAMPA_rsfs (0.6 Figs1-3; 0.4 Figs4-6; 0.8 Figs 7-9). RSPPStim = -3.'];
     
 
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
-    %
+    %%
     % Commit
     currd = pwd;
     cd ..
