@@ -436,8 +436,8 @@ switch sim_mode
 %                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
 
-        vary = { 'RS','PPstim',linspace(0,-8,4); ...
-                 'FS->RS','g_SYN',linspace(0.2,1.2,4)/Nfs;...
+        vary = { 'RS','PPstim',linspace(0,-5,12); ...
+                 'FS->RS','g_SYN',linspace(0.5,.5,1)/Nfs;...
                  }; 
 
              
@@ -818,10 +818,10 @@ switch sim_mode
         PlotData(data2,'plot_type','waveform','variable','RS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-        PlotData(data,'plot_type','rastergram','variable','RS_V');
-        PlotData(data,'plot_type','rastergram','variable','FS_V');
-        PlotFR2(data,'variable','RS_V');
-        PlotFR2(data,'variable','FS_V');
+%         PlotData(data,'plot_type','rastergram','variable','RS_V');
+%         PlotData(data,'plot_type','rastergram','variable','FS_V');
+        PlotFR2(data,'variable','RS_V'); PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+        PlotFR2(data,'variable','FS_V'); PlotFR2(data,'variable','FS_V','plot_type','meanFR');
         
         
 
