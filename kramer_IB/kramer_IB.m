@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -268,7 +268,7 @@ gGABAbie=0.3/Nng;
 % gGABAa_fsrs=0.2/Nfs;
 % % % % END % % % % 
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=0/Nrs;
+    gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.5/Nrs;
     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
@@ -427,17 +427,12 @@ switch sim_mode
 %         vary = [];
 
     case 9
-        vary = { 'RS','stim2',linspace(-2,1.5,2); ...
-                 'RS','PPstim',linspace(-7,-1,7); ...
-                 
-                 }; 
-             
-%          vary = { ...
-%                  'IB->RS','g_SYN',[0.01 0.03 0.05 0.07 0.1]/N};        % NMDA conductance
 
+        vary = { %'RS','stim2',linspace(2,0.5,4); ...
+                 %'RS','PPstim',linspace(-5,-2,4); ...
+                 'RS->FS','g_SYN',linspace(0.2,1.2,4)/Nrs;...
+                 'FS->RS','g_SYN',linspace(0.2,.8,4)/Nfs;...
 
-        vary = { 'RS','stim2',linspace(2,0.5,4); ...
-                 'RS','PPstim',linspace(-5,-2,4); ...
                  }; 
 
              
@@ -815,15 +810,15 @@ switch sim_mode
         
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
         data2 = CalcAverages(data);
-        PlotData(data2,'plot_type','waveform','variable','RS_V');
-        PlotData(data2,'plot_type','waveform','variable','FS_V');
+%         PlotData(data2,'plot_type','waveform','variable','RS_V');
+%         PlotData(data2,'plot_type','waveform','variable','FS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         PlotData(data,'plot_type','rastergram','variable','RS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
-        PlotFR2(data,'variable','RS_V'); %PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-        PlotFR2(data,'variable','FS_V'); %PlotFR2(data,'variable','FS_V','plot_type','meanFR');
-        
-        
+        PlotFR2(data,'variable','RS_V'); 
+        PlotFR2(data,'variable','FS_V'); 
+        PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+        PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
         
         
