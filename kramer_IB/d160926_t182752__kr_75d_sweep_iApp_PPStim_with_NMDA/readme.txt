@@ -1,0 +1,1 @@
+75d_sweep_iApp_PPStim_with_NMDA RS and FS cells. As before, but greatly increased gNMDA. Also increased FS->RS feedback to compensate and decreased RS->FS (to get more balance between 

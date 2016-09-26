@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -265,11 +265,11 @@ gGABAb_ngrs = 0.1/Nng;
 % RS-FS circuit (deep connections)
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
-%     gNMDA_RSRS=8/Nrs;
-gAMPA_rsfs=0.8/Nrs;
+    gNMDA_RSRS=12/Nrs;
+gAMPA_rsfs=0.6/Nrs;
 %     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=.6/Nfs;
+gGABAa_fsrs=1.0/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -425,8 +425,8 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { 'RS','stim2',linspace(4,0.5,4); ...
-                 'RS','PPstim',linspace(-8,-2,4); ...
+        vary = { 'RS','stim2',linspace(3,2,2); ...
+                 'RS','PPstim',linspace(-3,-2,2); ...
                  %'RS->FS','g_SYN',linspace(0.2,1.0,4)/Nrs;...
                  %'FS->RS','g_SYN',linspace(0.4,1.0,4)/Nfs;...
 
@@ -812,16 +812,17 @@ switch sim_mode
         %PlotData(data,'plot_type','power');
         
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
-%         data2 = CalcAverages(data);
+        data2 = CalcAverages(data);
+        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
 %         PlotData(data2,'plot_type','waveform','variable','RS_V');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
-%         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+
         PlotData(data,'plot_type','rastergram','variable','RS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
         PlotFR2(data,'variable','RS_V'); 
         PlotFR2(data,'variable','FS_V'); 
-        PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-        PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+%         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+%         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
         
         
