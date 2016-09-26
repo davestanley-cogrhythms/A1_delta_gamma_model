@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,15 +16,15 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 750]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -425,10 +425,10 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { %'RS','stim2',linspace(2,0.5,4); ...
-                 'RS','PPstim',linspace(-7,-2,4); ...
+        vary = { 'RS','stim2',linspace(2,-1.5,8); ...
+                 %'RS','PPstim',linspace(-7,-2,4); ...
                  %'RS->FS','g_SYN',linspace(0.2,1.0,4)/Nrs;...
-                 'FS->RS','g_SYN',linspace(0.2,.8,4)/Nfs;...
+                 %'FS->RS','g_SYN',linspace(0.2,.8,4)/Nfs;...
 
                  }; 
 
@@ -857,7 +857,7 @@ end
 % PlotData(data2,'plot_type','rastergram');
 % PlotFR(data2);
 
-
+toc
 
 %%
 
