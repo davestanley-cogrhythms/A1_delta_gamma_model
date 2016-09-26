@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,10 +16,10 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -33,9 +33,9 @@ no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
-Nrs=25; % Number of RS cells
+Nrs=24; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=25;  % Number of FS cells
+Nfs=24;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -92,9 +92,9 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-50;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 30;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
         IBPPstim = 0;
@@ -212,7 +212,9 @@ gGABAb_ngrs = 0;
 
 % RS-FS circuit (deep connections)
 gAMPA_rsrs=0;
+    gNMDA_RSRS=0;
 gAMPA_rsfs=0;
+    gNMDA_rsfs=0;
 gGABAaff=0;
 gGABAa_fsrs=0;
 
@@ -255,18 +257,12 @@ gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
 % IB and NG to RS connections
-% gAMPA_ibrs = 0.1/N;
-% gNMDA_ibrs = 0.5/N;
-% gGABAa_ngrs = 0.1/Nng;
-% gGABAb_ngrs = 0.1/Nng;
+gAMPA_ibrs = 0.05/N;
+gNMDA_ibrs = 1.0/N;
+gGABAa_ngrs = 0.1/Nng;
+gGABAb_ngrs = 0.1/Nng;
 
 % RS-FS circuit (deep connections)
-% % % % This configuration gives slightly closer to 40 Hz when stimulating at JRS = -2 % % % % 
-% gAMPA_rsrs=0.1/Nrs;
-% gAMPA_rsfs=1/Nrs;
-% gGABAaff=0.3/Nfs;
-% gGABAa_fsrs=0.2/Nfs;
-% % % % END % % % % 
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=5/Nrs;
@@ -427,7 +423,7 @@ switch sim_mode
                  'IB','PPshift',[350 400 575 650 750]}; 
 %         vary = [];
 
-    case 9
+    case 9  % Vary RS cells in RS-FS network
 
         vary = { %'RS','stim2',linspace(2,0.5,4); ...
                  'RS','PPstim',linspace(-7,-2,4); ...
@@ -441,6 +437,12 @@ switch sim_mode
      case 10
         vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[1,2,4,8];
                  }; 
+             
+    case 11     % Vary just FS cells
+        vary = { 'FS','stim',linspace(0,1.25,2); ...
+                 %'FS','PPstim',linspace(-2,0,2); ...
+                 }; 
+
         
 end
 
@@ -785,7 +787,7 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',1);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',1,'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
@@ -793,10 +795,10 @@ toc;
 
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
 switch sim_mode
-    case 1
-%         PlotData(data,'plot_type','waveform');
-        PlotData(data,'plot_type','rastergram');
-        PlotFR(data);
+    case {1,11}
+        PlotData(data,'plot_type','waveform');
+%          PlotData(data,'plot_type','rastergram');
+        %PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');
         PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
