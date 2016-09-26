@@ -16,10 +16,10 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -33,9 +33,9 @@ no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
-Nrs=25; % Number of RS cells
+Nrs=24; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=25;  % Number of FS cells
+Nfs=24;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -94,7 +94,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
         IBPPstim = 0;
