@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -265,9 +265,9 @@ gGABAb_ngrs = 0.1/Nng;
 % RS-FS circuit (deep connections)
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=5/Nrs;
+%     gNMDA_RSRS=8/Nrs;
 gAMPA_rsfs=0.8/Nrs;
-    gNMDA_rsfs=0/Nrs;
+%     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=.6/Nfs;
 
@@ -425,10 +425,10 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { %'RS','stim2',linspace(2,-1.5,8); ...
+        vary = { 'RS','stim2',linspace(4,0.5,4); ...
                  'RS','PPstim',linspace(-8,-2,4); ...
                  %'RS->FS','g_SYN',linspace(0.2,1.0,4)/Nrs;...
-                 'FS->RS','g_SYN',linspace(0.4,1.0,4)/Nfs;...
+                 %'FS->RS','g_SYN',linspace(0.4,1.0,4)/Nfs;...
 
                  }; 
 
