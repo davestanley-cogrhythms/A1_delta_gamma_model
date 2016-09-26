@@ -1,0 +1,1 @@
+73i_survey_PPStim_vs_gFSRS RS and FS cells; PPStim [ -7.0000   -5.3333   -3.6667   -2.0000]; gFSRS [  0.2000    0.4000    0.6000    0.8000]. gRSFS=0.8 

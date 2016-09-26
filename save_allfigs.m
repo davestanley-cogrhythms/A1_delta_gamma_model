@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '73h_survey_PPStim_vs_gRSFS_gFSRS_0.6';
+    currfigname = '73i_survey_PPStim_vs_gFSRS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -43,7 +43,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['RS and FS cells; PPStim [ -7.0000   -5.3333   -3.6667   -2.0000]; gRSFS [ 0.2000    0.4667    0.7333    1.0000]. gFSRS=0.6 '];
+    mycomment = ['RS and FS cells; PPStim [ -7.0000   -5.3333   -3.6667   -2.0000]; gFSRS [  0.2000    0.4000    0.6000    0.8000]. gRSFS=0.8 '];
 
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
