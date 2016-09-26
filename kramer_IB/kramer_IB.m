@@ -33,9 +33,9 @@ no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
-Nrs=24; % Number of RS cells
+Nrs=25; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=24;  % Number of FS cells
+Nfs=25;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -47,7 +47,7 @@ Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1.25;     % FS current injection; step1
 JRS1 = 3;
-JRS2 = 1.5;
+JRS2 = 2;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -425,10 +425,10 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { 'RS','stim2',linspace(2,-1.5,8); ...
-                 %'RS','PPstim',linspace(-7,-2,4); ...
+        vary = { %'RS','stim2',linspace(2,-1.5,8); ...
+                 'RS','PPstim',linspace(-8,-2,4); ...
                  %'RS->FS','g_SYN',linspace(0.2,1.0,4)/Nrs;...
-                 %'FS->RS','g_SYN',linspace(0.2,.8,4)/Nfs;...
+                 'FS->RS','g_SYN',linspace(0.4,1.0,4)/Nfs;...
 
                  }; 
 
@@ -812,10 +812,10 @@ switch sim_mode
         %PlotData(data,'plot_type','power');
         
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
-        data2 = CalcAverages(data);
+%         data2 = CalcAverages(data);
 %         PlotData(data2,'plot_type','waveform','variable','RS_V');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
-        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+%         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         PlotData(data,'plot_type','rastergram','variable','RS_V');
         PlotData(data,'plot_type','rastergram','variable','FS_V');
         PlotFR2(data,'variable','RS_V'); 
