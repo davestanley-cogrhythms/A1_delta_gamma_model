@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '75d_sweep_iApp_PPStim_with_NMDA';
+    currfigname = '75e_sweep_only_iApp';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[5:11]
+    for i=[1:5]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -42,8 +42,8 @@ function save_allfigs(currfname,currfigname)
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
-    %%
-    mycomment = ['RS and FS cells. As before, but greatly increased gNMDA. Also increased FS->RS feedback to compensate and decreased RS->FS (to get more balance between % of RS network activated and % of FS network activated.'];
+    
+    mycomment = ['RS and FS cells. Everything exaclty as before, but sweep wider range of RS iApp with RS PPStim at -3.'];
 
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
