@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -47,7 +47,7 @@ Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1.25;     % FS current injection; step1
 JRS1 = 3;
-JRS2 = 2;
+JRS2 = 2.5;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
