@@ -266,10 +266,11 @@ gGABAb_ngrs = 0.1/Nng;
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=5/Nrs;
-gAMPA_rsfs=0.8/Nrs;
+gAMPA_rsfs=0.3/Nrs;
 %     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=.5/Nfs;
+gGABAa_fsrs=.65/Nfs;
+gGABAa_fsrs=1.0/Nfs;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
@@ -425,10 +426,10 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { %'RS','stim2',linspace(-1.5,2.5,6); ...
-                 %'RS','PPstim',linspace(-3,-2,2); ...
-                 'RS->FS','g_SYN',linspace(0.3,1.0,5)/Nrs;...
-                 'FS->RS','g_SYN',linspace(0.3,1.0,5)/Nfs;...
+        vary = { 'RS','stim2',linspace(3.5,1.5,4); ...
+                 'RS','PPstim',linspace(-5,-2,4); ...
+                 %'RS->FS','g_SYN',linspace(0.3,1.0,5)/Nrs;...
+                 %'FS->RS','g_SYN',linspace(0.3,1.0,5)/Nfs;...
 
                  }; 
 
