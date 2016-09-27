@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '76b_varied_iApp_PPStim';
+    currfigname = '76c_gamma_delta_single_sims';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:10]
+    for i=[1:15]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -39,19 +39,19 @@ function save_allfigs(currfname,currfigname)
         end
         set(gcf,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-        tic; print(gcf,'-dpng','-r100','-opengl',fullfile(basepath,sp,savenames{i}));toc
+        tic; print(gcf,'-dpng','-r50','-opengl',fullfile(basepath,sp,savenames{i}));toc
         %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{i} '.png']));toc
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['Figs 1-5: gSyn FS->RS = .65/Nfs; Figs 6-10 gSyn FS->RS = 1.0/Nfs (using this one). Swept through various stimulation currents.'];
+    mycomment = ['Varied a bunch of things, greedily optimizing; see readme for details.. Generally I found that FS are too inhibited relative to RS. Also not sure what to do with IB PPStim.'];
 
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
-    
+    %%
     % Commit
     currd = pwd;
     cd ..

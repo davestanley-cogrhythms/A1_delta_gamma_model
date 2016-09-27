@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,10 +16,10 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -33,9 +33,9 @@ no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
-Nrs=25; % Number of RS cells
+Nrs=24; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=25;  % Number of FS cells
+Nfs=24;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -102,7 +102,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-%         IBPPstim = -1;
+        IBPPstim = -1;
         RSPPstim = -3;
 %         NGPPstim = -6;
 %         FSPPstim = -5;
@@ -260,7 +260,7 @@ gGABAbie=0.3/Nng;
 gAMPA_ibrs = 0.05/N;
 gNMDA_ibrs = 1.0/N;
 gGABAa_ngrs = 0.1/Nng;
-gGABAb_ngrs = 0.1/Nng;
+gGABAb_ngrs = 0.12/Nng;
 
 % RS-FS circuit (deep connections)
 % #mysynapses
@@ -788,7 +788,7 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',1,'verbose_flag',1);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
