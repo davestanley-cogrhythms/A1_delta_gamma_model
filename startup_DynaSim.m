@@ -14,6 +14,7 @@ function startup_DynaSim
     
     addpath((fullfile('~','src','DynaSim')));
     addpath(genpath(fullfile('~','src','DynaSim','functions')));
+    addpath(genpath(fullfile('~','src','DynaSim','functions_matlab_central')));
     addpath(genpath(fullfile('~','src','DynaSim','models')));
     
     % Add libdave path
