@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '76e_sweepIBRS_and_FSIB';
+    currfigname = '76f_sweep_NGPPSTim_and_FSIB';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[10:10]
+    for i=[1:11]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -39,13 +39,13 @@ function save_allfigs(currfname,currfigname)
         end
         set(gcf,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-        tic; print(gcf,'-dpng','-r50','-opengl',fullfile(basepath,sp,savenames{i}));toc
+        tic; print(gcf,'-dpng','-r100','-opengl',fullfile(basepath,sp,savenames{i}));toc
         %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{i} '.png']));toc
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['Used fixed IBPPStim of -2.5. Swept IB->RS through [ 0.0500    0.0667    0.0833    0.1000] and FS->IB synapses through [ 0.4000    0.6000    0.8000    1.0000]. Surprisingly higher IB->RS synaptic strength actually helped things! But anything above FS->IB of 0.4 disrupted IB cell firing.'];
+    mycomment = ['Swept NG PPSTim -3 through -10 and FS->IB through -4 and -8. Figs1-8 no AP; 9-11 with AP.'];
 
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

@@ -92,9 +92,9 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-50;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 2;
         IBPPstim = 0;
@@ -259,8 +259,8 @@ gGABAbie=0.3/Nng;
 % IB and NG to RS connections
 gAMPA_ibrs = 0.05/N;
 gNMDA_ibrs = 1.0/N;
-gGABAa_ngrs = 0.1/Nng;
-gGABAb_ngrs = 0.12/Nng;
+gGABAa_ngrs = 0.05/Nng;
+gGABAb_ngrs = 0.08/Nng;
 
 % RS-FS circuit (deep connections)
 % #mysynapses
@@ -444,9 +444,9 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { %'IB','PPstim',linspace(-5,0,6); ...
-                 'IB->RS','g_SYN',linspace(0.05,0.1,4)/N;...
-                 'FS->IB','g_SYN',linspace(0.4,1.0,4)/Nfs;...
+        vary = { 'NG','PPstim',linspace(-10,-3,8); ...
+                 %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
+                 'FS->IB','g_SYN',linspace(0.4,.8,2)/Nfs;...
                  }; 
         
         
@@ -799,6 +799,9 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
+% Downsample data
+data = DownsampleData(data,10);
+
 % Calculate Thevenin equivalents of GABA B conductances
 if include_NG && include_FS && include_IB
     data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_FS_NG_thev_equiv');
@@ -834,14 +837,14 @@ switch sim_mode
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
         if include_NG && include_FS && include_IB; PlotData(data,'plot_type','waveform','variable',{'IB_GABAB_gTH','IB_FS_NG_thev_equiv_gTH'});end
         data2 = CalcAverages(data);
-        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-%         PlotData(data2,'plot_type','waveform','variable','RS_V');
+%         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+        PlotData(data2,'plot_type','waveform','variable','RS_V');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
 
-        PlotData(data,'plot_type','rastergram','variable','RS_V');
-        PlotData(data,'plot_type','rastergram','variable','FS_V');
-        PlotFR2(data,'variable','RS_V'); 
-        PlotFR2(data,'variable','FS_V'); 
+%         PlotData(data,'plot_type','rastergram','variable','RS_V');
+%         PlotData(data,'plot_type','rastergram','variable','FS_V');
+%         PlotFR2(data,'variable','RS_V'); 
+%         PlotFR2(data,'variable','FS_V'); 
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
