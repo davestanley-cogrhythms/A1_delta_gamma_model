@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 12;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 3;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -435,7 +435,7 @@ switch sim_mode
 
              
              
-     case 10
+    case 10     % Vary PP stimulation frequency to all cells
         vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[1,2,4,8];
                  }; 
              
@@ -443,6 +443,11 @@ switch sim_mode
         vary = { 'FS','stim',linspace(0,1.25,2); ...
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
+    case 12     % Vary IB cells
+        vary = { 'IB','PPstim',linspace(-5,0,6); ...
+                 }; 
+        
+        
 
         
 end
@@ -819,7 +824,7 @@ switch sim_mode
         
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
-    case 9
+    case {9,12}
         %%
         %PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
