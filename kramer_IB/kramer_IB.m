@@ -67,7 +67,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 3;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -102,7 +102,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -1;
+        IBPPstim = -2.5;
         RSPPstim = -3;
 %         NGPPstim = -6;
 %         FSPPstim = -5;
@@ -444,7 +444,9 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { 'IB','PPstim',linspace(-5,0,6); ...
+        vary = { %'IB','PPstim',linspace(-5,0,6); ...
+                 'IB->RS','g_SYN',linspace(0.05,0.1,4)/N;...
+                 'FS->IB','g_SYN',linspace(0.4,1.0,4)/Nfs;...
                  }; 
         
         
