@@ -257,10 +257,10 @@ gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
 % IB and NG to RS connections
-gAMPA_ibrs = 0.05/N;
-gNMDA_ibrs = 1.0/N;
-gGABAa_ngrs = 0.05/Nng;
-gGABAb_ngrs = 0.08/Nng;
+% gAMPA_ibrs = 0.05/N;
+% gNMDA_ibrs = 1.0/N;
+% gGABAa_ngrs = 0.05/Nng;
+% gGABAb_ngrs = 0.08/Nng;
 
 % RS-FS circuit (deep connections)
 % #mysynapses
