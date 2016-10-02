@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,10 +16,10 @@ sim_mode = 12;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -87,7 +87,7 @@ switch pulse_mode
         supRSPPstim = 0;
     case 1                  % Gamma stimulation
         PPfreq = 40; % in Hz
-        PPwidth = 8; % in ms
+        PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-50;   % ms, offset time
@@ -96,7 +96,7 @@ switch pulse_mode
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
-        kernel_type = 2;
+        kernel_type = 1;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -426,9 +426,9 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { 'RS','stim2',linspace(3.5,1.5,4); ...
+        vary = { %'RS','stim2',linspace(3.5,1.5,4); ...
                  'RS','PPstim',linspace(-5,-2,4); ...
-                 %'RS->FS','g_SYN',linspace(0.3,1.0,5)/Nrs;...
+                 'RS->FS','g_SYN',[.2:.1:.5]/Nrs;...
                  %'FS->RS','g_SYN',linspace(0.3,1.0,5)/Nfs;...
 
                  }; 
@@ -839,6 +839,7 @@ switch sim_mode
         data2 = CalcAverages(data);
 %         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         PlotData(data2,'plot_type','waveform','variable','RS_V');
+%        PlotData(data,'variable','IB_V','plot_type','waveform');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
