@@ -1,0 +1,1 @@
+78a_deltagamma_adjust_PPStim_IB Swept through range of IB PPStim values. Note that RS-FS cells actually fire at 20 Hz. Value of -3 seems good; 4 is better.
