@@ -16,10 +16,10 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -103,7 +103,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
         IBPPstim = -2.5;
-        RSPPstim = -3;
+        RSPPstim = -4;
 %         NGPPstim = -6;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
@@ -266,10 +266,9 @@ gGABAbie=0.3/Nng;
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
     gNMDA_RSRS=5/Nrs;
-gAMPA_rsfs=0.3/Nrs;
+gAMPA_rsfs=0.4/Nrs;
 %     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
-gGABAa_fsrs=.65/Nfs;
 gGABAa_fsrs=1.0/Nfs;
 
 % RS-FS circuit (supra connections)
@@ -427,9 +426,9 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
 
         vary = { %'RS','stim2',linspace(3.5,1.5,4); ...
-                 'RS','PPstim',linspace(-5,-2,4); ...
-                 'RS->FS','g_SYN',[.2:.1:.5]/Nrs;...
-                 %'FS->RS','g_SYN',linspace(0.3,1.0,5)/Nfs;...
+                 %'RS','PPstim',linspace(-5,-2,4); ...
+                 %'RS->FS','g_SYN',[.2:.1:.5]/Nrs;...
+                 'FS->RS','g_SYN',[.6:.1:1.2]/Nfs;...
 
                  }; 
 
@@ -829,18 +828,31 @@ switch sim_mode
         
     case {5,6}
         PlotData(data,'plot_type','waveform','variable','IB_V');
-    case {9,12}
+    case 9
         %%
         %PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
         
+        data2 = CalcAverages(data);
+        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+        PlotData(data2,'plot_type','waveform','variable','RS_V');
+        PlotData(data2,'plot_type','waveform','variable','FS_V');
+
+        PlotData(data,'plot_type','rastergram','variable','RS_V');
+        PlotData(data,'plot_type','rastergram','variable','FS_V');
+        PlotFR2(data,'variable','RS_V'); 
+        PlotFR2(data,'variable','FS_V'); 
+        PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+        PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+
+    case 12
+         
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
         if include_NG && include_FS && include_IB; PlotData(data,'plot_type','waveform','variable',{'IB_GABAB_gTH','IB_FS_NG_thev_equiv_gTH'});end
         data2 = CalcAverages(data);
 %         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-        PlotData(data2,'plot_type','waveform','variable','RS_V');
-%        PlotData(data,'variable','IB_V','plot_type','waveform');
-%         PlotData(data2,'plot_type','waveform','variable','FS_V');
+        
+       PlotData(data,'variable','IB_V','plot_type','waveform');
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
 %         PlotData(data,'plot_type','rastergram','variable','FS_V');
@@ -848,6 +860,7 @@ switch sim_mode
 %         PlotFR2(data,'variable','FS_V'); 
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+
 
         
         

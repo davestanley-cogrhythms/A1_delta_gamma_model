@@ -1,0 +1,1 @@
+77b_as_before_adjust_FSRS Using best values from previous sim (RS PPStim = 4 and RSFS = 0.4), I now varied FS->RS synapse [0.6:.1:1.2]. Fig 11 zooms in on plots 5th and 6th from the top (1.0 and 1.1).

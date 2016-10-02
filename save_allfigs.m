@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '77a_RSFS_fix_PPStim_Gaussian';
+    currfigname = '77b_as_before_adjust_FSRS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:8]
+    for i=[1:11]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -45,7 +45,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['Have to redo everything because I was using the wrong PPStim mode. Now using kernel type 1 with Gaussian width 2ms. Varied RSPPStim [-2 -3 -4 -5] and RS->FS synapse [.2 .3 .4 .5].'];
+    mycomment = ['Using best values from previous sim (RS PPStim = 4 and RSFS = 0.4), I now varied FS->RS synapse [0.6:.1:1.2]. Fig 11 zooms in on plots 5th and 6th from the top (1.0 and 1.1).'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
