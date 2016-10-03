@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '78b_sweep_PPStim_IB_and_FSIB';
+    currfigname = '78c_sweep_PPStim_NG_and_FSIB';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:8]
+    for i=[1:4]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -40,18 +40,18 @@ function save_allfigs(currfname,currfigname)
         set(gcf,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
         tic; print(gcf,'-dpng','-r100','-opengl',fullfile(basepath,sp,savenames{i}));toc
-        %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{i} '.png']));toc
+        %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Swept through range of IB PPStim and FSIB synapse values. Seems that IB PPSTim at -3 really doesnt care what FSIB synapse is. At -4 it does.'];
+    mycomment = ['Swept through range of NG PPStim and FSIB synapse values. Figs1-4 with AP; 5-8 no AP. Note they use different ranges (FSIB is .3-.7 in Figs1-4; .4-.7 in Figs5-8; multiply by 24 to get correct range). Sweet spot seems to be NGStim = -3 and and synapse = 0.025 (0.025*24 = 0.6).'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
-    %%
+    
     % Commit
     currd = pwd;
     cd ..

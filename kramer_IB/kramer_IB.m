@@ -86,7 +86,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
     case 1                  % Gamma stimulation
-        PPfreq = 10; % in Hz
+        PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 250;    % ms, onset time
@@ -94,7 +94,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -102,9 +102,9 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -2.5;
+        IBPPstim = -3;
         RSPPstim = -4;
-%         NGPPstim = -6;
+        NGPPstim = -6;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
 
@@ -443,9 +443,9 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { 'IB','PPstim',[-5:1:-2]; ...
+        vary = { 'NG','PPstim',[-4:1:-1]; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
-                 'FS->IB','g_SYN',[.3:.1:.7]/Nfs;...
+                 'FS->IB','g_SYN',[.4:.1:.7]/Nfs;...
                  }; 
         
         
@@ -846,11 +846,11 @@ switch sim_mode
         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
     case 12
-         
+         %%
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
         if include_NG && include_FS && include_IB; PlotData(data,'plot_type','waveform','variable',{'IB_GABAB_gTH','IB_FS_NG_thev_equiv_gTH'});end
         data2 = CalcAverages(data);
-%         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         
        PlotData(data,'variable','IB_V','plot_type','waveform');
 
