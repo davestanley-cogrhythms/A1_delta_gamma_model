@@ -104,7 +104,7 @@ switch pulse_mode
         supRSPPstim = 0;
         IBPPstim = -3;
         RSPPstim = -4;
-        NGPPstim = 0;
+        NGPPstim = -1;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
 
