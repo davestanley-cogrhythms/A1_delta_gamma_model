@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '78c_sweep_PPStim_NG_and_FSIB';
+    currfigname = '78d_as_above_diff_range';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -45,13 +45,13 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Swept through range of NG PPStim and FSIB synapse values. Figs1-4 with AP; 5-8 no AP. Note they use different ranges (FSIB is .3-.7 in Figs1-4; .4-.7 in Figs5-8; multiply by 24 to get correct range). Sweet spot seems to be NGStim = -3 and and synapse = 0.025 (0.025*24 = 0.6).'];
+    mycomment = ['Used a different range. Figs1-4 AP; Figs 5-8 AP at different time. See folder for no AP'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
-    
+    %%
     % Commit
     currd = pwd;
     cd ..

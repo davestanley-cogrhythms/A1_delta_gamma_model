@@ -92,7 +92,7 @@ switch pulse_mode
         PPonset = 250;    % ms, onset time
         PPoffset = tspan(end)-50;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
@@ -443,9 +443,9 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { 'NG','PPstim',[-4:1:-1]; ...
+        vary = { 'NG','PPstim',[-2:1:0]; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
-                 'FS->IB','g_SYN',[.4:.1:.7]/Nfs;...
+                 'FS->IB','g_SYN',[.6:.1:.9]/Nfs;...
                  }; 
         
         
@@ -852,7 +852,7 @@ switch sim_mode
         data2 = CalcAverages(data);
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         
-       PlotData(data,'variable','IB_V','plot_type','waveform');
+        PlotData(data,'variable','IB_V','plot_type','waveform');
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
 %         PlotData(data,'plot_type','rastergram','variable','FS_V');
