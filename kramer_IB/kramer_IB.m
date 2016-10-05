@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -257,8 +257,8 @@ gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
 % IB and NG to RS connections
-gAMPA_ibrs = 0.05/N;
-gNMDA_ibrs = 1.0/N;
+gAMPA_ibrs = 0.013/N;
+gNMDA_ibrs = 0.02/N;
 % gGABAa_ngrs = 0.05/Nng;
 % gGABAb_ngrs = 0.08/Nng;
 
