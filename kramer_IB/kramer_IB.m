@@ -805,14 +805,12 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 data = DownsampleData(data,10);
 
 % Calculate Thevenin equivalents of GABA B conductances
-if include_NG && include_FS && include_IB
-    data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA');
-    data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA');
-        %figure; plot(data.IB_FS_NG_thev_equiv_gTH); hold on; plot(data.IB_GABAB_gTH);    % Testing GABA B only!
-        %PlotData(data,'plot_type','waveform','variable',{'IB_NG_IBaIBdbiSYNseed_s','IB_NG_iGABABAustin_g','IB_FS_IBaIBdbiSYNseed_s','IB_FS_NG_thev_equiv_gTH','IB_FS_NG_thev_equiv_ETH'});
-    %data2 = CalcSumOverFields(data,{'IB_FS_IBaIBdbiSYNseed_ISYN','IB_NG_IBaIBdbiSYNseed_ISYN'});
-    %PlotData(data2,'plot_type','waveform','variable',{'IB_summed','IB_NG_IBaIBdbiSYNseed_ISYN'});
-end
+if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
+if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
+if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
+
+% Calculate averages across cells (e.g. mean field)
+data2 = CalcAverages(data);
 
 toc;
 
@@ -822,7 +820,9 @@ switch sim_mode
         PlotData(data,'plot_type','waveform');
 %          PlotData(data,'plot_type','rastergram');
         
-        if include_NG && include_FS && include_IB; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH'});end
+        if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
+        elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+        elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
         %PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');
@@ -836,7 +836,6 @@ switch sim_mode
         %PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
         
-        data2 = CalcAverages(data);
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         PlotData(data2,'plot_type','waveform','variable','RS_V');
         PlotData(data2,'plot_type','waveform','variable','FS_V');
@@ -851,8 +850,9 @@ switch sim_mode
     case 12
          %%
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
-        data2 = CalcAverages(data);
-        if include_NG && include_FS && include_IB; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH'});end
+        if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
+        elseif include_IB && include_NG; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+        elseif include_IB && include_FS; PlotData(data,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
         
         %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         
