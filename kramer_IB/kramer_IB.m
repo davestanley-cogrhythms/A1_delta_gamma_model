@@ -94,7 +94,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -295,7 +295,7 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=.6/Nfs;
-gAMPA_rsng = 0.1/Nfs;
+% gAMPA_rsng = 0.1/Nfs;
 %gNMDA_rsng = 0.01/Nfs;
 
 end
@@ -448,12 +448,12 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { %'IB','PPstim',[-7:2:-1]; ...
+        vary = { 'IB','PPstim',[-5:1:-3]; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
-                 'FS->IB','g_SYN',[.4:.1:.6]/Nfs;...
+                 'FS->IB','g_SYN',[.5:.1:.8]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
                  %'IB->RS','gNMDA',[0,0.02,0.05]/N;...
-                 'RS->NG','g_SYN',[0:.1:0.8]/Nfs;...
+                 %'RS->NG','g_SYN',[0:.1:0.8]/Nfs;...
                  }; 
              
         
