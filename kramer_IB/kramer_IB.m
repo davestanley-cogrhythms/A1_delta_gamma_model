@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 12;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -92,9 +92,9 @@ switch pulse_mode
         PPonset = 600;    % ms, onset time
         PPoffset = tspan(end)-250;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -443,11 +443,11 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { %'NG','PPstim',[-2:1:0]; ...
+        vary = { 'IB','PPstim',[-7:2:-1]; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
-                 %'FS->IB','g_SYN',[.6:.1:.9]/Nfs;...
-                 'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
-                 'IB->RS','gNMDA',[0,0.02,0.05]/N;...
+                 'FS->IB','g_SYN',[.6:.2:1.2]/Nfs;...
+                 %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
+                 %'IB->RS','gNMDA',[0,0.02,0.05]/N;...
                  }; 
              
              
