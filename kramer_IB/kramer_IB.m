@@ -802,7 +802,7 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'c
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
 % Downsample data
-data = DownsampleData(data,10);
+data = DownsampleData(data,min(round(0.1/dt),1));   % Downsample so that sampling rate is 10000 Hz (dt = 0.1 ms)
 
 % Calculate Thevenin equivalents of GABA B conductances
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
