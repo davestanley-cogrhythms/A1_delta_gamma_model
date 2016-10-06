@@ -1,0 +1,1 @@
+80b_sweep_RS_NG_synapse RS->NG synapse swept through [0, 0.03, 0.05, 0.1, 0.3, 0.5, 1]
