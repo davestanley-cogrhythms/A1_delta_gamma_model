@@ -3,7 +3,7 @@
 tic
 clear
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -204,7 +204,7 @@ gGABAbie=0;
 
 gGABAafe=0;
 
-% IB and NG to RS connections
+% Delta -> Gamma oscillator connections
 gAMPA_ibrs = 0;
 gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
@@ -239,8 +239,10 @@ gAMPA_supRSRS = 0;
 gAMPA_supRSIB = 0;
 
 
-% FS circuit and FS->IB connections
+% Gamma -> Delta connections 
 gGABAafe=0;
+gAMPA_rsng = 0;
+gNMDA_rsng = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
@@ -256,7 +258,7 @@ gGABAbii=0.3/Nng;
 gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
-% IB and NG to RS connections
+% Delta -> Gamma oscillator connections
 % gAMPA_ibrs = 0.013/N;
 % gNMDA_ibrs = 0.02/N;
 % gGABAa_ngrs = 0.05/Nng;
@@ -291,8 +293,11 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSRS = 0.15/NsupRS;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
-% FS circuit and FS->IB connections
+% Gamma -> Delta connections 
 gGABAafe=.6/Nfs;
+gAMPA_rsng = 0.1/Nfs;
+%gNMDA_rsng = 0.01/Nfs;
+
 end
 
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -655,6 +660,16 @@ if include_RS && include_FS
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         'gNMDA',gNMDA_rsfs,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        };
+end
+
+% % RS->NG synaptic connection
+if include_RS && include_NG
+    i=i+1;
+    spec.connections(i).direction = 'RS->NG';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsng,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_rsng,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
