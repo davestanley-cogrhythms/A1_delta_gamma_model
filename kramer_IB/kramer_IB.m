@@ -24,7 +24,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 1500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=1; % downsample factor, applied after simulation
 
 % Simulation switches
@@ -52,10 +52,10 @@ supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
 
-IB_offset1=245;
-IB_onset2=245;
-RS_offset1=245;
-RS_onset2=245;
+IB_offset1=0;
+IB_onset2=0;
+RS_offset1=0;
+RS_onset2=0;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -89,12 +89,12 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 250;    % ms, onset time
-        PPoffset = tspan(end)-50;   % ms, offset time
+        PPonset = 600;    % ms, onset time
+        PPoffset = tspan(end)-250;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -257,8 +257,8 @@ gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
 % IB and NG to RS connections
-gAMPA_ibrs = 0.013/N;
-gNMDA_ibrs = 0.02/N;
+% gAMPA_ibrs = 0.013/N;
+% gNMDA_ibrs = 0.02/N;
 % gGABAa_ngrs = 0.05/Nng;
 % gGABAb_ngrs = 0.08/Nng;
 
