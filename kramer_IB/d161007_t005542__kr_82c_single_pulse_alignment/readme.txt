@@ -1,0 +1,1 @@
+82c_single_pulse_alignment Did single simulation with high IB stimulation. Trying to understand how AP pulse suppresses things. Seems to alter the timing of inhibitory inputs relative to IB PPStim.
