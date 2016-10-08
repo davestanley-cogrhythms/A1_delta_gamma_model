@@ -20,10 +20,10 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -271,7 +271,7 @@ gGABAbie=0.3/Nng;
 % RS-FS circuit (deep connections)
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=5/Nrs;
+%     gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.4/Nrs;
 %     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
@@ -434,10 +434,10 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { %'RS','stim2',linspace(3.5,1.5,4); ...
+        vary = { 'RS','stim2',linspace(2,-1,8); ...
                  %'RS','PPstim',linspace(-5,-2,4); ...
-                 'RS->FS','g_SYN',[.2:.2:.9]/Nrs;...
-                 'FS->RS','g_SYN',[.6:.2:1.2]/Nfs;...
+                 %'RS->FS','g_SYN',[.2:.2:.9]/Nrs;...
+                 %'FS->RS','g_SYN',[.6:.2:1.2]/Nfs;...
 
                  }; 
 
