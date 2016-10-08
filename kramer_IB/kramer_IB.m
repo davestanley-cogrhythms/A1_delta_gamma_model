@@ -2,8 +2,12 @@
 %%
 tic
 clear
+
+
+addpath(genpath(fullfile('.','funcs_supporting')));
+
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -16,10 +20,10 @@ sim_mode = 12;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -432,8 +436,8 @@ switch sim_mode
 
         vary = { %'RS','stim2',linspace(3.5,1.5,4); ...
                  %'RS','PPstim',linspace(-5,-2,4); ...
-                 %'RS->FS','g_SYN',[.2:.1:.5]/Nrs;...
-                 'FS->RS','g_SYN',[.6:.1:1.2]/Nfs;...
+                 'RS->FS','g_SYN',[.2:.2:.9]/Nrs;...
+                 'FS->RS','g_SYN',[.6:.2:1.2]/Nfs;...
 
                  }; 
 
@@ -853,15 +857,15 @@ switch sim_mode
         %PlotData(data,'plot_type','power');
         
         PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-        PlotData(data2,'plot_type','waveform','variable','RS_V');
-        PlotData(data2,'plot_type','waveform','variable','FS_V');
+%         PlotData(data2,'plot_type','waveform','variable','RS_V');
+%         PlotData(data2,'plot_type','waveform','variable','FS_V');
 
-        PlotData(data,'plot_type','rastergram','variable','RS_V');
-        PlotData(data,'plot_type','rastergram','variable','FS_V');
-        PlotFR2(data,'variable','RS_V'); 
-        PlotFR2(data,'variable','FS_V'); 
-        PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-        PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+%         PlotData(data,'plot_type','rastergram','variable','RS_V');
+%         PlotData(data,'plot_type','rastergram','variable','FS_V');
+%         PlotFR2(data,'variable','RS_V'); 
+%         PlotFR2(data,'variable','FS_V'); 
+%         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+%         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
     case 12
          %%
