@@ -20,10 +20,10 @@ sim_mode = 9;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -106,9 +106,9 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -3;
+        IBPPstim = -5;
         RSPPstim = -4;
-        NGPPstim = -2;
+        NGPPstim = -1;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
 
