@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:12]
+    for i=[7:8]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -44,7 +44,7 @@ function save_allfigs(currfname,currfigname)
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
-    %%
+    
     mycomment = ['Swept through IB PPStim values for different starting times (PPStim onset) and different amplitudes.'];
     
     

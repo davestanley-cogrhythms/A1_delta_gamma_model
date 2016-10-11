@@ -1,7 +1,7 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %%
 tic
-clear
+% clear
 
 
 addpath(genpath(fullfile('.','funcs_supporting')));
@@ -23,7 +23,7 @@ sim_mode = 12;   % 1 - normal sim
 include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
@@ -93,7 +93,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 600;    % ms, onset time
+        PPonset = 0;    % ms, onset time
         PPoffset = tspan(end)-250;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -106,7 +106,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -5;
+        IBPPstim = -3;
         RSPPstim = -4;
         NGPPstim = -1;
 %         FSPPstim = -5;
@@ -250,8 +250,8 @@ gNMDA_rsng = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=5/N;
+gAMPAee=0.02/N;      % IBa -> IBdb, 0(.04)
+% gNMDAee=5/N;
 % 
 gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
 gNMDAei=5/N;
@@ -452,8 +452,10 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { 'IB','PPstim',[-3, -4]; ...
-                 'NG','PPstim',[-7:1:-1]; ...
+        vary = { %'IB','PPstim',[-3, -4]; ...
+                 %'NG','PPstim',[-7:1:-1]; ...
+                 'IB','stim2',[-2]; ...
+%                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[.4:.05:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
@@ -476,9 +478,10 @@ if include_IB
     spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
+      'E_l2',EGABA,'g_l2',0,...
       'PPstim', IBPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',Jd1,'onset',0,'offset',IB_offset1,'stim2',Jd2,'onset2',IB_onset2,'offset2',Inf,...
