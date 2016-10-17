@@ -51,7 +51,7 @@ Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pul
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection; step1
 JRS1 = 5;
-JRS2 = -2;
+JRS2 = 1;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -71,7 +71,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -94,7 +94,7 @@ switch pulse_mode
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end)-250;   % ms, offset time
+        PPoffset = tspan(end)-100;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 25;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
@@ -107,7 +107,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
         %IBPPstim = -3;
-        RSPPstim = -7;
+        RSPPstim = -5;
         NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
@@ -441,8 +441,8 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
 
         vary = { %'RS','stim2',linspace(2,-2,12); ...
-                 %'RS','PPstim',linspace(-5,-2,4); ...
-                 'RS->FS','g_SYN',[0.2:0.1:.8]/Nrs;...
+                 'RS','PPstim',linspace(-7,-2,6); ...
+                 %'RS->FS','g_SYN',[0.2:0.1:.8]/Nrs;...
                  'FS->RS','g_SYN',[0.2:0.1:1]/Nfs;...
 
                  }; 
@@ -864,10 +864,14 @@ switch sim_mode
         
         %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
-        PlotData(data,'plot_type','power')
+        PlotData(data,'plot_type','waveform')
         %PlotFR2(data,'plot_type','meanFR')
-        for i = 1:9:63; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
-        for i = 1:9:63; PlotData(data(i:i+8),'variable','RS_V'); end
+        for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
+        for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
+        for i = 1:9:54; PlotData(data(i:i+8),'variable','FS_V'); end
+        for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
+        PlotStudy(data,@plot_AP_decay1_RSFS)
+        PlotStudy(data,@plot_AP_timing1_RSFS)
 %         PlotData(data,'plot_type','rastergram','variable','RS_V'); PlotData(data,'plot_type','rastergram','variable','FS_V')
 %         PlotData(data2,'plot_type','waveform','variable','RS_V');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
