@@ -7,7 +7,7 @@ tic
 addpath(genpath(fullfile('.','funcs_supporting')));
 
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -20,15 +20,15 @@ sim_mode = 12;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
+include_IB = 0;
+include_RS = 0;
 include_FS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -37,9 +37,9 @@ no_synapses = 0;
 
 % number of cells per population
 N=5;   % Number of excitatory cells
-Nrs=24; % Number of RS cells
+Nrs=5; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=24;  % Number of FS cells
+Nfs=5;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -49,9 +49,9 @@ Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
-Jfs=1.25;     % FS current injection; step1
-JRS1 = 3;
-JRS2 = 1.7;
+Jfs=1;     % FS current injection; step1
+JRS1 = 5;
+JRS2 = 0;
 supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
@@ -71,7 +71,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -96,7 +96,7 @@ switch pulse_mode
         PPonset = 0;    % ms, onset time
         PPoffset = tspan(end)-250;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 25;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
@@ -106,9 +106,9 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -3;
-        RSPPstim = -4;
-        NGPPstim = -1;
+        %IBPPstim = -3;
+        RSPPstim = -7;
+        NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
 
@@ -181,7 +181,7 @@ ggjaRS=0;
 ggja=0;
 ggjFS=0;
 % % Deep cells
-ggjaRS=.0/N;  % RS -> RS
+ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
 % % Sup cells
@@ -191,6 +191,12 @@ ggjsupFS=.2/NsupFS;  % IBa -> IBa
 
 % Synapse heterogenity
 gsyn_hetero = 0;
+
+% Eleak heterogenity
+RS_Eleak_std = 0;
+FS_Eleak_std = 0;
+% RS_Eleak_std = 10;
+% FS_Eleak_std = 20;
 
 % Synaptic connection strengths zeros
 gAMPAee=0;
@@ -271,7 +277,7 @@ gGABAbie=0.3/Nng;
 % RS-FS circuit (deep connections)
 % #mysynapses
 gAMPA_rsrs=0.1/Nrs;
-    gNMDA_RSRS=5/Nrs;
+%     gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.4/Nrs;
 %     gNMDA_rsfs=0/Nrs;
 gGABAaff=.5/Nfs;
@@ -434,7 +440,7 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { 'RS','stim2',linspace(2,-1,8); ...
+        vary = { 'FS','stim',linspace(2,-2,12); ...
                  %'RS','PPstim',linspace(-5,-2,4); ...
                  %'RS->FS','g_SYN',[.2:.2:.9]/Nrs;...
                  %'FS->RS','g_SYN',[.6:.2:1.2]/Nfs;...
@@ -500,7 +506,7 @@ if include_RS
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',10,'g_l',gl,...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',RS_Eleak_std,'g_l',gl,...
       'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',JRS1,'onset',0,'offset',RS_offset1,'stim2',JRS2,'onset2',RS_onset2,'offset2',Inf,...
@@ -536,7 +542,7 @@ if include_FS
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',20,'g_l',0.1,...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',FS_Eleak_std,'g_l',0.1,...
       'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
@@ -856,7 +862,10 @@ switch sim_mode
         %PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','power');
         
-        PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+        %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+        PlotData(data)
+        PlotData(data,'plot_type','power')
+        PlotFR2(data,'plot_type','meanFR')
 %         PlotData(data2,'plot_type','waveform','variable','RS_V');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
 
