@@ -49,7 +49,7 @@ Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
-Jfs=1;     % FS current injection; step1
+Jfs=-1;     % FS current injection; step1
 JRS1 = 5;
 JRS2 = 0;
 supJRS1 = 5;
@@ -440,10 +440,10 @@ switch sim_mode
 
     case 9  % Vary RS cells in RS-FS network
 
-        vary = { 'FS','stim',linspace(2,-2,12); ...
+        vary = { %'FS','stim',linspace(2,-2,12); ...
                  %'RS','PPstim',linspace(-5,-2,4); ...
                  %'RS->FS','g_SYN',[.2:.2:.9]/Nrs;...
-                 %'FS->RS','g_SYN',[.6:.2:1.2]/Nfs;...
+                 'FS->FS','g_SYN',[0.2:0.05:1]/Nfs;...
 
                  }; 
 
@@ -866,6 +866,7 @@ switch sim_mode
         PlotData(data)
         PlotData(data,'plot_type','power')
         PlotFR2(data,'plot_type','meanFR')
+        PlotData(data,'plot_type','rastergram')
 %         PlotData(data2,'plot_type','waveform','variable','RS_V');
 %         PlotData(data2,'plot_type','waveform','variable','FS_V');
 
