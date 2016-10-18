@@ -7,7 +7,7 @@ tic
 addpath(genpath(fullfile('.','funcs_supporting')));
 
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -107,7 +107,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
         %IBPPstim = -3;
-        RSPPstim = -5;
+        RSPPstim = -7;
         NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
