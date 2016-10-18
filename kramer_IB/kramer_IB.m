@@ -257,10 +257,10 @@ gNMDA_rsng = 0;
 if ~no_synapses
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAee=5/N;
+gNMDAee=5/N;
 % 
 gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
-% gNMDAei=5/N;
+gNMDAei=5/N;
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=0.3/Nng;
