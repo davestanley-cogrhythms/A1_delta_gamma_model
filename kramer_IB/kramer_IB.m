@@ -56,10 +56,10 @@ supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
 
-IB_offset1=0;
-IB_onset2=0;
-RS_offset1=0;
-RS_onset2=0;
+IB_offset1=300;
+IB_onset2=300;
+RS_offset1=300;
+RS_onset2=300;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -93,7 +93,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 600;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end)-200;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -108,7 +108,7 @@ switch pulse_mode
         supRSPPstim = 0;
         %IBPPstim = -3;
         RSPPstim = -7;
-        NGPPstim = -4;
+%         NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
 
@@ -463,7 +463,7 @@ switch sim_mode
                  %'IB','stim2',[-2]; ...
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
-                 'FS->IB','g_SYN',[.3:.05:.7]/Nfs;...
+                 'FS->IB','g_SYN',[.05:.05:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
                  %'IB->RS','gNMDA',[0,0.02,0.05]/N;...
                  %'RS->NG','g_SYN',[0:.1:0.8]/Nfs;...
@@ -886,7 +886,7 @@ switch sim_mode
     case 12
          %%
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
-        if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
+        if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'});
         elseif include_IB && include_NG; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH'});
         elseif include_IB && include_FS; PlotData(data,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
         
@@ -897,9 +897,9 @@ switch sim_mode
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
 %         PlotData(data,'plot_type','rastergram','variable','FS_V');
 %         PlotFR2(data,'variable','RS_V'); 
-        PlotFR2(data,'variable','FS_V'); 
+%         PlotFR2(data,'variable','FS_V'); 
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-        PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+%         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
 
         

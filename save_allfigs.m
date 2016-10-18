@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '86f_RSFS_single_sim';
+    currfigname = '87a_DGNet_sweep_FSIB';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[2:4]
+    for i=[1:5]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -45,7 +45,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Single sim with all parameters working. Fig2-No PPStim. Fig3-4 with 40Hz PPStim'];
+    mycomment = ['Plot range of FS->IB synapse values. Figs 1-2 no AP pulse; Figs 3-5 has AP pulse. For very strong FS->IB values, IB cells fire very sparsely, but do weakly activate NG cells. I think this is crucial for keeping things inhibited.'];
     
     
     % Write to a text file
