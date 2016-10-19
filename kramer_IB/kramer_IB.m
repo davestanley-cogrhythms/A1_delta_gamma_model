@@ -34,6 +34,7 @@ dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 % Simulation switches
 no_noise = 0;
 no_synapses = 0;
+NMDA_block = 0; 
 
 % number of cells per population
 N=5;   % Number of excitatory cells
@@ -257,10 +258,10 @@ gNMDA_rsng = 0;
 if ~no_synapses
 % % Synaptic connection strengths
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAee=5/N;
+if ~NMDA_block; gNMDAee=5/N; end
 % 
 gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
-gNMDAei=5/N;
+if ~NMDA_block; gNMDAei=5/N; end
 % 
 gGABAaii=0.1/Nng;
 gGABAbii=0.3/Nng;
@@ -464,10 +465,10 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.05:0.05:.5]/Nfs;...
-                 'FS->IB','g_SYN',[0.3:0.05:.4]/Nfs;...
+                 'FS->IB','g_SYN',[0.3:0.025:.4]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
                  %'IB->RS','gNMDA',[0,0.02,0.05]/N;...
-                 'RS->NG','g_SYN',[0:.1:.3]/Nfs;...
+                 'RS->NG','g_SYN',[.1:.1:.3]/Nfs;...
                  %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
                  }; 
              
@@ -888,13 +889,14 @@ switch sim_mode
     case 12
          %%
         %PlotData(data,'plot_type','rastergram','variable','RS_V');
-        if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'});
-        elseif include_IB && include_NG; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-        elseif include_IB && include_FS; PlotData(data,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
+        if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'});
+        elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+        elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
         
         %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         
         PlotData(data,'variable','IB_V','plot_type','waveform');
+        
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
 %         PlotData(data,'plot_type','rastergram','variable','FS_V');
@@ -902,6 +904,10 @@ switch sim_mode
 %         PlotFR2(data,'variable','FS_V'); 
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+
+        t = data(1).time; data3 = CropData(data, t > 1300 & t < 1800);
+        PlotData(data3,'variable','IB_V','plot_type','waveform');
+        PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 2.5]);
 
 
         
