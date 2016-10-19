@@ -1,4 +1,6 @@
 V_noise = [0.05]
- 
-current => V_noise.*randn(1,Npop);
+
+Inoise(X) = V_noise.*randn(1,Npop) 
+
+current => Inoise(V);
  
