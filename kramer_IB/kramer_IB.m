@@ -28,7 +28,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 3000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -99,7 +99,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -305,7 +305,7 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % Gamma -> Delta connections 
-gGABAafe=.4/Nfs;
+gGABAafe=.5/Nfs;
 % gAMPA_rsng = 0.1/Nfs;
 %gNMDA_rsng = 0.01/Nfs;
 
@@ -459,15 +459,17 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { 'IB','PPstim',[0:-0.5:-2]; ...
+        vary = { 'IB','PPstim',[0:-0.5:-1]; ...
                  %'NG','PPstim',[-7:1:-1]; ...
                  %'IB','stim2',[-2]; ...
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.05:0.05:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
+                 %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
-                 %'IB->RS','gNMDA',[0,0.02,0.05]/N;...
+                 'IB->NG','gNMDA',[5,7,9,11]/N;...
+                    % For NMDA block conditions
+                 %'IB->NG','gNMDA',[0.005,0.007,0.009,0.011]/N;...
                  %'RS->NG','g_SYN',[.1:.1:.3]/Nfs;...
                  %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
                  }; 
@@ -906,7 +908,7 @@ switch sim_mode
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
-        t = data(1).time; data3 = CropData(data, t > 600 & t < 1800);
+        t = data(1).time; data3 = CropData(data, t > 2000 & t < 2800);
         PlotData(data3,'variable','IB_V','plot_type','waveform');
         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
 
