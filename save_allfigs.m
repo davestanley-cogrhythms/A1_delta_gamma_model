@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '88b_test_NMDA_block';
+    currfigname = '88c_play_with_A_current';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -18,7 +18,7 @@ function save_allfigs(currfname,currfigname)
     
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
-    for i=[1:2]
+    for i=[1:13]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -45,7 +45,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Analysed effects of NMDA block for various parameter regimes. It didnt really produce an increase in gamma power.'];
+    mycomment = ['Try lowered NG A-current to allow NG cells to more easily entrain to oscillatory 40Hz activity.'];
     
     
     % Write to a text file
