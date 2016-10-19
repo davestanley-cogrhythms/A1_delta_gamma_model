@@ -5,11 +5,14 @@ c_MbM = [1]
 IC = [0]
 IC_noise = [0.01]
 Qs = 3.209
+halfMM = -35
 
-aM(X) = c_MaM.*(0.0001*Qs*(X+30)) ./ (1-exp(-(X+30)/9))
-bM(X) = c_MbM.*(-0.0001*Qs*(X+30)) ./ (1-exp((X+30)/9))
+aM(X) = c_MaM.*(0.0001*Qs*(X-halfMM)) ./ (1-exp(-(X-halfMM)/10))
+bM(X) = c_MbM.*(-0.0001*Qs*(X-halfMM)) ./ (1-exp((X-halfMM)/10))
 IM(X,mM) = gM.*mM.*(X-E_M)
- 
+infmM(X) = aM(X)./(aM(X)+bM(X))
+taumM(X) = 1./(aM(X)+bM(X))
+
 mM' = (aM(V).*(1-mM)-bM(V).*mM);
 mM(0) = IC+IC_noise.*rand(Npop,1)
 
