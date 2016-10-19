@@ -305,7 +305,7 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % Gamma -> Delta connections 
-gGABAafe=.5/Nfs;
+gGABAafe=.4/Nfs;
 % gAMPA_rsng = 0.1/Nfs;
 %gNMDA_rsng = 0.01/Nfs;
 
@@ -459,13 +459,13 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { %'IB','PPstim',[-3, -4]; ...
+        vary = { 'IB','PPstim',[0:-0.5:-2]; ...
                  %'NG','PPstim',[-7:1:-1]; ...
                  %'IB','stim2',[-2]; ...
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.05:0.05:.5]/Nfs;...
-                 'FS->IB','g_SYN',[0.2:0.05:.6]/Nfs;...
+                 'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
                  %'IB->RS','gNMDA',[0,0.02,0.05]/N;...
                  %'RS->NG','g_SYN',[.1:.1:.3]/Nfs;...
@@ -896,6 +896,7 @@ switch sim_mode
         %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
         
         PlotData(data,'variable','IB_V','plot_type','waveform');
+        %PlotData(data,'variable','IB_V','plot_type','rastergram');
         
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
@@ -905,9 +906,9 @@ switch sim_mode
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
-%         t = data(1).time; data3 = CropData(data, t > 1300 & t < 1800);
-%         PlotData(data3,'variable','IB_V','plot_type','waveform');
-%         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 2.5]);
+        t = data(1).time; data3 = CropData(data, t > 600 & t < 1800);
+        PlotData(data3,'variable','IB_V','plot_type','waveform');
+        PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
 
 
         
