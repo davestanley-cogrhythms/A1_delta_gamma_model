@@ -7,9 +7,9 @@ NaF_d2 = [15]
 NaF_c0 = [0.15]
 NaF_c1 = [1.15]
 E_NaF = [50]
-IC = [0]
+IC = [1]
 IC_noise = [0.01]
- 
+
 hinf(V) = 1./(1+exp((V+NaF_V1)/NaF_d1))
 htau(V) = NaF_c0 + NaF_c1./(1+exp((V+NaF_V2)/NaF_d2))
 m0(V) = 1./(1+exp((-V-NaF_V0)/10))

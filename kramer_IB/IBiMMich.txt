@@ -4,7 +4,7 @@ c_MaM = [.625]
 c_MbM = [2.75]
 IC = [0]
 IC_noise = [0.01]
-Qs = 3.209
+Qs = 3.209^2
 halfMM = -50
 
 aM(X) = c_MaM.*(0.0001*Qs*(X-halfMM)) ./ (1-exp(-(X-halfMM)/10))
