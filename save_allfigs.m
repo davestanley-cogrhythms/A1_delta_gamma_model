@@ -7,7 +7,7 @@ function save_allfigs(currfname,currfigname)
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
     currfname = 'kr'; 
-    currfigname = '89a_add_RSNG_NMDA';
+    currfigname = '89b_add_RSNG_NMDA2_diffrange';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -19,7 +19,7 @@ function save_allfigs(currfname,currfigname)
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
     
-    for i=[1:2]
+    for i=[8:9]
         figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
@@ -46,7 +46,7 @@ function save_allfigs(currfname,currfigname)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     %%
-    mycomment = ['Added NMDA synapse from RS cells to NG cells in order to drive NG activation. This is also susceptible to NMDA block, so that NG cells are less active during 40Hz stimulation during NMDA block.'];
+    mycomment = ['As above, but swept through different parameter ranges.'];
     
     
     % Write to a text file

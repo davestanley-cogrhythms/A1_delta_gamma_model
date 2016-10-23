@@ -34,13 +34,13 @@ dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 % Simulation switches
 no_noise = 0;
 no_synapses = 0;
-NMDA_block = 1; 
+NMDA_block = 0; 
 
 % number of cells per population
 N=5;   % Number of excitatory cells
-Nrs=5; % Number of RS cells
+Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=5;  % Number of FS cells
+Nfs=N;  % Number of FS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -99,7 +99,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -305,9 +305,9 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % Gamma -> Delta connections 
-gGABAafe=.5/Nfs;
+gGABAafe=.3/Nfs;
 gAMPA_rsng = 0.1/Nrs;
-gNMDA_rsng = 5/Nrs;
+gNMDA_rsng = 3/Nrs;
 
 end
 
@@ -465,9 +465,9 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.3,.4,.5]/Nfs;...
-                 %'RS->NG','gNMDA',[0:1:5]/N;...
-                 'RS->NG','gNMDA',[0:1:5]/N*0.001;...
+                 'FS->IB','g_SYN',[.2:.1:.5]/Nfs;...
+                 'RS->NG','gNMDA',[1:1:4]/N;...
+                 %'RS->NG','gNMDA',[0:1:5]/N*0.001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
                  %'IB->NG','gNMDA',[5,7,9,11]/N;...
@@ -842,6 +842,7 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
 if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
+if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
 
 % Calculate averages across cells (e.g. mean field)
 data2 = CalcAverages(data);
@@ -856,7 +857,9 @@ switch sim_mode
         
         if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
         elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-        elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
+        elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
+        elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});end
+        %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
         %PlotFR(data);
     case {2,3}
         PlotData(data,'plot_type','waveform');
