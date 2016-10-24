@@ -99,7 +99,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -183,7 +183,7 @@ ggja=0;
 ggjFS=0;
 % % Deep cells
 ggjaRS=.2/N;  % RS -> RS
-ggja=.2/N;  % IBa -> IBa
+ggja=2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
 % % Sup cells
 ggjasupRS=.00/(NsupRS);  % RS -> RS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
@@ -257,7 +257,7 @@ gNMDA_rsng = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
+gAMPAee=0.4/N;      % IBa -> IBdb, 0(.04)
 if ~NMDA_block; gNMDAee=5/N; end
 % 
 gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
@@ -465,8 +465,8 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.2:.1:.5]/Nfs;...
-                 'RS->NG','gNMDA',[1:1:4]/N;...
+                 'FS->IB','g_SYN',[.3:.05:.6]/Nfs;...
+                 'RS->NG','gNMDA',[1:2]/N;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
