@@ -37,7 +37,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=15;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -257,6 +257,7 @@ gNMDA_rsng = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
+% #mysynapses
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 if ~NMDA_block; gNMDAee=5/N; end
 % 
@@ -276,8 +277,7 @@ gGABAbie=0.3/Nng;
 % gGABAb_ngrs = 0.08/Nng;
 
 % RS-FS circuit (deep connections)
-% #mysynapses
-gAMPA_rsrs=0.1/Nrs;
+gAMPA_rsrs=0.2/Nrs;
 %     gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.4/Nrs;
 %     gNMDA_rsfs=0/Nrs;
@@ -305,9 +305,9 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % Gamma -> Delta connections 
-gGABAafe=.3/Nfs;
+gGABAafe=.9/Nfs;
 gAMPA_rsng = 0.1/Nrs;
-gNMDA_rsng = 3/Nrs;
+if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
@@ -465,8 +465,8 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.3,.4,.5]/Nfs;...
-                 'RS->NG','gNMDA',[1:1:5]/N;...
+                 'FS->IB','g_SYN',[.5 .7 .9]/Nfs;...
+                 %'RS->NG','gNMDA',[1:1:5]/N;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
@@ -852,6 +852,7 @@ toc;
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
 switch sim_mode
     case {1,11}
+        %%
         PlotData(data,'plot_type','waveform');
 %          PlotData(data,'plot_type','rastergram');
         
