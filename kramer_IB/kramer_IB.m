@@ -34,7 +34,7 @@ dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 % Simulation switches
 no_noise = 0;
 no_synapses = 0;
-NMDA_block = 0; 
+NMDA_block = 1; 
 
 % number of cells per population
 N=15;   % Number of excitatory cells
@@ -277,7 +277,7 @@ gGABAbie=0.3/Nng;
 % gGABAb_ngrs = 0.08/Nng;
 
 % RS-FS circuit (deep connections)
-gAMPA_rsrs=0.2/Nrs;
+gAMPA_rsrs=0.1/Nrs;
 %     gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.4/Nrs;
 %     gNMDA_rsfs=0/Nrs;
@@ -906,6 +906,7 @@ switch sim_mode
         
         PlotData(data,'variable','IB_V','plot_type','waveform');
         %PlotData(data,'variable','IB_V','plot_type','rastergram');
+        PlotData(data,'plot_type','rastergram');
         
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
