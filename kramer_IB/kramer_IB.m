@@ -99,7 +99,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -306,8 +306,8 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=.9/Nfs;
-gAMPA_rsng = 0.1/Nrs;
-if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+% gAMPA_rsng = 0.1/Nrs;
+% if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
@@ -465,7 +465,7 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.5 .7 .9]/Nfs;...
+                 'FS->IB','g_SYN',[.3:.2:1.3]/Nfs;...
                  %'RS->NG','gNMDA',[1:1:5]/N;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
@@ -916,9 +916,9 @@ switch sim_mode
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
-%         t = data(1).time; data3 = CropData(data, t > 2000 & t < 2800);
-%         PlotData(data3,'variable','IB_V','plot_type','waveform');
-%         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
+        t = data(1).time; data3 = CropData(data, t > 1200 & t < 1800);
+        PlotData(data3,'variable','IB_V','plot_type','waveform');
+        PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
 
 
         
