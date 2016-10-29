@@ -34,7 +34,7 @@ dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 % Simulation switches
 no_noise = 0;
 no_synapses = 0;
-NMDA_block = 1; 
+NMDA_block = 0; 
 
 % number of cells per population
 N=15;   % Number of excitatory cells
@@ -57,10 +57,10 @@ supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
 
-IB_offset1=300;
-IB_onset2=300;
-RS_offset1=300;
-RS_onset2=300;
+IB_offset1=0;
+IB_onset2=0;
+RS_offset1=0;
+RS_onset2=0;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -94,7 +94,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 625;    % ms, onset time
         PPoffset = tspan(end)-200;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -305,7 +305,7 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % Gamma -> Delta connections 
-gGABAafe=.9/Nfs;
+gGABAafe=1.3/Nfs;
 % gAMPA_rsng = 0.1/Nrs;
 % if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
@@ -906,7 +906,7 @@ switch sim_mode
         
         PlotData(data,'variable','IB_V','plot_type','waveform');
         %PlotData(data,'variable','IB_V','plot_type','rastergram');
-        PlotData(data,'plot_type','rastergram');
+        %PlotData(data,'plot_type','rastergram');
         
 
 %         PlotData(data,'plot_type','rastergram','variable','RS_V');
@@ -916,9 +916,9 @@ switch sim_mode
 %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
 %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
-        t = data(1).time; data3 = CropData(data, t > 1200 & t < 1800);
-        PlotData(data3,'variable','IB_V','plot_type','waveform');
-        PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
+%         t = data(1).time; data3 = CropData(data, t > 1200 & t < 1800);
+%         PlotData(data3,'variable','IB_V','plot_type','waveform');
+%         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
 
 
         
