@@ -14,7 +14,7 @@ function save_allfigs(handles_arr)
     
     if isempty(handles_arr); handles_arr = 1:3; end
     currfname = 'kr'; 
-    currfigname = '95a_model1a_vary_IB_burstiness_CaH_IM';
+    currfigname = '95b_diff_ranges';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -53,7 +53,7 @@ function save_allfigs(handles_arr)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Modeled just the initial bursting activity of IB cells when PPStim starts. Varied FSIB GABA and IB PPStim. Different simulations progressively ramped up CaH and IM across values 2,3,4, and 5.'];
+    mycomment = ['Tried other combinations of CaH and M conductances. Generally made gCaH = gM + 1.'];
     
     
     % Write to a text file
