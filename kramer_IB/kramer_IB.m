@@ -12,7 +12,7 @@ save_plots = 1;
 visible_flag = 'off';
 
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -26,8 +26,8 @@ sim_mode = 12;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_RS = 1;
-include_FS = 1;
+include_RS = 0;
+include_FS = 0;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
@@ -42,7 +42,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=15;   % Number of excitatory cells
+N=3;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -77,7 +77,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
