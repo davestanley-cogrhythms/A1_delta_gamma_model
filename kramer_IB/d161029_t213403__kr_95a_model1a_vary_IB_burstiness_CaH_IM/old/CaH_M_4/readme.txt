@@ -1,0 +1,1 @@
+95a_model1a_vary_IB_burstiness_CaH_IM Modeled just the initial bursting activity of IB cells when PPStim starts. Varied FSIB GABA and IB PPStim. Different simulations progressively ramped up CaH and IM across values 2,3,4, and 5.

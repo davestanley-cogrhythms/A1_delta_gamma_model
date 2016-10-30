@@ -9,7 +9,7 @@ addpath(genpath(fullfile('.','funcs_supporting')));
 % Display options
 plot_on = 1;
 save_plots = 1;
-visible_flag = 'on';
+visible_flag = 'off';
 
 % Simulation mode
 sim_mode = 12;   % 1 - normal sim
@@ -33,7 +33,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -62,10 +62,10 @@ supJRS1 = 5;
 supJRS2 = 0.75;
 supJfs = 1;
 
-IB_offset1=0;
-IB_onset2=0;
-RS_offset1=0;
-RS_onset2=0;
+IB_offset1=300;
+IB_onset2=300;
+RS_offset1=300;
+RS_onset2=300;
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -99,12 +99,12 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 635;    % ms, onset time
+        PPonset = 925;    % ms, onset time
         PPoffset = tspan(end)-200;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 84;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -311,8 +311,8 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=1.3/Nfs;
-gAMPA_rsng = 0.1/Nrs;
-if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+% gAMPA_rsng = 0.1/Nrs;
+% if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
@@ -464,13 +464,13 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { %'IB','PPstim',[0:-0.5:-1]; ...
+        vary = { 'IB','PPstim',[0:-1:-5]; ...
                  %'NG','PPstim',[-7:1:-1]; ...
                  %'IB','stim2',[-2]; ...
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.3:.2:1.5]/Nfs;...
+                 'FS->IB','g_SYN',[.1:.15:.70]/Nfs;...
                  %'RS->NG','gNMDA',[0:1:5]/N;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
@@ -911,6 +911,7 @@ if plot_on
 
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
 
+            PlotData(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
             PlotData(data2,'variable','IB_V','plot_type','waveform','visible',visible_flag);
             %PlotData(data,'variable','IB_V','plot_type','rastergram');
             %PlotData(data,'plot_type','rastergram');
