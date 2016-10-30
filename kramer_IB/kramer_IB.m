@@ -12,7 +12,7 @@ save_plots = 1;
 visible_flag = 'off';
 
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 12;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -26,14 +26,14 @@ sim_mode = 1;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
+include_RS = 1;
+include_FS = 1;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -42,7 +42,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=3;   % Number of excitatory cells
+N=15;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -77,7 +77,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -104,7 +104,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 84;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -311,8 +311,8 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=1.3/Nfs;
-% gAMPA_rsng = 0.1/Nrs;
-% if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+gAMPA_rsng = 0.1/Nrs;
+if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
@@ -464,14 +464,14 @@ switch sim_mode
                  %'FS','PPstim',linspace(-2,0,2); ...
                  }; 
     case 12     % Vary IB cells
-        vary = { 'IB','PPstim',[0:-1:-5]; ...
+        vary = { %'IB','PPstim',[0:-1:-5]; ...
                  %'NG','PPstim',[-7:1:-1]; ...
                  %'IB','stim2',[-2]; ...
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
                  'FS->IB','g_SYN',[.1:.15:.70]/Nfs;...
-                 %'RS->NG','gNMDA',[0:1:5]/N;...
+                 'RS->NG','gNMDA',[0:2:10]/N;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
@@ -507,8 +507,8 @@ if include_IB
       'V_noise',IBda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',4,'E_M',E_EKDR,...
-      'gCaH',5,'E_CaH',ECa,...
+      'gM',2,'E_M',E_EKDR,...
+      'gCaH',3,'E_CaH',ECa,...
       };
 end
 
@@ -907,6 +907,7 @@ if plot_on
 %             if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
 %             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
+            close all
             PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
 
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
