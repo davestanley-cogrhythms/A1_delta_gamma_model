@@ -9,7 +9,7 @@ addpath(genpath(fullfile('.','funcs_supporting')));
 % Display options
 plot_on = 1;
 save_plots = 1;
-visible_flag = 'off';
+visible_flag = 'on';
 
 % Simulation mode
 sim_mode = 12;   % 1 - normal sim
@@ -33,7 +33,7 @@ include_supRS = 0;
 include_supFS = 0;
 
 % simulation controls
-tspan=[0 2000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -99,10 +99,10 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 625;    % ms, onset time
+        PPonset = 635;    % ms, onset time
         PPoffset = tspan(end)-200;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 84;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
@@ -112,7 +112,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -5;
+        IBPPstim = -1;
         RSPPstim = -7;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
@@ -311,8 +311,8 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=1.3/Nfs;
-% gAMPA_rsng = 0.1/Nrs;
-% if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+gAMPA_rsng = 0.1/Nrs;
+if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
@@ -470,9 +470,9 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.3:.3:2.4]/Nfs;...
-                 %'RS->NG','gNMDA',[1:1:5]/N;...
-                 %'RS->NG','gNMDA',[0:1:5]/N*0.001;...
+                 'FS->IB','g_SYN',[.3:.2:1.5]/Nfs;...
+                 %'RS->NG','gNMDA',[0:1:5]/N;...
+                 %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
                  %'IB->NG','gNMDA',[5,7,9,11]/N;...
@@ -904,13 +904,14 @@ if plot_on
         case 12
              %%
             %PlotData(data,'plot_type','rastergram','variable','RS_V');
-            if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
-            elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
-            elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
+%             if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
+%             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
+%             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
+            PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
 
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
 
-%             PlotData(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
+            PlotData(data2,'variable','IB_V','plot_type','waveform','visible',visible_flag);
             %PlotData(data,'variable','IB_V','plot_type','rastergram');
             %PlotData(data,'plot_type','rastergram');
 
@@ -922,9 +923,9 @@ if plot_on
     %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
     %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
 
-    %         t = data(1).time; data3 = CropData(data, t > 1200 & t < 1800);
-    %         PlotData(data3,'variable','IB_V','plot_type','waveform');
-    %         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
+%             t = data(1).time; data3 = CropData(data, t > 1200 & t < 2300);
+%             PlotData(data3,'variable','IB_V','plot_type','waveform');
+%             PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
 
             if save_plots
                 h = figure('visible','off'); 
