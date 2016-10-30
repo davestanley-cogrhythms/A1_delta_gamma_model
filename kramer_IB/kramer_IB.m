@@ -6,6 +6,11 @@ tic
 
 addpath(genpath(fullfile('.','funcs_supporting')));
 
+% Display options
+plot_on = 1;
+save_plots = 1;
+visible_flag = 'off';
+
 % Simulation mode
 sim_mode = 12;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
@@ -99,7 +104,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 60;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         IBPPstim = 0;
@@ -107,7 +112,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -1;
+        IBPPstim = -5;
         RSPPstim = -7;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
@@ -115,7 +120,7 @@ switch pulse_mode
 
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
-        PPwidth = 10; % in ms
+        PPwidth = 10; % in mscd
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
@@ -465,7 +470,7 @@ switch sim_mode
 %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
                  %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
                  %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-                 'FS->IB','g_SYN',[.3:.2:1.3]/Nfs;...
+                 'FS->IB','g_SYN',[.3:.3:2.4]/Nfs;...
                  %'RS->NG','gNMDA',[1:1:5]/N;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
@@ -850,81 +855,89 @@ data2 = CalcAverages(data);
 toc;
 
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
-switch sim_mode
-    case {1,11}
-        %%
-        PlotData(data,'plot_type','waveform');
-%          PlotData(data,'plot_type','rastergram');
-        
-        if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
-        elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-        elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
-        elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});end
-        %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
-        %PlotFR(data);
-    case {2,3}
-        PlotData(data,'plot_type','waveform');
-        PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
-        PlotData(data,'variable','iNMDA_s','plot_type','waveform');
-        
-    case {5,6}
-        PlotData(data,'plot_type','waveform','variable','IB_V');
-    case 9
-        %%
-        %PlotData(data,'plot_type','waveform');
-        %PlotData(data,'plot_type','power');
-        
-        %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-        %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
-        PlotData(data,'plot_type','waveform')
-        %PlotFR2(data,'plot_type','meanFR')
-        for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
-        for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
-        for i = 1:9:54; PlotData(data(i:i+8),'variable','FS_V'); end
-        for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
-        PlotStudy(data,@plot_AP_decay1_RSFS)
-        PlotStudy(data,@plot_AP_timing1_RSFS)
-%         PlotData(data,'plot_type','rastergram','variable','RS_V'); PlotData(data,'plot_type','rastergram','variable','FS_V')
-%         PlotData(data2,'plot_type','waveform','variable','RS_V');
-%         PlotData(data2,'plot_type','waveform','variable','FS_V');
+if plot_on
+    switch sim_mode
+        case {1,11}
+            %%
+            PlotData(data,'plot_type','waveform');
+    %          PlotData(data,'plot_type','rastergram');
 
-%         PlotData(data,'plot_type','rastergram','variable','RS_V');
-%         PlotData(data,'plot_type','rastergram','variable','FS_V');
-%         PlotFR2(data,'variable','RS_V'); 
-%         PlotFR2(data,'variable','FS_V'); 
-%         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-%         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+            if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
+            elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+            elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
+            elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});end
+            %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
+            %PlotFR(data);
+        case {2,3}
+            PlotData(data,'plot_type','waveform');
+            PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+            PlotData(data,'variable','iNMDA_s','plot_type','waveform');
 
-    case 12
-         %%
-        %PlotData(data,'plot_type','rastergram','variable','RS_V');
-        if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'});
-        elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-        elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'}); end
-        
-        %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-        
-        PlotData(data,'variable','IB_V','plot_type','waveform');
-        %PlotData(data,'variable','IB_V','plot_type','rastergram');
-        %PlotData(data,'plot_type','rastergram');
-        
+        case {5,6}
+            PlotData(data,'plot_type','waveform','variable','IB_V');
+        case 9
+            %%
+            %PlotData(data,'plot_type','waveform');
+            %PlotData(data,'plot_type','power');
 
-%         PlotData(data,'plot_type','rastergram','variable','RS_V');
-%         PlotData(data,'plot_type','rastergram','variable','FS_V');
-%         PlotFR2(data,'variable','RS_V'); 
-%         PlotFR2(data,'variable','FS_V'); 
-%         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-%         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+            %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+            %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
+            PlotData(data,'plot_type','waveform')
+            %PlotFR2(data,'plot_type','meanFR')
+            for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
+            for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
+            for i = 1:9:54; PlotData(data(i:i+8),'variable','FS_V'); end
+            for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
+            PlotStudy(data,@plot_AP_decay1_RSFS)
+            PlotStudy(data,@plot_AP_timing1_RSFS)
+    %         PlotData(data,'plot_type','rastergram','variable','RS_V'); PlotData(data,'plot_type','rastergram','variable','FS_V')
+    %         PlotData(data2,'plot_type','waveform','variable','RS_V');
+    %         PlotData(data2,'plot_type','waveform','variable','FS_V');
 
-%         t = data(1).time; data3 = CropData(data, t > 1200 & t < 1800);
-%         PlotData(data3,'variable','IB_V','plot_type','waveform');
-%         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
+    %         PlotData(data,'plot_type','rastergram','variable','RS_V');
+    %         PlotData(data,'plot_type','rastergram','variable','FS_V');
+    %         PlotFR2(data,'variable','RS_V'); 
+    %         PlotFR2(data,'variable','FS_V'); 
+    %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+    %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+
+        case 12
+             %%
+            %PlotData(data,'plot_type','rastergram','variable','RS_V');
+            if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
+            elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
+            elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
+
+            %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+
+%             PlotData(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
+            %PlotData(data,'variable','IB_V','plot_type','rastergram');
+            %PlotData(data,'plot_type','rastergram');
 
 
-        
-        
-    otherwise
-        PlotData(data,'plot_type','waveform');
+    %         PlotData(data,'plot_type','rastergram','variable','RS_V');
+    %         PlotData(data,'plot_type','rastergram','variable','FS_V');
+    %         PlotFR2(data,'variable','RS_V'); 
+    %         PlotFR2(data,'variable','FS_V'); 
+    %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
+    %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+
+    %         t = data(1).time; data3 = CropData(data, t > 1200 & t < 1800);
+    %         PlotData(data3,'variable','IB_V','plot_type','waveform');
+    %         PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
+
+            if save_plots
+                h = figure('visible','off'); 
+                h2 = double(h);
+                save_allfigs(1:h2-1);
+                close(h);  % Get most recent figure handle
+                clear h h2
+            end
+
+
+        otherwise
+            PlotData(data,'plot_type','waveform');
+    end
 end
 
 

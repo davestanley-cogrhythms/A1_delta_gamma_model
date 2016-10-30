@@ -1,13 +1,20 @@
 
 
-function save_allfigs(currfname,currfigname)
+function save_allfigs(handles_arr)
     %% save_allfigs
     % % For loop for saving figs
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
 %     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
     %clear all       % Clear memory for large data sets before saving figs.
+    
+    if nargin < 1; handles_arr = [];
+    end
+    
+    do_commit = 0;
+    
+    if isempty(handles_arr); handles_arr = 1:3; end
     currfname = 'kr'; 
-    currfigname = '92a_model1a_FSIB_only';
+    currfigname = '93a_model1a_spontaneous_delta';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -19,8 +26,8 @@ function save_allfigs(currfname,currfigname)
     mkdir(fullfile(basepath,sp));
     multiplot_on = 0;
     
-    for i=[1:2]
-        figure(i); %ylim([0 0.175])
+    for i=handles_arr
+        %figure(i); %ylim([0 0.175])
         %title('');
         %ylabel('');
         %xlim([-1.5 2.2]);
@@ -38,15 +45,15 @@ function save_allfigs(currfname,currfigname)
 %             set(gcf,'Position',[0.8257    0.1256    0.1743    0.7689]);         % Size to compare Carracedo
                                                                                 % To get only 1 cell trace, run: data(1).model.specification.populations(1).size=1;
         end
-        set(gcf,'PaperPositionMode','auto');
+        set(i,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-        tic; print(gcf,'-dpng','-r100','-opengl',fullfile(basepath,sp,savenames{i}));toc
+        tic; print(i,'-dpng','-r100','-opengl',fullfile(basepath,sp,savenames{i}));toc
         %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Restored earlier form of model with no RS->NG connections. I call this Model 1a. It reproduces a variety of behaviors, but doesnt produce NMDA block effects.'];
+    mycomment = ['Allowed IB cells to burst spontaneously before applying PPStim, rather than hyperpolarizing.'];
     
     
     % Write to a text file
@@ -54,12 +61,14 @@ function save_allfigs(currfname,currfigname)
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
     %%
-    % Commit
-    currd = pwd;
-    cd ..
-    system('git add *');
-    system(['git commit -am "' currfigname ' ' mycomment '"']);
-    cd(currd);
+    if do_commit
+        % Commit
+        currd = pwd;
+        cd ..
+        system('git add *');
+        system(['git commit -am "' currfigname ' ' mycomment '"']);
+        cd(currd);
+    end
 
 
 end
