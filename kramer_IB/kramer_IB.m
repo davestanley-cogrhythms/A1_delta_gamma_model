@@ -10,9 +10,11 @@ addpath(genpath(fullfile('.','funcs_supporting')));
 plot_on = 1;
 save_plots = 1;
 visible_flag = 'off';
+compile_flag = 1;
+random_seed = 1;
 
 % Simulation mode
-sim_mode = 12;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -90,6 +92,10 @@ switch pulse_mode
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.75;  % Not used for Gaussian pulse
         kernel_type = 2;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -107,6 +113,10 @@ switch pulse_mode
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -129,6 +139,10 @@ switch pulse_mode
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 2.5;  % Not used for Gaussian pulse
         kernel_type = 2;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -150,6 +164,10 @@ switch pulse_mode
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = 0.75;  % Not used for Gaussian pulse
         kernel_type = 1;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -497,18 +515,18 @@ if include_IB
     spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
       'E_l2',EGABA,'g_l2',0,...
-      'PPstim', IBPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'PPstim', IBPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau','PPFacFactor',IBPPFacFactor,...
       'gRAN',gRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',Jd1,'onset',0,'offset',IB_offset1,'stim2',Jd2,'onset2',IB_onset2,'offset2',Inf,...
       'V_noise',IBda_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',2,'E_M',E_EKDR,...
-      'gCaH',3,'E_CaH',ECa,...
+      'gCaH',2,'E_CaH',ECa,...
       };
 end
 
@@ -517,10 +535,10 @@ if include_RS
     spec.populations(i).name = 'RS';
     spec.populations(i).size = Nrs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',RS_Eleak_std,'g_l',gl,...
-      'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau','PPFacFactor',RSPPFacFactor,...
       'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',JRS1,'onset',0,'offset',RS_offset1,'stim2',JRS2,'onset2',RS_onset2,'offset2',Inf,...
       'V_noise',RSda_Vnoise,...
@@ -536,10 +554,10 @@ if include_NG
     spec.populations(i).name = 'NG';
     spec.populations(i).size = Nng;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'PPstim',NGPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'PPstim',NGPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau','PPFacFactor',PPFacFactor,...
       'stim',Jng1,'onset',0,'offset',50,'stim2',Jng2,'onset2',50,'offset2',Inf,...
       'V_noise',NG_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
@@ -553,10 +571,10 @@ if include_FS
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',FS_Eleak_std,'g_l',0.1,...
-      'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau','PPFacFactor',PPFacFactor,...
       'stim',Jfs,'onset',0,'offset',Inf,...
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
@@ -570,10 +588,10 @@ if include_supRS
     spec.populations(i).name = 'supRS';
     spec.populations(i).size = NsupRS;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'g_l',gl,'E_l',-67,'E_l_std',5,...
-      'PPstim', supRSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+      'PPstim', supRSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau','PPFacFactor',PPFacFactor,...
       'gRAN',supRSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',supJRS1,'onset',0,'offset',RS_offset1,'stim2',supJRS2,'onset2',RS_onset2,'offset2',Inf,...
       'V_noise',supRSda_Vnoise,...
@@ -839,7 +857,7 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
