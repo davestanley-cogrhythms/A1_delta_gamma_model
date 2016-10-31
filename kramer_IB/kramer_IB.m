@@ -113,17 +113,18 @@ switch pulse_mode
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
-        PPFacTau = 200;
+        PPFacTau = 100;
         PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
+        IBPPFacFactor = 0.1;
+        RSPPFacFactor = 70.0;
+            RSPPFacTau = 100;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -1;
-        RSPPstim = -7;
+        IBPPstim = -4;
+        RSPPstim = -0.1;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
@@ -329,8 +330,8 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=1.3/Nfs;
-gAMPA_rsng = 0.1/Nrs;
-if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+% gAMPA_rsng = 0.1/Nrs;
+% if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
@@ -538,7 +539,7 @@ if include_RS
     spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',RS_Eleak_std,'g_l',gl,...
-      'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau','PPFacFactor',RSPPFacFactor,...
+      'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',RSPPFacTau','PPFacFactor',RSPPFacFactor,...
       'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
       'stim',JRS1,'onset',0,'offset',RS_offset1,'stim2',JRS2,'onset2',RS_onset2,'offset2',Inf,...
       'V_noise',RSda_Vnoise,...
