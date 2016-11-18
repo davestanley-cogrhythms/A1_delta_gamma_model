@@ -115,16 +115,16 @@ switch pulse_mode
         kernel_type = 1;
         PPFacTau = 100;
         PPFacFactor = 1.0;
-        IBPPFacFactor = 0.1;
-        RSPPFacFactor = 70.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
             RSPPFacTau = 100;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-        IBPPstim = -4;
-        RSPPstim = -0.1;
+        IBPPstim = -1;
+        RSPPstim = -7;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
@@ -330,8 +330,8 @@ gGABAb_NGsupRS=0.05/Nng;
 
 % Gamma -> Delta connections 
 gGABAafe=1.3/Nfs;
-% gAMPA_rsng = 0.1/Nrs;
-% if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+gAMPA_rsng = 0.1/Nrs;
+if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
 
 end
 
