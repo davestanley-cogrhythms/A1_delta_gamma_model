@@ -21,7 +21,7 @@ ap_pulse_delay = 12.5;  % ms, the amount the spike should be delayed. 0 for no a
 kernel_type = 1;
 width2_rise = 0.25;
 
-s2=getAperiodicPulseFast(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise);
+s2=getAperiodicPulseFast(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise,0);
 
 monitor functions % always record the current
 

@@ -6,7 +6,7 @@ stim2 = 0;
 onset2 = [0]
 offset2 = inf
 
-Itonic_paired(t) = stim*(t>onset & t<offset) + stim2*(t>onset2 & t<offset2)
+ItonicPaired(t) = stim*(t>onset & t<offset) + stim2*(t>onset2 & t<offset2)
  
-current => -Itonic_paired(t)
+current => -ItonicPaired(t)
  
