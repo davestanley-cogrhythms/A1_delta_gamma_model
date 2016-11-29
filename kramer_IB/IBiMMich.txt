@@ -7,8 +7,8 @@ IC_noise = [0.01]
 Qs = 3.209^2
 halfMM = -50
 
-aM(X) = c_MaM.*(0.0001*Qs*(X-halfMM)) ./ (1-exp(-(X-halfMM)/10))
-bM(X) = c_MbM.*(-0.0001*Qs*(X-halfMM)) ./ (1-exp((X-halfMM)/10))
+aM(X) = c_MaM.*(0.0001*Qs*(X-halfMM)) ./ (1-exp(-(X-halfMM)/9))
+bM(X) = c_MbM.*(-0.0001*Qs*(X-halfMM)) ./ (1-exp((X-halfMM)/9))
 IM(X,mM) = gM.*mM.*(X-E_M)
 infmM(X) = aM(X)./(aM(X)+bM(X))
 taumM(X) = 1./(aM(X)+bM(X))
