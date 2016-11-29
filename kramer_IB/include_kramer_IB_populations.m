@@ -66,6 +66,12 @@ end
 
 %% FS cells
 if include_FS
+    if swap_FS_to_LTS
+        FS_gM = 4;
+    else
+        FS_gM = 0;
+    end
+    
     i=i+1;
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
@@ -78,6 +84,7 @@ if include_FS
       'V_noise',FS_Vnoise,...
       'gNaF',100,'E_NaF',ENa,...
       'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',FS_gM,'E_M',E_EKDR,...
       };
 end
 

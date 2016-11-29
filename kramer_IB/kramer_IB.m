@@ -27,15 +27,18 @@ sim_mode = 1;   % 1 - normal sim
                 
                 
 % Cells to include in model
-include_IB = 1;
-include_RS = 1;
+include_IB = 0;
+include_RS = 0;
 include_FS = 1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
+% LTS cell mode
+swap_FS_to_LTS = 1;
+
 % simulation controls
-tspan=[0 2500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -68,6 +71,13 @@ IB_offset1=300;
 IB_onset2=300;
 RS_offset1=300;
 RS_onset2=300;
+
+% Set everything temporarily to zero
+IB_offset1=0;
+IB_onset2=0;
+RS_offset1=0;
+RS_onset2=0;
+
 
 % Poisson IPSPs to IBdb (basal dendrite)
 gRAN=.015;
@@ -346,6 +356,9 @@ tauNMDAr=5; % ms, NMDA rise time; Jung et al
 tauNMDAd=100; % ms, NMDA decay time; Jung et al
 tauGABAar=.5;  % ms, GABAa rise time; Jung et al
 tauGABAad=8;   % ms, GABAa decay time; Jung et al
+if swap_FS_to_LTS
+    tauGABAad=20;
+end
 tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
 tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
 EAMPA=0;
