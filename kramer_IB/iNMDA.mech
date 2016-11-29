@@ -27,5 +27,5 @@ s(0) = IC+IC_noise*rand(1,N_pre)
 monitor functions % always record the synaptic current
 
 % linkers
-@current += -INMDA(Vpost,s)
+@current += -INMDA(X_post,s)
 

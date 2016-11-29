@@ -20,5 +20,5 @@ INaF(V,h) = gNaF.*m0(V).^3.*hNaF.*(V-E_NaF)
 hNaF' = aH(V).*(1-hNaF)-bH(V).*hNaF;
 hNaF(0) = IC+IC_noise.*rand(Npop,1)
  
-current => -INaF(V,hNaF)
+@current += -INaF(V,hNaF)
  

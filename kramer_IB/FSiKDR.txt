@@ -16,5 +16,5 @@ IKDR(V,m) = gKDR.*mKDR.^4.*(V-E_KDR)
 mKDR' = aM(V).*(1-mKDR)-bM(V).*mKDR;
 mKDR(0) = IC+IC_noise.*rand(Npop,1)
  
-current => -IKDR(V,mKDR)
+@current += -IKDR(V,mKDR)
  
