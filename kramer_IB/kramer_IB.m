@@ -14,7 +14,7 @@ compile_flag = 1;
 random_seed = 1;
 
 % Simulation mode
-sim_mode = 11;   % 1 - normal sim
+sim_mode = 9;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -28,7 +28,7 @@ sim_mode = 11;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 0;
-include_RS = 0;
+include_RS = 1;
 include_FS = 1;
 include_NG = 0;
 include_supRS = 0;
@@ -118,9 +118,9 @@ switch pulse_mode
         PPonset = 0;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 84;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 16;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         PPFacTau = 100;
@@ -136,7 +136,7 @@ switch pulse_mode
         IBPPstim = -1;
         RSPPstim = -7;
 %         NGPPstim = -4;
-        FSPPstim = -5;
+%         FSPPstim = -5;
 %         supRSPPstim = -7;
 
     case 2                  % Median nerve stimulation
@@ -479,9 +479,9 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
 
         vary = { %'RS','stim2',linspace(2,-2,12); ...
-                 'RS','PPstim',linspace(-7,-2,6); ...
-                 %'RS->FS','g_SYN',[0.2:0.1:.8]/Nrs;...
-                 'FS->RS','g_SYN',[0.2:0.1:1]/Nfs;...
+                 %'RS','PPstim',linspace(-10,-2,8); ...
+                 'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
+                 'FS->RS','g_SYN',[0.2:0.2:1]/Nfs;...
 
                  }; 
 
@@ -580,12 +580,12 @@ if plot_on
             %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
             PlotData(data,'plot_type','waveform')
             %PlotFR2(data,'plot_type','meanFR')
-            for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
-            for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
-            for i = 1:9:54; PlotData(data(i:i+8),'variable','FS_V'); end
-            for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
-            PlotStudy(data,@plot_AP_decay1_RSFS)
-            PlotStudy(data,@plot_AP_timing1_RSFS)
+%             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
+%             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
+%             for i = 1:9:54; PlotData(data(i:i+8),'variable','FS_V'); end
+%             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
+%             PlotStudy(data,@plot_AP_decay1_RSFS)
+%             PlotStudy(data,@plot_AP_timing1_RSFS)
     %         PlotData(data,'plot_type','rastergram','variable','RS_V'); PlotData(data,'plot_type','rastergram','variable','FS_V')
     %         PlotData(data2,'plot_type','waveform','variable','RS_V');
     %         PlotData(data2,'plot_type','waveform','variable','FS_V');
