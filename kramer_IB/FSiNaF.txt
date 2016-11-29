@@ -9,16 +9,17 @@ NaF_c1 = 1.125
 E_NaF = [50]
 IC = [0]
 IC_noise = [0.01]
+NaF_offset = 10
  
-hinf(V) = 1./(1+exp((V+NaF_V1)/NaF_d1))
-htau(V) = NaF_c0 + NaF_c1./(1+exp((V+NaF_V2)/NaF_d2))
-m0(V) = 1./(1+exp((-V-NaF_V0)/10))
-aH(V) = hinf(V) ./ htau(V)
-bH(V) = (1-hinf(V))./htau(V)
-INaF(V,h) = gNaF.*m0(V).^3.*hNaF.*(V-E_NaF)
+hinf(X) = 1./(1+exp((X+NaF_V1-NaF_offset)/NaF_d1))
+htau(X) = NaF_c0 + NaF_c1./(1+exp((X+NaF_V2-NaF_offset)/NaF_d2))
+m0(X) = 1./(1+exp((-X-NaF_V0+NaF_offset)/10))
+aH(X) = hinf(X) ./ htau(X)
+bH(X) = (1-hinf(X))./htau(X)
+INaF(X,hNaF) = gNaF.*m0(X).^3.*hNaF.*(X-E_NaF)
  
-hNaF' = aH(V).*(1-hNaF)-bH(V).*hNaF;
+hNaF' = aH(X).*(1-hNaF)-bH(X).*hNaF;
 hNaF(0) = IC+IC_noise.*rand(Npop,1)
  
-@current += -INaF(V,hNaF)
+@current += -INaF(X,hNaF)
  
