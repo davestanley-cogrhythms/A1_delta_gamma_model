@@ -14,7 +14,7 @@ compile_flag = 1;
 random_seed = 1;
 
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 11;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -47,7 +47,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=10;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -89,7 +89,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -115,7 +115,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 800;    % ms, onset time
+        PPonset = 0;    % ms, onset time
         PPoffset = tspan(end)-200;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 84;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -136,7 +136,7 @@ switch pulse_mode
         IBPPstim = -1;
         RSPPstim = -7;
 %         NGPPstim = -4;
-%         FSPPstim = -5;
+        FSPPstim = -5;
 %         supRSPPstim = -7;
 
     case 2                  % Median nerve stimulation
@@ -492,8 +492,9 @@ switch sim_mode
                  }; 
              
     case 11     % Vary just FS cells
-        vary = { 'FS','stim',linspace(0,1.25,2); ...
+        vary = { 'FS','stim',linspace(-2,2,8); ...
                  %'FS','PPstim',linspace(-2,0,2); ...
+                 'FS->FS','g_SYN', linspace(0.2,1,4)/Nfs...
                  }; 
     case 12     % Vary IB cells
         vary = { %'IB','PPstim',[-1:-1:-5]; ...
@@ -555,7 +556,12 @@ if plot_on
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
-            elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});end
+            elseif include_FS;
+                %PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
+            end
+            
+            PlotData(data,'plot_type','power');
+            
             %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
             %PlotFR(data);
         case {2,3}
