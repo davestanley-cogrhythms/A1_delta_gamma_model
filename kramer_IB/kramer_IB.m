@@ -89,7 +89,7 @@ supRSgRAN = 0.005;
 
 
 % % Periodic pulse stimulation
-pulse_mode = 0;
+pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -116,7 +116,7 @@ switch pulse_mode
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end)-200;   % ms, offset time
+        PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 84;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
@@ -492,8 +492,8 @@ switch sim_mode
                  }; 
              
     case 11     % Vary just FS cells
-        vary = { 'FS','stim',linspace(-2,2,8); ...
-                 %'FS','PPstim',linspace(-2,0,2); ...
+        vary = { %'FS','stim',linspace(-2,1,1); ...
+                 'FS','PPstim',linspace(-6,0,8); ...
                  'FS->FS','g_SYN', linspace(0.2,1,4)/Nfs...
                  }; 
     case 12     % Vary IB cells
