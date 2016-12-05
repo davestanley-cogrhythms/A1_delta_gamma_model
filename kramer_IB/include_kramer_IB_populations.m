@@ -88,6 +88,23 @@ if include_FS
       };
 end
 
+%% LTS cells
+if include_LTS
+    i=i+1;
+    spec.populations(i).name = 'LTS';
+    spec.populations(i).size = Nlts;
+    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',LTS_Eleak_std,'g_l',0.1,...
+      'stim',Jlts,'onset',0,'offset',Inf,...
+      'V_noise',LTS_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',4,'E_M',E_EKDR,...
+      };
+end
+
 %% Supraficial cells
 if include_supRS
     i=i+1;

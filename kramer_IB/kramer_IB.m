@@ -10,7 +10,7 @@ addpath(genpath(fullfile('.','funcs_supporting')));
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 1;
+compile_flag = 0;
 random_seed = 1;
 
 % Simulation mode
@@ -39,7 +39,7 @@ include_supFS = 0;
 swap_FS_to_LTS = 0;
 
 % simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 75]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -123,7 +123,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 16;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         PPFacTau = 100;
@@ -222,6 +222,7 @@ ggjFS=0;
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IBa -> IBa
 ggjFS=.2/Nfs;  % IBa -> IBa
+ggjLTS=.2/Nlts;  % IBa -> IBa
 % % Sup cells
 ggjasupRS=.00/(NsupRS);  % RS -> RS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjsupFS=.2/NsupFS;  % IBa -> IBa
@@ -233,6 +234,7 @@ gsyn_hetero = 0;
 % Eleak heterogenity
 RS_Eleak_std = 0;
 FS_Eleak_std = 0;
+LTS_Eleak_std = 0;
 % RS_Eleak_std = 10;
 % FS_Eleak_std = 20;
 
@@ -249,8 +251,8 @@ gGABAbii=0;
 gGABAaie=0;
 gGABAbie=0;
 
-
-gGABAafe=0;
+gAMPA_ibLTS=0;
+gNMDA_ibLTS=0;
 
 % Delta -> Gamma oscillator connections
 gAMPA_ibrs = 0;
@@ -265,6 +267,13 @@ gAMPA_rsfs=0;
     gNMDA_rsfs=0;
 gGABAaff=0;
 gGABAa_fsrs=0;
+
+gAMPA_rsLTS = 0;
+    gNMDA_rsLTS = 0;
+gGABAa_LTSrs = 0;
+
+gGABAa_fsLTS = 0;
+gGABAa_LTSfs = 0;
 
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0;
@@ -291,6 +300,7 @@ gAMPA_supRSIB = 0;
 gGABAafe=0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
+gGABAa_LTSe = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
@@ -307,13 +317,17 @@ gGABAbii=0.3/Nng;
 gGABAaie=0.1/Nng;
 gGABAbie=0.3/Nng;
 
+                   % IB-> LTS
+gAMPA_ibLTS=0.1/N;
+if ~NMDA_block; gNMDA_ibLTS=5/N; end
+
 % Delta -> Gamma oscillator connections
 % gAMPA_ibrs = 0.013/N;
 % gNMDA_ibrs = 0.02/N;
 % gGABAa_ngrs = 0.05/Nng;
 % gGABAb_ngrs = 0.08/Nng;
 
-% RS-FS circuit (deep connections)
+% RS-FS-LTS circuit
 gAMPA_rsrs=0.1/Nrs;
 %     gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.4/Nrs;
@@ -321,12 +335,23 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=1.0/Nfs;
 
+gAMPA_rsLTS = 0.4/Nrs;
+    gNMDA_rsLTS = 0/Nrs;
+gGABAa_LTSrs = 1.0/Nfs;
+
+gGABAa_fsLTS = .5/Nfs;
+gGABAa_LTSfs = .5/Nlts;
+
+
+
+
 % RS-FS circuit (supra connections)
 gAMPA_supRSsupRS=0.1/(NsupRS);
         gNMDA_supRSsupRS=0.0/(NsupRS);
 gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principle cells.
 gGABA_supFSsupFS=0.5/NsupFS;
 gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
+
 
 % Deep -> Supra connections (including NG - really should model this separately!)
 % gAMPA_IBsupRS = 0.01/N;
@@ -345,6 +370,7 @@ gGABAb_NGsupRS=0.05/Nng;
 gGABAafe=1.3/Nfs;
 gAMPA_rsng = 0.1/Nrs;
 if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
+gGABAa_LTSe = 1.3/Nfs;
 
 end
 
@@ -360,8 +386,10 @@ tauNMDAd=100; % ms, NMDA decay time; Jung et al
 tauGABAar=.5;  % ms, GABAa rise time; Jung et al
 tauGABAad=8;   % ms, GABAa decay time; Jung et al
 if swap_FS_to_LTS
-    tauGABAad=20;
+    tauGABAad=20;   % LTS decay time
 end
+tauGABAaLTSr = .5;
+tauGABAaLTSd = 20;  % LTS decay time
 tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
 tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
 EAMPA=0;
@@ -377,6 +405,7 @@ IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
+LTS_Vnoise = 3;
 RSda_Vnoise = .3;
 supRSda_Vnoise = .3;
 supFS_Vnoise = 3;
