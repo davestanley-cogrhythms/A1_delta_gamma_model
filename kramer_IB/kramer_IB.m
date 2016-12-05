@@ -137,7 +137,7 @@ switch pulse_mode
         FSPPstim = 0;
         supRSPPstim = 0;
         IBPPstim = -1;
-        RSPPstim = -7;
+        RSPPstim = -10;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
 %         supRSPPstim = -7;
@@ -332,10 +332,10 @@ gAMPA_rsrs=0.1/Nrs;
 %     gNMDA_RSRS=5/Nrs;
 gAMPA_rsfs=0.4/Nrs;
 %     gNMDA_rsfs=0/Nrs;
-gGABAaff=.5/Nfs;
-gGABAa_fsrs=1.0/Nfs;
+gGABAaff=1/Nfs;
+gGABAa_fsrs=.6/Nfs;
 
-% gAMPA_rsLTS = 0.4/Nrs;
+% gAMPA_rsLTS = 0.3/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
 % gGABAa_LTSrs = 1.0/Nfs;
 % 
