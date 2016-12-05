@@ -10,7 +10,7 @@ addpath(genpath(fullfile('.','funcs_supporting')));
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 0;
+compile_flag = 1;
 random_seed = 1;
 
 % Simulation mode
@@ -39,7 +39,7 @@ include_supFS = 0;
 swap_FS_to_LTS = 0;
 
 % simulation controls
-tspan=[0 75]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % Simulation switches
@@ -121,9 +121,9 @@ switch pulse_mode
         PPonset = 0;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 16;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         PPFacTau = 100;
@@ -335,12 +335,12 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=.5/Nfs;
 gGABAa_fsrs=1.0/Nfs;
 
-gAMPA_rsLTS = 0.4/Nrs;
-    gNMDA_rsLTS = 0/Nrs;
-gGABAa_LTSrs = 1.0/Nfs;
-
+% gAMPA_rsLTS = 0.4/Nrs;
+%     gNMDA_rsLTS = 0/Nrs;
+% gGABAa_LTSrs = 1.0/Nfs;
+% 
 gGABAa_fsLTS = .5/Nfs;
-gGABAa_LTSfs = .5/Nlts;
+% gGABAa_LTSfs = .5/Nlts;
 
 
 
@@ -592,7 +592,7 @@ if plot_on
                 %PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
             end
             
-            PlotData(data,'plot_type','power');
+%             PlotData(data,'plot_type','power');
             
             %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
             %PlotFR(data);
