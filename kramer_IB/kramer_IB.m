@@ -8,13 +8,13 @@ addpath(genpath(fullfile('.','funcs_supporting')));
 
 % Display options
 plot_on = 1;
-save_plots = 1;
-visible_flag = 'off';
+save_plots = 0;
+visible_flag = 'on';
 compile_flag = 1;
 random_seed = 1;
 
 % Simulation mode
-sim_mode = 9;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -30,12 +30,13 @@ sim_mode = 9;   % 1 - normal sim
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
+include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
 % LTS cell mode
-swap_FS_to_LTS = 1;
+swap_FS_to_LTS = 0;
 
 % simulation controls
 tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -51,6 +52,7 @@ N=5;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
+Nlts=N; % Number of LTS cells
 NsupRS = 30; 
 NsupFS = N;
 
@@ -60,7 +62,8 @@ Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
-Jfs=1;     % FS current injection; step1
+Jfs=1;     % FS current injection
+Jlts=1;     % LTS current injection
 JRS1 = 5;
 JRS2 = 1;
 supJRS1 = 5;
