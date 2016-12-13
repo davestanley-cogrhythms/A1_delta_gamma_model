@@ -48,7 +48,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=5;   % Number of excitatory cells
+N=10;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -337,7 +337,7 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=1/Nfs;
 gGABAa_fsrs=.6/Nfs;
 
-gAMPA_rsLTS = 0.4/Nrs;
+gAMPA_rsLTS = 0.3/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
 % gGABAa_LTSrs = 1.0/Nfs;
 % 
@@ -549,6 +549,19 @@ switch sim_mode
                  %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
                  }; 
              
+    case 13
+        vary = { 'RS->LTS','g_SYN',[.1:.1:.5]/Nrs;...
+                 'FS->LTS','g_SYN',[.2:.1:.6]/Nfs;...
+                 %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
+                 %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
+                 %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
+                 %'IB->NG','gNMDA',[5,7,9,11]/N;...
+                    % For NMDA block conditions
+                 %'IB->NG','gNMDA',[0.005,0.007,0.009,0.011]/N;...
+                 %'RS->NG','g_SYN',[.1:.1:.3]/Nfs;...
+                 %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
+                 }; 
+             
         
 
         
@@ -669,7 +682,16 @@ if plot_on
 
 
         otherwise
-            PlotData(data,'plot_type','waveform');
+            %PlotData(data,'plot_type','waveform');
+            PlotData(data,'plot_type','waveform','variable','LTS_V')
+            PlotData(data,'plot_type','rastergram','variable','LTS_V')
+            
+            if 0
+                %% Plot overlaid Vm data
+                data_cat = cat(3,data.RS_V,data.FS_V,data.LTS_V);
+                figure; plott_matrix3D(data_cat);
+            end
+            
     end
 end
 

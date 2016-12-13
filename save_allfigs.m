@@ -10,11 +10,11 @@ function save_allfigs(handles_arr)
     if nargin < 1; handles_arr = [];
     end
     
-    do_commit = 1;
+    do_commit = 0;
     
-    if isempty(handles_arr); handles_arr = 6; end
+    if isempty(handles_arr); handles_arr = 14; end
     currfname = 'kr'; 
-    currfigname = '101a_RS_FS_LTS_only';
+    currfigname = '101b_2D_sweep';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -53,7 +53,7 @@ function save_allfigs(handles_arr)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Got simple LTS response 1 cycle after AP pulse.'];
+    mycomment = ['Swept LTS firing over RS->LTS and FS-LTS synapse strength.'];
     
     
     % Write to a text file
