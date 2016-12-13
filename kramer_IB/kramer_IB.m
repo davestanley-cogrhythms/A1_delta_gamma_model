@@ -14,7 +14,7 @@ compile_flag = 1;
 random_seed = 1;
 
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 13;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -48,7 +48,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=10;   % Number of excitatory cells
+N=30;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -550,8 +550,8 @@ switch sim_mode
                  }; 
              
     case 13
-        vary = { 'RS->LTS','g_SYN',[.1:.1:.5]/Nrs;...
-                 'FS->LTS','g_SYN',[.2:.1:.6]/Nfs;...
+        vary = { 'RS->LTS','g_SYN',[.3:.3:.3]/Nrs;...
+                 'FS->LTS','g_SYN',[.4:.05:.8]/Nfs;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
@@ -580,6 +580,8 @@ include_kramer_IB_synapses;
 data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
+
+
 
 % Calculate Thevenin equivalents of GABA B conductances
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
@@ -683,8 +685,9 @@ if plot_on
 
         otherwise
             %PlotData(data,'plot_type','waveform');
-            PlotData(data,'plot_type','waveform','variable','LTS_V')
-            PlotData(data,'plot_type','rastergram','variable','LTS_V')
+            PlotData(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
+            PlotData(data,'plot_type','rastergram','variable','LTS_V');
+            PlotData(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             
             if 0
                 %% Plot overlaid Vm data

@@ -12,9 +12,9 @@ function save_allfigs(handles_arr)
     
     do_commit = 1;
     
-    if isempty(handles_arr); handles_arr = 1:4; end
+    if isempty(handles_arr); handles_arr = 1:12; end
     currfname = 'kr'; 
-    currfigname = '101c_test_mechanism_2nd_pulse';
+    currfigname = '101d_test_noise_levels';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -53,7 +53,7 @@ function save_allfigs(handles_arr)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Tested what happens when RS fire or not after AP pulse. Figs1-2 RS fire. Figs3-4 RS dont fire.'];
+    mycomment = [' Tried varying the noise levels to see how this effects parameter regime for LTS burst.'];
     
     
     % Write to a text file
