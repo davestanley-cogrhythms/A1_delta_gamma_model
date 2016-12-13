@@ -305,6 +305,8 @@ gGABAa_LTSe = 0;
 if ~no_synapses
 % % Synaptic connection strengths
 % #mysynapses
+
+% Delta oscillator
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 if ~NMDA_block; gNMDAee=5/N; end
 % 
@@ -335,7 +337,7 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=1/Nfs;
 gGABAa_fsrs=.6/Nfs;
 
-% gAMPA_rsLTS = 0.3/Nrs;
+gAMPA_rsLTS = 0.4/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
 % gGABAa_LTSrs = 1.0/Nfs;
 % 
