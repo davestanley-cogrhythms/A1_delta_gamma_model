@@ -63,7 +63,7 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection
-Jlts=0.75;     % LTS current injection
+Jlts=1;     % LTS current injection
 JRS1 = 5;
 JRS2 = 1;
 supJRS1 = 5;
@@ -550,7 +550,7 @@ switch sim_mode
                  }; 
              
     case 13         % LTS Cells
-        vary = { 'RS->LTS','g_SYN',[.25:.05:.45]/Nrs;...
+        vary = { 'RS->LTS','g_SYN',[.15:.05:.35]/Nrs;...
                  'FS->LTS','g_SYN',[.2:.2:1]/Nfs;...
                  %'LTS','stim',[-.5:.1:.5]; ...
                  
