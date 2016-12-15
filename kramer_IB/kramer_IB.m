@@ -28,8 +28,8 @@ sim_mode = 13;   % 1 - normal sim
                 
 % Cells to include in model
 include_IB = 0;
-include_RS = 0;
-include_FS = 0;
+include_RS = 1;
+include_FS = 1;
 include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
@@ -63,7 +63,7 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection
-Jlts=1;     % LTS current injection
+Jlts=0.5;     % LTS current injection
 JRS1 = 5;
 JRS2 = 1;
 supJRS1 = 5;
@@ -550,9 +550,9 @@ switch sim_mode
                  }; 
              
     case 13         % LTS Cells
-        vary = { %'RS->LTS','g_SYN',[.3:.3:.3]/Nrs;...
-                 %'FS->LTS','g_SYN',[.3:.1:1.2]/Nfs;...
-                 'LTS','stim',[-.5:.1:.5]; ...
+        vary = { 'RS->LTS','g_SYN',[.15:.05:.35]/Nrs;...
+                 'FS->LTS','g_SYN',[.2:.2:1]/Nfs;...
+                 %'LTS','stim',[-.5:.1:.5]; ...
                  
                  }; 
              
@@ -680,9 +680,10 @@ if plot_on
 
         otherwise
             %PlotData(data,'plot_type','waveform');
-            PlotData(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
-            PlotData(data,'plot_type','rastergram','variable','LTS_V');
-            PlotData(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+            PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
+            PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
+            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+            PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
             
             if 0
                 %% Plot overlaid Vm data
