@@ -407,7 +407,7 @@ IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
-LTS_Vnoise = 3;
+LTS_Vnoise = 9;
 RSda_Vnoise = .3;
 supRSda_Vnoise = .3;
 supFS_Vnoise = 3;
@@ -550,8 +550,8 @@ switch sim_mode
                  }; 
              
     case 13
-        vary = { 'RS->LTS','g_SYN',[.3:.3:.3]/Nrs;...
-                 'FS->LTS','g_SYN',[.4:.05:.8]/Nfs;...
+        vary = { %'RS->LTS','g_SYN',[.3:.3:.3]/Nrs;...
+                 'FS->LTS','g_SYN',[.3:.1:1.2]/Nfs;...
                  %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
                  %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
                  %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
@@ -581,7 +581,8 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
-
+% Crop data
+t = data(1).time; data = CropData(data, t > 100 & t <= t(end));
 
 % Calculate Thevenin equivalents of GABA B conductances
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
