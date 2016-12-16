@@ -14,7 +14,7 @@ compile_flag = 1;
 random_seed = 1;
 
 % Simulation mode
-sim_mode = 13;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -341,7 +341,7 @@ gAMPA_rsLTS = 0.25/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
 % gGABAa_LTSrs = 1.0/Nfs;
 % 
-gGABAa_fsLTS = .5/Nfs;
+gGABAa_fsLTS = .6/Nfs;
 % gGABAa_LTSfs = .5/Nlts;
 
 
@@ -594,8 +594,12 @@ if plot_on
     switch sim_mode
         case {1,11}
             %%
-            PlotData(data,'plot_type','waveform');
-    %          PlotData(data,'plot_type','rastergram');
+            % PlotData(data,'plot_type','waveform');
+            
+            PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
+            PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
+            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+    
 
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});

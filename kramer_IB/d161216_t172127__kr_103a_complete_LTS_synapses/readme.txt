@@ -1,0 +1,1 @@
+103a_complete_LTS_synapses For this set of sims, I will add LTS->X connectivity (where X=RS or FS cells). This first stimulation just keeps everything at the default.
