@@ -339,7 +339,7 @@ gGABAa_fsrs=.6/Nfs;
 
 gAMPA_rsLTS = 0.2/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
-% gGABAa_LTSrs = 5/Nlts;
+gGABAa_LTSrs = 3/Nlts;
 % 
 gGABAa_fsLTS = .3/Nfs;
 % gGABAa_LTSfs = 5/Nlts;
@@ -598,7 +598,7 @@ if plot_on
             
 %             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             PlotData_with_AP_line(data,'plot_type','rastergram');
-            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+%             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
     
 
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
