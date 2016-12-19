@@ -11,7 +11,7 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
-random_seed = 'shuffle';
+random_seed = 1;
 
 % Simulation mode
 sim_mode = 13;   % 1 - normal sim
@@ -407,7 +407,7 @@ IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
-LTS_Vnoise = 6;
+LTS_Vnoise = 3;
 RSda_Vnoise = .3;
 supRSda_Vnoise = .3;
 supFS_Vnoise = 3;
