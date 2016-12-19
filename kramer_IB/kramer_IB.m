@@ -11,10 +11,10 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
-random_seed = 1;
+random_seed = 'shuffle';
 
 % Simulation mode
-sim_mode = 13;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -48,7 +48,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=30;   % Number of excitatory cells
+N=10;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -337,11 +337,11 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=1/Nfs;
 gGABAa_fsrs=.6/Nfs;
 
-gAMPA_rsLTS = 0.25/Nrs;
+gAMPA_rsLTS = 0.2/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
 % gGABAa_LTSrs = 5/Nlts;
 % 
-gGABAa_fsLTS = .6/Nfs;
+gGABAa_fsLTS = .3/Nfs;
 % gGABAa_LTSfs = 5/Nlts;
 
 
@@ -576,7 +576,7 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
 % Crop data
-t = data(1).time; data = CropData(data, t > 100 & t <= t(end));
+% t = data(1).time; data = CropData(data, t > 100 & t <= t(end));
 
 % Calculate Thevenin equivalents of GABA B conductances
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
@@ -596,7 +596,7 @@ if plot_on
             %%
             % PlotData(data,'plot_type','waveform');
             
-            PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
+%             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             PlotData_with_AP_line(data,'plot_type','rastergram');
             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
     

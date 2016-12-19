@@ -10,11 +10,11 @@ function save_allfigs(handles_arr)
     if nargin < 1; handles_arr = [];
     end
     
-    do_commit = 0;
-    handles_arr = 2:2;
+    do_commit = 1;
+    handles_arr = 1:8;
     if isempty(handles_arr); handles_arr = 1:2; end
     currfname = 'kr'; 
-    currfigname = '104c_lower_vnoise';
+    currfigname = '104d_test_singlesims';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -53,7 +53,7 @@ function save_allfigs(handles_arr)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Lowered LTS Vnoise'];
+    mycomment = ['Ran a bunch of test sims, varying N cells (Figs 1-8 use different seeds and different N). Chose LTS Vnoise = 3; LTS gM=1; and RS->LTS=0.2 and FS->LTS=0.3.'];
     
     
     % Write to a text file
