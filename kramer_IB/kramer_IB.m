@@ -11,10 +11,10 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
-random_seed = 1;
+random_seed = 'shuffle';
 
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 13;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -63,7 +63,7 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection
-Jlts=0.5;     % LTS current injection
+Jlts=.75;     % LTS current injection
 JRS1 = 5;
 JRS2 = 1;
 supJRS1 = 5;
@@ -339,7 +339,7 @@ gGABAa_fsrs=.6/Nfs;
 
 gAMPA_rsLTS = 0.25/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
-gGABAa_LTSrs = 5/Nlts;
+% gGABAa_LTSrs = 5/Nlts;
 % 
 gGABAa_fsLTS = .6/Nfs;
 % gGABAa_LTSfs = 5/Nlts;
@@ -550,7 +550,7 @@ switch sim_mode
                  }; 
              
     case 13         % LTS Cells
-        vary = { %'RS->LTS','g_SYN',[.15:.05:.35]/Nrs;...
+        vary = { 'RS->LTS','g_SYN',[.15:.05:.35]/Nrs;...
                  'FS->LTS','g_SYN',[.3:.1:1]/Nfs;...
                  %'LTS','stim',[-.5:.1:.5]; ...
                  
@@ -683,11 +683,13 @@ if plot_on
 
 
         otherwise
-            %PlotData(data,'plot_type','waveform');
-            PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
-            PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
-            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-            PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
+            if 0
+                %PlotData(data,'plot_type','waveform');
+                PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
+                PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
+                PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+                PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
+            end
             
             if 0
                 %% Plot overlaid Vm data
