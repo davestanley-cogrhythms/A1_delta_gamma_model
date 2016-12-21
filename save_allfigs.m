@@ -11,11 +11,11 @@ function save_allfigs(handles_arr)
     end
     
     do_commit = 0;
-    handles_arr = 1:8;
-    if isempty(handles_arr); handles_arr = 1:6; end
+    handles_arr = 1:18;
+    if isempty(handles_arr); handles_arr = 1:18; end
     currfname = 'kr'; 
-    currfigname = '105a_complete_circuit_LTS_RS';
-    savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28'};
+    currfigname = '106a_LTS_preemptive_fire_singlesims';
+    savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
     sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
@@ -53,7 +53,7 @@ function save_allfigs(handles_arr)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Played around with various values of LTS->RS synapse'];
+    mycomment = ['Single sims. Used different parameter regime so that LTS cells fire before the 4th pulse in the AP series.'];
     
     
     % Write to a text file

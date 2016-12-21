@@ -48,7 +48,7 @@ no_synapses = 0;
 NMDA_block = 0; 
 
 % number of cells per population
-N=10;   % Number of excitatory cells
+N=30;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -337,11 +337,11 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=1/Nfs;
 gGABAa_fsrs=.6/Nfs;
 
-gAMPA_rsLTS = 0.2/Nrs;
+gAMPA_rsLTS = 0.15/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
 gGABAa_LTSrs = 3/Nlts;
 % 
-gGABAa_fsLTS = .3/Nfs;
+gGABAa_fsLTS = .2/Nfs;
 % gGABAa_LTSfs = 5/Nlts;
 
 
@@ -407,7 +407,7 @@ IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
-LTS_Vnoise = 3;
+LTS_Vnoise = 6;
 RSda_Vnoise = .3;
 supRSda_Vnoise = .3;
 supFS_Vnoise = 3;
@@ -596,9 +596,9 @@ if plot_on
             %%
             % PlotData(data,'plot_type','waveform');
             
-%             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
+            PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             PlotData_with_AP_line(data,'plot_type','rastergram');
-%             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
     
 
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
