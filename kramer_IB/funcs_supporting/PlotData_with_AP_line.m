@@ -705,10 +705,10 @@ for figset=1:num_fig_sets
             axis_counter=axis_counter+1;
             %axes(haxes(axis_counter));
             set(gcf,'CurrentAxes',haxes(axis_counter));
-            hold on; myh = plot([250,250],[min(ylim),max(ylim)],'y:','LineWidth',2); uistack(myh,'bottom');
-            hold on; myh = plot([286,286],[min(ylim),max(ylim)],'y:','LineWidth',2); uistack(myh,'bottom');
-            hold on; myh = plot([300,300],[min(ylim),max(ylim)],'y:','LineWidth',2); uistack(myh,'bottom');
-            hold on; myh = plot([325,325],[min(ylim),max(ylim)],'y:','LineWidth',2); uistack(myh,'bottom');
+            hold on; myh = plot([250,250],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
+            hold on; myh = plot([286,286],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
+            hold on; myh = plot([300,300],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
+            hold on; myh = plot([325,325],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
             
           end
         end

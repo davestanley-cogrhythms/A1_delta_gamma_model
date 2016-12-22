@@ -14,7 +14,7 @@ compile_flag = 1;
 random_seed = 'shuffle';
 
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 14;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -24,6 +24,7 @@ sim_mode = 1;   % 1 - normal sim
                 % 8 - sim study Median Nerve phase
                 % 9 - sim study FS-RS circuit vary RS stim
                 % 10 - Vary iPeriodicPulses in all cells
+                % 14 - Vary random parameter in order to get repeat sims
                 
                 
 % Cells to include in model
@@ -556,6 +557,9 @@ switch sim_mode
                  
                  }; 
              
+    case 14         % Vary random parameter to force shuffling random seed
+        vary = {'RS','asdfasdfadf',1:8 };       % shuffle starting seed 8 times
+             
         
 
         
@@ -680,6 +684,22 @@ if plot_on
                 close(h);  % Get most recent figure handle
                 clear h h2
             end
+            
+            
+        case 14
+            
+            data_var = CalcAverages(data);                  % Average all cells together
+            data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
+                PlotData_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s'});
+                %PlotData_with_AP_line(data_var,'variable',{'LTS_V','LTS_IBiMMich_mM'});
+            opts.save_std = 1;
+            data_var2 = CalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
+            plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]);
+            %plot_data_stdev(data_var2,'RS_V',[]);
+            
+            PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
+            PlotData(data(5),'plot_type','waveform')
+            PlotData(data(5),'plot_type','rastergram')
 
 
         otherwise
