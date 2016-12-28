@@ -11,10 +11,10 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
-random_seed = 'shuffle';
+random_seed = 1;
 
 % Simulation mode
-sim_mode = 14;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -24,7 +24,6 @@ sim_mode = 14;   % 1 - normal sim
                 % 8 - sim study Median Nerve phase
                 % 9 - sim study FS-RS circuit vary RS stim
                 % 10 - Vary iPeriodicPulses in all cells
-                % 14 - Vary random parameter in order to get repeat sims
                 
                 
 % Cells to include in model
@@ -64,7 +63,7 @@ Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
 Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
 Jng2=1;     % NG current injection; step2
 Jfs=1;     % FS current injection
-Jlts=.75;     % LTS current injection
+Jlts=1;     % LTS current injection
 JRS1 = 5;
 JRS2 = 1;
 supJRS1 = 5;
@@ -306,8 +305,6 @@ gGABAa_LTSe = 0;
 if ~no_synapses
 % % Synaptic connection strengths
 % #mysynapses
-
-% Delta oscillator
 gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
 if ~NMDA_block; gNMDAee=5/N; end
 % 
@@ -338,12 +335,12 @@ gAMPA_rsfs=0.4/Nrs;
 gGABAaff=1/Nfs;
 gGABAa_fsrs=.6/Nfs;
 
-gAMPA_rsLTS = 0.15/Nrs;
+gAMPA_rsLTS = 0.3/Nrs;
 %     gNMDA_rsLTS = 0/Nrs;
-gGABAa_LTSrs = 3/Nlts;
+% gGABAa_LTSrs = 1.0/Nfs;
 % 
-gGABAa_fsLTS = .2/Nfs;
-% gGABAa_LTSfs = 5/Nlts;
+gGABAa_fsLTS = .5/Nfs;
+% gGABAa_LTSfs = .5/Nlts;
 
 
 
@@ -408,7 +405,7 @@ IBdb_Vnoise = .3;
 IBa_Vnoise = .1;
 NG_Vnoise = 3;
 FS_Vnoise = 3;
-LTS_Vnoise = 6;
+LTS_Vnoise = 3;
 RSda_Vnoise = .3;
 supRSda_Vnoise = .3;
 supFS_Vnoise = 3;
@@ -550,16 +547,6 @@ switch sim_mode
                  %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
                  }; 
              
-    case 13         % LTS Cells
-        vary = { 'RS->LTS','g_SYN',[.1:.025:.2]/Nrs;...
-                 'FS->LTS','g_SYN',[.1:.1:.6]/Nfs;...
-                 %'LTS','stim',[-.5:.1:.5]; ...
-                 
-                 }; 
-             
-    case 14         % Vary random parameter to force shuffling random seed
-        vary = {'RS','asdfasdfadf',1:8 };       % shuffle starting seed 8 times
-             
         
 
         
@@ -579,9 +566,6 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
-% Crop data
-% t = data(1).time; data = CropData(data, t > 100 & t <= t(end));
-
 % Calculate Thevenin equivalents of GABA B conductances
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
 if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
@@ -598,13 +582,10 @@ if plot_on
     switch sim_mode
         case {1,11}
             %%
-            % PlotData(data,'plot_type','waveform');
-            
             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             PlotData_with_AP_line(data,'plot_type','rastergram');
-            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-    
-
+            
+            
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
@@ -684,39 +665,10 @@ if plot_on
                 close(h);  % Get most recent figure handle
                 clear h h2
             end
-            
-            
-        case 14
-            
-            data_var = CalcAverages(data);                  % Average all cells together
-            data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
-                PlotData_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s'});
-                %PlotData_with_AP_line(data_var,'variable',{'LTS_V','LTS_IBiMMich_mM'});
-            opts.save_std = 1;
-            data_var2 = CalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
-            plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]);
-            %plot_data_stdev(data_var2,'RS_V',[]);
-            
-            PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
-            PlotData(data(5),'plot_type','waveform')
-            PlotData(data(5),'plot_type','rastergram')
 
 
         otherwise
-            if 0
-                %PlotData(data,'plot_type','waveform');
-                PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
-                PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
-                PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-                PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
-            end
-            
-            if 0
-                %% Plot overlaid Vm data
-                data_cat = cat(3,data.RS_V,data.FS_V,data.LTS_V);
-                figure; plott_matrix3D(data_cat);
-            end
-            
+            PlotData(data,'plot_type','waveform');
     end
 end
 
