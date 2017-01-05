@@ -14,7 +14,7 @@ compile_flag = 1;
 random_seed = 'shuffle';
 
 % Simulation mode
-sim_mode = 14;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -110,6 +110,7 @@ switch pulse_mode
         PPFacFactor = 1.0;
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
+            RSPPFacTau = 200;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -158,6 +159,7 @@ switch pulse_mode
         PPFacFactor = 1.0;
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
+            RSPPFacTau = 200;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -183,6 +185,7 @@ switch pulse_mode
         PPFacFactor = 1.0;
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
+            RSPPFacTau = 200;
         IBPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
@@ -565,6 +568,7 @@ switch sim_mode
         
 end
 
+%% Includes
 % % % % % % % % % % % % %  Populations  % % % % % % % % % % % % %  
 include_kramer_IB_populations;
 
@@ -695,20 +699,20 @@ if plot_on
             opts.save_std = 1;
             data_var2 = CalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
             plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]);
-            %plot_data_stdev(data_var2,'RS_V',[]);
+            plot_data_stdev(data_var2,'RS_V',[]);
             
-            PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
-            PlotData(data(5),'plot_type','waveform')
-            PlotData(data(5),'plot_type','rastergram')
+            %PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
+            %PlotData(data(5),'plot_type','waveform')
+            %PlotData(data(5),'plot_type','rastergram')
 
 
         otherwise
             if 0
-                %PlotData(data,'plot_type','waveform');
-                PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
-                PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
-                PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-                PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
+                PlotData(data,'plot_type','waveform');
+                %PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
+                %PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
+                %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+                %PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
             end
             
             if 0
