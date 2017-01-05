@@ -25,8 +25,9 @@ width2_rise = 0.25;
 PPFacTau = 300;
 PPFacFactor = 2.0;
 
-% Get pulse train
-s2=getAperiodicPulseFast(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise);
+% Build pulse train
+s = getDeltaTrainAP(PPfreq,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay);
+s2 = convolveDeltaTrainwithKernel(s,dt,PPwidth,Npop,kernel_type,width2_rise);
 
 % Calculate facilitation function
 facilitation_mask = (exp(-(((T-PPonset)>0).*(T-PPonset))/PPFacTau))*(1-PPFacFactor) + PPFacFactor;

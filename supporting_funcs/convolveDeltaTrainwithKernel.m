@@ -1,37 +1,19 @@
 
-function s3 = getAperiodicPulseFast(freq,width,shift,T,dt,onset,offset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise)
+function s3 = convolveDeltaTrainwithKernel(s,dt,width,Npop,kernel_type,width2_rise)
+% dt - timestep
+% width - kernel width in units of dt
+% Npop - number of cells in population
+% kernel_type - code for which type of kernel to use
+% width2_rise - second parameter for shapping kernel. Only used for kernel mode 2.
 
-% This function generates a delta train and then convolves it with a kernel
-% in order to produce a pulse train that can be injected into a cell.
-
-% **This function is outdated and is no longer maintained.**
-% See functions getDeltaTrainAP and convolveDeltaTrainwithKernel, which
-% splits this funciton into its two functional components (generating and
-% convolving the delta pulse train, respectively.
 
 plot_demo_on = 0;  % Plot if desired
 
-% Build train of delta functions, spaced with frequency "freq"
-t=(0:dt:T)';                            % Generate times vector
-s = zeros(size(t));
-pulse_period=1000/freq;
-s((1+round(shift/dt)):round(pulse_period/dt):end) = 1;    % Add deltas, allowing for shift
 
-% Set aperiodic pulse
-if ap_pulse_num > 0
-    ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(ap_pulse_num-1);    % Index of the aperiodic pulse in the time series.
-    ap_ind_new = ap_ind_orig+round(ap_pulse_delay/dt);          % Index of where it should appear after the delay.
-    if ap_ind_new > length(s) || ap_ind_orig > length(s); error('Aperiodic spike placement would be outside of simulation time.'); end
-    s(ap_ind_orig) = 0;                 % Delete the original pulse
-    s(ap_ind_new) = 1;                  % Create pulse at the delayed location
-end
-
-% Remove anything outside of onset to offset
-s(t<onset | t>offset) = 0;
 
 
 % Build kernel
-if kernel_type < 1.5
+if kernel_type < 1.5                                % Kernel mode 1 - Gaussian
         % Build kernel time series
         kernel_length=4*width;                      % Length of kernel time series
         t2a = [0:-dt:-kernel_length];
@@ -41,7 +23,8 @@ if kernel_type < 1.5
         
         % Build kernel
         kernel = 1 * exp(-t2.^2/2/width^2);      % Build kernel. Peaks at 1.0.
-elseif kernel_type < 2.5
+        
+elseif kernel_type < 2.5                         % Kernel mode 2 - Dual exponential
         % Build kernel time series
         kernel_length=8*width;                   
         t2a = [0:-dt:-kernel_length];
