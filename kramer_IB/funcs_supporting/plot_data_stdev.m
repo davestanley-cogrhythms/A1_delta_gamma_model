@@ -29,7 +29,7 @@ function h2 = plot_data_stdev(data,fieldname,ind_range,linespec)
     b = cat(3,mystd,mystd);
     b = permute(b,[1,3,2]);
 
-    figure; i=i+1; hold on; h{i} = boundedline(data.time(ind),data.(fieldname)(ind,:),1*b(ind,:,:),linespec{:});
+    i=i+1; hold on; h{i} = boundedline(data.time(ind),data.(fieldname)(ind,:),1*b(ind,:,:),linespec{:});
     %i=i+1; hold on; h{i} = plot(data.time(ind),data.RS_iPeriodicPulsesFacilitate_Iext(ind,1)*10-160,'k','LineWidth',5);
     %xlim([1440,1560])
     
@@ -40,7 +40,8 @@ function h2 = plot_data_stdev(data,fieldname,ind_range,linespec)
     
     
     hold on; myh = plot([250,250],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
-    hold on; myh = plot([286,286],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
+    hold on; myh = plot([275,275],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
+    hold on; myh = plot([286,286],[min(ylim),max(ylim)],'r:','LineWidth',2); uistack(myh,'bottom');
     hold on; myh = plot([300,300],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
     hold on; myh = plot([325,325],[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
 

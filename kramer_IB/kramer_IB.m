@@ -12,9 +12,10 @@ save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
 random_seed = 'shuffle';
+%random_seed = 2;
 
 % Simulation mode
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 14;   % 1 - normal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -104,6 +105,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = 0.75;  % Not used for Gaussian pulse
         kernel_type = 2;
         PPFacTau = 200;
@@ -116,7 +118,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
-    case 1                  % Gamma stimulation
+    case 1                  % Gamma stimulation (with aperoidicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
@@ -126,6 +128,7 @@ switch pulse_mode
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         PPFacTau = 100;
@@ -153,6 +156,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = 2.5;  % Not used for Gaussian pulse
         kernel_type = 2;
         PPFacTau = 200;
@@ -179,6 +183,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = 0.75;  % Not used for Gaussian pulse
         kernel_type = 1;
         PPFacTau = 200;
@@ -562,7 +567,7 @@ switch sim_mode
              
     case 14         % Vary random parameter to force shuffling random seed
         vary = {'RS','asdfasdfadf',1:8 };       % shuffle starting seed 8 times
-             
+        random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.     
         
 
         
@@ -605,8 +610,9 @@ if plot_on
             % PlotData(data,'plot_type','waveform');
             
             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
-            PlotData_with_AP_line(data,'plot_type','rastergram');
-            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+            %PlotData_with_AP_line(data,'plot_type','rastergram');
+            %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
     
 
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
@@ -691,19 +697,22 @@ if plot_on
             
             
         case 14
-            
+            %% Case 14
             data_var = CalcAverages(data);                  % Average all cells together
             data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
-                PlotData_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s'});
-                %PlotData_with_AP_line(data_var,'variable',{'LTS_V','LTS_IBiMMich_mM'});
+                PlotData_with_AP_line(data_var,'plot_type','waveform')
+                PlotData_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
             data_var2 = CalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
-            plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]);
-            plot_data_stdev(data_var2,'RS_V',[]);
+            figl;
+            subplot(211);plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]); ylabel('LTS->RS synapse');
+            subplot(212); plot_data_stdev(data_var2,'RS_V',[]); ylabel('RS Vm');
+            xlabel('Time (ms)');
+            %plot_data_stdev(data_var2,'RS_RS_IBaIBdbiSYNseed_s',[]);
             
             %PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
-            %PlotData(data(5),'plot_type','waveform')
-            %PlotData(data(5),'plot_type','rastergram')
+            PlotData_with_AP_line(data(5),'plot_type','waveform')
+            PlotData_with_AP_line(data(5),'plot_type','rastergram')
 
 
         otherwise
