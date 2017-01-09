@@ -1,17 +1,18 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %%
 tic
-clear
+% clear
 
 
-addpath(genpath(fullfile('.','funcs_supporting')));
+addpath(genpath(fullfile(pwd,'funcs_supporting')));
+addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
 %% ##1.0 Simulation switches
 % % Display options
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 1;
+compile_flag = 0;
 random_seed = 'shuffle';
 random_seed = 2;
 
@@ -27,15 +28,16 @@ sim_mode = 1;   % 1 - normal sim
                 
 % % Cells to include in model
 include_IB = 0;
-include_RS = 1;
-include_FS = 1;
-include_LTS = 1;
+include_RS = 0;
+include_FS = 0;
+include_LTS = 0;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
+include_deepRS = 1;
 
 % % Simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -64,6 +66,7 @@ Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 NsupRS = 30; 
 NsupFS = N;
+NdeepRS = 2;    % Number of deep theta-resonant RS cells
 
 % % % % % % % % % % % % % ##2.1 Injected currents % % % % % % % % % % % % %  
 % % Tonic input currents.
@@ -85,6 +88,7 @@ Jlts=.75; % LTS cells
 supJRS1 = 5;    % RS superficial cells
 supJRS2 = 0.75;
 supJfs = 1;     % FS superficial cells
+JdeepRS = 0.6;   % Ben's RS theta cells
 
 
 % % Tonic current onset and offset times

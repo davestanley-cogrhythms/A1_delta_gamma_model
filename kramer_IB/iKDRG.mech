@@ -1,0 +1,22 @@
+% iKDR: fast, delayed rectifier potassium current, from Gutfreund et al. 1995.
+% Tags: sodium, channel, intrinsic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters
+gKDR = 5 %/3
+gdenomK = 1
+E_KDR = -80
+tau_m = (3^((temp-6.3)/10)); temp = 22; % 34 % 1
+IC=0; IC_noise=0
+Koffset = 0
+
+% Functions
+aM(X) = -.01*(X+20-Koffset)./(exp(-(X+20-Koffset)/10)-1)
+bM(X) = .125*exp(-(X+30-Koffset)/80)
+IKDR(X,mKDR) = (gKDR/gdenomK).*mKDR.^4.*(X-E_KDR)
+
+% ODEs
+mKDR' = tau_m*(aM(X).*(1-mKDR)-bM(X).*mKDR)
+mKDR(0) = IC+IC_noise.*rand(Npop,1)
+
+% Interface
+@current += -IKDR(X,mKDR)
