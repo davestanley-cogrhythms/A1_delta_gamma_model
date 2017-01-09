@@ -267,17 +267,17 @@ LTS_Eleak_std = 0;
 % disable synaptic connections.
 
 % % Delta oscillator (IB-NG circuit)
-gAMPAee=0;
-gNMDAee=0;
+gAMPA_ibib=0;
+gNMDA_ibib=0;
 
-gAMPAei=0;
-gNMDAei=0;
+gAMPA_ibng=0;
+gNMDA_ibng=0;
 
-gGABAaii=0;
-gGABAbii=0;
+gGABAa_ngng=0;
+gGABAb_ngng=0;
 
-gGABAaie=0;
-gGABAbie=0;
+gGABAa_ngib=0;
+gGABAb_ngib=0;
 
 % % IB to LTS
 gAMPA_ibLTS=0;
@@ -291,10 +291,10 @@ gGABAb_ngrs = 0;
 
 % % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0;
-    gNMDA_RSRS=0;
+    gNMDA_rsrs=0;
 gAMPA_rsfs=0;
     gNMDA_rsfs=0;
-gGABAaff=0;
+gGABAa_fsfs=0;
 gGABAa_fsrs=0;
 
 gAMPA_rsLTS = 0;
@@ -326,27 +326,27 @@ gAMPA_supRSIB = 0;
 
 
 % % Gamma -> Delta connections 
-gGABAafe=0;
+gGABAa_fsib=0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
-gGABAa_LTSe = 0;
+gGABAa_LTSib = 0;
 
 if ~no_synapses
 % % Synaptic connection strengths
 % #mysynapses
 
 % % Delta oscillator (IB-NG circuit)
-gAMPAee=0.1/N;                          % IB -> IB
-if ~NMDA_block; gNMDAee=5/N; end        % IB -> IB NMDA
+gAMPA_ibib=0.1/N;                          % IB -> IB
+if ~NMDA_block; gNMDA_ibib=5/N; end        % IB -> IB NMDA
 
-gAMPAei=0.1/N;                          % IB -> NG
-if ~NMDA_block; gNMDAei=5/N; end        % IB -> NG NMDA
+gAMPA_ibng=0.1/N;                          % IB -> NG
+if ~NMDA_block; gNMDA_ibng=5/N; end        % IB -> NG NMDA
 
-gGABAaii=0.1/Nng;                       % NG -> NG
-gGABAbii=0.3/Nng;                       % NG -> NG GABA B
+gGABAa_ngng=0.1/Nng;                       % NG -> NG
+gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
 
-gGABAaie=0.1/Nng;                       % NG -> IB
-gGABAbie=0.3/Nng;                       % NG -> IB GABA B
+gGABAa_ngib=0.1/Nng;                       % NG -> IB
+gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
 
 % % IB -> LTS
 gAMPA_ibLTS=0.1/N;
@@ -360,10 +360,10 @@ if ~NMDA_block; gNMDA_ibLTS=5/N; end
 
 % % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
-%     gNMDA_RSRS=5/Nrs;                 % RS -> RS NMDA
+%     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
 gAMPA_rsfs=0.4/Nrs;                     % RS -> FS
 %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-gGABAaff=1/Nfs;                         % FS -> FS
+gGABAa_fsfs=1/Nfs;                      % FS -> FS
 gGABAa_fsrs=.6/Nfs;                     % FS -> RS
 
 gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
@@ -396,10 +396,10 @@ gGABAb_NGsupRS=0.05/Nng;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
 % % Gamma -> Delta connections 
-gGABAafe=1.3/Nfs;                           % FS -> IB 
+gGABAa_fsib=1.3/Nfs;                        % FS -> IB 
 gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
 if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-gGABAa_LTSe = 1.3/Nfs;                      % LTS -> RS
+gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
 
 end
 
@@ -417,6 +417,8 @@ tauGABAaLTSd = 20;  % ms, LTS decay time; Jung et al
 EAMPA=0;
 EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
+
+
 
 
 % % % % % % % % % % % % %  ##2.3 Biophysical parameters % % % % % % % % % % % % %  
