@@ -15,7 +15,7 @@ random_seed = 'shuffle';
 %random_seed = 2;
 
 % Simulation mode
-sim_mode = 14;   % 1 - normal sim
+sim_mode = 1;   % 1 - nogrmal sim
                 % 2 - sim study IB disconnected; iM and iCaH
                 % 3 - sim study IB disconnected; current injection
                 % 4 - sim study IB connected; vary AMPA, NMDA injection
@@ -128,7 +128,7 @@ switch pulse_mode
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
         PPFacTau = 100;
