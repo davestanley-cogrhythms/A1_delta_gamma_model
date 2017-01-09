@@ -6,7 +6,7 @@ clear
 
 addpath(genpath(fullfile('.','funcs_supporting')));
 
-%% #1.0 Simulation switches
+%% ##1.0 Simulation switches
 % % Display options
 plot_on = 1;
 save_plots = 0;
@@ -49,6 +49,12 @@ NMDA_block = 0;
 % initially define them as set to zero, and then I will define them a
 % second time. I do this so that you can easily comment out the second
 % definition as way to disable things (e.g. setting synapses to zero).
+% 
+% Note2: SupRS and SupFS cells represent superficial RS and FS cells.
+% However, I've since switched the RS, FS, and LTS cells to representing
+% superficial cells. So these ones now are disabled. I'm leaving the code
+% in the network, however, incase we want to re-enable them later or use
+% them for something else.
 
 % % Number of cells per population
 N=30;   % Number of excitatory cells
