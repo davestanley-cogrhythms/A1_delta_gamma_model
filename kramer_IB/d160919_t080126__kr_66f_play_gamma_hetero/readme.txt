@@ -1,0 +1,1 @@
+66f_play_gamma_hetero Added gamma stim. Varied gamma stim amplitude. Figs 1-2 gGABAaff=.5/Nfs; gGABAa_fsrs=2/Nfs

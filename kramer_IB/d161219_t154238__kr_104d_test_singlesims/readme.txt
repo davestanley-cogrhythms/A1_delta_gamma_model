@@ -1,0 +1,1 @@
+104d_test_singlesims Ran a bunch of test sims, varying N cells (Figs 1-8 use different seeds and different N). Chose LTS Vnoise = 3; LTS gM=1; and RS->LTS=0.2 and FS->LTS=0.3.

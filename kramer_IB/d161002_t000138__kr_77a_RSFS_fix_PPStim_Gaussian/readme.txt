@@ -1,0 +1,1 @@
+77a_RSFS_fix_PPStim_Gaussian Have to redo everything because I was using the wrong PPStim mode. Now using kernel type 1 with Gaussian width 2ms. Varied RSPPStim [-2 -3 -4 -5] and RS->FS synapse [.2 .3 .4 .5].

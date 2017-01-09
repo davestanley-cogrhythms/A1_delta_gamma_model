@@ -1,0 +1,1 @@
+75g_add_delta_single_sim_play Now have delta + gamma oscillators. Figs 5-8 no pulse train; 9-12 pulse train. Cant see effect of AP pulse!

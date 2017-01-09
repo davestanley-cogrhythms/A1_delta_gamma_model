@@ -1,0 +1,1 @@
+87a_DGNet_sweep_FSIB Plot range of FS->IB synapse values. Figs 1-2 no AP pulse; Figs 3-5 has AP pulse. For very strong FS->IB values, IB cells fire very sparsely, but do weakly activate NG cells. I think this is crucial for keeping things inhibited.

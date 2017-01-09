@@ -1,0 +1,19 @@
+gM = [0.75]
+E_M = [-95]
+c_MaM = [1]
+c_MbM = [1]
+IC = [0]
+IC_noise = [0.01]
+Qs = 3.209
+
+aM(X) = c_MaM.*(0.0001*Qs*(X+30)) ./ (1-exp(-(X+30)/9))
+bM(X) = c_MbM.*(-0.0001*Qs*(X+30)) ./ (1-exp((X+30)/9))
+IM(X,mM) = gM.*mM.*(X-E_M)
+ 
+mM' = (aM(V).*(1-mM)-bM(V).*mM);
+mM(0) = IC+IC_noise.*rand(Npop,1)
+
+% monitor functions % always record the synaptic current
+ 
+current => -IM(V,mM)
+

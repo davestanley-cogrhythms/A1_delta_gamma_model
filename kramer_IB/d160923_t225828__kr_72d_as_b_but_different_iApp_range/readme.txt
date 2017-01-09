@@ -1,0 +1,1 @@
+72d_as_b_but_different_iApp_range Only FS cells; sweep both iApp and PPStim; different range. gGABAaff=0.5/Nfs.

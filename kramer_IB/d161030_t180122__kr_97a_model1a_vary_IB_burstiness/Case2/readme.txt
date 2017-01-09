@@ -1,0 +1,1 @@
+96a_model1b_vary_CaH_IM_IBPPStim Ran sweeps over varying RSNG NMDA and FSIB synapses. Ran multiple simulations with gCaH and gM varying along with IB PPStim (see readme docs).

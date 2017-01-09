@@ -1,0 +1,1 @@
+60b_fixed_AP_pulse_open_loop For some reason adding the supraficial layer screwed up the AP pulse in the deep layer (even when supra layer was open loop!). I figured out that this is simply the result of the RNG. Apparently AP pulse is very sensitive. Moving it 1 gamma cycle later restores transient delta. (Fig. 1 AP pulse @ 44; Fig. 2 AP pulse @ 45).

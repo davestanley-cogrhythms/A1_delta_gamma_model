@@ -1,0 +1,1 @@
+93a_model1a_spontaneous_delta Allowed IB cells to burst spontaneously before applying PPStim, rather than hyperpolarizing.

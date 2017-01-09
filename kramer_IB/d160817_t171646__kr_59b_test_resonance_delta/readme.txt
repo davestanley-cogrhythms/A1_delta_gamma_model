@@ -1,0 +1,1 @@
+59a_test_resonance Stimmed auditory input at peri-delta frequencies (1-8 Hz). Network doesnt resonate well at delta.

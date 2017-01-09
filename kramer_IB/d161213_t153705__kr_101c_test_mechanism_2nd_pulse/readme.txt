@@ -1,0 +1,1 @@
+101c_test_mechanism_2nd_pulse Tested what happens when RS fire or not after AP pulse. Figs1-2 RS fire. Figs3-4 RS dont fire.

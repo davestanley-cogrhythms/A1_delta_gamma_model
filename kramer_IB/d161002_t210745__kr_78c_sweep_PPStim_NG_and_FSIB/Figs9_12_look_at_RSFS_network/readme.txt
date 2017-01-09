@@ -1,0 +1,1 @@
+This just shows the ramp up of the RS-FS network. Note that everything ramps up quickly because I've disables Delta->Gamma connections!

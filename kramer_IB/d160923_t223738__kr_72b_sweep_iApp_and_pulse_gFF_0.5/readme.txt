@@ -1,0 +1,1 @@
+72b_sweep_iApp_and_pulse_gFF_0.5 Only FS cells; sweep both iApp and PPStim. gGABAaff=.5/Nfs.

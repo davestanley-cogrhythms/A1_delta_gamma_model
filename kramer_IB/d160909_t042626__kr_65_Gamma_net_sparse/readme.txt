@@ -1,0 +1,1 @@
+65_Gamma_net_sparse Now test full gamma network with heterogeneous RS and FS cells. It seems to work with firing becoming less sparse over time. Firing rates still seems somewhat low but its fine.

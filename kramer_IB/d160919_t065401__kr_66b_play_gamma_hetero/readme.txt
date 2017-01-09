@@ -1,0 +1,1 @@
+66b_play_gamma_hetero Restored gamma oscillator. Increased FS->RS connectivity. gGABAaff=1/Nfs; gGABAa_fsrs=2/Nfs;.

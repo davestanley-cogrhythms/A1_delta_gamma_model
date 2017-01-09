@@ -1,0 +1,1 @@
+76b_varied_iApp_PPStim Figs 1-5: gSyn FS->RS = .65/Nfs; Figs 6-10 gSyn FS->RS = 1.0/Nfs (using this one). Swept through various stimulation currents.

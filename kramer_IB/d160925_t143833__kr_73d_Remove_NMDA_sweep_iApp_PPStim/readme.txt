@@ -1,0 +1,1 @@
+73d_Remove_NMDA_sweep_iApp_PPStim RS and FS cells; No NMDA; instead vary iApp and PPStim to RS cells. stim2: [2, 1.5, 1, 0.5. PPstim: [-5,-4,-3,-2].

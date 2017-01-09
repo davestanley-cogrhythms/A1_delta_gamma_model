@@ -1,0 +1,1 @@
+97a_model1a_vary_IB_burstiness Ran model1a while varying IB PPStim and also FS->IB connectivity. Ran separate simulations for different levels of excitability (gCaH and gM). (See readme). **Unlike previous version, this one has AP pulse present**

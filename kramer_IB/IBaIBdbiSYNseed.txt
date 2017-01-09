@@ -1,0 +1,25 @@
+g_SYN = [0.0]
+E_SYN = [0]
+tauDx = [100]
+tauRx = [.5]
+IC = [0.1]
+IC_noise = [0]
+g_SYN_hetero = [0.005]
+ 
+fanout = inf
+UB = max(Npre,Npost)
+Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
+Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
+mask = (abs(Xpre-Xpost)<=fanout)
+
+gsyn=unifrnd(g_SYN-g_SYN_hetero,g_SYN+g_SYN_hetero,[Npost 1])'
+ISYN(X,s) = (gsyn.*(s*mask).*(X-E_SYN))
+ 
+s' = -s./tauDx + ((1-s)/tauRx).*(1+tanh(Vpre/10));
+s(0) = IC+IC_noise.*rand(1,Npre)
+
+monitor functions % always record the synaptic current
+ 
+% Linkers
+current => -ISYN(Vpost,s)
+ 

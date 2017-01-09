@@ -1,0 +1,30 @@
+%%
+% Poisson mechanism based on Jason's email implementation. For some
+% reason this produces huge PSPs
+
+% Pulse train properties
+PPstim = -.1;
+PPfreq = 40; % in Hz
+PPwidth = 2; % in ms
+PPshift = 0; % in ms
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt=0.01;        % ms, time step duration
+PPonset = 0;    % ms, onset time
+PPoffset = Inf;   % ms, offset time
+
+% Aperiodic pulse specification
+ap_pulse_num = 11;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 12.5;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+
+kernel_type = 1;
+width2_rise = 0.25;
+
+s2=getAperiodicPulseFast(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise);
+
+monitor functions % always record the current
+
+Iext(X)=PPstim*s2(k,:)
+current => -Iext(X)
+

@@ -1,0 +1,1 @@
+100c_RS_LTS_vary_gsyn Varied synapses. See readme. With or without AP pulse.
