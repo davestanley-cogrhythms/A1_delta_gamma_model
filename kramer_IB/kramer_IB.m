@@ -239,8 +239,8 @@ end
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IB -> IB 
 ggjFS=.2/Nfs;  % FS -> FS
-ggjLTS=.2/Nlts;  % LTS -> LTS
-    warning('Need to enable LTS gap junctions');
+ggjLTS=.0/Nlts;  % LTS -> LTS
+    warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise to compensate.');
 % % Sup cells
 ggjasupRS=.00/(NsupRS);  % supRS -> supRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjsupFS=.2/NsupFS;  % supFS -> supFS
