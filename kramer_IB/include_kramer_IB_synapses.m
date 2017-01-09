@@ -167,8 +167,7 @@ if include_FS && include_LTS
 end
 
 
-%%
-% % % % %  LTS Cells  % % % % %
+%% LTS Cells
 % % LTS->IB Synaptic connections
 if include_LTS && include_IB
     i=i+1;

@@ -66,12 +66,8 @@ end
 
 %% FS cells
 if include_FS
-    if swap_FS_to_LTS
-        FS_gM = 4;
-    else
-        FS_gM = 0;
-    end
-    
+
+    FS_gM = 0;
     i=i+1;
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;

@@ -1,3 +1,7 @@
+% 2-step Tonic current injection
+% Injected current takes on value stim from onset to offset (in
+% milliseconds). It then takes on value stim2 from onset2 to offset2.
+
 stim = [-4.5]
 onset = [0]
 offset = inf

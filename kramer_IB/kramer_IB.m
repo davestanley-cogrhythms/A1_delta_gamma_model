@@ -1,34 +1,31 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %%
 tic
-% clear
+clear
 
 
 addpath(genpath(fullfile('.','funcs_supporting')));
 
-% Display options
+%% #1.0 Simulation switches
+% % Display options
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
 random_seed = 'shuffle';
-%random_seed = 2;
+random_seed = 2;
 
-% Simulation mode
-sim_mode = 1;   % 1 - nogrmal sim
-                % 2 - sim study IB disconnected; iM and iCaH
-                % 3 - sim study IB disconnected; current injection
-                % 4 - sim study IB connected; vary AMPA, NMDA injection
-                % 5 - sim study IB connected; gamma input
-                % 6 - sim study IB connected; single pulse
-                % 7 - sim study NG; gamma input
-                % 8 - sim study Median Nerve phase
+% % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;   % 1 - normal sim
                 % 9 - sim study FS-RS circuit vary RS stim
                 % 10 - Vary iPeriodicPulses in all cells
+                % 11 - Vary FS cells
+                % 12 - Vary IB cells
+                % 13 - Vary LTS cell synapses
                 % 14 - Vary random parameter in order to get repeat sims
                 
                 
-% Cells to include in model
+% % Cells to include in model
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
@@ -37,19 +34,23 @@ include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 
-% LTS cell mode
-swap_FS_to_LTS = 0;
-
-% simulation controls
+% % Simulation controls
 tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
-% Simulation switches
+% % Simulation switches
 no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0; 
 
-% number of cells per population
+
+%% ##2.0 Model parameters
+% Note: For some of these parameters I will define them twice - once I will
+% initially define them as set to zero, and then I will define them a
+% second time. I do this so that you can easily comment out the second
+% definition as way to disable things (e.g. setting synapses to zero).
+
+% % Number of cells per population
 N=30;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -58,42 +59,58 @@ Nlts=N; % Number of LTS cells
 NsupRS = 30; 
 NsupFS = N;
 
-% % % % % % % % % % % % %  Injected currents % % % % % % % % % % % % %  
-% tonic input currents
-Jd1=5; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jd2=0; % apical: 23.5(25.5), basal: 23.5(42.5)
-Jng1=3;     % NG current injection; step1   % Do this to remove the first NG pulse
-Jng2=1;     % NG current injection; step2
-Jfs=1;     % FS current injection
-Jlts=.75;     % LTS current injection
-JRS1 = 5;
-JRS2 = 1;
-supJRS1 = 5;
+% % % % % % % % % % % % % ##2.1 Injected currents % % % % % % % % % % % % %  
+% % Tonic input currents.
+% Note: IB, NG, and RS cells use two different values for tonic current
+% injection. This is because I generally hyperpolarize these cells for a
+% few hundred milliseconds to allow things to settle (see
+% itonicPaired.txt). The hyperpolarizing value is listed first (e.g. JRS1)
+% and then the value that kicks in after this is second (e.g. JRS2).
+% Note2: Positive values are hyperpolarizing, negative values are
+% depolarizing.
+Jd1=5;    % IB cells
+Jd2=0;    %         
+Jng1=3;   % NG cells
+Jng2=1;   %
+JRS1 = 5; % RS cells
+JRS2 = 1; %
+Jfs=1;    % FS cells
+Jlts=.75; % LTS cells
+supJRS1 = 5;    % RS superficial cells
 supJRS2 = 0.75;
-supJfs = 1;
+supJfs = 1;     % FS superficial cells
 
-IB_offset1=300;
-IB_onset2=300;
-RS_offset1=300;
-RS_onset2=300;
 
-% Set everything temporarily to zero
+% % Tonic current onset and offset times
+% Times at which injected currnets turn on and off (in milliseconds). See
+% itonicPaired.txt. Setting these to 0 essentailly removes the first
+% hyperpolarization step.
 IB_offset1=0;
 IB_onset2=0;
 RS_offset1=0;
 RS_onset2=0;
 
-
-% Poisson IPSPs to IBdb (basal dendrite)
-gRAN=.015;
+% % Poisson EPSPs to IB and RS cells (synaptic noise)
+gRAN=.015;      % synaptic noise conductance IB cells 
 ERAN=0;
 tauRAN=2;
-lambda = 1000;
-RSgRAN=0.005;
-supRSgRAN = 0.005;
+lambda = 1000;  % Mean frequency Poisson IPSPs
+RSgRAN=0.005;   % synaptic noise conductance to RS cells
+supRSgRAN = 0.005; % synaptic noise conductance to supRS cells
 
+% % Magnitude of injected current Gaussian noise
+IBda_Vnoise = .3;
+IBs_Vnoise = .1;
+IBdb_Vnoise = .3;
+IBa_Vnoise = .1;
+NG_Vnoise = 3;
+FS_Vnoise = 3;
+LTS_Vnoise = 6;
+RSda_Vnoise = .3;
+supRSda_Vnoise = .3;
+supFS_Vnoise = 3;
 
-% % Periodic pulse stimulation
+% % Periodic pulse stimulation parameters
 pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
@@ -200,9 +217,9 @@ switch pulse_mode
         % RSPPstim = -3;
         % NGPPstim = -4;
         % FSPPstim = -5;
-        supRSPPstim = -3;
-        
+        supRSPPstim = -3;        
 end
+
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -216,38 +233,34 @@ end
 % 
 
 
-% % % % % % % % % % % % %  Synaptic connections % % % % % % % % % % % % %  
-% compartmental connection strengths
-gsd=.2;     % IBs -> IBda,IBdb
-gds=.4;     % IBda,IBdb -> IBs
-gas=.3;     % IBa -> IBs
-gsa=.3;     % IBs -> IBa
-
-% Gap junction connection
-ggjaRS=0;
-ggja=0;
-ggjFS=0;
+% % % % % % % % % % % % %  ##2.2 Synaptic connectivity parameters % % % % % % % % % % % % %  
+% % Gap junction connections
 % % Deep cells
 ggjaRS=.2/N;  % RS -> RS
-ggja=.2/N;  % IBa -> IBa
-ggjFS=.2/Nfs;  % IBa -> IBa
-ggjLTS=.2/Nlts;  % IBa -> IBa
+ggja=.2/N;  % IB -> IB 
+ggjFS=.2/Nfs;  % FS -> FS
+ggjLTS=.2/Nlts;  % LTS -> LTS
+    warning('Need to enable LTS gap junctions');
 % % Sup cells
-ggjasupRS=.00/(NsupRS);  % RS -> RS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
-ggjsupFS=.2/NsupFS;  % IBa -> IBa
+ggjasupRS=.00/(NsupRS);  % supRS -> supRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
+ggjsupFS=.2/NsupFS;  % supFS -> supFS
 
 
-% Synapse heterogenity
+% % Synapse heterogenity
 gsyn_hetero = 0;
 
-% Eleak heterogenity
+% % Eleak heterogenity (makes excitability of cells variable)
 RS_Eleak_std = 0;
 FS_Eleak_std = 0;
 LTS_Eleak_std = 0;
 % RS_Eleak_std = 10;
 % FS_Eleak_std = 20;
 
-% Synaptic connection strengths zeros
+% % Synaptic connection strengths
+% Initially set everything to zero, so that commenting out below will
+% disable synaptic connections.
+
+% % Delta oscillator (IB-NG circuit)
 gAMPAee=0;
 gNMDAee=0;
 
@@ -260,16 +273,17 @@ gGABAbii=0;
 gGABAaie=0;
 gGABAbie=0;
 
+% % IB to LTS
 gAMPA_ibLTS=0;
 gNMDA_ibLTS=0;
 
-% Delta -> Gamma oscillator connections
+% % Delta -> Gamma oscillator connections
 gAMPA_ibrs = 0;
 gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
 
-% RS-FS circuit (deep connections)
+% % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0;
     gNMDA_RSRS=0;
 gAMPA_rsfs=0;
@@ -284,14 +298,14 @@ gGABAa_LTSrs = 0;
 gGABAa_fsLTS = 0;
 gGABAa_LTSfs = 0;
 
-% RS-FS circuit (supra connections)
+% % Gamma oscillator, superficial (RS-FS circuit)
 gAMPA_supRSsupRS=0;
 gNMDA_supRSsupRS=0;
 gAMPA_supRSsupFS=0;
 gGABA_supFSsupFS=0;
 gGABAa_supFSsupRS=0;
 
-% Deep -> Supra connections
+% % Deep -> Supra connections (including NG - really should model this separately!)
 gAMPA_IBsupRS = 0;
 gNMDA_IBsupRS = 0;
 gAMPA_IBsupFS = 0;
@@ -300,12 +314,12 @@ gAMPA_RSsupRS = 0;
 gGABAa_NGsupRS=0;
 gGABAb_NGsupRS=0;
 
-% Supra -> Deep connections
+% % Supra -> Deep connections
 gAMPA_supRSRS = 0;
 gAMPA_supRSIB = 0;
 
 
-% Gamma -> Delta connections 
+% % Gamma -> Delta connections 
 gGABAafe=0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
@@ -315,48 +329,46 @@ if ~no_synapses
 % % Synaptic connection strengths
 % #mysynapses
 
-% Delta oscillator
-gAMPAee=0.1/N;      % IBa -> IBdb, 0(.04)
-if ~NMDA_block; gNMDAee=5/N; end
-% 
-gAMPAei=0.1/N;      % IBa -> IBdb, 0(.04)
-if ~NMDA_block; gNMDAei=5/N; end
-% 
-gGABAaii=0.1/Nng;
-gGABAbii=0.3/Nng;
-% % 
-gGABAaie=0.1/Nng;
-gGABAbie=0.3/Nng;
+% % Delta oscillator (IB-NG circuit)
+gAMPAee=0.1/N;                          % IB -> IB
+if ~NMDA_block; gNMDAee=5/N; end        % IB -> IB NMDA
 
-                   % IB-> LTS
+gAMPAei=0.1/N;                          % IB -> NG
+if ~NMDA_block; gNMDAei=5/N; end        % IB -> NG NMDA
+
+gGABAaii=0.1/Nng;                       % NG -> NG
+gGABAbii=0.3/Nng;                       % NG -> NG GABA B
+
+gGABAaie=0.1/Nng;                       % NG -> IB
+gGABAbie=0.3/Nng;                       % NG -> IB GABA B
+
+% % IB -> LTS
 gAMPA_ibLTS=0.1/N;
 if ~NMDA_block; gNMDA_ibLTS=5/N; end
 
-% Delta -> Gamma oscillator connections
+% % Delta -> Gamma oscillator connections
 % gAMPA_ibrs = 0.013/N;
 % gNMDA_ibrs = 0.02/N;
 % gGABAa_ngrs = 0.05/Nng;
 % gGABAb_ngrs = 0.08/Nng;
 
-% RS-FS-LTS circuit
-gAMPA_rsrs=0.1/Nrs;
-%     gNMDA_RSRS=5/Nrs;
-gAMPA_rsfs=0.4/Nrs;
-%     gNMDA_rsfs=0/Nrs;
-gGABAaff=1/Nfs;
-gGABAa_fsrs=.6/Nfs;
+% % Gamma oscillator (RS-FS-LTS circuit)
+gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
+%     gNMDA_RSRS=5/Nrs;                 % RS -> RS NMDA
+gAMPA_rsfs=0.4/Nrs;                     % RS -> FS
+%     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
+gGABAaff=1/Nfs;                         % FS -> FS
+gGABAa_fsrs=.6/Nfs;                     % FS -> RS
 
-gAMPA_rsLTS = 0.15/Nrs;
-%     gNMDA_rsLTS = 0/Nrs;
-gGABAa_LTSrs = 3/Nlts;
+gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
+%     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
+gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
 % 
-gGABAa_fsLTS = .2/Nfs;
-% gGABAa_LTSfs = 5/Nlts;
+gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
+% gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
 
 
-
-
-% RS-FS circuit (supra connections)
+% % Gamma oscillator, superficial (RS-FS circuit)
 gAMPA_supRSsupRS=0.1/(NsupRS);
         gNMDA_supRSsupRS=0.0/(NsupRS);
 gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principle cells.
@@ -364,7 +376,7 @@ gGABA_supFSsupFS=0.5/NsupFS;
 gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
 
 
-% Deep -> Supra connections (including NG - really should model this separately!)
+% % Deep -> Supra connections (including NG - really should model this separately!)
 % gAMPA_IBsupRS = 0.01/N;
 gNMDA_IBsupRS = 0.2/N;
 % gAMPA_IBsupFS = 0.01/N;
@@ -373,19 +385,17 @@ gAMPA_RSsupRS = 0.15/Nrs;
 % gGABAa_NGsupRS=0.01/Nng;
 gGABAb_NGsupRS=0.05/Nng;
 
-% Supra -> Deep connections
+% % Supra -> Deep connections
 % gAMPA_supRSRS = 0.15/NsupRS;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
-% Gamma -> Delta connections 
-gGABAafe=1.3/Nfs;
-gAMPA_rsng = 0.1/Nrs;
-if ~NMDA_block; gNMDA_rsng = 2/Nrs; end
-gGABAa_LTSe = 1.3/Nfs;
+% % Gamma -> Delta connections 
+gGABAafe=1.3/Nfs;                           % FS -> IB 
+gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
+if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
+gGABAa_LTSe = 1.3/Nfs;                      % LTS -> RS
 
 end
-
-% % % % % % % % % % % % % % % % % % % % % % 
 
 
 
@@ -396,32 +406,14 @@ tauNMDAr=5; % ms, NMDA rise time; Jung et al
 tauNMDAd=100; % ms, NMDA decay time; Jung et al
 tauGABAar=.5;  % ms, GABAa rise time; Jung et al
 tauGABAad=8;   % ms, GABAa decay time; Jung et al
-if swap_FS_to_LTS
-    tauGABAad=20;   % LTS decay time
-end
-tauGABAaLTSr = .5;
-tauGABAaLTSd = 20;  % LTS decay time
-tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
-tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
+tauGABAaLTSr = .5;  % ms, LTS rise time; Jung et al
+tauGABAaLTSd = 20;  % ms, LTS decay time; Jung et al
 EAMPA=0;
 EGABA=-95;
-TmaxGABAB=0.5;
+TmaxGABAB=0.5;      % See iGABABAustin.txt
 
 
-
-% Current injection noise levels
-IBda_Vnoise = .3;
-IBs_Vnoise = .1;
-IBdb_Vnoise = .3;
-IBa_Vnoise = .1;
-NG_Vnoise = 3;
-FS_Vnoise = 3;
-LTS_Vnoise = 6;
-RSda_Vnoise = .3;
-supRSda_Vnoise = .3;
-supFS_Vnoise = 3;
-
-
+% % % % % % % % % % % % %  ##2.3 Biophysical parameters % % % % % % % % % % % % %  
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
 gl=.1;
@@ -443,95 +435,20 @@ end
 IC_V = -65;
 
 
-% % % % % % % % % % % % % % % % Override some defaults % % % % % % % % % % 
+% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % % 
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
         vary = [];
-    case 2                                                                  % IB only, no synapse, no gamma
-        include_IB = 1; include_FS = 0; include_NG = 0; include_RS = 0;
-        gAMPAee=0; gNMDAee=0;
-        IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
-        N=2;
-        
-        vary_mode = 1;
-        switch vary_mode 
-            case 1
-                vary = { 'IB','gCaH',[.5 1 1.5 2];
-                     'IB','gM',[.5 1 2 4]};
-            case 2
-                vary = { 'IB','stim2',[1.5 1 0.5 0 -0.5 -1 -1.5]};
-        end
-        
-    case 4                                                                  % IB only, no gamma
-        include_IB = 1; include_FS = 0; include_NG = 0; include_RS = 0;
-        IBPPstim = 0; NGPPstim = 0; FSPPstim = 0;
-        
-        vary = { 'IB->IB','g_SYN',[0, 0.1, 0.5 1]/N; % AMPA conductance
-                 'IB->IB','gNMDA',[0 1 5]/N};        % NMDA conductance
-        
-    case 5                                                                  % IB, FS, and NG cells.
-        include_IB = 1; include_FS = 1; include_NG = 1; include_RS = 0;
-        
-        vary_mode = 1;
-        switch vary_mode
-            case 1
-                vary = { 'IB','PPstim',[-1 -2 -3 -4 -5];     % IBPPstim
-                         'FS->IB','g_SYN',[.1 .2 .3 .4 .5]/N}; % gGABAafe
-            case 2
-                vary = { 'IB->IB','g_SYN',[.2 .5 .3]/N;     % gAMPAee
-                         'FS->IB','g_SYN',[.8 1 1.3 1.5]/N}; % gGABAafe
-             case 3
-                vary = { 'IB->IB','gNMDA',[1 2 3]/N;               % IBPPstim
-                         'FS->IB','g_SYN',[.3 .5 .6]/N};         % gGABAafe
-        end
-    case 6                                                                  % IB cell with single gamma pulse
-        include_IB = 1; include_FS = 1; include_NG = 0; include_RS = 0;
-        FSPPstim = -5;
-        PPoffset=270;
-
-    case 7                                                                  % NG only, no gamma
-        include_IB = 0; include_FS = 0; include_NG = 1; include_RS = 0;
-        vary = { 'NG','PPstim',[-2 -3.5 -5 -6.5 -8]; % AMPA conductance
-                 'NG->NG','g_SYN',[.1 .3 .6 1 2]/Nng};        % NMDA conductance
-        vary = { 'NG','PPstim',[-3.5 -5 ]; % AMPA conductance
-                 'NG->NG','g_SYN',[.3 .6 ]/Nng};        % NMDA conductance
-%          vary = [];
-
-
-    case 8
-        PPfreq = 1/tspan(end); % 1 spike per cycle. 
-        PPwidth = 10; % in ms
-        PPshift = 600; % in ms
-        PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-0;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        width2_rise = 2.5;  % Not used for Gaussian pulse
-        kernel_type = 2;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        FSPPstim = 0;
-        IBPPstim = -3;
-        % NGPPstim = -4;
-        % FSPPstim = -5;
-
-        vary = { 'IB','PPstim',[-2 -5 -10];   
-                 'IB','PPshift',[350 400 575 650 750]}; 
-%         vary = [];
-
     case 9  % Vary RS cells in RS-FS network
 
         vary = { %'RS','stim2',linspace(2,-2,12); ...
                  %'RS','PPstim',linspace(-10,-2,8); ...
                  'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
                  'FS->RS','g_SYN',[0.2:0.2:1]/Nfs;...
-
                  }; 
 
-             
-             
     case 10     % Vary PP stimulation frequency to all cells
-        vary = { '(IB,NG,RS,FS,supRS)','PPfreq',[1,2,4,8];
+        vary = { '(IB,NG,RS,FS,LTS)','PPfreq',[1,2,4,8];
                  }; 
              
     case 11     % Vary just FS cells
@@ -558,7 +475,7 @@ switch sim_mode
                  %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
                  }; 
              
-    case 13         % LTS Cells
+    case 13         % LTS Cell synapses
         vary = { 'RS->LTS','g_SYN',[.1:.025:.2]/Nrs;...
                  'FS->LTS','g_SYN',[.1:.1:.6]/Nfs;...
                  %'LTS','stim',[-.5:.1:.5]; ...
@@ -573,37 +490,40 @@ switch sim_mode
         
 end
 
-%% Includes
-% % % % % % % % % % % % %  Populations  % % % % % % % % % % % % %  
+%% ##3.0 Build populations and synapses
+% % % % % % % % % % ##3.1 Populations % % % % % % % % %
 include_kramer_IB_populations;
 
-% % % % % % % % % % % %  Connections  % % % % % % % % % % % % % %
-% Add synaptic connecitons
+% % % % % % % % % % ##3.2 Connections % % % % % % % % %
 include_kramer_IB_synapses;
 
 
+%% ##4.0 Run simulation & post process
 
-% % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
+% % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
 data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
-% Crop data
+
+% % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
+% % Crop data within a time range
 % t = data(1).time; data = CropData(data, t > 100 & t <= t(end));
 
-% Calculate Thevenin equivalents of GABA B conductances
+% % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
 if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
 if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
 
-% Calculate averages across cells (e.g. mean field)
+% % Calculate averages across cells (e.g. mean field)
 data2 = CalcAverages(data);
 
 toc;
 
-% % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
+%% ##5.0 Plotting
 if plot_on
+    % % Do different plots depending on which parallel sim we are running
     switch sim_mode
         case {1,11}
             %%
