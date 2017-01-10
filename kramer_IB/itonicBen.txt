@@ -4,7 +4,7 @@ I_app = -4.5
 ton = 100
 toff = 500
 
-IBen(t)=I_app*((t/ton)*(t<=ton)+(ton<t&t<toff)+rand*.1)
+IBen(t)=I_app*((t/ton)*(t<=ton)+(ton<t&t<toff)+rand(1,Npop)*.1)
 %IBen(t)=I_app*((t/ton)*(t<=ton)+(ton<t&t<toff))
 
 % *((1-pulse/2)+pulse*(mod(t,750)<250&t>2*ton));',...
