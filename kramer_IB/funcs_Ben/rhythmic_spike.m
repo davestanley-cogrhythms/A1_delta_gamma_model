@@ -48,3 +48,4 @@ for c = 1:Npop
 end
 
 psps = psps(:, real_time_indicator);
+psps = psps';                           % Correct dimensions so that time is rows and cells are columns. ##Dave

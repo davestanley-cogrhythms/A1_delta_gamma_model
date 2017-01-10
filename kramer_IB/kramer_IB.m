@@ -37,7 +37,7 @@ include_supFS = 0;
 include_deepRS = 1;
 
 % % Simulation controls
-tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -66,7 +66,7 @@ Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 NsupRS = 30; 
 NsupFS = N;
-NdeepRS = 2;    % Number of deep theta-resonant RS cells
+NdeepRS = 1;    % Number of deep theta-resonant RS cells
 
 % % % % % % % % % % % % % ##2.1 Injected currents % % % % % % % % % % % % %  
 % % Tonic input currents.
