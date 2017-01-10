@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 0;
+compile_flag = 1;
 random_seed = 'shuffle';
 random_seed = 2;
 
@@ -28,16 +28,16 @@ sim_mode = 1;   % 1 - normal sim
                 
 % % Cells to include in model
 include_IB = 0;
-include_RS = 0;
-include_FS = 0;
-include_LTS = 0;
+include_RS = 1;
+include_FS = 1;
+include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
-include_deepRS = 1;
+include_deepRS = 0;
 
 % % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
