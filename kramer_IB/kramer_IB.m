@@ -88,7 +88,7 @@ Jlts=.75; % LTS cells
 supJRS1 = 5;    % RS superficial cells
 supJRS2 = 0.75;
 supJfs = 1;     % FS superficial cells
-JdeepRS = 0.6;   % Ben's RS theta cells
+JdeepRS = -0.3;   % Ben's RS theta cells
 
 
 % % Tonic current onset and offset times
@@ -544,7 +544,7 @@ if plot_on
             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             %PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-            PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
+%             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
     
 
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
