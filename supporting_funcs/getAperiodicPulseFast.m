@@ -1,23 +1,13 @@
 
 function s3 = getAperiodicPulseFast(freq,width,shift,T,dt,onset,offset,ap_pulse_num,ap_pulse_delay,Npop,kernel_type,width2_rise)
 
-% Comment this out because it gets confusing.
-% if nargin < 5
-%     onset = 0;
-%     offset = Inf;
-% end
-% if nargin < 7
-%     ap_pulse_num = 0;
-%     ap_pulse_delay = 0;
-% end
-% if nargin < 10
-%     kernel_type = 1;  % Options for kernel type are:
-%                                 % 1-Gaussian
-%                                 % 2-Double exponential - width is decay time; width2 is rise
-% end
-% if nargin < 11
-%     width2_rise = 0.5; % 0.5 ms by default
-% end
+% This function generates a delta train and then convolves it with a kernel
+% in order to produce a pulse train that can be injected into a cell.
+
+% **This function is outdated and is no longer maintained.**
+% See functions getDeltaTrainAP and convolveDeltaTrainwithKernel, which
+% splits this funciton into its two functional components (generating and
+% convolving the delta pulse train, respectively.
 
 plot_demo_on = 0;  % Plot if desired
 

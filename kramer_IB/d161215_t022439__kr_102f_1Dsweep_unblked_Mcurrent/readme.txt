@@ -1,0 +1,3 @@
+102f_1Dsweep_unblked_Mcurrent Swept through possible gFS->LTS values. M current re-added.
+	Sweep range: ‘FS->LTS','g_SYN',[.3:.1:1]/Nfs;...
+	[0.3000    0.4000    0.5000    0.6000    0.7000    0.8000    0.9000    1.0000]

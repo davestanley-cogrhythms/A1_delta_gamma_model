@@ -1,0 +1,1 @@
+88a_added_RSNG_synapse Sweep FSIB and RSNG synapses. Figs 1-2 with AP; Figs 3-4 without. Good ranges for FSIB are 0.3 or 0.4. Values for RSNG synapses values 0.4 and 0.5 inhibit the AP pulse.

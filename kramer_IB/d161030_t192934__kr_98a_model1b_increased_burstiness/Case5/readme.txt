@@ -1,0 +1,1 @@
+98a_model1b_increased_burstiness Settled on burstiness of gCaH=3 and gM=2. Used slightly refined range for parameter sweeps.

@@ -1,0 +1,1 @@
+82c_gammaonly_synapses_AP_timing Reduced to just the RS-FS network. Swept through RS<->FS connectivity measures. Explored the timing of the AP pulse.

@@ -1,0 +1,28 @@
+%% iPeriodicSpikes.mech
+
+% Spike train properties
+gSpike = .1;
+Esyn = 0;
+tau_d = 5; % decay time, in ms
+tau_r = .5; % rise time, in ms
+Sfreq = 1.5; % in Hz
+Sshift = 0; % in ms
+inputs_per_cell = 1;
+jitter = 1000/Sfreq*.05; % in ms
+
+% Time series properties
+Tend = T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+Sonset = 500;    % ms, onset time
+Soffset = Inf;   % ms, offset time
+
+kernel_type = 7;
+width2_rise = 0.25;
+
+psp = rhythmic_spike(tau_d,tau_r,Sfreq,Sshift,Tend,dt,Sonset,Soffset,Npop,inputs_per_cell,jitter)
+
+% Functions
+input(X) = psp(k,:)
+Ispike(X) = gSpike*input(X)*(X-Esyn)
+
+@current += -Ispike(X)
