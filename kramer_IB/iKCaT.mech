@@ -1,8 +1,8 @@
 % iKCaT: KCa after Traub & Jefferys 1994.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Parameters
-gKCa = .005 % .9*.005/.25 % .0125
-bKCa = .001
+gKCa = .007 % .9*.005/.25 % .0125
+bKCa = .002
 EK = -80
 IC_noise = 0
 aKCa_factor = .1

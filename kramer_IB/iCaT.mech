@@ -1,7 +1,7 @@
 % iCa: calcium inward current after Traub & Jefferys 1994.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Parameters
-gCa=.02 % .9*.02/.25
+gCa=.05 % .9*.02/.25
 ECa=120
 IC_noise=0
 Caoffset=0

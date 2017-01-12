@@ -14,11 +14,12 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 0;
-random_seed = 'shuffle';
+% random_seed = 'shuffle';
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 1;   % 1 - normal sim\
+sim_mode = 2;   % 1 - normal sim
+                % 2 - Vary I_app in deep RS cells
                 % 9 - sim study FS-RS circuit vary RS stim
                 % 10 - Vary iPeriodicPulses in all cells
                 % 11 - Vary FS cells
@@ -37,7 +38,7 @@ include_supFS = 0;
 include_deepRS = 1;
 
 % % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 6000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -88,11 +89,11 @@ Jlts=.75; % LTS cells
 supJRS1 = 5;    % RS superficial cells
 supJRS2 = 0.75;
 supJfs = 1;     % FS superficial cells
-JdeepRS = -0.3;   % Ben's RS theta cells
+JdeepRS = -0.75;   % Ben's RS theta cells
 
 % % Tonic current onset and offset times
-% Times at which injected currnets turn on and off (in milliseconds). See
-% itonicPaired.txt. Setting these to 0 essentailly removes the first
+% Times at which injected currents turn on and off (in milliseconds). See
+% itonicPaired.txt. Setting these to 0 essentially removes the first
 % hyperpolarization step.
 IB_offset1=0;
 IB_onset2=0;
@@ -379,9 +380,9 @@ gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
 % % Gamma oscillator, superficial (RS-FS circuit)
 gAMPA_supRSsupRS=0.1/(NsupRS);
         gNMDA_supRSsupRS=0.0/(NsupRS);
-gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principle cells.
+gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principal cells.
 gGABA_supFSsupFS=0.5/NsupFS;
-gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principle cells
+gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principal cells
 
 
 % % Deep -> Supra connections (including NG - really should model this separately!)
@@ -433,7 +434,7 @@ IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
 ECa=125;     % calcium reversal potential
 IC_noise=.25;% fractional noise in initial conditions
 if no_noise
-    IC_noise= 0;
+    IC_noise = 0;
     IBda_Vnoise = 0;
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
@@ -450,8 +451,12 @@ switch sim_mode
     case 1                                                                  % Everything default, single simulation
         vary = [];
 
+    case 2
+        
+        vary = {'deepRS','I_app',-.6:-.01:-.75;
+                };
+        
     case 9  % Vary RS cells in RS-FS network
-
         vary = { %'RS','stim2',linspace(2,-2,12); ...
                  %'RS','PPstim',linspace(-10,-2,8); ...
                  'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
@@ -558,8 +563,8 @@ if plot_on
             %PlotFR(data);
         case {2,3}
             PlotData(data,'plot_type','waveform');
-            PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
-            PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+            % PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+            % PlotData(data,'variable','iNMDA_s','plot_type','waveform');
 
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');

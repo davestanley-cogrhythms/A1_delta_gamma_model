@@ -101,7 +101,7 @@ if include_LTS
       };
 end
 
-%% Supraficial cells
+%% Superficial cells
 if include_supRS
     i=i+1;
     spec.populations(i).name = 'supRS';
@@ -136,11 +136,11 @@ if include_supFS
       };
 end
 
-%% BEn's deepRS cell
+%% Ben's deepRS cell
 if include_deepRS
     
     Cm_Ben = 0.25;
-    gKs = 0.084;
+    gKs = 0.124;
     gNaP_denom = 3.36;
     I_const = 0;
     
@@ -158,11 +158,9 @@ if include_deepRS
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
     spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','iPeriodicSpikes','itonicBen'};
     spec.populations(i).parameters = {...
-      'Cm',Cm_Ben,...
+      'Cm',Cm_Ben,'PPstim',0,'gSpike',0,...
       'gKs',gKs,'gNaP_denom',gNaP_denom,'gNaP',gKs/gNaP_denom, 'I_const',I_const,...    %  halfKs=-60; halfNaP=-60; gKs=0.084; gNaP=0.025; gl=0.025; gCa=0.02; %%% 
-      'tau_fast',tau_fast,'tau_h',tau_fast,'tau_m',tau_fast,... 
-      'slow_offset',slow_offset, 'slow_offset_correction',slow_offset_correction,'Ks_offset',slow_offset-slow_offset_correction,'NaP_offset',slow_offset,...
-      'fast_offset',0, 'Koffset',fast_offset,'Noffset',fast_offset...                   % 'fast_denom=1; gKDR=5/fast_denom; gNa=12.5/fast_denom;',...
+      'tau_h',tau_fast,'tau_m',tau_fast,... 
       'ton',50,'toff',tspan(end),'I_app',JdeepRS,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
       };
 end
