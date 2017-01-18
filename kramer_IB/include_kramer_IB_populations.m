@@ -101,30 +101,12 @@ if include_LTS
       };
 end
 
-%% Superficial cells
-if include_supRS
-    i=i+1;
-    spec.populations(i).name = 'supRS';
-    spec.populations(i).size = NsupRS;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
-    spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'g_l',gl,'E_l',-67,'E_l_std',5,...
-      'PPstim', supRSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau,'PPFacFactor',PPFacFactor,...
-      'gRAN',supRSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
-      'stim',supJRS1,'onset',0,'offset',RS_offset1,'stim2',supJRS2,'onset2',RS_onset2,'offset2',Inf,...
-      'V_noise',supRSda_Vnoise,...
-      'gNaF',100,'E_NaF',ENa,...
-      'gKDR',80,'E_KDR',E_EKDR,...
-      'gM',2,'E_M',E_EKDR,...
-      'gCaH',.5,'E_CaH',ECa,...
-      };
-end
+%% Deep cells
 
-if include_supFS
+if include_deepFS
     i=i+1;
-    spec.populations(i).name = 'supFS';
-    spec.populations(i).size = NsupFS;
+    spec.populations(i).name = 'deepFS';
+    spec.populations(i).size = NdeepFS;
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
@@ -136,18 +118,7 @@ if include_supFS
       };
 end
 
-%% Ben's deepRS cell
 if include_deepRS
-    
-    Cm_Ben = 0.25;
-    gKs = 0.124;
-    gNaP_denom = 3.36;
-    I_const = 0;
-    
-    tau_fast = 5;
-    slow_offset = 0;
-    slow_offset_correction = 0;
-    fast_offset = 0;
     
     warning('Dave uses a different linker than Ben (D=(current); Ben=@current). To share mechanisms, should unify these.');
     

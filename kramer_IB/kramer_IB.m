@@ -26,16 +26,6 @@ sim_mode = 2;   % 1 - normal sim
                 % 12 - Vary IB cells
                 % 13 - Vary LTS cell synapses
                 % 14 - Vary random parameter in order to get repeat sims
-                
-% % Cells to include in model
-include_IB = 0;
-include_RS = 0;
-include_FS = 0;
-include_LTS = 0;
-include_NG = 0;
-include_supRS = 0;
-include_supFS = 0;
-include_deepRS = 1;
 
 % % Simulation controls
 tspan=[0 6000]; dt=.01; solver='euler'; % euler, rk2, rk4
@@ -45,6 +35,27 @@ dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0; 
+                
+%% % Cells to include in model
+include_IB = 1;
+include_RS = 1;
+include_FS = 1;
+include_LTS = 1;
+include_NG = 1;
+include_deepRS = 1;
+include_deepFS = 1;
+
+% Parameters for deep RS cells.
+
+Cm_Ben = 0.25;
+gKs = 0.124;
+gNaP_denom = 3.36;
+I_const = 0;
+
+tau_fast = 5;
+slow_offset = 0;
+slow_offset_correction = 0;
+fast_offset = 0;
 
 
 %% ##2.0 Model parameters
@@ -53,24 +64,24 @@ NMDA_block = 0;
 % second time. I do this so that you can easily comment out the second
 % definition as way to disable things (e.g. setting synapses to zero).
 % 
-% Note2: SupRS and SupFS cells represent superficial RS and FS cells.
+% Note2: SupRS cells represent superficial RS cells.
 % However, I've since switched the RS, FS, and LTS cells to representing
 % superficial cells. So these ones now are disabled. I'm leaving the code
 % in the network, however, incase we want to re-enable them later or use
 % them for something else.
 
-% % Number of cells per population
-N=30;   % Number of excitatory cells
+%% % Number of cells per population
+N=1;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
-NsupRS = 30; 
-NsupFS = N;
+% NsupRS = 30; 
+NdeepFS = N;
 NdeepRS = 1;    % Number of deep theta-resonant RS cells
 
-% % % % % % % % % % % % % ##2.1 Injected currents % % % % % % % % % % % % %  
-% % Tonic input currents.
+%% % % % % % % % % % % % % ##2.1 Injected currents % % % % % % % % % % % % %  
+%% % Tonic input currents.
 % Note: IB, NG, and RS cells use two different values for tonic current
 % injection. This is because I generally hyperpolarize these cells for a
 % few hundred milliseconds to allow things to settle (see
@@ -120,7 +131,7 @@ RSda_Vnoise = .3;
 supRSda_Vnoise = .3;
 supFS_Vnoise = 3;
 
-% % Periodic pulse stimulation parameters
+%% % Periodic pulse stimulation parameters
 pulse_mode = 1;
 switch pulse_mode
     case 0                  % No stimulation
@@ -242,8 +253,8 @@ end
 %     much so that it interrupts the first IB burst.
 % 
 
-% % % % % % % % % % % % %  ##2.2 Synaptic connectivity parameters % % % % % % % % % % % % %  
-% % Gap junction connections
+%% % % % % % % % % % % % %  ##2.2 Synaptic connectivity parameters % % % % % % % % % % % % %  
+%% % Gap junction connections.
 % % Deep cells
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IB -> IB 
@@ -252,9 +263,9 @@ ggjLTS=.0/Nlts;  % LTS -> LTS
     warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise to compensate.');
 % % Sup cells
 ggjasupRS=.00/(NsupRS);  % supRS -> supRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
-ggjsupFS=.2/NsupFS;  % supFS -> supFS
+ggjsupFS=.2/NdeepFS;  % supFS -> supFS
 
-
+%% % Chemical synapses, DEFAULTS.
 % % Synapse heterogenity
 gsyn_hetero = 0;
 
@@ -314,7 +325,7 @@ gAMPA_supRSsupFS=0;
 gGABA_supFSsupFS=0;
 gGABAa_supFSsupRS=0;
 
-% % Deep -> Supra connections (including NG - really should model this separately!)
+% % Deep -> Superficial connections (including NG - really should model this separately!)
 gAMPA_IBsupRS = 0;
 gNMDA_IBsupRS = 0;
 gAMPA_IBsupFS = 0;
@@ -323,22 +334,23 @@ gAMPA_RSsupRS = 0;
 gGABAa_NGsupRS=0;
 gGABAb_NGsupRS=0;
 
-% % Supra -> Deep connections
+% % Superficial -> Deep connections
 gAMPA_supRSRS = 0;
 gAMPA_supRSIB = 0;
 
-
 % % Gamma -> Delta connections 
-gGABAa_fsib=0;
+gGABAa_fsib = 0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
 gGABAa_LTSib = 0;
+
+%% % Chemical Synapses, DEFINITIONS. % %
 
 if ~no_synapses
 % % Synaptic connection strengths
 % #mysynapses
 
-% % Delta oscillator (IB-NG circuit)
+% % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
 gAMPA_ibib=0.1/N;                          % IB -> IB
 if ~NMDA_block; gNMDA_ibib=5/N; end        % IB -> IB NMDA
 
@@ -376,16 +388,21 @@ gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
 gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
 % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
 
+% % % Gamma oscillator, superficial (RS-FS circuit)
+% gAMPA_supRSsupRS=0.1/(NsupRS);
+%         gNMDA_supRSsupRS=0.0/(NsupRS);
+% gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principal cells.
+% gGABA_supFSsupFS=0.5/NdeepFS;
+% gGABAa_supFSsupRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of sup principal cells
 
-% % Gamma oscillator, superficial (RS-FS circuit)
+% % Deep RS-FS circuit.
 gAMPA_supRSsupRS=0.1/(NsupRS);
         gNMDA_supRSsupRS=0.0/(NsupRS);
 gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principal cells.
-gGABA_supFSsupFS=0.5/NsupFS;
-gGABAa_supFSsupRS=0.2/NsupFS;       % Decreased by 3x due to reduced stimulation of sup principal cells
+gGABA_supFSsupFS=0.5/NdeepFS;
+gGABAa_supFSsupRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of sup principal cells
 
-
-% % Deep -> Supra connections (including NG - really should model this separately!)
+% % Deep -> Superficial connections (including NG - really should model this separately!)
 % gAMPA_IBsupRS = 0.01/N;
 gNMDA_IBsupRS = 0.2/N;
 % gAMPA_IBsupFS = 0.01/N;
@@ -394,7 +411,7 @@ gAMPA_RSsupRS = 0.15/Nrs;
 % gGABAa_NGsupRS=0.01/Nng;
 gGABAb_NGsupRS=0.05/Nng;
 
-% % Supra -> Deep connections
+% % Superficial -> Deep connections
 % gAMPA_supRSRS = 0.15/NsupRS;
 % gAMPA_supRSIB = 0.15/NsupRS;
 
@@ -407,8 +424,7 @@ gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
 end
 
 
-
-% Synaptic time constants & reversals
+%% % Synaptic time constants & reversals
 tauAMPAr=.25;  % ms, AMPA rise time; Jung et al
 tauAMPAd=1;   % ms, AMPA decay time; Jung et al
 tauNMDAr=5; % ms, NMDA rise time; Jung et al
@@ -424,7 +440,7 @@ TmaxGABAB=0.5;      % See iGABABAustin.txt
 
 
 
-% % % % % % % % % % % % %  ##2.3 Biophysical parameters % % % % % % % % % % % % %  
+%% % % % % % % % % % % % %  ##2.3 Biophysical parameters % % % % % % % % % % % % %  
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
 gl=.1;
@@ -446,7 +462,7 @@ end
 IC_V = -65;
 
 
-% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % % 
+%% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % % 
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
         vary = [];
