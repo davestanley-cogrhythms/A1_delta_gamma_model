@@ -5,7 +5,7 @@ tic
 % clear
 
 
-addpath(genpath(fullfile(pwd,'funcs_supporting')));
+addpath(genpath(fullfile(pwd,'funcs_deepporting')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
 %% ##1.0 Simulation switches
@@ -18,7 +18,7 @@ compile_flag = 0;
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 10;   % 1 - normal sim
                 % 2 - Vary I_app in deep RS cells
                 % 9 - sim study FS-RS circuit vary RS stim
                 % 10 - Vary iPeriodicPulses in all cells
@@ -32,30 +32,18 @@ tspan=[0 6000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
-no_noise = 0;
+no_noise = 1;
 no_synapses = 0;
 NMDA_block = 0; 
                 
 %% % Cells to include in model
-include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_LTS = 1;
-include_NG = 1;
+include_IB = 0;
+include_RS = 0;
+include_FS = 0;
+include_LTS = 0;
+include_NG = 0;
 include_deepRS = 1;
 include_deepFS = 1;
-
-% Parameters for deep RS cells.
-
-Cm_Ben = 0.25;
-gKs = 0.124;
-gNaP_denom = 3.36;
-I_const = 0;
-
-tau_fast = 5;
-slow_offset = 0;
-slow_offset_correction = 0;
-fast_offset = 0;
 
 
 %% ##2.0 Model parameters
@@ -64,9 +52,9 @@ fast_offset = 0;
 % second time. I do this so that you can easily comment out the second
 % definition as way to disable things (e.g. setting synapses to zero).
 % 
-% Note2: SupRS cells represent superficial RS cells.
+% Note2: deepRS cells represent deep RS cells.
 % However, I've since switched the RS, FS, and LTS cells to representing
-% superficial cells. So these ones now are disabled. I'm leaving the code
+% deep cells. So these ones now are disabled. I'm leaving the code
 % in the network, however, incase we want to re-enable them later or use
 % them for something else.
 
@@ -76,9 +64,19 @@ Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
-% NsupRS = 30; 
+% NdeepRS = 30; 
 NdeepFS = N;
 NdeepRS = 1;    % Number of deep theta-resonant RS cells
+
+% Parameters for deep RS cells.
+gKs = 0.124;
+gNaP_denom = 3.36;
+I_const = 0;
+
+tau_fast = 5;
+slow_offset = 0;
+slow_offset_correction = 0;
+fast_offset = 0;
 
 %% % % % % % % % % % % % % ##2.1 Injected currents % % % % % % % % % % % % %  
 %% % Tonic input currents.
@@ -97,10 +95,10 @@ JRS1 = 5; % RS cells
 JRS2 = 1; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
-supJRS1 = 5;    % RS superficial cells
-supJRS2 = 0.75;
-supJfs = 1;     % FS superficial cells
-JdeepRS = -0.75;   % Ben's RS theta cells
+deepJRS1 = 5;    % RS deep cells
+deepJRS2 = 0.75;
+deepJfs = 1;     % FS deep cells
+JdeepRS = -6;   % Ben's RS theta cells
 
 % % Tonic current onset and offset times
 % Times at which injected currents turn on and off (in milliseconds). See
@@ -117,7 +115,7 @@ ERAN=0;
 tauRAN=2;
 lambda = 1000;  % Mean frequency Poisson IPSPs
 RSgRAN=0.005;   % synaptic noise conductance to RS cells
-supRSgRAN = 0.005; % synaptic noise conductance to supRS cells
+deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
 IBda_Vnoise = .3;
@@ -128,8 +126,8 @@ NG_Vnoise = 3;
 FS_Vnoise = 3;
 LTS_Vnoise = 6;
 RSda_Vnoise = .3;
-supRSda_Vnoise = .3;
-supFS_Vnoise = 3;
+deepRSda_Vnoise = .3;
+deepFS_Vnoise = 3;
 
 %% % Periodic pulse stimulation parameters
 pulse_mode = 1;
@@ -155,8 +153,8 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
-        supRSPPstim = 0;
-    case 1                  % Gamma stimulation (with aperoidicity)
+        deepRSPPstim = 0;
+    case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
@@ -178,12 +176,14 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
-        supRSPPstim = 0;
+        deepRSPPstim = 0;
         IBPPstim = -1;
         RSPPstim = -10;
+        deepRSPPstim = -5;
+        deepRSgSpike = 0;
 %         NGPPstim = -4;
 %         FSPPstim = -5;
-%         supRSPPstim = -7;
+%         deepRSPPstim = -7;
 
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
@@ -206,12 +206,12 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
-        supRSPPstim = 0;
+        deepRSPPstim = 0;
         IBPPstim = -5;
         % RSPPstim = -5;
         % NGPPstim = -4;
         % FSPPstim = -5;
-        % supRSPPstim = -5;
+        % deepRSPPstim = -5;
     case 3                  % Auditory stimulation at 10Hz (possibly not used...)
         PPfreq = 10; % in Hz
         PPwidth = 2; % in ms
@@ -233,12 +233,12 @@ switch pulse_mode
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
-        supRSPPstim = 0;
+        deepRSPPstim = 0;
         % IBPPstim = -3;
         % RSPPstim = -3;
         % NGPPstim = -4;
         % FSPPstim = -5;
-        supRSPPstim = -3;        
+        deepRSPPstim = -3;        
 end
 
 
@@ -261,9 +261,9 @@ ggja=.2/N;  % IB -> IB
 ggjFS=.2/Nfs;  % FS -> FS
 ggjLTS=.0/Nlts;  % LTS -> LTS
     warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise to compensate.');
-% % Sup cells
-ggjasupRS=.00/(NsupRS);  % supRS -> supRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
-ggjsupFS=.2/NdeepFS;  % supFS -> supFS
+% % deep cells
+ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
+ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
 
 %% % Chemical synapses, DEFAULTS.
 % % Synapse heterogenity
@@ -318,25 +318,25 @@ gGABAa_LTSrs = 0;
 gGABAa_fsLTS = 0;
 gGABAa_LTSfs = 0;
 
-% % Gamma oscillator, superficial (RS-FS circuit)
-gAMPA_supRSsupRS=0;
-gNMDA_supRSsupRS=0;
-gAMPA_supRSsupFS=0;
-gGABA_supFSsupFS=0;
-gGABAa_supFSsupRS=0;
+% % Gamma oscillator, deep (RS-FS circuit)
+gAMPA_deepRSdeepRS=0;
+gNMDA_deepRSdeepRS=0;
+gAMPA_deepRSdeepFS=0;
+gGABA_deepFSdeepFS=0;
+gGABAa_deepFSdeepRS=0;
 
-% % Deep -> Superficial connections (including NG - really should model this separately!)
-gAMPA_IBsupRS = 0;
-gNMDA_IBsupRS = 0;
-gAMPA_IBsupFS = 0;
-gNMDA_IBsupFS = 0;
-gAMPA_RSsupRS = 0;
-gGABAa_NGsupRS=0;
-gGABAb_NGsupRS=0;
+% % Deep -> deep connections (including NG - really should model this separately!)
+gAMPA_IBdeepRS = 0;
+gNMDA_IBdeepRS = 0;
+gAMPA_IBdeepFS = 0;
+gNMDA_IBdeepFS = 0;
+gAMPA_RSdeepRS = 0;
+gGABAa_NGdeepRS=0;
+gGABAb_NGdeepRS=0;
 
-% % Superficial -> Deep connections
-gAMPA_supRSRS = 0;
-gAMPA_supRSIB = 0;
+% % deep -> Deep connections
+gAMPA_deepRSRS = 0;
+gAMPA_deepRSIB = 0;
 
 % % Gamma -> Delta connections 
 gGABAa_fsib = 0;
@@ -368,10 +368,10 @@ gAMPA_ibLTS=0.1/N;
 if ~NMDA_block; gNMDA_ibLTS=5/N; end
 
 % % Delta -> Gamma oscillator connections
-% gAMPA_ibrs = 0.013/N;
-% gNMDA_ibrs = 0.02/N;
-% gGABAa_ngrs = 0.05/Nng;
-% gGABAb_ngrs = 0.08/Nng;
+gAMPA_ibrs = 0.013/N;
+gNMDA_ibrs = 0.02/N;
+gGABAa_ngrs = 0.05/Nng;
+gGABAb_ngrs = 0.08/Nng;
 
 % % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
@@ -388,32 +388,25 @@ gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
 gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
 % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
 
-% % % Gamma oscillator, superficial (RS-FS circuit)
-% gAMPA_supRSsupRS=0.1/(NsupRS);
-%         gNMDA_supRSsupRS=0.0/(NsupRS);
-% gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principal cells.
-% gGABA_supFSsupFS=0.5/NdeepFS;
-% gGABAa_supFSsupRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of sup principal cells
+% % Theta oscillator (deep RS-FS circuit).
+gAMPA_deepRSdeepRS=0.1/(NdeepRS);
+        gNMDA_deepRSdeepRS=0.0/(NdeepRS);
+gAMPA_deepRSdeepFS=1/(NdeepRS);        % Increased by 4x due to sparse firing of deep principal cells.
+gGABA_deepFSdeepFS=0.5/NdeepFS;
+gGABAa_deepFSdeepRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of deep principal cells
 
-% % Deep RS-FS circuit.
-gAMPA_supRSsupRS=0.1/(NsupRS);
-        gNMDA_supRSsupRS=0.0/(NsupRS);
-gAMPA_supRSsupFS=1/(NsupRS);        % Increased by 4x due to sparse firing of sup principal cells.
-gGABA_supFSsupFS=0.5/NdeepFS;
-gGABAa_supFSsupRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of sup principal cells
+% % Delta -> Theta connections (including NG - really should model this separately!)
+gAMPA_IBdeepRS = 0.01/N;
+% gNMDA_IBdeepRS = 0.2/N;
+% gAMPA_IBdeepFS = 0.01/N;
+% gNMDA_IBdeepFS = 0.1/N;
+gAMPA_deepRSRS = 0.15/Nrs;
+% gGABAa_NGdeepRS=0.01/Nng;
+% gGABAb_NGdeepRS=0.05/Nng;
 
-% % Deep -> Superficial connections (including NG - really should model this separately!)
-% gAMPA_IBsupRS = 0.01/N;
-gNMDA_IBsupRS = 0.2/N;
-% gAMPA_IBsupFS = 0.01/N;
-% gNMDA_IBsupFS = 0.1/N;
-gAMPA_RSsupRS = 0.15/Nrs;
-% gGABAa_NGsupRS=0.01/Nng;
-gGABAb_NGsupRS=0.05/Nng;
-
-% % Superficial -> Deep connections
-% gAMPA_supRSRS = 0.15/NsupRS;
-% gAMPA_supRSIB = 0.15/NsupRS;
+% deep -> Deep connections
+gAMPA_RSdeepRS = 0.15/NdeepRS;
+gAMPA_RSIB = 0.15/NdeepRS;
 
 % % Gamma -> Delta connections 
 gGABAa_fsib=1.3/Nfs;                        % FS -> IB 
@@ -443,6 +436,7 @@ TmaxGABAB=0.5;      % See iGABABAustin.txt
 %% % % % % % % % % % % % %  ##2.3 Biophysical parameters % % % % % % % % % % % % %  
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
+Cm_Ben = 2.7;
 gl=.1;
 ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
@@ -479,8 +473,8 @@ switch sim_mode
                  'FS->RS','g_SYN',[0.2:0.2:1]/Nfs;...
                  }; 
 
-    case 10     % Vary PP stimulation frequency to all cells
-        vary = { '(IB,NG,RS,FS,LTS)','PPfreq',[1,2,4,8];
+    case 10     % Vary PP stimulation frequency to all input cells
+        vary = { '(IB,RS,deepRS)','PPfreq',[1,2,4,8,16,32];
                  }; 
              
     case 11     % Vary just FS cells
@@ -584,7 +578,7 @@ if plot_on
 
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');
-        case 9
+        case {9,10}
             %%
             %PlotData(data,'plot_type','waveform');
             %PlotData(data,'plot_type','power');
@@ -609,6 +603,8 @@ if plot_on
     %         PlotFR2(data,'variable','FS_V'); 
     %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
     %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
+    
+            save_as_pdf(gcf, 'kramer_IB')
 
         case 12
              %%
