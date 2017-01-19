@@ -101,7 +101,7 @@ bKCa = .002;
 gCa = Cm_factor*.05;
 CAF = 24/Cm_factor;
 gl_dRS = Cm_factor*.025;
-gNaF_dRS = Cm_factor*12.5;
+gNa_dRS = Cm_factor*12.5;
 gKDR_dRS = Cm_factor*5;
 I_const = 0;
 
@@ -130,7 +130,7 @@ Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
-JdeepRS = -6;   % Ben's RS theta cells
+JdeepRS = -.6;   % Ben's RS theta cells
 
 % % Tonic current onset and offset times
 % Times at which injected currents turn on and off (in milliseconds). See
@@ -211,7 +211,7 @@ switch pulse_mode
         deepRSPPstim = 0;
         IBPPstim = -1;
         RSPPstim = -10;
-        deepRSPPstim = -5;
+        deepRSPPstim = -.5;
         deepRSgSpike = 0;
         %         NGPPstim = -4;
         %         FSPPstim = -5;
