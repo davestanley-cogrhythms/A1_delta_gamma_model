@@ -1,6 +1,5 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %%
-tic
 % clear
 
 
@@ -17,7 +16,7 @@ random_seed = 'shuffle';
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 14;   % 1 - normal sim
                 % 9 - sim study FS-RS circuit vary RS stim
                 % 10 - Vary iPeriodicPulses in all cells
                 % 11 - Vary FS cells
@@ -250,7 +249,7 @@ ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IB -> IB 
 ggjFS=.2/Nfs;  % FS -> FS
 ggjLTS=.0/Nlts;  % LTS -> LTS
-    warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise to compensate.');
+%     warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise to compensate.');
 % % Sup cells
 ggjasupRS=.00/(NsupRS);  % supRS -> supRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjsupFS=.2/NsupFS;  % supFS -> supFS
@@ -495,7 +494,7 @@ switch sim_mode
                  }; 
              
     case 14         % Vary random parameter to force shuffling random seed
-        vary = {'RS','asdfasdfadf',1:8 };       % shuffle starting seed 8 times
+        vary = {'RS','asdfasdfadf',1:4 };       % shuffle starting seed 8 times
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.     
         
 
@@ -513,7 +512,9 @@ include_kramer_IB_synapses;
 %% ##4.0 Run simulation & post process
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
+tic
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',0);
+toc
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
@@ -531,17 +532,20 @@ if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,
 % % Calculate averages across cells (e.g. mean field)
 data2 = CalcAverages(data);
 
-toc;
+
 
 %% ##5.0 Plotting
 if plot_on
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
-        case {1,11}
+        case {1,11,14}
             %%
             % PlotData(data,'plot_type','waveform');
+            PlotData(data);
             
-            PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
+            
+            
+%             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             %PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
 %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
@@ -693,7 +697,7 @@ end
 % PlotData(data2,'plot_type','rastergram');
 % PlotFR(data2);
 
-toc
+
 
 %%
 
