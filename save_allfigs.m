@@ -11,10 +11,10 @@ function save_allfigs(handles_arr)
     end
     
     do_commit = 0;
-    handles_arr = 1:30;
+    handles_arr = 1:3;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '108a_test_pulse_presets';
+    currfigname = '109a_test_NMDA_kineticscheme';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -53,7 +53,7 @@ function save_allfigs(handles_arr)
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
     
-    mycomment = ['Wrote code and tested the 5 different pulse train modes.'];
+    mycomment = ['Wrote code and tested NMDA kinetics with desensitization.'];
     
     
     % Write to a text file
