@@ -18,7 +18,7 @@ compile_flag = 0;
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 10;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -28,12 +28,12 @@ sim_mode = 10;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-tspan=[0 6000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
 no_noise = 1;
-no_synapses = 0;
+no_synapses = 1;
 NMDA_block = 0;
 
 %% % Cells to include in model

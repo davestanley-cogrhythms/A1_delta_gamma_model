@@ -10,7 +10,7 @@ CAF = 24  	 % calcium accumulation factor % 600
 IC_noise=0
 
 % ODEs
-cai' = - CAF.*@ica - cai/tauCa
+cai' = - CAF.*ica - cai/tauCa
 cai(0) = cainf+IC_noise.*rand(1,Npop)
 
 % Interface

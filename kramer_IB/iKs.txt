@@ -19,4 +19,4 @@ n'=(ninf(X)-n)/tauKs(X)
 n(0)=IC+IC_noise.*rand(Npop,1)
 
 % Interface
-current => -IKs(X,n)
+current => -IKs(V,n)

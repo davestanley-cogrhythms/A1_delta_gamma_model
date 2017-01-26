@@ -20,4 +20,4 @@ h' = tau_h*(ah(X).*(1-h)-bh(X).*h)
 h(0) = IC+IC_noise.*rand(Npop,1)
 
 % Linkers
-current => -INa(X,h)
+current => -INa(V,h)

@@ -223,7 +223,7 @@ end
 % % % % % % % % % % % %  Deep connections (RS-FS) % % % % % % % % % % % % % 
 % % % % %  deepRS Cells  % % % % %
 % % deepRS->deepRS recurrent synaptic and gap connections
-if include_deepRS
+if include_deepRS && NdeepRS > 1
     i=i+1;
     spec.connections(i).direction = 'deepRS->deepRS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
@@ -246,7 +246,7 @@ end
 
 % % % % %  deepFS Cells  % % % % %
 % % deepFS->deepFS Synaptic connections
-if include_deepFS
+if include_deepFS && NdeepFS > 1
     i=i+1;
     spec.connections(i).direction = 'deepFS->deepFS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
