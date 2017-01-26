@@ -18,7 +18,7 @@ compile_flag = 0;
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 2;   % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -28,12 +28,12 @@ sim_mode = 1;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
 no_noise = 1;
-no_synapses = 1;
+no_synapses = 0;
 NMDA_block = 0;
 
 %% % Cells to include in model
@@ -96,7 +96,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 %% Parameters for deep RS cells.
 gKs = Cm_factor*0.124;
 gNaP_denom = 3.36;
-gKCa = Cm_factor*0.007;
+gKCa = Cm_factor*0.005;
 bKCa = .002;
 gCa = Cm_factor*.05;
 CAF = 24/Cm_factor;
@@ -130,7 +130,7 @@ Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
-JdeepRS = -.6;   % Ben's RS theta cells
+JdeepRS = -10;   % Ben's RS theta cells
 
 % % Tonic current onset and offset times
 % Times at which injected currents turn on and off (in milliseconds). See
@@ -161,117 +161,7 @@ RSda_Vnoise = .3;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
 
-%% % Periodic pulse stimulation parameters
-pulse_mode = 1;
-switch pulse_mode
-    case 0                  % No stimulation
-        PPfreq = 4; % in Hz
-        PPwidth = 2; % in ms
-        PPshift = 0; % in ms
-        PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-0;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = 0.75;  % Not used for Gaussian pulse
-        kernel_type = 2;
-        PPFacTau = 200;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 200;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
-        deepRSPPstim = 0;
-    case 1                  % Gamma stimulation (with aperiodicity)
-        PPfreq = 40; % in Hz
-        PPwidth = 2; % in ms
-        PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = .5;  % Not used for Gaussian pulse
-        kernel_type = 1;
-        PPFacTau = 100;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 100;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
-        deepRSPPstim = 0;
-        IBPPstim = -1;
-        RSPPstim = -10;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
-        %         NGPPstim = -4;
-        %         FSPPstim = -5;
-        %         deepRSPPstim = -7;
-        
-    case 2                  % Median nerve stimulation
-        PPfreq = 2; % 2 Hz delta
-        PPwidth = 10; % in mscd
-        PPshift = 0; % in ms
-        PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-0;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = 2.5;  % Not used for Gaussian pulse
-        kernel_type = 2;
-        PPFacTau = 200;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 200;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
-        deepRSPPstim = 0;
-        IBPPstim = -5;
-        % RSPPstim = -5;
-        % NGPPstim = -4;
-        % FSPPstim = -5;
-        % deepRSPPstim = -5;
-    case 3                  % Auditory stimulation at 10Hz (possibly not used...)
-        PPfreq = 10; % in Hz
-        PPwidth = 2; % in ms
-        PPshift = 0; % in ms
-        PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-10;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = 0.75;  % Not used for Gaussian pulse
-        kernel_type = 1;
-        PPFacTau = 200;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 200;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
-        deepRSPPstim = 0;
-        % IBPPstim = -3;
-        % RSPPstim = -3;
-        % NGPPstim = -4;
-        % FSPPstim = -5;
-        deepRSPPstim = -3;
-end
+
 
 
 % Steps for tuning
@@ -462,15 +352,17 @@ EAMPA=0;
 EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
 
-
 %% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % %
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
+        
         vary = [];
         
     case 2
         
-        vary = {'deepRS','I_app',-.6:-.01:-.75;
+        tspan = [0 6000];
+        vary = {
+            'deepRS','I_app',-6:-.1:-9;...
             };
         
     case 9  % Vary RS cells in RS-FS network
@@ -520,8 +412,120 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
         
-        
 end
+
+%% % Periodic pulse stimulation parameters
+pulse_mode = 1;
+switch pulse_mode
+    case 0                  % No stimulation
+        PPfreq = 4; % in Hz
+        PPwidth = 2; % in ms
+        PPshift = 0; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-0;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        width2_rise = 0.75;  % Not used for Gaussian pulse
+        kernel_type = 2;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 200;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        RSPPstim = 0;
+        FSPPstim = 0;
+        deepRSPPstim = 0;
+    case 1                  % Gamma stimulation (with aperiodicity)
+        PPfreq = 40; % in Hz
+        PPwidth = 2; % in ms
+        PPshift = 0; % in ms
+        PPonset = 0;    % ms, onset time
+        PPoffset = tspan(end);   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        width2_rise = .5;  % Not used for Gaussian pulse
+        kernel_type = 1;
+        PPFacTau = 100;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 100;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        RSPPstim = 0;
+        FSPPstim = 0;
+        deepRSPPstim = 0;
+        IBPPstim = -1;
+        RSPPstim = -10;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        %         NGPPstim = -4;
+        %         FSPPstim = -5;
+        %         deepRSPPstim = -7;
+        
+    case 2                  % Median nerve stimulation
+        PPfreq = 2; % 2 Hz delta
+        PPwidth = 10; % in mscd
+        PPshift = 0; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-0;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        width2_rise = 2.5;  % Not used for Gaussian pulse
+        kernel_type = 2;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 200;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        RSPPstim = 0;
+        FSPPstim = 0;
+        deepRSPPstim = 0;
+        IBPPstim = -5;
+        % RSPPstim = -5;
+        % NGPPstim = -4;
+        % FSPPstim = -5;
+        % deepRSPPstim = -5;
+    case 3                  % Auditory stimulation at 10Hz (possibly not used...)
+        PPfreq = 10; % in Hz
+        PPwidth = 2; % in ms
+        PPshift = 0; % in ms
+        PPonset = 10;    % ms, onset time
+        PPoffset = tspan(end)-10;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        width2_rise = 0.75;  % Not used for Gaussian pulse
+        kernel_type = 1;
+        PPFacTau = 200;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 200;
+        IBPPstim = 0;
+        NGPPstim = 0;
+        RSPPstim = 0;
+        FSPPstim = 0;
+        deepRSPPstim = 0;
+        % IBPPstim = -3;
+        % RSPPstim = -3;
+        % NGPPstim = -4;
+        % FSPPstim = -5;
+        deepRSPPstim = -3;
+end
+
 
 %% ##3.0 Build populations and synapses
 % % % % % % % % % % ##3.1 Populations % % % % % % % % %
@@ -582,6 +586,8 @@ if plot_on
             PlotData(data,'plot_type','waveform');
             % PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
             % PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+            
+            save_as_pdf(gcf, 'kramer_IB_sim_2')
             
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');
