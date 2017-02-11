@@ -18,7 +18,7 @@ compile_flag = 0;
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 2;   % 1 - normal sim
+sim_mode = 3;   % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -365,6 +365,17 @@ switch sim_mode
             'deepRS','I_app',-6:-.1:-9;...
             };
         
+    case 3
+        
+        include_IB = 1;
+        include_NG = 1;
+        include_deepRS = 0;
+        indlued_deepFS = 0;
+        
+        tspan = [0 6000];
+        
+        % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
+        
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
@@ -415,7 +426,7 @@ switch sim_mode
 end
 
 %% % Periodic pulse stimulation parameters
-pulse_mode = 1;
+pulse_mode = 0;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -537,7 +548,7 @@ include_kramer_IB_synapses;
 %% ##4.0 Run simulation & post process
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 3),'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
@@ -587,7 +598,7 @@ if plot_on
             % PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
             % PlotData(data,'variable','iNMDA_s','plot_type','waveform');
             
-            save_as_pdf(gcf, 'kramer_IB_sim_2')
+            save_as_pdf(gcf, sprintf('kramer_IB_sim_%d', sim_mode))
             
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');
