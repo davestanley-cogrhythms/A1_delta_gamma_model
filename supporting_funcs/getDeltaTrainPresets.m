@@ -65,11 +65,7 @@ function s = add_pulse (s,pulse_period,shift,dt,pulse_num,new_pulse_pos_relative
 
         ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(pulse_num-1);    % Index of the aperiodic pulse in the time series.
         ap_ind_new = ap_ind_orig+round(new_pulse_pos_relative/dt);          % Index of where it should appear after the delay.
-        if ap_ind_new > length(s) || ap_ind_orig > length(s)
-            
-            display('Aperiodic spike placement would be outside of simulation time.')
-            
-        else
+        if ~(ap_ind_new > length(s) || ap_ind_orig > length(s))
             
             s(ap_ind_new) = 1;                  % Create pulse at the delayed location
 
