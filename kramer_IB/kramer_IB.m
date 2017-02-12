@@ -28,7 +28,7 @@ sim_mode = 3;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -120,7 +120,7 @@ fast_offset = 0;
 % Note2: Positive values are hyperpolarizing, negative values are
 % depolarizing.
 Jd1=5;    % IB cells
-Jd2=5;    %
+Jd2=0;    %
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
@@ -362,8 +362,7 @@ switch sim_mode
         
         tspan = [0 6000];
         vary = {
-            'deepRS', 'I_app', -6:-.1:-9;...
-            'deepFS->deepRS', 'g_SYN', .2:.2:1,...
+            'deepRS','I_app',-6:-.1:-9;...
             };
         
     case 3
@@ -371,11 +370,9 @@ switch sim_mode
         include_IB = 1;
         include_NG = 1;
         include_deepRS = 0;
-        include_deepFS = 0;
+        indlued_deepFS = 0;
         
         tspan = [0 6000];
-        
-        vary = {'IB', 'stim2', -6.3:.01:-6.2};
         
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
@@ -551,20 +548,7 @@ include_kramer_IB_synapses;
 %% ##4.0 Run simulation & post process
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
-
-if sim_mode == 2
-
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
-        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
-        'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
-
-else
-    
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
-        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',1);
-    
-end
-    
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 3),'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
