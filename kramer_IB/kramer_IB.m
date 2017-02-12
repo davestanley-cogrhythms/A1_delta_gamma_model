@@ -13,12 +13,12 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 0;
+compile_flag = 1;
 % random_seed = 'shuffle';
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 3;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -28,7 +28,7 @@ sim_mode = 3;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -37,13 +37,13 @@ no_synapses = 0;
 NMDA_block = 0;
 
 %% % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 0;
 include_FS = 0;
 include_LTS = 0;
-include_NG = 0;
-include_deepRS = 1;
-include_deepFS = 1;
+include_NG = 1;
+include_deepRS = 0;
+include_deepFS = 0;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -120,7 +120,7 @@ fast_offset = 0;
 % Note2: Positive values are hyperpolarizing, negative values are
 % depolarizing.
 Jd1=5;    % IB cells
-Jd2=0;    %
+Jd2=-4;    %
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
@@ -136,8 +136,8 @@ JdeepRS = -10;   % Ben's RS theta cells
 % Times at which injected currents turn on and off (in milliseconds). See
 % itonicPaired.txt. Setting these to 0 essentially removes the first
 % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
+IB_offset1=200;
+IB_onset2=200;
 RS_offset1=0;
 RS_onset2=0;
 
@@ -548,7 +548,7 @@ include_kramer_IB_synapses;
 %% ##4.0 Run simulation & post process
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 3),'verbose_flag',1);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
