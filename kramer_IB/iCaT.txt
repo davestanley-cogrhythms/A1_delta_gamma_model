@@ -19,4 +19,4 @@ s(0) = as(-65)/(as(-65)+bs(-65))+IC_noise.*rand(1,Npop)
 
 % Linkers
 @current += -ICa(V)
-ica => ICa(V)
+@ica += ICa(V)
