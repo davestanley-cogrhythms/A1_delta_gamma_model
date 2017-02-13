@@ -9,9 +9,9 @@ i=0;
 if include_IB
     i=i+1;
     spec.connections(i).direction = 'IB->IB';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDADestexhe1998Markov','IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_ibib,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_ibib,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'gNMDA',gNMDA_ibib,'ENMDA',EAMPA,'Rd ', Rd, 'Rr', Rr, ...    
         'g_GAP',ggja,...
         };
 end
@@ -20,9 +20,9 @@ end
 if include_IB && include_NG
     i=i+1;
     spec.connections(i).direction = 'IB->NG';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDADestexhe1998Markov'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_ibng,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_ibng,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'gNMDA',gNMDA_ibng,'ENMDA',EAMPA,'Rd ', Rd, 'Rr', Rr, ...    
         };
 end
 
@@ -30,9 +30,9 @@ end
 if include_IB && include_RS
     i=i+1;
     spec.connections(i).direction = 'IB->RS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDADestexhe1998Markov'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_ibrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_ibrs,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'gNMDA',gNMDA_ibrs,'ENMDA',EAMPA,'Rd ', Rd, 'Rr', Rr, ...    
         };
 end
 
@@ -40,9 +40,9 @@ end
 if include_IB && include_LTS
     i=i+1;
     spec.connections(i).direction = 'IB->LTS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDADestexhe1998Markov'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_ibLTS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_ibLTS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'gNMDA',gNMDA_ibLTS,'ENMDA',EAMPA,'Rd ', Rd, 'Rr', Rr, ...    
         };
 end
 
