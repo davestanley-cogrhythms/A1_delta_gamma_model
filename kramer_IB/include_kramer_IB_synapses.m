@@ -87,9 +87,8 @@ end
 if include_RS
     i=i+1;
     spec.connections(i).direction = 'RS->RS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsrs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_rsrs,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         'g_GAP',ggjaRS,...
         };
 end
@@ -98,9 +97,8 @@ end
 if include_RS && include_FS
     i=i+1;
     spec.connections(i).direction = 'RS->FS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_rsfs,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
@@ -108,9 +106,8 @@ end
 if include_RS && include_LTS
     i=i+1;
     spec.connections(i).direction = 'RS->LTS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsLTS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_rsLTS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
@@ -118,9 +115,8 @@ end
 if include_RS && include_NG
     i=i+1;
     spec.connections(i).direction = 'RS->NG';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsng,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_rsng,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
