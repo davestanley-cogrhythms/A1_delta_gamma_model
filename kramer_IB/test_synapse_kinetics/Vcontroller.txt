@@ -1,0 +1,62 @@
+% ileak: HH leak current
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters
+g_l=10;    % mS/cm^2
+
+% Stim 1
+stim = [1]
+onset = [10]
+offset = 500
+
+% Stim 2
+stim2 = 0;
+onset2 = [0]
+offset2 = inf
+
+% Pulse train properties
+PPstim = 1;
+PPfreq = 40; % in Hz
+PPwidth = 2; % in ms
+PPshift = 0; % in ms
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt=0.01;        % ms, time step duration
+PPonset = 30;    % ms, onset time
+PPoffset = 600;   % ms, offset time
+
+% Aperiodic pulse specification
+ap_pulse_num = 11;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 12.5;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+
+% Pulse train preset (codes for different presets of pulse train; see getDeltaTrainPresets.m for details)
+pulse_train_preset = 0
+
+kernel_type = 2;
+width2_rise = 0.25;
+
+% Facilitation parameters
+PPFacTau = 300;
+PPFacFactor = 1.0;
+
+% Build pulse train
+s = getDeltaTrainPresets(PPfreq,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
+s2 = convolveDeltaTrainwithKernel(s,dt,PPwidth,Npop,kernel_type,width2_rise);
+
+
+% Calculate facilitation function
+facilitation_mask = (exp(-(((T-PPonset)>0).*(T-PPonset))/PPFacTau))*(1-PPFacFactor) + PPFacFactor;
+
+% Apply facilitation mask to data
+s3 = s2 .* repmat(facilitation_mask(:),1,Npop);
+
+
+% Functions
+E_l(t) = stim*(t>onset & t<offset) + stim2*(t>onset2 & t<offset2) + PPstim*s3(k,:)
+Ileak(IN,t) = g_l.*(IN-E_l(t))
+
+% Interface
+@current => -Ileak(IN,t)
+
+
+ 
