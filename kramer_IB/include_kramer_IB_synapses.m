@@ -37,9 +37,9 @@ if include_IB && include_RS
 end
 
 % % IB->LTS
-if include_IB && include_RS
+if include_IB && include_LTS
     i=i+1;
-    spec.connections(i).direction = 'IB->RS';
+    spec.connections(i).direction = 'IB->LTS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_ibLTS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         'gNMDA',gNMDA_ibLTS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
