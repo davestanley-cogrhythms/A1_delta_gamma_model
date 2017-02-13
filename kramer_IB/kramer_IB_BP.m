@@ -257,7 +257,7 @@ if include_RS
     i=i+1;
     spec.populations(i).name = 'RS';
     spec.populations(i).size = Nrs;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',10,'g_l',gl,...
@@ -279,7 +279,7 @@ if include_FS
     i=i+1;
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulses','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',20,'g_l',0.1,...
