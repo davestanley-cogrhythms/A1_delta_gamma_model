@@ -8,4 +8,4 @@ E_l2=-70;
 Ileak2(IN) = g_l2.*(IN-E_l2)
 
 % Interface
-current => -Ileak2(IN)
+@current += -Ileak2(IN)

@@ -17,5 +17,5 @@ m'=(minf(X)-m)/tauNaP
 m(0)=m_IC+IC_noise*rand(1,Npop)
 
 % linkers
-current => -INaP(V,m)
+@current += -INaP(V,m)
 

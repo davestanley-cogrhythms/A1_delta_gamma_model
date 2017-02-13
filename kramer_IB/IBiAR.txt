@@ -18,5 +18,5 @@ IAR(V,m) = gAR.*m.*(V-E_AR)
 mAR' = aM(V).*(1-mAR)-bM(V).*mAR;
 mAR(0) = IC+IC_noise.*rand(Npop,1)
  
-current => -IAR(V,mAR)
+@current += -IAR(V,mAR)
  

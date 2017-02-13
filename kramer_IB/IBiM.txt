@@ -12,5 +12,5 @@ IM(V,m) = gM.*m.*(V-E_M)
 mM' = (aM(V).*(1-mM)-bM(V).*mM);
 mM(0) = IC+IC_noise.*rand(Npop,1)
  
-current => -IM(V,mM)
+@current += -IM(V,mM)
  

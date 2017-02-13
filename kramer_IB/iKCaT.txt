@@ -18,4 +18,4 @@ q' = (infKCa(cai)-q)./tauKCa(cai)
 q(0) = infKCa(0)+IC_noise.*rand(1,Npop)
 
 % Linkers
-current => -IKCa(V,q)
+@current += -IKCa(V,q)

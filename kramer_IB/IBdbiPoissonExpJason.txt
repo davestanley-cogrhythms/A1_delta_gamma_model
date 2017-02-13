@@ -20,5 +20,5 @@ T2=(0:dt:Tend)';
 
 s=getPoissonGating(baseline,lambda,ac,freq,phase,onsetRAN,T,tauRAN,T2,Npop);
 Iext(X)=gRAN*s(k,:).*(X-ERAN)
-current => -Iext(X)
+@current += -Iext(X)
 

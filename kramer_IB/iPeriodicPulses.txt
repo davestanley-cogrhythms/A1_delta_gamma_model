@@ -26,5 +26,5 @@ s2=getAperiodicPulseFast(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,ap_puls
 monitor functions % always record the current
 
 Iext(X)=PPstim*s2(k,:)
-current => -Iext(X)
+@current += -Iext(X)
 

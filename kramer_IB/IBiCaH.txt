@@ -13,5 +13,5 @@ ICaH(V,m) = gCaH.*mCaH.^2.*(V-E_CaH)
 mCaH' = (aM(V).*(1-mCaH)-bM(V).*mCaH)/tauCaH;
 mCaH(0) = IC+IC_noise.*rand(Npop,1)
  
-current => -ICaH(V,mCaH)
+@current += -ICaH(V,mCaH)
  

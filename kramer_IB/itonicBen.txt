@@ -11,5 +11,5 @@ IBen(t)=I_app*((t/ton)*(t<=ton)+(ton<t&t<toff)+rand(1,Npop)*noise)
 % *((1-pulse/2)+pulse*(mod(t,750)<250&t>2*ton));',...
 
 % Linkers
-current => -IBen(t)
+@current += -IBen(t)
 

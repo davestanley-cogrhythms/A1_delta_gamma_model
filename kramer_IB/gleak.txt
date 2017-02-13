@@ -11,4 +11,4 @@ Il(X) = (gl/gdenoml).*(X-El)
 % ODEs & ICs
 
 % Linkers
-current => -Il(X)
+@current += -Il(X)

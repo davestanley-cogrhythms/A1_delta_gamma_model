@@ -41,5 +41,5 @@ s3 = s2 .* repmat(facilitation_mask(:),1,Npop);
 monitor functions % always record the current
 
 Iext(X)=PPstim*s3(k,:)
-current => -Iext(X)
+@current += -Iext(X)
 

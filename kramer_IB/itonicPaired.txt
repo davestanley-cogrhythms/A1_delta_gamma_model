@@ -12,5 +12,5 @@ offset2 = inf
 
 ItonicPaired(t) = stim*(t>onset & t<offset) + stim2*(t>onset2 & t<offset2)
  
-current => -ItonicPaired(t)
+@current += -ItonicPaired(t)
  

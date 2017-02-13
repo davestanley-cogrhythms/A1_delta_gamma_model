@@ -18,5 +18,5 @@ mM(0) = IC+IC_noise.*rand(Npop,1)
 
 % monitor functions % always record the synaptic current
  
-current => -IM(V,mM)
+@current += -IM(V,mM)
 
