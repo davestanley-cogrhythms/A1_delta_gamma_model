@@ -37,7 +37,7 @@ include_supFS = 0;
 include_deepRS = 0;
 
 % % Simulation controls
-tspan=[0 100]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -95,10 +95,10 @@ JdeepRS = -0.3;   % Ben's RS theta cells
 % Times at which injected currnets turn on and off (in milliseconds). See
 % itonicPaired.txt. Setting these to 0 essentailly removes the first
 % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
-RS_offset1=0;
-RS_onset2=0;
+IB_offset1=300;
+IB_onset2=300;
+RS_offset1=300;
+RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.015;      % synaptic noise conductance IB cells 
@@ -151,7 +151,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.

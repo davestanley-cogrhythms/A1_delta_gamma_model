@@ -66,7 +66,6 @@ o' = Ro*c2 - Rc*o
 c2' = Rb*NT(k).*c1 - Ru*c2 + Rd*d - Rr*c2 + Rc*o - Ro*c2
 c1' = Rb*NT(k).*(1-c1-c2-d-o) - Ru*c1 + Ru*c2 - Rb*NT(k).*c1
 d' = Rr*c2 - Rd*d
-INMDA(o) = gNMDA_pseudo .* o
 
 o(0) = IC+IC_noise*rand(1,Npop)
 c2(0) = IC+IC_noise*rand(1,Npop)
@@ -76,7 +75,7 @@ d(0) = IC+IC_noise*rand(1,Npop)
 monitor functions % always record the synaptic current
 
 % linkers
-@current => -INMDA(o)
+@current => -INMDA(X,o)
 
 
 
