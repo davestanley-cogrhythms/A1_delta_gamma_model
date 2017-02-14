@@ -123,7 +123,7 @@ supFS_Vnoise = 3;
 % % Periodic pulse stimulation parameters
 pulse_mode = 1;
 gNMDA_pseudo = 0;
-gNMDA_pseudo = 10;
+% gNMDA_pseudo = 10;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
