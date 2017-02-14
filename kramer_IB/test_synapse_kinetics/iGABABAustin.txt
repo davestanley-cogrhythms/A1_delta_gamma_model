@@ -64,4 +64,4 @@ g(0) = IC+IC_noise.*rand(1,Npop);
 monitor gfour
 
 % Interface
-@current => -IGABAB(g)
+@current += -IGABAB(g)

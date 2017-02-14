@@ -10,4 +10,4 @@ E_l_randomized = E_l + unifrnd(-E_l_std,E_l_std,1,Npop); % mV
 Ileak(IN) = g_l.*(IN-E_l_randomized)
 
 % Interface
-current => -Ileak(IN)
+@current += -Ileak(IN)

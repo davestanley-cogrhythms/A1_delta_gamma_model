@@ -75,7 +75,7 @@ d(0) = IC+IC_noise*rand(1,Npop)
 monitor functions % always record the synaptic current
 
 % linkers
-@current => -INMDA(X,o)
+@current += -INMDA(X,o)
 
 
 
