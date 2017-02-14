@@ -38,10 +38,10 @@ NMDA_block = 0;
 
 %% % Cells to include in model
 include_IB = 1;
-include_RS = 1;
-include_FS = 1;
+include_RS = 0;
+include_FS = 0;
 include_LTS = 0;
-include_NG = 1;
+include_NG = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -442,9 +442,9 @@ switch sim_mode
 end
 
 %% % Periodic pulse stimulation parameters
-pulse_mode = 0;
+pulse_mode = 1;
 gNMDA_pseudo = 0;               
-gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
+% gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -468,6 +468,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         deepRSPPstim = 0;
+        gNMDA_pseudo = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -561,7 +562,7 @@ end
 include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
-include_kramer_IB_synapses;
+% include_kramer_IB_synapses;
 
 %% ##4.0 Run simulation & post process
 

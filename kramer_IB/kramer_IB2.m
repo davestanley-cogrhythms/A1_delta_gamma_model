@@ -147,6 +147,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
+        gNMDA_pseudo = 0;
     case 1                  % Gamma stimulation (with aperoidicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
