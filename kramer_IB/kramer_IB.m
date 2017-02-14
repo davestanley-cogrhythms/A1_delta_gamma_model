@@ -80,7 +80,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
-Jng2=1;   %
+Jng2=-2;   %
 JRS1 = 5; % RS cells
 JRS2 = 1; %
 Jfs=1;    % FS cells
@@ -534,7 +534,7 @@ data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
-if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
+% if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
 if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
 
