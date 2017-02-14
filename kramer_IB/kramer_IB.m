@@ -32,7 +32,7 @@ tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
-no_noise = 1;
+no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0;
 
