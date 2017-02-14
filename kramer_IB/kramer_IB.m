@@ -28,7 +28,7 @@ sim_mode = 3;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -84,7 +84,7 @@ IC_V = -65;
 % them for something else.
 
 %% % Number of cells per population
-N=1;   % Number of excitatory cells
+N=5;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -136,10 +136,10 @@ JdeepRS = -10;   % Ben's RS theta cells
 % Times at which injected currents turn on and off (in milliseconds). See
 % itonicPaired.txt. Setting these to 0 essentially removes the first
 % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
-RS_offset1=0;
-RS_onset2=0;
+IB_offset1=300;
+IB_onset2=300;
+RS_offset1=300;
+RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.015;      % synaptic noise conductance IB cells
@@ -354,6 +354,17 @@ EAMPA=0;
 EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
 
+
+% NMDA kinetics
+% Shift Rd and Rr to make NMDA desensitize more...
+increase_NMDA_desens = 1;
+if increase_NMDA_desens; Rd_delta = 2*8.4*10^-3;
+else; Rd_delta = 0;
+end
+Rd = 8.4*10^-3 - Rd_delta;
+Rr = 6.8*10^-3 + Rd_delta;
+
+
 %% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % %
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
@@ -432,6 +443,8 @@ end
 
 %% % Periodic pulse stimulation parameters
 pulse_mode = 0;
+gNMDA_pseudo = 0;               
+gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -459,12 +472,12 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
