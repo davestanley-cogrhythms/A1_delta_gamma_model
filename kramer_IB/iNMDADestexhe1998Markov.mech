@@ -19,7 +19,7 @@ IC = [0]
 IC_noise = [0]
 
 % fixed variables
-%netcon = ones(N_pre,N_post) % default connectivity matrix (all-to-all)
+netcon = ones(N_pre,N_post) % default connectivity matrix (all-to-all)
 
 % functions
 BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods in Neuronal Modeling, page 9]
@@ -31,7 +31,6 @@ o' = Ro*c2 - Rc*o
 c2' = Rb*NT(X_pre).*c1 - Ru*c2 + Rd*d - Rr*c2 + Rc*o - Ro*c2
 c1' = Rb*NT(X_pre).*(1-c1-c2-d-o) - Ru*c1 + Ru*c2 - Rb*NT(X_pre).*c1
 d' = Rr*c2 - Rd*d
-INMDA(o) = gNMDA .* o
 
 o(0) = IC+IC_noise*rand(1,Npop)
 c2(0) = IC+IC_noise*rand(1,Npop)
@@ -41,5 +40,5 @@ d(0) = IC+IC_noise*rand(1,Npop)
 monitor functions % always record the synaptic current
 
 % linkers
-@current => -INMDA(Vpost,o)
+current => -INMDA(Vpost,o)
 
