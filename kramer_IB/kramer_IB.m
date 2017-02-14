@@ -41,7 +41,7 @@ include_IB = 1;
 include_RS = 0;
 include_FS = 0;
 include_LTS = 0;
-include_NG = 0;
+include_NG = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
