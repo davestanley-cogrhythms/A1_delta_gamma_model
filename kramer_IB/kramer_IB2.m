@@ -28,10 +28,10 @@ sim_mode = 1;   % 1 - normal sim
                 
 % % Cells to include in model
 include_IB = 1;
-include_RS = 1;
-include_FS = 1;
+include_RS = 0;
+include_FS = 0;
 include_LTS = 0;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -517,7 +517,7 @@ end
 include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
-include_kramer_IB_synapses;
+% include_kramer_IB_synapses;
 
 
 %% ##4.0 Run simulation & post process
