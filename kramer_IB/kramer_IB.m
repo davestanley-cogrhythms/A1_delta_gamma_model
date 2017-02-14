@@ -517,7 +517,7 @@ end
 include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
-include_kramer_IB_synapses;
+% include_kramer_IB_synapses;
 
 
 %% ##4.0 Run simulation & post process
