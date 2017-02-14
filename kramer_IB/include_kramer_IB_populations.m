@@ -10,7 +10,7 @@ if include_IB
     i=i+1;
     spec.populations(i).name = 'IB';
     spec.populations(i).size = N;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','iPeriodicPulsesiNMDADestexhe1998Markov.mech','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
@@ -32,7 +32,7 @@ if include_RS
     i=i+1;
     spec.populations(i).name = 'RS';
     spec.populations(i).size = Nrs;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',RS_Eleak_std,'g_l',gl,...
@@ -52,7 +52,7 @@ if include_NG
     i=i+1;
     spec.populations(i).name = 'NG';
     spec.populations(i).size = Nng;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
@@ -72,7 +72,7 @@ if include_FS
     i=i+1;
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',FS_Eleak_std,'g_l',0.1,...
@@ -90,7 +90,7 @@ if include_LTS
     i=i+1;
     spec.populations(i).name = 'LTS';
     spec.populations(i).size = Nlts;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBiMMich','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',LTS_Eleak_std,'g_l',0.1,...
@@ -107,7 +107,7 @@ if include_supRS
     i=i+1;
     spec.populations(i).name = 'supRS';
     spec.populations(i).size = NsupRS;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'g_l',gl,'E_l',-67,'E_l_std',5,...
@@ -126,7 +126,7 @@ if include_supFS
     i=i+1;
     spec.populations(i).name = 'supFS';
     spec.populations(i).size = NsupFS;
-    spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
@@ -150,7 +150,7 @@ if include_deepRS
     slow_offset_correction = 0;
     fast_offset = 0;
     
-    warning('Dave uses a different linker than Ben (D=(current); Ben=@current). To share mechanisms, should unify these.');
+    warning('Dave uses a different linker than Ben (D=@current; Ben=@current). To share mechanisms, should unify these.');
     
     i=i+1;
     spec.populations(i).name = 'deepRS';

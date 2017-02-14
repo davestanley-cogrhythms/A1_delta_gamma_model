@@ -18,7 +18,7 @@ compile_flag = 0;
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 3;   % 1 - normal sim
+sim_mode = 1;   % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -37,13 +37,13 @@ no_synapses = 0;
 NMDA_block = 0;
 
 %% % Cells to include in model
-include_IB = 0;
-include_RS = 0;
-include_FS = 0;
+include_IB = 1;
+include_RS = 1;
+include_FS = 1;
 include_LTS = 0;
-include_NG = 0;
-include_deepRS = 1;
-include_deepFS = 1;
+include_NG = 1;
+include_deepRS = 0;
+include_deepFS = 0;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -120,7 +120,7 @@ fast_offset = 0;
 % Note2: Positive values are hyperpolarizing, negative values are
 % depolarizing.
 Jd1=5;    % IB cells
-Jd2=5;    %
+Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
@@ -573,10 +573,15 @@ if sim_mode == 2
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
         'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
 
+elseif sim_mode == 1
+    
+    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
+        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',0,'compile_flag',compile_flag);
+    
 else
     
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
-        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',1);
+        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',1,'compile_flag',compile_flag);
     
 end
     

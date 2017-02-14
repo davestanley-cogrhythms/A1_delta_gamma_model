@@ -24,7 +24,7 @@ IC_noise = [0]
 % functions
 BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods in Neuronal Modeling, page 9]
 NT(X) = Tmax./(1+exp(-(X-Vpp)/Kp)) 		% sigmoidal neurotransmitter concentration [T] increasing rapidly to Tmax with presynaptic voltage above 0mV (i.e., Vpre spike)
-INMDA(X,o) = gNMDA.*BMg(X).*(o*netcon).*(X-ENMDA) % post-synaptic NMDA current
+INMDA(X) = gNMDA.*BMg(X).*(o*netcon).*(X-ENMDA) % post-synaptic NMDA current
 
 % ODEs and ICs
 o' = Ro*c2 - Rc*o
@@ -41,5 +41,5 @@ d(0) = IC+IC_noise*rand(1,Npop)
 monitor functions % always record the synaptic current
 
 % linkers
-@current += -INMDA(Vpost,o)
+@current += -INMDA(X_post)
 
