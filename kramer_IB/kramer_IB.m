@@ -38,9 +38,9 @@ NMDA_block = 0;
 
 %% % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS = 0;
+include_RS = 1;
+include_FS = 1;
+include_LTS = 1;
 include_NG = 1;
 include_deepRS = 0;
 include_deepFS = 0;
@@ -291,11 +291,11 @@ if ~no_synapses
     gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
-    gAMPA_ibLTS=0.1/N;
-    if ~NMDA_block; gNMDA_ibLTS=5/N; end
+    gAMPA_ibLTS=0.02/N;
+%     if ~NMDA_block; gNMDA_ibLTS=5/N; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.013/N;
+    gAMPA_ibrs = 0.3/N;
     gNMDA_ibrs = 0.02/N;
     gGABAa_ngrs = 0.05/Nng;
     gGABAb_ngrs = 0.08/Nng;
@@ -336,10 +336,10 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=1.3/Nfs;                        % FS -> IB
+%     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
     gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-    gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
+%     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
 
