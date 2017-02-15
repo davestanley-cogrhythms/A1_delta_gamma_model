@@ -68,6 +68,11 @@ if no_noise
     FSgRAN=0;
 end
 
+
+% Offsets for deep FS cells
+NaF_offset = 10;
+KDR_offset = 20;
+
 IC_V = -65;
 
 
