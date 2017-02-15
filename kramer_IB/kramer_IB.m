@@ -127,7 +127,7 @@ fast_offset = 0;
 Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
-Jng2=-2;   %
+Jng2=1;   %
 JRS1 = 5; % RS cells
 JRS2 = 1; %
 Jfs=1;    % FS cells
@@ -567,7 +567,7 @@ end
 include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
-% include_kramer_IB_synapses;
+include_kramer_IB_synapses;
 
 %% ##4.0 Run simulation & post process
 
