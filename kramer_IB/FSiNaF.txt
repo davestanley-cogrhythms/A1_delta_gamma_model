@@ -9,7 +9,7 @@ NaF_c1 = 1.125
 E_NaF = [50]
 IC = [0]
 IC_noise = [0.01]
-NaF_offset = 10
+NaF_offset = 0
  
 hinf(X) = 1./(1+exp((X+NaF_V1-NaF_offset)/NaF_d1))
 htau(X) = NaF_c0 + NaF_c1./(1+exp((X+NaF_V2-NaF_offset)/NaF_d2))
