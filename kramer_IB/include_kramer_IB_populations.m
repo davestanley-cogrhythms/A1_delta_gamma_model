@@ -137,7 +137,23 @@ if include_supFS
       };
 end
 
-%% BEn's deepRS cell
+%% Deep cells
+
+if include_deepFS
+    i=i+1;
+    spec.populations(i).name = 'deepFS';
+    spec.populations(i).size = NdeepFS;
+    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'stim',deepJfs,'onset',0,'offset',Inf,...
+      'V_noise',deepFS_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      };
+end
+
 if include_deepRS
     
     Cm_Ben = 0.25;
