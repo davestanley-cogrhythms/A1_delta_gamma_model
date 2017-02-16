@@ -102,7 +102,7 @@ if include_LTS
       };
 end
 
-%% Supraficial cells
+%% Superficial cells
 if include_supRS
     i=i+1;
     spec.populations(i).name = 'supRS';

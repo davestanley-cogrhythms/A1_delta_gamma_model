@@ -359,7 +359,7 @@ TmaxGABAB=0.5;      % See iGABABAustin.txt
 % Shift Rd and Rr to make NMDA desensitize more...
 increase_NMDA_desens = 1;
 if increase_NMDA_desens; Rd_delta = 2*8.4*10^-3;
-else; Rd_delta = 0;
+else Rd_delta = 0;
 end
 Rd = 8.4*10^-3 - Rd_delta;
 Rr = 6.8*10^-3 + Rd_delta;
@@ -555,6 +555,8 @@ switch pulse_mode
         deepRSPPstim = -3;
 end
 
+
+if function_mode, return, end
 
 %% ##3.0 Build populations and synapses
 % % % % % % % % % % ##3.1 Populations % % % % % % % % %
