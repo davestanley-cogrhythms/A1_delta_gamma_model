@@ -6,6 +6,8 @@ mkdir(Today)
 
 function_mode = 1;
 
+unpack_sim_struct
+
 kramer_IB
 
 unpack_sim_struct
