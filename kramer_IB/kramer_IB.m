@@ -2,8 +2,13 @@
 %%
 tic
 
-clear
+if ~function_mode
 
+    clear
+
+    function_mode = 0;
+    
+end
 
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
