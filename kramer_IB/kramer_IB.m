@@ -2,7 +2,7 @@
 %%
 tic
 
-% clear
+clear
 
 
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
@@ -36,7 +36,7 @@ tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
-no_noise = 1;
+no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0;
 
@@ -44,8 +44,10 @@ NMDA_block = 0;
 include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_LTS = 0;
+include_LTS = 1;
 include_NG = 1;
+include_supRS = 0;
+include_supFS = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -71,6 +73,11 @@ if no_noise
     gRAN=0;
     FSgRAN=0;
 end
+
+
+% Offsets for deep FS cells
+NaF_offset = 10;
+KDR_offset = 20;
 
 IC_V = -65;
 
@@ -290,11 +297,11 @@ if ~no_synapses
     gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
-    gAMPA_ibLTS=0.1/N;
-    if ~NMDA_block; gNMDA_ibLTS=5/N; end
+    gAMPA_ibLTS=0.02/N;
+%     if ~NMDA_block; gNMDA_ibLTS=5/N; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.013/N;
+    gAMPA_ibrs = 0.3/N;
     gNMDA_ibrs = 0.02/N;
     gGABAa_ngrs = 0.05/Nng;
     gGABAb_ngrs = 0.08/Nng;
@@ -335,10 +342,10 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=1.3/Nfs;                        % FS -> IB
+%     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
     gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-    gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
+%     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
 
@@ -446,7 +453,7 @@ switch sim_mode
 end
 
 %% % Periodic pulse stimulation parameters
-pulse_mode = 0;
+pulse_mode = 1;
 gNMDA_pseudo = 0;               
 gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
@@ -472,6 +479,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         deepRSPPstim = 0;
+        gNMDA_pseudo = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -600,7 +608,7 @@ end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
-if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
+% if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
 if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
 
@@ -624,7 +632,7 @@ if plot_on
             
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
-            elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+%             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
             elseif include_FS;
                 %PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});

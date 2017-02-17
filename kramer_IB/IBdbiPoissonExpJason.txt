@@ -13,10 +13,9 @@ ac = 0;
 freq = 0;
 phase = 0;
 onsetRAN = 0;
-Tend=T(end); % 4000; 	% ms, duration
+T=4000; 	% ms, duration
 tauRAN=4; 	% ms, exponential decay time constant
-dt = .01;
-T2=(0:dt:Tend)';
+T2=(0:0.01:T)';
 
 s=getPoissonGating(baseline,lambda,ac,freq,phase,onsetRAN,T,tauRAN,T2,Npop);
 Iext(X)=gRAN*s(k,:).*(X-ERAN)

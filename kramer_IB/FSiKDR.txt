@@ -6,7 +6,7 @@ KDR_d2 = [10]
 E_KDR = [-95]
 IC = [0]
 IC_noise = [0.01]
-KDR_offset = 20
+KDR_offset = 0
  
 minf(X) = 1./(1+exp((-X-KDR_V1+KDR_offset)/KDR_d1))
 mtau(X) = .25+4.35*exp(-abs(X+KDR_V2-KDR_offset)/KDR_d2)

@@ -28,10 +28,10 @@ sim_mode = 1;   % 1 - normal sim
                 
 % % Cells to include in model
 include_IB = 1;
-include_RS = 1;
-include_FS = 1;
+include_RS = 0;
+include_FS = 0;
 include_LTS = 0;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -147,6 +147,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         supRSPPstim = 0;
+        gNMDA_pseudo = 0;
     case 1                  % Gamma stimulation (with aperoidicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
