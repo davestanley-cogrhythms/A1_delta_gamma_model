@@ -137,33 +137,40 @@ if include_supFS
       };
 end
 
-%% BEn's deepRS cell
+%% Deep cells
+
+if include_deepFS
+    i=i+1;
+    spec.populations(i).name = 'deepFS';
+    spec.populations(i).size = NdeepFS;
+    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'stim',deepJfs,'onset',0,'offset',Inf,...
+      'V_noise',deepFS_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      };
+end
+
 if include_deepRS
     
-    Cm_Ben = 0.25;
-    gKs = 0.084;
-    gNaP_denom = 3.36;
-    I_const = 0;
-    
-    tau_fast = 5;
-    slow_offset = 0;
-    slow_offset_correction = 0;
-    fast_offset = 0;
-    
-    warning('Dave uses a different linker than Ben (D=@current; Ben=@current). To share mechanisms, should unify these.');
+    warning('Dave uses a different linker than Ben (D=(current); Ben=@current). To share mechanisms, should unify these.');
     
     i=i+1;
     spec.populations(i).name = 'deepRS';
     spec.populations(i).size = NdeepRS;
-    spec.populations(i).equations = {['V''=(I_const+@current)/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).equations = {['V''=(I_const+current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
-    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','iPeriodicSpikes','itonicBen'};
+    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak',...
+        'CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','itonicBen'}; % 'iPeriodicSpikes',
     spec.populations(i).parameters = {...
-      'Cm',Cm_Ben,...
-      'gKs',gKs,'gNaP_denom',gNaP_denom,'gNaP',gKs/gNaP_denom, 'I_const',I_const,...    %  halfKs=-60; halfNaP=-60; gKs=0.084; gNaP=0.025; gl=0.025; gCa=0.02; %%% 
-      'tau_fast',tau_fast,'tau_h',tau_fast,'tau_m',tau_fast,... 
-      'slow_offset',slow_offset, 'slow_offset_correction',slow_offset_correction,'Ks_offset',slow_offset-slow_offset_correction,'NaP_offset',slow_offset,...
-      'fast_offset',0, 'Koffset',fast_offset,'Noffset',fast_offset...                   % 'fast_denom=1; gKDR=5/fast_denom; gNa=12.5/fast_denom;',...
-      'ton',50,'toff',tspan(end),'I_app',JdeepRS,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
+      'Cm',Cm_Ben,'PPstim',deepRSPPstim,'gSpike',deepRSgSpike,...
+      'gKs',gKs,'gNaP',gKs/gNaP_denom,'gKCa',gKCa,'bKCa',bKCa,'gCa',gCa,'CAF',CAF,...
+      'gl',gl_dRS,'gNa',gNa_dRS,'gKDR',gKDR_dRS,...
+      'I_const',I_const,'tau_h',tau_fast,'tau_m',tau_fast,... 
+      'ton',500,'toff',tspan(end),'I_app',JdeepRS,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
+      'PPonset',PPonset,...
       };
 end
