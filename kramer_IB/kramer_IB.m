@@ -37,7 +37,7 @@ sim_mode = 1;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 500]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
