@@ -14,6 +14,10 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 0;
+parallel_flag = 1;
+cluster_flag = 0;
+save_data_flag = 1;
+verbose_flag = 1;
 % random_seed = 'shuffle';
 random_seed = 2;
 

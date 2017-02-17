@@ -1,7 +1,7 @@
 fields = fieldnames(sim_struct);
 
-for i = 1:length(fields)
+for f = 1:length(fields)
     
-    eval(sprintf('%s = %s;'), fields{i}, sim_struct.(fields{i}))
+    eval(sprintf('%s = sim_struct.%s;', fields{f}, fields{f}))
     
 end
