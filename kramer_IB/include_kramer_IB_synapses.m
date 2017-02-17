@@ -201,121 +201,109 @@ if include_LTS && include_FS
         };
 end
 
-
-
-%% Deep connections
-% % % % % % % % % % % %  Deep connections (RS-FS) % % % % % % % % % % % % % 
-% % % % %  deepRS Cells  % % % % %
-% % deepRS->deepRS recurrent synaptic and gap connections
-if include_deepRS && NdeepRS > 1
+%% Supraficial connections
+% % % % % % % % % % % %  Supraficial connections (RS-FS) % % % % % % % % % % % % % 
+% % % % %  supRS Cells  % % % % %
+% % supRS->supRS recurrent synaptic and gap connections
+if include_supRS
     i=i+1;
-    spec.connections(i).direction = 'deepRS->deepRS';
+    spec.connections(i).direction = 'supRS->supRS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSdeepRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_deepRSdeepRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-        'g_GAP',ggjadeepRS,...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_supRSsupRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+        'g_GAP',ggjasupRS,...
         };
 end
 
-% % deepRS->deepFS synaptic connection
-if include_deepRS && include_deepFS
+% % supRS->supFS synaptic connection
+if include_supRS && include_supFS
     i=i+1;
-    spec.connections(i).direction = 'deepRS->deepFS';
+    spec.connections(i).direction = 'supRS->supFS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSdeepFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSsupFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
 
-% % % % %  deepFS Cells  % % % % %
-% % deepFS->deepFS Synaptic connections
-if include_deepFS && NdeepFS > 1
+% % % % %  supFS Cells  % % % % %
+% % supFS->supFS Synaptic connections
+if include_supFS
     i=i+1;
-    spec.connections(i).direction = 'deepFS->deepFS';                  
+    spec.connections(i).direction = 'supFS->supFS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gGABA_deepFSdeepFS,'E_SYN',EGABA,'tauDx',tauGABAad,...
-        'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-        'g_GAP',ggjdeepFS,...
+    spec.connections(i).parameters = {'g_SYN',gGABA_supFSsupFS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'g_GAP',ggjsupFS,...
         };
 end
 
-% % deepFS->deepRS Synaptic connections
-if include_deepFS && include_deepRS
+% % supFS->supRS Synaptic connections
+if include_supFS && include_supRS
     i=i+1;
-    spec.connections(i).direction = 'deepFS->deepRS';                  
+    spec.connections(i).direction = 'supFS->supRS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_deepFSdeepRS,'E_SYN',EGABA,'tauDx',tauGABAad,...
-        'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_supFSsupRS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 
 
-% % NG->deepRS Synaptic connections           % Exactly the same as Deep NG->RS connection
-if include_NG && include_deepRS
+% % NG->supRS Synaptic connections           % Exactly the same as Deep NG->RS connection
+if include_NG && include_supRS
     i=i+1;
-    spec.connections(i).direction = 'NG->deepRS';                  
+    spec.connections(i).direction = 'NG->supRS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_NGdeepRS,'E_SYN',EGABA,'tauDx',tauGABAad,...
-        'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-        'gGABAB',gGABAb_NGdeepRS,'EGABAB',EGABA,'gGABAB_hetero',gsyn_hetero,... % 'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,
+    spec.connections(i).parameters = {'g_SYN',gGABAa_NGsupRS,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAb_NGsupRS,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
         'TmaxGABAB',TmaxGABAB ...
         };
 end
 
-% % % % % % % % % % % %  Delta -> Theta connections % % % % % % % % % % % % % 
-% % IB->deepRS
-if include_IB && include_deepRS
+% % % % % % % % % % % %  Deep->Supraficial connections % % % % % % % % % % % % % 
+% % IB->supRS
+if include_IB && include_supRS
     i=i+1;
-    spec.connections(i).direction = 'IB->deepRS';
+    spec.connections(i).direction = 'IB->supRS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_IBdeepRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_IBdeepRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_IBsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_IBsupRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
-% % IB->deepFS
-if include_IB && include_deepFS
+% % IB->supFS
+if include_IB && include_supFS
     i=i+1;
-    spec.connections(i).direction = 'IB->deepFS';
+    spec.connections(i).direction = 'IB->supFS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_IBdeepFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_IBdeepFS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_IBsupFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_IBsupFS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
         };
 end
 
-% % RS->deepRS
-if include_RS && include_deepRS
+% % RS->supRS
+if include_RS && include_supRS
     i=i+1;
-    spec.connections(i).direction = 'RS->deepRS';
+    spec.connections(i).direction = 'RS->supRS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_RSdeepRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_RSsupRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
 
 
 
 
-% % % % % % % % % % % %  Theta -> Delta/Gamma connections % % % % % % % % % % % % % 
-% % deepRS->RS
-if include_RS && include_deepRS
+% % % % % % % % % % % %  Supraficial->Deep connections % % % % % % % % % % % % % 
+% % supRS->RS
+if include_RS && include_supRS
     i=i+1;
-    spec.connections(i).direction = 'deepRS->RS';
+    spec.connections(i).direction = 'supRS->RS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
 
-% % deepRS->IB
-if include_RS && include_deepRS
+% % supRS->IB
+if include_RS && include_supRS
     i=i+1;
-    spec.connections(i).direction = 'deepRS->IB';
+    spec.connections(i).direction = 'supRS->IB';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSIB,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+    spec.connections(i).parameters = {'g_SYN',gAMPA_supRSIB,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
