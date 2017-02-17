@@ -555,7 +555,6 @@ switch pulse_mode
         deepRSPPstim = -3;
 end
 
-
 if function_mode, return, end
 
 %% ##3.0 Build populations and synapses
