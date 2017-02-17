@@ -315,6 +315,8 @@ if include_RS && include_deepRS
         };
 end
 
+sim_spec = spec;
+
 % %% Supraficial connections
 % % % % % % % % % % % % %  Supraficial connections (RS-FS) % % % % % % % % % % % % % 
 % % % % % %  supRS Cells  % % % % %

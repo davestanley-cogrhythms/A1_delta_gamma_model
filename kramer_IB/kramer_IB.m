@@ -21,13 +21,13 @@ visible_flag = 'on';
 compile_flag = 0;
 parallel_flag = 1;
 cluster_flag = 0;
-save_data_flag = 1;
+save_data_flag = 0;
 verbose_flag = 1;
 % random_seed = 'shuffle';
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 1;   % 1 - normal sim
+sim_mode = 2;   % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -389,6 +389,9 @@ switch sim_mode
         
     case 2
         
+        [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
+        [include_deepRS, include_deepFS] = deal(1);
+        
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -6:-.1:-9;...
@@ -590,6 +593,8 @@ if sim_mode == 2
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
         'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
+    
+    return
 
 elseif sim_mode == 1
     
@@ -602,7 +607,7 @@ else
         'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',1,'compile_flag',compile_flag);
     
 end
-    
+
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
