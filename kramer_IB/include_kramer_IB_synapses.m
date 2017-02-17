@@ -312,9 +312,6 @@ if include_RS && include_deepRS
         };
 end
 
-
-
-
 % % % % % % % % % % % %  Theta -> Delta/Gamma connections % % % % % % % % % % % % % 
 % % deepRS->RS
 if include_RS && include_deepRS
