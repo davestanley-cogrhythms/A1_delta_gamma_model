@@ -2,17 +2,17 @@
 % % This script adds all the synaptic connections between cells % %
 
 % % % % % % % % % % % % %  Populations  % % % % % % % % % % % % %  
-sim_spec=[];
+spec=[];
 i=0;
 
 %% IB Cells
 if include_IB
     i=i+1;
-    sim_spec.populations(i).name = 'IB';
-    sim_spec.populations(i).size = N;
-    sim_spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
-    sim_spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','iPeriodicPulsesiNMDADestexhe1998Markov.mech','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).name = 'IB';
+    spec.populations(i).size = N;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','iPeriodicPulsesiNMDADestexhe1998Markov.mech','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
+    spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
       'E_l2',EGABA,'g_l2',0,...
       'PPstim', IBPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau,'PPFacFactor',IBPPFacFactor,...
@@ -30,11 +30,11 @@ end
 %% RS cells
 if include_RS
     i=i+1;
-    sim_spec.populations(i).name = 'RS';
-    sim_spec.populations(i).size = Nrs;
-    sim_spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
-    sim_spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).name = 'RS';
+    spec.populations(i).size = Nrs;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleaknoisy'};
+    spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',RS_Eleak_std,'g_l',gl,...
       'PPstim', RSPPstim, 'PPfreq', PPfreq,      'PPwidth', PPwidth,'PPshift',PPshift,                    'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',RSPPFacTau,'PPFacFactor',RSPPFacFactor,...
       'gRAN',RSgRAN,'ERAN',ERAN,'tauRAN',tauRAN,'lambda',lambda,...
@@ -50,11 +50,11 @@ end
 %% NG cells
 if include_NG
     i=i+1;
-    sim_spec.populations(i).name = 'NG';
-    sim_spec.populations(i).size = Nng;
-    sim_spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
-    sim_spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).name = 'NG';
+    spec.populations(i).size = Nng;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+    spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
       'PPstim',NGPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau,'PPFacFactor',PPFacFactor,...
       'stim',Jng1,'onset',0,'offset',50,'stim2',Jng2,'onset2',50,'offset2',Inf,...
@@ -70,11 +70,11 @@ if include_FS
 
     FS_gM = 0;
     i=i+1;
-    sim_spec.populations(i).name = 'FS';
-    sim_spec.populations(i).size = Nfs;
-    sim_spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
-    sim_spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).name = 'FS';
+    spec.populations(i).size = Nfs;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
+    spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',FS_Eleak_std,'g_l',0.1,...
       'PPstim',FSPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau,'PPFacFactor',PPFacFactor,...
       'stim',Jfs,'onset',0,'offset',Inf,...
@@ -88,11 +88,11 @@ end
 %% LTS cells
 if include_LTS
     i=i+1;
-    sim_spec.populations(i).name = 'LTS';
-    sim_spec.populations(i).size = Nlts;
-    sim_spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
-    sim_spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBiMMich','IBleaknoisy'};
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).name = 'LTS';
+    spec.populations(i).size = Nlts;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBiMMich','IBleaknoisy'};
+    spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',LTS_Eleak_std,'g_l',0.1,...
       'stim',Jlts,'onset',0,'offset',Inf,...
       'V_noise',LTS_Vnoise,...
@@ -141,11 +141,11 @@ end
 
 if include_deepFS
     i=i+1;
-    sim_spec.populations(i).name = 'deepFS';
-    sim_spec.populations(i).size = NdeepFS;
-    sim_spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
-    sim_spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).name = 'deepFS';
+    spec.populations(i).size = NdeepFS;
+    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
+    spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
       'stim',deepJfs,'onset',0,'offset',Inf,...
       'V_noise',deepFS_Vnoise,...
@@ -159,13 +159,13 @@ if include_deepRS
     warning('Dave uses a different linker than Ben (D=(current); Ben=@current). To share mechanisms, should unify these.');
     
     i=i+1;
-    sim_spec.populations(i).name = 'deepRS';
-    sim_spec.populations(i).size = NdeepRS;
-    sim_spec.populations(i).equations = {['V''=(I_const+current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).name = 'deepRS';
+    spec.populations(i).size = NdeepRS;
+    spec.populations(i).equations = {['V''=(I_const+current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
-    sim_spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak',...
+    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak',...
         'CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','itonicBen'}; % 'iPeriodicSpikes',
-    sim_spec.populations(i).parameters = {...
+    spec.populations(i).parameters = {...
       'Cm',Cm_Ben,'PPstim',deepRSPPstim,'gSpike',deepRSgSpike,...
       'gKs',gKs,'gNaP',gKs/gNaP_denom,'gKCa',gKCa,'bKCa',bKCa,'gCa',gCa,'CAF',CAF,...
       'gl',gl_dRS,'gNa',gNa_dRS,'gKDR',gKDR_dRS,...
