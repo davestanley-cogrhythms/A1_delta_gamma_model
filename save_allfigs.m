@@ -11,7 +11,7 @@ function save_allfigs(handles_arr)
 %     end
     
     do_commit = 0;
-    handles_arr = 1:5;
+    handles_arr = 6;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
     currfigname = '109c_for_Miles';
