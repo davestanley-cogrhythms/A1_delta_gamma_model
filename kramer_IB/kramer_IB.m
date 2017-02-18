@@ -35,7 +35,7 @@ if function_mode
 else
 
     tspan=[0 500];
-    sim_mode = 2;
+    sim_mode = 1;
     pulse_mode = 1;
     Cm_Ben = 2.7;
     Cm_factor = Cm_Ben/.25;
