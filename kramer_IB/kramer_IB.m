@@ -27,7 +27,20 @@ verbose_flag = 1;
 random_seed = 2;
 
 % % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 1;   % 1 - normal sim
+if function_mode
+    
+    Cm_Ben = 2.7;
+    Cm_factor = Cm_Ben/.25;
+
+else
+
+    tspan=[0 500];
+    sim_mode = 2;
+    pulse_mode = 1;
+    Cm_Ben = 2.7;
+    Cm_factor = Cm_Ben/.25;
+
+end % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -37,7 +50,6 @@ sim_mode = 1;   % 1 - normal sim
 % 14 - Vary random parameter in order to get repeat sims
 
 % % Simulation controls
-if ~function_mode, tspan=[0 1000]; end
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
@@ -62,8 +74,6 @@ include_deepFS = 0;
 % for deep RS cells.
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
-Cm_Ben = 2.7;
-Cm_factor = Cm_Ben/.25;
 gl=.1;
 ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
@@ -396,7 +406,7 @@ switch sim_mode
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -6:-.1:-9;...
-            'deepFS->deepRS', 'g_SYN', .2:.2:1,...
+            % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
         
     case 3
@@ -462,7 +472,6 @@ switch sim_mode
 end
 
 %% % Periodic pulse stimulation parameters
-pulse_mode = 1;
 gNMDA_pseudo = 0;               
 gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
@@ -589,7 +598,7 @@ include_kramer_IB_synapses;
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
 
-if sim_mode == 2
+if cluster_flag
 
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
@@ -597,15 +606,10 @@ if sim_mode == 2
     
     return
 
-elseif sim_mode == 1
-    
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
-        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',0,'compile_flag',compile_flag);
-    
 else
     
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
-        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',1,'compile_flag',compile_flag);
+        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'compile_flag',compile_flag);
     
 end
 
