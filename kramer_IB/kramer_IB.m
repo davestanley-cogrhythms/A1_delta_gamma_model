@@ -318,9 +318,9 @@ if ~no_synapses
     
     % % Delta -> Gamma oscillator connections
     gAMPA_ibrs = 0.3/N;
-    gNMDA_ibrs = 0.02/N;
-    gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.08/Nng;
+%     gNMDA_ibrs = 0.02/N;
+%     gGABAa_ngrs = 0.05/Nng;
+%     gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
