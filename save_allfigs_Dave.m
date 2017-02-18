@@ -1,6 +1,6 @@
 
 
-function save_allfigs(handles_arr)
+function save_allfigs_Dave(handles_arr)
     %% save_allfigs
     % % For loop for saving figs
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
@@ -20,7 +20,7 @@ function save_allfigs(handles_arr)
     c=clock;
     sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
     sp = [sp '__' currfname '_' currfigname];
-    basepath = './Figures';
+    basepath = './Figs_Dave';
     % basepath = '~/figs_tosave';
     
     mkdir(fullfile(basepath,sp));
