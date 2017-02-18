@@ -1,1 +1,0 @@
-80a_add_RS_NG_connection_single_sim Added connection from RS to NG cells to provide some weak activation of NG.

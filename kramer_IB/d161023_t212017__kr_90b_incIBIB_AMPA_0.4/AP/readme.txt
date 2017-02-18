@@ -1,1 +1,0 @@
-90b_incIBIB_AMPA_0.3 As above, but swept through different parameter ranges.

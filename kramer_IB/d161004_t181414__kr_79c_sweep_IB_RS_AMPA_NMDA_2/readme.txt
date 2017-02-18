@@ -1,1 +1,0 @@
-79c_sweep_IB_RS_AMPA_NMDA_2 Used different ranges

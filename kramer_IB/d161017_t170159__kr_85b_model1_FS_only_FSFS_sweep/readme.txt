@@ -1,1 +1,0 @@
-85b_model1_FS_only_FSFS_sweep Sweep through FS synaptic connectivity.

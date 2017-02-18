@@ -1,1 +1,0 @@
-88d_play_with_IB_PPStim Try lowered NG A-current to allow NG cells to more easily entrain to oscillatory 40Hz activity.
