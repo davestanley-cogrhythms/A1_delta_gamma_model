@@ -59,9 +59,9 @@ legend('Transmitter (mM)');
 xlabel('Time (ms)');
 ylabel('Neurotransmitter (mM)');
 
-%% Test 1b - NMDA: PPStim at 40 Hz for 500 ms
+%% Test 1b - NMDA: 1mM PPStim at 40 Hz for 500 ms
 
-increase_NMDA_desens = 1;
+increase_NMDA_desens = 0;
 
 eqns={ 
   'dv/dt=@current';
@@ -70,7 +70,7 @@ stim = [0];
 onset = [10];
 offset = 500;
 
-PPstim = 1;
+PPstim = 0.5;
 PPfreq = 40; % in Hz
 
 PPonset = 50;    % ms, onset time
@@ -121,7 +121,7 @@ ylabel('Neurotransmitter (mM)');
 
 %% Test 1c - NMDA: 500 ms pulse at 1 mM
 
-increase_NMDA_desens = 1;
+increase_NMDA_desens = 0;
     
 % define equations of cell model (same for E and I populations)
 eqns={ 

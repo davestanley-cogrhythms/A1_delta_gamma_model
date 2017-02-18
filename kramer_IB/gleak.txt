@@ -1,0 +1,14 @@
+% Leak current from Gutfreund et al. 1995.
+% Parameters
+gl = .025 % /4
+gdenoml = 1
+El = -65
+
+
+% Functions
+Il(X) = (gl/gdenoml).*(X-El)
+
+% ODEs & ICs
+
+% Linkers
+@current += -Il(X)

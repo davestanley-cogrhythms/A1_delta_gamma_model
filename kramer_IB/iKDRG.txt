@@ -19,4 +19,4 @@ mKDR' = tau_m*(aM(X).*(1-mKDR)-bM(X).*mKDR)
 mKDR(0) = IC+IC_noise.*rand(Npop,1)
 
 % Interface
-@current += -IKDR(X,mKDR)
+@current += -IKDR(V,mKDR)

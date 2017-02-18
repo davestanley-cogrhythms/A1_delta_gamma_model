@@ -56,7 +56,7 @@ E_l(t) = stim*(t>onset & t<offset) + stim2*(t>onset2 & t<offset2) + PPstim*s3(k,
 Ileak(IN,t) = g_l.*(IN-E_l(t))
 
 % Interface
-@current => -Ileak(IN,t)
+@current += -Ileak(IN,t)
 
 
  

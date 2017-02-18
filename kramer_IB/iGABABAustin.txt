@@ -62,4 +62,4 @@ g(0) = IC+IC_noise.*rand(1,Npre);
 monitor IGABAB
 
 % Interface
-current => -IGABAB(Vpost,g)
+@current += -IGABAB(Vpost,g)

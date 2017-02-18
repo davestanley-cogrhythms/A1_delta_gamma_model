@@ -9,5 +9,5 @@ offset = inf
 
 Itonic(t) = stim*(t>onset & t<offset)
  
-current => -Itonic(t)
+@current += -Itonic(t)
  

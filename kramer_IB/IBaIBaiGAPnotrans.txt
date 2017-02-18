@@ -8,5 +8,5 @@ mask = abs(Xpre-Xpost)<=fanout
 
 IGAP(V1,V2) = g_GAP.*sum(((ones(size(V1,2),1)*V1)-(V2'*ones(1,size(V2,2)))).*mask,2)'
  
-current => IGAP(Vpre,Vpost)
+@current += IGAP(Vpre,Vpost)
  

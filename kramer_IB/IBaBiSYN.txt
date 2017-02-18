@@ -17,5 +17,5 @@ ISYN(V,s) = (gsyn.*(s'*mask)'.*(V-E_SYN))
 sSYNpre' = -sSYNpre./tauDx + ((1-sSYNpre)/tauRx).*(1+tanh(Vpre/10));
 sSYNpre(0) = IC+IC_noise.*rand(Npre,1)
  
-current => -ISYN(Vpost,sSYNpre)
+@current += -ISYN(Vpost,sSYNpre)
  
