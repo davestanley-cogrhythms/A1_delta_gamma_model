@@ -4,7 +4,7 @@ tic
 
 if ~function_mode
 
-    clear
+    %clear
 
     function_mode = 0;
     
