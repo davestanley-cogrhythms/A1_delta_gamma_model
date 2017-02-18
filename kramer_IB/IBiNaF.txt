@@ -15,7 +15,7 @@ htau(V) = NaF_c0 + NaF_c1./(1+exp((V+NaF_V2)/NaF_d2))
 m0(V) = 1./(1+exp((-V-NaF_V0)/10))
 aH(V) = hinf(V) ./ htau(V)
 bH(V) = (1-hinf(V))./htau(V)
-INaF(V,h) = gNaF.*m0(V).^3.*h.*(V-E_NaF)
+INaF(V,hNaF) = gNaF.*m0(V).^3.*hNaF.*(V-E_NaF)
  
 hNaF' = aH(V).*(1-hNaF)-bH(V).*hNaF;
 hNaF(0) = IC+IC_noise.*rand(Npop,1)
