@@ -1,5 +1,5 @@
 % Model: Kramer 2008, PLoS Comp Bio
-%%
+%% Initialize
 tic
 
 if ~exist('function_mode','var'); function_mode = 0; end
@@ -7,13 +7,24 @@ if ~exist('function_mode','var'); function_mode = 0; end
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
-%% ##0.0 Simulation master parameters
-% % There are some partameters that are derived from other parameters. Put
+%% % % % % % % % % % % % %  ##0.0 Simulation master parameters % % % % % % % % % % % % %
+% There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 100];
-sim_mode = 1;               % Choice normal sim (sim_mode=1) or parallel sim options
-pulse_mode = 1;
+tspan=[0 500];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+                            % 2 - Vary I_app in deep RS cells
+                            % 9 - sim study FS-RS circuit vary RS stim
+                            % 10 - Vary iPeriodicPulses in all cells
+                            % 11 - Vary FS cells
+                            % 12 - Vary IB cells
+                            % 13 - Vary LTS cell synapses
+                            % 14 - Vary random parameter in order to get repeat sims
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
+                            % 0 - No stimulation
+                            % 1 - Gamma pulse train
+                            % 2 - Median nerve stimulation
+                            % 3 - Auditory clicks @ 10 Hz
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
@@ -21,8 +32,9 @@ if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
 end
 
-%% ##1.0 Simulation parameters
-% % Display options
+%% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
+
+% % % % % Display options
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
@@ -37,24 +49,16 @@ random_seed = 2;
 Now = clock;
 name = sprintf('kramer_IB_%g_%g_%.4g', Now(4), Now(5), Now(6));
 
-% 2 - Vary I_app in deep RS cells
-% 9 - sim study FS-RS circuit vary RS stim
-% 10 - Vary iPeriodicPulses in all cells
-% 11 - Vary FS cells
-% 12 - Vary IB cells
-% 13 - Vary LTS cell synapses
-% 14 - Vary random parameter in order to get repeat sims
-
-% % Simulation controls
+% % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
-% % Simulation switches
+% % % % % Simulation switches
 no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0;
 
-%% % Cells to include in model
+% % % % % Cells to include in model
 include_IB = 1;
 include_RS = 1;
 include_FS = 1;
@@ -86,37 +90,16 @@ if no_noise
     FSgRAN=0;
 end
 
+IC_V = -65;         % Starting membrane potential
 
-% Offsets for deep FS cells
+% % % % % Offsets for deep FS cells
 NaF_offset = 10;
 KDR_offset = 20;
 
-IC_V = -65;
 
 
-%% % % % % % % % % % % %  ##2.1 Model parameters % % % % % % % % % % % % % 
-% Note: For some of these parameters I will define them twice - once I will
-% initially define them as set to zero, and then I will define them a
-% second time. I do this so that you can easily comment out the second
-% definition as way to disable things (e.g. setting synapses to zero).
-%
-% Note2: deepRS cells represent deep RS cells.
-% However, I've since switched the RS, FS, and LTS cells to representing
-% deep cells. So these ones now are disabled. I'm leaving the code
-% in the network, however, incase we want to re-enable them later or use
-% them for something else.
 
-%% % Number of cells per population
-N=5;   % Number of excitatory cells
-Nrs=N; % Number of RS cells
-Nng=N;  % Number of FSNG cells
-Nfs=N;  % Number of FS cells
-Nlts=N; % Number of LTS cells
-% NdeepRS = 30;
-NdeepFS = N;
-NdeepRS = 1;    % Number of deep theta-resonant RS cells
-
-%% Parameters for deep RS cells.
+% % % % % Parameters for deep RS cells.
 gKs = Cm_factor*0.124;
 gNaP_denom = 3.36;
 gKCa = Cm_factor*0.005;
@@ -132,16 +115,42 @@ tau_fast = 5;
 slow_offset = 0;
 slow_offset_correction = 0;
 fast_offset = 0;
+warning('move these to section 2.0');
+
+
+%% % % % % % % % % % % %  ##2.1 Number of cells % % % % % % % % % % % % % 
+% Note: For some of these parameters I will define them twice - once I will
+% initially define them as set to zero, and then I will define them a
+% second time. I do this so that you can easily comment out the second
+% definition as way to disable things (e.g. setting synapses to zero).
+%
+% Note2: deepRS cells represent deep RS cells.
+% However, I've since switched the RS, FS, and LTS cells to representing
+% deep cells. So these ones now are disabled. I'm leaving the code
+% in the network, however, incase we want to re-enable them later or use
+% them for something else.
+
+% % % % % % Number of cells per population
+N=5;   % Number of excitatory cells
+Nrs=N; % Number of RS cells
+Nng=N;  % Number of FSNG cells
+Nfs=N;  % Number of FS cells
+Nlts=N; % Number of LTS cells
+% NdeepRS = 30;
+NdeepFS = N;
+NdeepRS = 1;    % Number of deep theta-resonant RS cells
+
 
 %% % % % % % % % % % % % % ##2.2 Injected currents % % % % % % % % % % % % %
-%% % Tonic input currents.
-% Note: IB, NG, and RS cells use two different values for tonic current
-% injection. This is because I generally hyperpolarize these cells for a
-% few hundred milliseconds to allow things to settle (see
-% itonicPaired.txt). The hyperpolarizing value is listed first (e.g. JRS1)
-% and then the value that kicks in after this is second (e.g. JRS2).
-% Note2: Positive values are hyperpolarizing, negative values are
-% depolarizing.
+
+% % % % % % Tonic input currents.
+    % Note: IB, NG, and RS cells use two different values for tonic current
+    % injection. This is because I generally hyperpolarize these cells for a
+    % few hundred milliseconds to allow things to settle (see
+    % itonicPaired.txt). The hyperpolarizing value is listed first (e.g. JRS1)
+    % and then the value that kicks in after this is second (e.g. JRS2).
+    % Note2: Positive values are hyperpolarizing, negative values are
+    % depolarizing.
 Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
@@ -155,10 +164,10 @@ deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
 JdeepRS = -10;   % Ben's RS theta cells
 
-% % Tonic current onset and offset times
-% Times at which injected currents turn on and off (in milliseconds). See
-% itonicPaired.txt. Setting these to 0 essentially removes the first
-% hyperpolarization step.
+% % % % % % Tonic current onset and offset times
+    % Times at which injected currents turn on and off (in milliseconds). See
+    % itonicPaired.txt. Setting these to 0 essentially removes the first
+    % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
 RS_offset1=000;
@@ -198,8 +207,8 @@ deepFS_Vnoise = 3;
 %     much so that it interrupts the first IB burst.
 %
 
-%% % % % % % % % % % % % %  ##2.2 Synaptic connectivity parameters % % % % % % % % % % % % %
-%% % Gap junction connections.
+%% % % % % % % % % % % % %  ##2.3 Synaptic connectivity parameters % % % % % % % % % % % % %
+% % Gap junction connections.
 % % Deep cells
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IB -> IB
@@ -210,7 +219,7 @@ warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise 
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
 
-%% % Chemical synapses, DEFAULTS.
+% % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
 gsyn_hetero = 0;
 
@@ -289,7 +298,7 @@ gAMPA_rsng = 0;
 gNMDA_rsng = 0;
 gGABAa_LTSib = 0;
 
-%% % Chemical Synapses, DEFINITIONS. % %
+%% % ##2.3.1 Chemical Synapses, DEFINITIONS. % %
 
 if ~no_synapses
     % % Synaptic connection strengths
@@ -362,7 +371,7 @@ if ~no_synapses
 end
 
 
-%% % Synaptic time constants & reversals
+% % % % % Synaptic time constants & reversals
 tauAMPAr=.25;  % ms, AMPA rise time; Jung et al
 tauAMPAd=1;   % ms, AMPA decay time; Jung et al
 tauNMDAr=5; % ms, NMDA rise time; Jung et al
@@ -388,7 +397,7 @@ Rd = 8.4*10^-3 - Rd_delta;
 Rr = 6.8*10^-3 + Rd_delta;
 
 
-%% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % %
+%% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
         
@@ -467,7 +476,7 @@ switch sim_mode
         
 end
 
-%% % Periodic pulse stimulation parameters
+%% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
 gNMDA_pseudo = 0;               
 gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
@@ -583,14 +592,15 @@ end
 
 if function_mode, return, end
 
-%% ##3.0 Build populations and synapses
+%% % % % % % % % % % % % %  ##3.0 Build populations and synapses % % % % % % % % % % % % %
 % % % % % % % % % % ##3.1 Populations % % % % % % % % %
 include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
 include_kramer_IB_synapses;
 
-%% ##4.0 Run simulation & post process
+%% % % % % % % % % % % % %  ##4.0 Run simulation & post process % % % % % % % % % % % % %
+
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
 
