@@ -2,18 +2,26 @@
 %%
 tic
 
-if ~function_mode
-
-    %clear
-
-    function_mode = 0;
-    
-end
+if ~exist('function_mode','var'); function_mode = 0; end
 
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
-%% ##1.0 Simulation switches
+%% ##0.0 Simulation master parameters
+% % There are some partameters that are derived from other parameters. Put
+% these master parameters first!
+
+tspan=[0 100];
+sim_mode = 1;               % Choice normal sim (sim_mode=1) or parallel sim options
+pulse_mode = 1;
+Cm_Ben = 2.7;
+Cm_factor = Cm_Ben/.25;
+
+if function_mode
+    unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
+end
+
+%% ##1.0 Simulation parameters
 % % Display options
 plot_on = 1;
 save_plots = 0;
@@ -26,21 +34,9 @@ verbose_flag = 1;
 % random_seed = 'shuffle';
 random_seed = 2;
 
-% % Choice normal sim (sim_mode=1) or parallel sim options
-if function_mode
-    
-    Cm_Ben = 2.7;
-    Cm_factor = Cm_Ben/.25;
+Now = clock;
+name = sprintf('kramer_IB_%g_%g_%.4g', Now(4), Now(5), Now(6));
 
-else
-
-    tspan=[0 500];
-    sim_mode = 1;
-    pulse_mode = 1;
-    Cm_Ben = 2.7;
-    Cm_factor = Cm_Ben/.25;
-
-end % 1 - normal sim
 % 2 - Vary I_app in deep RS cells
 % 9 - sim study FS-RS circuit vary RS stim
 % 10 - Vary iPeriodicPulses in all cells
@@ -163,10 +159,10 @@ JdeepRS = -10;   % Ben's RS theta cells
 % Times at which injected currents turn on and off (in milliseconds). See
 % itonicPaired.txt. Setting these to 0 essentially removes the first
 % hyperpolarization step.
-IB_offset1=300;
-IB_onset2=300;
-RS_offset1=300;
-RS_onset2=300;
+IB_offset1=000;
+IB_onset2=000;
+RS_offset1=000;
+RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.015;      % synaptic noise conductance IB cells
@@ -502,7 +498,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 0;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -608,8 +604,9 @@ if cluster_flag
 
 else
     
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
-        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'compile_flag',compile_flag);
+    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,...
+        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'study_dir',name);
     
 end
 

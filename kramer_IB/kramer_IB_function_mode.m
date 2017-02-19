@@ -1,24 +1,22 @@
 function [data, name] = kramer_IB_function_mode(sim_struct)
 
-Today = datestr(datenum(date),'yy-mm-dd');
+if nargin < 1; sim_struct = []; end
+if isempty(sim_struct); sim_struct = struct; end
 
-mkdir(Today)
+Today = datestr(datenum(date),'yy-mm-dd');
+savepath = fullfile('Figs_Ben',Today);
+mkdir(savepath);
 
 function_mode = 1;
 
-unpack_sim_struct
-
 kramer_IB
 
-unpack_sim_struct
+%unpack_sim_struct
+vars_pull(sim_struct);
 
 include_kramer_IB_populations;
 
 include_kramer_IB_synapses;
-
-Now = clock;
-
-name = sprintf('kramer_IB_%g_%g_%.4g', Now(4), Now(5), Now(6));
 
 if cluster_flag
     
@@ -38,6 +36,8 @@ end
 
 PlotData(data)
 
-save_as_pdf(gcf, [Today, '/', name])
+% save_as_pdf(gcf, fullfile(savepath,name))
 
-save([Today, '/', name, '_sim_struct.mat'], 'sim_struct')
+% save(fullfile(Today, name, '_sim_struct.mat'), 'sim_struct');
+
+end
