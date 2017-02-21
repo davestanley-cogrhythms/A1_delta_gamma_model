@@ -85,18 +85,15 @@ if no_noise
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
     IBa_Vnoise = 0;
-    gRAN=0;
-    FSgRAN=0;
+    gRAN = 0;
+    FSgRAN = 0;
 end
 
 IC_V = -65;         % Starting membrane potential
 
 % % % % % Offsets for deep FS cells
-NaF_offset = 10;
-KDR_offset = 20;
-
-
-
+% NaF_offset = 10;
+% KDR_offset = 20;
 
 % % % % % Parameters for deep RS cells.
 gKs = Cm_factor*0.124;
@@ -191,9 +188,6 @@ LTS_Vnoise = 6;
 RSda_Vnoise = .3;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
-
-
-
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -385,7 +379,6 @@ EAMPA=0;
 EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
 
-
 % NMDA kinetics
 % Shift Rd and Rr to make NMDA desensitize more...
 increase_NMDA_desens = 1;
@@ -394,7 +387,6 @@ else Rd_delta = 0;
 end
 Rd = 8.4*10^-3 - Rd_delta;
 Rr = 6.8*10^-3 + Rd_delta;
-
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
@@ -410,21 +402,22 @@ switch sim_mode
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -6:-.1:-9;...
+            'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
             % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
         
     case 3
         
-        include_IB = 1;
-        include_NG = 1;
-        include_deepRS = 0;
-        include_deepFS = 0;
+        [include_IB, include_NG] = deal(1);
+        [include_deepRS, include_deepFS, include_RS, include_FS, include_LTS] = deal(0);
         
         tspan = [0 6000];
         
-        vary = {'IB', 'stim2', -6.3:.01:-6.2};
+        % vary = {'IB', 'stim2', -6.3:.01:-6.2};
         
-        % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
+        vary = {'IB', 'PPfreq', 1:15;...
+            'IB', 'PPstim', 0:-.5:-2;...
+            'IB', 'stim2', 0:-.5:-2}; % [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',linspace(2,-2,12); ...
