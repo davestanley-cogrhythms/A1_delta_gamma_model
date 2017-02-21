@@ -403,21 +403,22 @@ switch sim_mode
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -6:-.1:-9;...
+            'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
             % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
         
     case 3
         
-        include_IB = 1;
-        include_NG = 1;
-        include_deepRS = 0;
-        include_deepFS = 0;
+        [include_IB, include_NG] = deal(1);
+        [include_deepRS, include_deepFS, include_RS, include_FS, include_LTS] = deal(0);
         
         tspan = [0 6000];
         
         % vary = {'IB', 'stim2', -6.3:.01:-6.2};
         
-        vary = {'IB', 'PPfreq', 1:15}; % [1, 2, 4, 8, 16, 32]};
+        vary = {'IB', 'PPfreq', 1:15;...
+            'IB', 'PPstim', 0:-.5:-2;...
+            'IB', 'stim2', 0:-.5:-2}; % [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',linspace(2,-2,12); ...
