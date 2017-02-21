@@ -11,10 +11,10 @@ function save_allfigs_Dave(handles_arr)
 %     end
     
     do_commit = 0;
-    handles_arr = 1:11;
+    handles_arr = 1:5;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '111a_RS_FS_LTS_test_sparse';
+    currfigname = '111b_no_gFSFS';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -54,7 +54,7 @@ function save_allfigs_Dave(handles_arr)
     end
     
 
-    mycomment = ['Tried comparing my gamma network to Jasons gamma network and latency between RS and FS pulses.'];
+    mycomment = ['Tried disabling gFSFS (Fig3) and then increasing gRSFS (Fig5) to get better locking between RS and FS. Improved slightly, but not enough. Next step is to try ramping up noise.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
