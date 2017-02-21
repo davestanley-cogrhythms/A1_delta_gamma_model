@@ -47,7 +47,6 @@ verbose_flag = 1;
 random_seed = 2;
 
 Now = clock;
-name = sprintf('kramer_IB_%g_%g_%.4g', Now(4), Now(5), Now(6));
 
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
@@ -616,7 +615,7 @@ else
     
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,...
-        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'study_dir',name);
+        'compile_flag',compile_flag,'save_data_flag',save_data_flag);
     
 end
 
