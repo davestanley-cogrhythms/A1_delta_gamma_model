@@ -1,5 +1,5 @@
 
-% % This script adds all the synaptic connections between cells % %
+% % This script adds all the cell populations and their parameters. % %
 
 % % % % % % % % % % % % %  Populations  % % % % % % % % % % % % %  
 spec=[];
@@ -161,7 +161,7 @@ if include_deepRS
     i=i+1;
     spec.populations(i).name = 'deepRS';
     spec.populations(i).size = NdeepRS;
-    spec.populations(i).equations = {['V''=(I_const+current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).equations = {['V''=(I_const+@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
     spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak',...
         'CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','itonicBen'}; % 'iPeriodicSpikes',
