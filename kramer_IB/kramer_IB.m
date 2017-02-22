@@ -211,8 +211,7 @@ deepFS_Vnoise = 3;
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IB -> IB
 ggjFS=.2/Nfs;  % FS -> FS
-ggjLTS=.0/Nlts;  % LTS -> LTS
-warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise to compensate.');
+ggjLTS=.2/Nlts;  % LTS -> LTS
 % % deep cells
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
