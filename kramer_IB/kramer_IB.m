@@ -11,7 +11,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 200];
+tspan=[0 700];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -39,7 +39,7 @@ plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
-parallel_flag = 0;
+parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
 verbose_flag = 1;
@@ -153,7 +153,7 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 5; % RS cells
+JRS1 = 2.5; % RS cells
 JRS2 = 2.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
@@ -168,8 +168,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=000;
-RS_onset2=000;
+RS_offset1=300;         % 300 is a good settling time for RS cells
+RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.015;      % synaptic noise conductance IB cells
@@ -428,7 +428,8 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
-            'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
+            %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
+            'RS','PPstim',linspace(-10,-2,4); ...
             'FS->RS','g_SYN',[0.2:0.2:1]/Nfs;...
             };
         
@@ -505,12 +506,12 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
@@ -623,7 +624,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-% t = data(1).time; data = CropData(data, t > 100 & t <= t(end));
+t = data(1).time; data = CropData(data, t > 250 & t <= t(end));
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
