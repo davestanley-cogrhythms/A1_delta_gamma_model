@@ -11,7 +11,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 700];
+tspan=[0 400];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -168,7 +168,7 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=300;         % 300 is a good settling time for RS cells
+RS_offset1=300;         % 200 is a good settling time for RS cells
 RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
@@ -506,7 +506,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 200;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -624,7 +624,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-t = data(1).time; data = CropData(data, t > 250 & t <= t(end));
+% t = data(1).time; data = CropData(data, t > 250 & t <= t(end));
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
