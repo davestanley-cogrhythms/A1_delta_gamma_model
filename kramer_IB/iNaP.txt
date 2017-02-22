@@ -1,4 +1,4 @@
-V% Persistent sodium current, after French et al. 1990, from Gutfreund et al. 1995.
+% Persistent sodium current, after French et al. 1990, from Gutfreund et al. 1995.
 % parameters
 gNaP=.025 % .0125 max sodium conductance
 ENa=50
@@ -10,12 +10,12 @@ NaP_offset=0
 
 % functions
 minf(X)=1./(1+exp(-(X-(halfNaP+NaP_offset))/5))
-INaP(X,mNaP)=gNaP.*mNaP.*(X-ENa)
+INaP(X,m)=gNaP.*m.*(X-ENa)
 
 % ODEs and ICs
-mNaP'=(minf(X)-mNaP)/tauNaP
-mNaP(0)=m_IC+IC_noise*rand(1,Npop)
+m'=(minf(X)-m)/tauNaP
+m(0)=m_IC+IC_noise*rand(1,Npop)
 
 % linkers
-@current += -INaP(X,mNaP)
+@current += -INaP(X,m)
 
