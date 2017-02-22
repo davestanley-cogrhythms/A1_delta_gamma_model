@@ -41,7 +41,13 @@ end
 
 PlotData(data)
 
-save_as_pdf(gcf, fullfile(savepath, name))
+figHandles = findobj('Type', 'Figure');
+
+for f = 1:length(figHandles)
+
+    save_as_pdf(figHandles(f), fullfile(savepath, name))
+    
+end
 
 save(fullfile(Today, [name, '_sim_struct.mat']), 'sim_struct');
 
