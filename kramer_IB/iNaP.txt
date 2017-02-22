@@ -10,12 +10,12 @@ NaP_offset=0
 
 % functions
 minf(X)=1./(1+exp(-(X-(halfNaP+NaP_offset))/5))
-INaP(X,m)=gNaP.*m.*(X-ENa)
+INaP(X,mNaP)=gNaP.*mNaP.*(X-ENa)
 
 % ODEs and ICs
 mNaP'=(minf(X)-mNaP)/tauNaP
 mNaP(0)=m_IC+IC_noise*rand(1,Npop)
 
 % linkers
-@current += -INaP(V,m)
+@current += -INaP(X,mNaP)
 
