@@ -395,12 +395,13 @@ switch sim_mode
     case 2
         
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
-        [include_deepRS, include_deepFS] = deal(1);
+        % [include_deepRS, include_deepFS] = deal(1);
+        include_deepRS = 1;
         
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -6:-.1:-9;...
-            'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
+            % 'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
             % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
         
