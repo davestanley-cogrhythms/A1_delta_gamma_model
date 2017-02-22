@@ -1,8 +1,8 @@
 % Tonic current injection Bens version
 
-I_app = -4.5
-ton = 100
-toff = 500
+I_app = -6
+ton = 500
+toff = T(end)
 noise = .1
 
 IBen(t)=I_app*((t/ton)*(t<=ton)+(ton<t&t<toff)+rand(1,Npop)*noise)
