@@ -11,7 +11,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 100];
+tspan=[0 200];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -43,7 +43,7 @@ parallel_flag = 0;
 cluster_flag = 0;
 save_data_flag = 0;
 verbose_flag = 1;
-% random_seed = 'shuffle';
+random_seed = 'shuffle';
 random_seed = 2;
 
 Now = clock;
@@ -129,7 +129,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=5;   % Number of excitatory cells
+N=30;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -154,7 +154,7 @@ Jd2=0;    %
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
-JRS2 = 1; %
+JRS2 = 2.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -176,7 +176,7 @@ gRAN=.015;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 1000;  % Mean frequency Poisson IPSPs
-RSgRAN=0.005;   % synaptic noise conductance to RS cells
+RSgRAN=0.015;   % synaptic noise conductance to RS cells
 deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
