@@ -180,14 +180,11 @@ RSgRAN=0.015;   % synaptic noise conductance to RS cells
 deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
-IBda_Vnoise = .3;
-IBs_Vnoise = .1;
-IBdb_Vnoise = .3;
-IBa_Vnoise = .1;
-NG_Vnoise = 3;
-FS_Vnoise = 3;
+IBda_Vnoise = 6;
+NG_Vnoise = 6;
+FS_Vnoise = 6;
 LTS_Vnoise = 6;
-RSda_Vnoise = .3;
+RSda_Vnoise = 6;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
 
