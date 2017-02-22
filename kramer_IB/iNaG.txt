@@ -16,7 +16,7 @@ bh(X) = 1./(exp(-(X-Noffset)/10)+1)
 INa(X,h) = (gNa/gdenomN)*(minf(X).^3).*h.*(X-ENa)
 
 % ODEs & ICs
-h' = tau_h*(ah(X).*(1-h)-bh(X).*h)
+hNaG' = tau_h*(ah(X).*(1-hNaG)-bh(X).*hNaG)
 h(0) = IC+IC_noise.*rand(Npop,1)
 
 % Linkers

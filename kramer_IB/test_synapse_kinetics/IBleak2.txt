@@ -1,0 +1,11 @@
+% ileak: HH leak current
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters
+g_l2=1;    % mS/cm^2
+E_l2=-70;
+
+% Functions
+Ileak2(IN) = g_l2.*(IN-E_l2)
+
+% Interface
+@current += -Ileak2(IN)

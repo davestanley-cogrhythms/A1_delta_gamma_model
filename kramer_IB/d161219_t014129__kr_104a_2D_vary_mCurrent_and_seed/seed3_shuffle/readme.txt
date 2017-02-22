@@ -1,1 +1,0 @@
-103a_complete_LTS_synapses Tried various connectivity values.

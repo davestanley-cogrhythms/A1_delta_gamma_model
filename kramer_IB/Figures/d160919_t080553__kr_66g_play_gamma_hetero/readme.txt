@@ -1,1 +1,0 @@
-66g_play_gamma_hetero Added gamma stim. As before, but vary Itonic amp. gGABAaff=.5/Nfs; gGABAa_fsrs=2/Nfs

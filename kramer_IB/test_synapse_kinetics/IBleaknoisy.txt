@@ -1,0 +1,13 @@
+% ileak: HH leak current
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters
+g_l=1;    % mS/cm^2
+E_l=[-67];                        % E_l mean
+E_l_std = [0];                    % E_l standard deviation. No noise by default.
+
+% Functions
+E_l_randomized = E_l + unifrnd(-E_l_std,E_l_std,1,Npop); % mV
+Ileak(IN) = g_l.*(IN-E_l_randomized)
+
+% Interface
+@current += -Ileak(IN)

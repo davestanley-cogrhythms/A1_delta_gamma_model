@@ -1,57 +1,78 @@
 % Model: Kramer 2008, PLoS Comp Bio
-%%
+%% Initialize
 tic
 
-% clear
-
+if ~exist('function_mode','var'); function_mode = 0; end
 
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
-%% ##1.0 Simulation switches
-% % Display options
+%% % % % % % % % % % % % %  ##0.0 Simulation master parameters % % % % % % % % % % % % %
+% There are some partameters that are derived from other parameters. Put
+% these master parameters first!
+
+tspan=[0 500];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+                            % 2 - Vary I_app in deep RS cells
+                            % 9 - sim study FS-RS circuit vary RS stim
+                            % 10 - Vary iPeriodicPulses in all cells
+                            % 11 - Vary FS cells
+                            % 12 - Vary IB cells
+                            % 13 - Vary LTS cell synapses
+                            % 14 - Vary random parameter in order to get repeat sims
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
+                            % 0 - No stimulation
+                            % 1 - Gamma pulse train
+                            % 2 - Median nerve stimulation
+                            % 3 - Auditory clicks @ 10 Hz
+Cm_Ben = 2.7;
+Cm_factor = Cm_Ben/.25;
+
+if function_mode
+    unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
+end
+
+%% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
+
+% % % % % Display options
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
 compile_flag = 0;
+parallel_flag = 0;
+cluster_flag = 0;
+save_data_flag = 0;
+verbose_flag = 1;
 % random_seed = 'shuffle';
 random_seed = 2;
 
-% % Choice normal sim (sim_mode=1) or parallel sim options
-sim_mode = 3;   % 1 - normal sim
-% 2 - Vary I_app in deep RS cells
-% 9 - sim study FS-RS circuit vary RS stim
-% 10 - Vary iPeriodicPulses in all cells
-% 11 - Vary FS cells
-% 12 - Vary IB cells
-% 13 - Vary LTS cell synapses
-% 14 - Vary random parameter in order to get repeat sims
+Now = clock;
 
-% % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+% % % % % Simulation controls
+dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
-% % Simulation switches
-no_noise = 1;
+% % % % % Simulation switches
+no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0;
 
-%% % Cells to include in model
-include_IB = 0;
-include_RS = 0;
-include_FS = 0;
-include_LTS = 0;
-include_NG = 0;
-include_deepRS = 1;
-include_deepFS = 1;
+% % % % % Cells to include in model
+include_IB = 1;
+include_RS = 1;
+include_FS = 1;
+include_LTS = 1;
+include_NG = 1;
+include_supRS = 0;
+include_supFS = 0;
+include_deepRS = 0;
+include_deepFS = 0;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
 % for deep RS cells.
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
-Cm_Ben = 2.7;
-Cm_factor = Cm_Ben/.25;
 gl=.1;
 ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
@@ -64,36 +85,17 @@ if no_noise
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
     IBa_Vnoise = 0;
-    gRAN=0;
-    FSgRAN=0;
+    gRAN = 0;
+    FSgRAN = 0;
 end
 
-IC_V = -65;
+IC_V = -65;         % Starting membrane potential
 
+% % % % % Offsets for deep FS cells
+% NaF_offset = 10;
+% KDR_offset = 20;
 
-%% % % % % % % % % % % %  ##2.1 Model parameters % % % % % % % % % % % % % 
-% Note: For some of these parameters I will define them twice - once I will
-% initially define them as set to zero, and then I will define them a
-% second time. I do this so that you can easily comment out the second
-% definition as way to disable things (e.g. setting synapses to zero).
-%
-% Note2: deepRS cells represent deep RS cells.
-% However, I've since switched the RS, FS, and LTS cells to representing
-% deep cells. So these ones now are disabled. I'm leaving the code
-% in the network, however, incase we want to re-enable them later or use
-% them for something else.
-
-%% % Number of cells per population
-N=1;   % Number of excitatory cells
-Nrs=N; % Number of RS cells
-Nng=N;  % Number of FSNG cells
-Nfs=N;  % Number of FS cells
-Nlts=N; % Number of LTS cells
-% NdeepRS = 30;
-NdeepFS = N;
-NdeepRS = 1;    % Number of deep theta-resonant RS cells
-
-%% Parameters for deep RS cells.
+% % % % % Parameters for deep RS cells.
 gKs = Cm_factor*0.124;
 gNaP_denom = 3.36;
 gKCa = Cm_factor*0.005;
@@ -110,17 +112,41 @@ slow_offset = 0;
 slow_offset_correction = 0;
 fast_offset = 0;
 
+%% % % % % % % % % % % %  ##2.1 Number of cells % % % % % % % % % % % % % 
+% Note: For some of these parameters I will define them twice - once I will
+% initially define them as set to zero, and then I will define them a
+% second time. I do this so that you can easily comment out the second
+% definition as way to disable things (e.g. setting synapses to zero).
+%
+% Note2: deepRS cells represent deep RS cells.
+% However, I've since switched the RS, FS, and LTS cells to representing
+% deep cells. So these ones now are disabled. I'm leaving the code
+% in the network, however, incase we want to re-enable them later or use
+% them for something else.
+
+% % % % % % Number of cells per population
+N=5;   % Number of excitatory cells
+Nrs=N; % Number of RS cells
+Nng=N;  % Number of FSNG cells
+Nfs=N;  % Number of FS cells
+Nlts=N; % Number of LTS cells
+% NdeepRS = 30;
+NdeepFS = N;
+NdeepRS = 1;    % Number of deep theta-resonant RS cells
+
+
 %% % % % % % % % % % % % % ##2.2 Injected currents % % % % % % % % % % % % %
-%% % Tonic input currents.
-% Note: IB, NG, and RS cells use two different values for tonic current
-% injection. This is because I generally hyperpolarize these cells for a
-% few hundred milliseconds to allow things to settle (see
-% itonicPaired.txt). The hyperpolarizing value is listed first (e.g. JRS1)
-% and then the value that kicks in after this is second (e.g. JRS2).
-% Note2: Positive values are hyperpolarizing, negative values are
-% depolarizing.
+
+% % % % % % Tonic input currents.
+    % Note: IB, NG, and RS cells use two different values for tonic current
+    % injection. This is because I generally hyperpolarize these cells for a
+    % few hundred milliseconds to allow things to settle (see
+    % itonicPaired.txt). The hyperpolarizing value is listed first (e.g. JRS1)
+    % and then the value that kicks in after this is second (e.g. JRS2).
+    % Note2: Positive values are hyperpolarizing, negative values are
+    % depolarizing.
 Jd1=5;    % IB cells
-Jd2=5;    %
+Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
@@ -132,14 +158,14 @@ deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
 JdeepRS = -10;   % Ben's RS theta cells
 
-% % Tonic current onset and offset times
-% Times at which injected currents turn on and off (in milliseconds). See
-% itonicPaired.txt. Setting these to 0 essentially removes the first
-% hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
-RS_offset1=0;
-RS_onset2=0;
+% % % % % % Tonic current onset and offset times
+    % Times at which injected currents turn on and off (in milliseconds). See
+    % itonicPaired.txt. Setting these to 0 essentially removes the first
+    % hyperpolarization step.
+IB_offset1=000;
+IB_onset2=000;
+RS_offset1=000;
+RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.015;      % synaptic noise conductance IB cells
@@ -161,9 +187,6 @@ RSda_Vnoise = .3;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
 
-
-
-
 % Steps for tuning
 %     1) Get delta oscillation
 %     2) Get delta oscillation with NG firing at gamma. This NG gamma
@@ -175,8 +198,8 @@ deepFS_Vnoise = 3;
 %     much so that it interrupts the first IB burst.
 %
 
-%% % % % % % % % % % % % %  ##2.2 Synaptic connectivity parameters % % % % % % % % % % % % %
-%% % Gap junction connections.
+%% % % % % % % % % % % % %  ##2.3 Synaptic connectivity parameters % % % % % % % % % % % % %
+% % Gap junction connections.
 % % Deep cells
 ggjaRS=.2/N;  % RS -> RS
 ggja=.2/N;  % IB -> IB
@@ -187,7 +210,7 @@ warning('Need to set LTS gap junctions to 0.2. Probably need to increase Vnoise 
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
 ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
 
-%% % Chemical synapses, DEFAULTS.
+% % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
 gsyn_hetero = 0;
 
@@ -266,7 +289,7 @@ gAMPA_rsng = 0;
 gNMDA_rsng = 0;
 gGABAa_LTSib = 0;
 
-%% % Chemical Synapses, DEFINITIONS. % %
+%% % ##2.3.1 Chemical Synapses, DEFINITIONS. % %
 
 if ~no_synapses
     % % Synaptic connection strengths
@@ -286,14 +309,14 @@ if ~no_synapses
     gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
-    gAMPA_ibLTS=0.1/N;
-    if ~NMDA_block; gNMDA_ibLTS=5/N; end
+    gAMPA_ibLTS=0.02/N;
+%     if ~NMDA_block; gNMDA_ibLTS=5/N; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.013/N;
-    gNMDA_ibrs = 0.02/N;
-    gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.08/Nng;
+    gAMPA_ibrs = 0.3/N;
+%     gNMDA_ibrs = 0.02/N;
+%     gGABAa_ngrs = 0.05/Nng;
+%     gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
@@ -331,15 +354,15 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=1.3/Nfs;                        % FS -> IB
+%     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
     gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-    gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
+%     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
 
 
-%% % Synaptic time constants & reversals
+% % % % % Synaptic time constants & reversals
 tauAMPAr=.25;  % ms, AMPA rise time; Jung et al
 tauAMPAd=1;   % ms, AMPA decay time; Jung et al
 tauNMDAr=5; % ms, NMDA rise time; Jung et al
@@ -354,7 +377,16 @@ EAMPA=0;
 EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
 
-%% % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % %
+% NMDA kinetics
+% Shift Rd and Rr to make NMDA desensitize more...
+increase_NMDA_desens = 1;
+if increase_NMDA_desens; Rd_delta = 2*8.4*10^-3;
+else Rd_delta = 0;
+end
+Rd = 8.4*10^-3 - Rd_delta;
+Rr = 6.8*10^-3 + Rd_delta;
+
+%% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
         
@@ -362,24 +394,28 @@ switch sim_mode
         
     case 2
         
+        [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
+        [include_deepRS, include_deepFS] = deal(1);
+        
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -6:-.1:-9;...
-            'deepFS->deepRS', 'g_SYN', .2:.2:1,...
+            'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
+            % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
         
     case 3
         
-        include_IB = 1;
-        include_NG = 1;
-        include_deepRS = 0;
-        include_deepFS = 0;
+        [include_IB, include_NG] = deal(1);
+        [include_deepRS, include_deepFS, include_RS, include_FS, include_LTS] = deal(0);
         
         tspan = [0 6000];
         
-        vary = {'IB', 'stim2', -6.3:.01:-6.2};
+        % vary = {'IB', 'stim2', -6.3:.01:-6.2};
         
-        % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
+        vary = {'IB', 'PPfreq', 1:15;...
+            'IB', 'PPstim', 0:-.5:-2;...
+            'IB', 'stim2', 0:-.5:-2}; % [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',linspace(2,-2,12); ...
@@ -430,8 +466,9 @@ switch sim_mode
         
 end
 
-%% % Periodic pulse stimulation parameters
-pulse_mode = 0;
+%% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
+gNMDA_pseudo = 0;               
+gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
@@ -455,6 +492,7 @@ switch pulse_mode
         RSPPstim = 0;
         FSPPstim = 0;
         deepRSPPstim = 0;
+        gNMDA_pseudo = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPwidth = 2; % in ms
@@ -464,7 +502,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         width2_rise = .5;  % Not used for Gaussian pulse
         kernel_type = 1;
@@ -542,31 +580,36 @@ switch pulse_mode
         deepRSPPstim = -3;
 end
 
+if function_mode, return, end
 
-%% ##3.0 Build populations and synapses
+%% % % % % % % % % % % % %  ##3.0 Build populations and synapses % % % % % % % % % % % % %
 % % % % % % % % % % ##3.1 Populations % % % % % % % % %
 include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
 include_kramer_IB_synapses;
 
-%% ##4.0 Run simulation & post process
+%% % % % % % % % % % % % %  ##4.0 Run simulation & post process % % % % % % % % % % % % %
+
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
 
-if sim_mode == 2
+if cluster_flag
 
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
         'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
+    
+    return
 
 else
     
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,...
-        'coder',0,'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',1);
+    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,...
+        'compile_flag',compile_flag,'save_data_flag',save_data_flag);
     
 end
-    
+
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
@@ -577,7 +620,7 @@ end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
-if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
+% if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
 if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
 
@@ -601,7 +644,7 @@ if plot_on
             
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
-            elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+%             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
             elseif include_FS;
                 %PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
@@ -726,7 +769,3 @@ end
 toc
 
 %%
-
-
-
-

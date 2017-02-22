@@ -1,1 +1,0 @@
-69a_adding_RS_FS_NMDA_synapse Just realized I should add RS->FS NMDA synapse too. Might make more robost. No PPStim; iApp swept [2.0 to -1.5]!

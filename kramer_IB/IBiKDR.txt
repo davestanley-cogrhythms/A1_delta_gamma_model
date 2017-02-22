@@ -11,7 +11,7 @@ minf(V) = 1./(1+exp((-V-KDR_V1)/KDR_d1))
 mtau(V) = .25+4.35*exp(-abs(V+KDR_V2)/KDR_d2)
 aM(V) = minf(V) ./ mtau(V)
 bM(V) = (1-minf(V))./mtau(V)
-IKDR(V,m) = gKDR.*mKDR.^4.*(V-E_KDR)
+IKDR(V,mKDR) = gKDR.*mKDR.^4.*(V-E_KDR)
  
 mKDR' = aM(V).*(1-mKDR)-bM(V).*mKDR;
 mKDR(0) = IC+IC_noise.*rand(Npop,1)

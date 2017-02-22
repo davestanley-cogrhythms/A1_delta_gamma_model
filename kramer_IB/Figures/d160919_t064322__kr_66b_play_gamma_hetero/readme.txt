@@ -1,1 +1,0 @@
-66b_play_gamma_hetero Restored gamma oscillator. Readjusting connectivity. gGABAaff=1/Nfs; gGABAa_fsrs=1/Nfs;.

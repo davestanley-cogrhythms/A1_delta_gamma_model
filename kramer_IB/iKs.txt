@@ -15,8 +15,8 @@ tauKs(X)=tau_mult*1000./(3.3*tau_div*(exp((X-(halfKs+Ks_offset))/40)+exp(-(X-(ha
 IKs(X,n)=gKs.*n.*(X-E_Ks)
 
 % ODEs
-n'=(ninf(X)-n)/tauKs(X)
-n(0)=IC+IC_noise.*rand(Npop,1)
+nKs'=(ninf(X)-nKs)/tauKs(X)
+nKs(0)=IC+IC_noise.*rand(Npop,1)
 
 % Interface
 @current += -IKs(V,n)
