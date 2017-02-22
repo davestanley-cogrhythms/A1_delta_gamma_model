@@ -519,7 +519,7 @@ switch pulse_mode
         deepRSPPstim = 0;
         IBPPstim = -1;
         RSPPstim = -10;
-        deepRSPPstim = -.5;
+        % deepRSPPstim = -.5;
         deepRSgSpike = 0;
         %         NGPPstim = -4;
         %         FSPPstim = -5;
