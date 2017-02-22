@@ -111,8 +111,6 @@ tau_fast = 5;
 slow_offset = 0;
 slow_offset_correction = 0;
 fast_offset = 0;
-warning('move these to section 2.0');
-
 
 %% % % % % % % % % % % %  ##2.1 Number of cells % % % % % % % % % % % % % 
 % Note: For some of these parameters I will define them twice - once I will
