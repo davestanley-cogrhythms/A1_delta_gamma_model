@@ -45,7 +45,7 @@ figHandles = findobj('Type', 'Figure');
 
 for f = 1:length(figHandles)
 
-    save_as_pdf(figHandles(f), fullfile(savepath, name))
+    save_as_pdf(figHandles(f), fullfile(savepath, [name, '_', num2str(f)]))
     
 end
 
