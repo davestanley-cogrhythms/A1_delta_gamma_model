@@ -1,0 +1,23 @@
+% Transient sodium current from Gutfreund et al. 1995.
+% Parameters
+gNa = 12.5 %/3
+gdenomN = 1
+ENa = 40
+tau_h = (3^((temp-6.3)/10)); temp = 22; % 34 % 1
+IC=0; IC_noise=0
+Noffset = 0
+
+% Functions
+minf(X) = am(X)./(am(X)+bm(X))
+am(X) = -(X+16-Noffset)./(10*(exp(-(X+16-Noffset)/10)-1))
+bm(X) = 4*exp(-(X+41-Noffset)/18)
+ah(X) = .07*exp(-(X+30-Noffset)/20)
+bh(X) = 1./(exp(-(X-Noffset)/10)+1)
+INa(X,h) = (gNa/gdenomN)*(minf(X).^3).*h.*(X-ENa)
+
+% ODEs & ICs
+h' = tau_h*(ah(X).*(1-h)-bh(X).*h)
+h(0) = IC+IC_noise.*rand(Npop,1)
+
+% Linkers
+@current += -INa(X,h)
