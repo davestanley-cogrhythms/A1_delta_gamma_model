@@ -23,6 +23,8 @@ include_kramer_IB_populations;
 
 include_kramer_IB_synapses;
 
+save(fullfile(Today, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct');
+
 if cluster_flag
     
     data=SimulateModel(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
@@ -48,7 +50,5 @@ for f = 1:length(figHandles)
     save_as_pdf(figHandles(f), fullfile(savepath, [name, '_', num2str(f)]))
     
 end
-
-save(fullfile(Today, [name, '_sim_struct.mat']), 'sim_struct');
 
 end
