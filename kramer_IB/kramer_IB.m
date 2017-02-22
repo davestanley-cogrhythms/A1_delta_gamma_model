@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 400];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -331,7 +331,7 @@ if ~no_synapses
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-    gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
+%     gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
     %
     gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
     % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
@@ -425,8 +425,8 @@ switch sim_mode
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'RS','PPstim',linspace(-10,-2,4); ...
-            'FS->RS','g_SYN',[0.2:0.2:1]/Nfs;...
+            'RS','PPstim',linspace(-10,-2,8); ...
+            'FS->RS','g_SYN',[0.2:0.1:1]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -620,7 +620,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-% t = data(1).time; data = CropData(data, t > 250 & t <= t(end));
+t = data(1).time; data = CropData(data, t > 250 & t <= t(end));
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
