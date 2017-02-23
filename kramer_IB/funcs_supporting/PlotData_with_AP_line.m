@@ -16,6 +16,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 %     'xlim' - [XMIN XMAX], x-axis limits (default: all data)
 %     'yscale' {'linear','log','log10'}, whether to plot linear or log scale
 %     'visible' {'on','off'}
+%     'textfontsize' - default text font size of 10
 %     NOTE: analysis options available depending on plot_type
 %       see see CalcFR options for plot_type 'rastergram' or 'rates'
 %       see CalcPower options for plot_type 'power'
@@ -148,6 +149,7 @@ options=CheckOptions(varargin,{...
   'ylim',[],[],...
   'yscale','linear',{'linear','log','log10','log2'},...
   'visible','on',{'on','off'},...
+  'textfontsize',10,[],...
   },false);
 data=CheckData(data);
 handles=[];
@@ -654,7 +656,7 @@ for figset=1:num_fig_sets
             text_xpos=xmin+.05*(xmax-xmin);
             text_ypos=ymin+.9*(ymax-ymin);
             try
-              text(text_xpos,text_ypos,text_string{row,col});
+              text(text_xpos,text_ypos,text_string{row,col},'FontSize',options.textfontsize);
             end
           end  
         end
@@ -691,7 +693,7 @@ for figset=1:num_fig_sets
             ymin=min(ylim); ymax=max(ylim);
             text_xpos=xmin+.05*(xmax-xmin);
             text_ypos=ymin+.9*(ymax-ymin);
-            text(double(text_xpos),text_ypos,text_string{row,col});
+            text(double(text_xpos),text_ypos,text_string{row,col},'FontSize',options.textfontsize);
           end
         end
       end
@@ -711,7 +713,7 @@ for figset=1:num_fig_sets
             hold on; myh = plot([286,286]+shift,[min(ylim),max(ylim)],'r:','LineWidth',2); uistack(myh,'bottom');
             hold on; myh = plot([300,300]+shift,[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
             hold on; myh = plot([325,325]+shift,[min(ylim),max(ylim)],'b:','LineWidth',2); uistack(myh,'bottom');
-            
+            set(gca,'FontSize',options.textfontsize);
           end
         end
   end % end loop over figures in this set

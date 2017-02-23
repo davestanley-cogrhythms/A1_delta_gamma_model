@@ -11,10 +11,11 @@ function save_allfigs_Dave(handles_arr)
 %     end
     
     do_commit = 0;
-    handles_arr = 1:2;
+    supersize_me = 1;
+    handles_arr = 1;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '112d_inc_Vnoise';
+    currfigname = '112e_sweep';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -44,6 +45,12 @@ function save_allfigs_Dave(handles_arr)
 %             set(gcf,'Position',[0.1071    0.2381    0.7250    0.5981]);         % Size for when 3 rows of subplots
 %             set(gcf,'Position',[0.8257    0.1256    0.1743    0.7689]);         % Size to compare Carracedo
                                                                                 % To get only 1 cell trace, run: data(1).model.specification.populations(1).size=1;
+        end
+        if supersize_me
+            axp = get(i,'Position');
+            set(i,'Visible','off');
+            factor = 5;
+            set(i,'Position',[axp(1), axp(2), axp(3)*factor, axp(4)*factor]);
         end
         set(i,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));

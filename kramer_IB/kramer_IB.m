@@ -694,7 +694,7 @@ if plot_on
             %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
             %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
             
-            save_as_pdf(gcf, 'kramer_IB')
+%             save_as_pdf(gcf, 'kramer_IB')
             
         case 12
             %%

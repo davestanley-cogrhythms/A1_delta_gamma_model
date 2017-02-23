@@ -20,6 +20,4 @@ function startup_DynaSimDave
     addpath(genpath(fullfile(pwd,'supporting_funcs')));
     addpath(pwd);
     
-    rmpath(genpath('/projectnb/crc-nak/brpp/Modeling'))
-    
 end
