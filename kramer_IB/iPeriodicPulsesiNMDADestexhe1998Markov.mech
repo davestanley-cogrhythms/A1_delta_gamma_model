@@ -1,7 +1,4 @@
-%%
-% Poisson mechanism based on Jason's email implementation. For some
-% reason this produces huge PSPs
-
+% Generate pulse train
 
 % Pulse train properties
 PPfreq = 40; % in Hz
@@ -24,19 +21,8 @@ pulse_train_preset = 1;
 kernel_type = 1;
 width2_rise = 0.25;
 
-% Build pulse train
-s = getDeltaTrainPresets(PPfreq,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
-s2 = convolveDeltaTrainwithKernel(s,dt,PPwidth,Npop,kernel_type,width2_rise);
-
-% Convert train to pseudo Vm
-X_pseudo(k) = 100*s2(k,:) - 60;           % Membrane voltage of simulated pre-synaptic cell action potentials goes from -60 to +40 mV 
-
-
-% iNMDA: NMDA-type synaptic current baesd on Markov scheme and with magnesium block (see Destexhe: Methods in Neuronal Modeling, Chapter 1)
-% Original implementation as in Destexhe: Methods in Neuronal Modeling
-% See equation 1.5, pg 8, for kinetic scheme.
-
-gNMDA_pseudo = [0]		% mS/cm2, maximal conductance
+% Synaptic response properties (NMDA synapse)
+PP_gNMDA = [0]		% mS/cm2, maximal conductance
 ENMDA = [0]		% mV, reversal potential
 
 Rb = 5*10^0            % Convert from 1/(M*s) to 1/(mM*ms)
@@ -53,13 +39,25 @@ Kp = [5]             % page 5: Kp = 5        % transmitter steepness
 IC = [0]
 IC_noise = [0]
 
+% Build pulse train
+s1 = getDeltaTrainPresets(PPfreq,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
+s2 = convolveDeltaTrainwithKernel(s1,dt,PPwidth,Npop,kernel_type,width2_rise);
+
+% Convert train to pseudo Vm
+X_pseudo(k) = 100*s2(k,:) - 60;           % Membrane voltage of simulated pre-synaptic cell action potentials goes from -60 to +40 mV 
+
+
+% iNMDA: NMDA-type synaptic current baesd on Markov scheme and with magnesium block (see Destexhe: Methods in Neuronal Modeling, Chapter 1)
+% Original implementation as in Destexhe: Methods in Neuronal Modeling
+% See equation 1.5, pg 8, for kinetic scheme.
+
 % fixed variables
 %netcon = ones(N_pre,N_post) % default connectivity matrix (all-to-all)
 
 % functions
 BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods in Neuronal Modeling, page 9]
 NT(k) = Tmax./(1+exp(-(X_pseudo(k)-Vpp)/Kp)) 		% sigmoidal neurotransmitter concentration [T] increasing rapidly to Tmax with presynaptic voltage above 0mV (i.e., Vpre spike)
-INMDA(X,o) = gNMDA_pseudo.*BMg(X).*o.*(X-ENMDA) % post-synaptic NMDA current
+INMDA(X,o) = PP_gNMDA.*BMg(X).*o.*(X-ENMDA) % post-synaptic NMDA current
 
 % ODEs and ICs
 o' = Ro*c2 - Rc*o

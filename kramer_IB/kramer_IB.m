@@ -129,7 +129,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=30;   % Number of excitatory cells
+N=10;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -425,7 +425,7 @@ switch sim_mode
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'FS','PPstim',linspace(-3,-.5,4); ...
+            'RS','PPstim',linspace(-3,-.5,4); ...
 %             'FS->RS','g_SYN',[0.05:0.05:.2]/Nfs;...
             };
         
@@ -472,12 +472,22 @@ switch sim_mode
 end
 
 %% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
-gNMDA_pseudo = 0;               
-gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
+IB_PP_gNMDA = 0;               
+IB_PP_gSYN = 0;
+RS_PP_gSYN = 0;
+NG_PP_gSYN = 0;
+FS_PP_gSYN = 0;
+
+% IB_PP_gSYN = 0.1;
+% IB_PP_gNMDA = 0.5;
+RS_PP_gSYN = 0.05;
+% NG_PP_gSYN = 0.05;
+% FS_PP_gSYN = 0.05;
+
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
-        PPwidth = 2; % in ms
+        PPwidth = tauAMPAd*2; % in ms        % Broaden by factor of 2x due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
@@ -485,22 +495,23 @@ switch pulse_mode
         ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = 0.75;  % Not used for Gaussian pulse
+        width2_rise = tauAMPAr*2;      % Broaden by factor of 2x due to presynaptic jitter
         kernel_type = 2;
         PPFacTau = 200;
         PPFacFactor = 1.0;
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
         RSPPFacTau = 200;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
+        IB_PP_gNMDA = 0;               
+        IB_PP_gSYN = 0;
+        RS_PP_gSYN = 0;
+        NG_PP_gSYN = 0;
+        FS_PP_gSYN = 0;
         deepRSPPstim = 0;
-        gNMDA_pseudo = 0;
+        IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
-        PPwidth = 2; % in ms
+        PPwidth = tauAMPAd*2; % in ms        % Broaden by factor of 2x due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 200;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
@@ -509,7 +520,7 @@ switch pulse_mode
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = .5;  % Not used for Gaussian pulse
+        width2_rise = tauAMPAr*2;      % Broaden by factor of 2x due to presynaptic jitter
         kernel_type = 1;
         PPFacTau = 100;
         PPFacFactor = 1.0;
@@ -530,59 +541,9 @@ switch pulse_mode
         %         deepRSPPstim = -7;
         
     case 2                  % Median nerve stimulation
-        PPfreq = 2; % 2 Hz delta
-        PPwidth = 10; % in mscd
-        PPshift = 0; % in ms
-        PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-0;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = 2.5;  % Not used for Gaussian pulse
-        kernel_type = 2;
-        PPFacTau = 200;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 200;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
-        deepRSPPstim = 0;
-        IBPPstim = -5;
-        % RSPPstim = -5;
-        % NGPPstim = -4;
-        % FSPPstim = -5;
-        % deepRSPPstim = -5;
+        % Disabled for now...
     case 3                  % Auditory stimulation at 10Hz (possibly not used...)
-        PPfreq = 10; % in Hz
-        PPwidth = 2; % in ms
-        PPshift = 0; % in ms
-        PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-10;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = 0.75;  % Not used for Gaussian pulse
-        kernel_type = 1;
-        PPFacTau = 200;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 200;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
-        deepRSPPstim = 0;
-        % IBPPstim = -3;
-        % RSPPstim = -3;
-        % NGPPstim = -4;
-        % FSPPstim = -5;
-        deepRSPPstim = -3;
+        % Disabled for now...
 end
 
 if function_mode, return, end
@@ -620,7 +581,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
+% t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
@@ -642,7 +603,7 @@ if plot_on
             %%
             % PlotData(data,'plot_type','waveform');
             
-            PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
+%             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             %PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
