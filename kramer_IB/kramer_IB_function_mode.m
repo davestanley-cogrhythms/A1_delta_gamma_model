@@ -41,6 +41,8 @@ else
 
 end
 
+close('all')
+
 PlotData(data)
 
 figHandles = findobj('Type', 'Figure');
