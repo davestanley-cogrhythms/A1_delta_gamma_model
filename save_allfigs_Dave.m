@@ -11,8 +11,8 @@ function save_allfigs_Dave(handles_arr)
 %     end
     
     do_commit = 0;
-    supersize_me = 1;
-    handles_arr = 4:4;
+    supersize_me = 0;
+    handles_arr = 1:1;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
     currfigname = '112e_sweep';
