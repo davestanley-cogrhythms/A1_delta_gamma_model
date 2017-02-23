@@ -12,7 +12,7 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 1;
-    handles_arr = 1;
+    handles_arr = 4:4;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
     currfigname = '112e_sweep';
@@ -49,7 +49,7 @@ function save_allfigs_Dave(handles_arr)
         if supersize_me
             axp = get(i,'Position');
             set(i,'Visible','off');
-            factor = 5;
+            factor = 3;
             set(i,'Position',[axp(1), axp(2), axp(3)*factor, axp(4)*factor]);
         end
         set(i,'PaperPositionMode','auto');
@@ -61,7 +61,7 @@ function save_allfigs_Dave(handles_arr)
     end
     
 
-    mycomment = ['Increased Gaussian noise to all 4 cell types. Set all to 6.'];
+    mycomment = ['Parameter sweep through gFS_RS and RS PPStim'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
