@@ -1,0 +1,22 @@
+% iCa: calcium inward current after Traub & Jefferys 1994.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters
+gCa=.02 % .9*.02/.25
+ECa=120
+IC_noise=0
+Caoffset=0
+
+% Functions
+as(X) = 1.6./(1+exp(-.072*(X-Caoffset-65)))
+bs(X) = 0.02*(X-Caoffset-51.1)./(exp((X-Caoffset-51.1)/5)-1)
+sinf(X) = as(X)./(as(X)+bs(X))
+stau(X) = 1./(as(X)+bs(X))
+ICa(X) = gCa.*(s.^2).*(X-ECa)
+
+% ODEs & ICs
+s' = (sinf(X)-s)./stau(X) % s' = as(X).*(1-X)-bs(X).*X % 
+s(0) = as(-65)/(as(-65)+bs(-65))+IC_noise.*rand(1,Npop)
+
+% Linkers
+@current += -ICa(X)
+@ica += ICa(X)
