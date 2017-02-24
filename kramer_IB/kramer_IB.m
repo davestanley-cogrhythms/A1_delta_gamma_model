@@ -129,7 +129,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=10;   % Number of excitatory cells
+N=30;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -425,8 +425,8 @@ switch sim_mode
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'RS','PP_gSYN',linspace(0,0.15,4); ...
-%             'FS->RS','g_SYN',[0.05:0.05:.2]/Nfs;...
+            'RS','PP_gSYN',linspace(0.05,0.1,4); ...
+            'FS->RS','g_SYN',[0.05:0.05:.4]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -581,7 +581,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-% t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
+t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure

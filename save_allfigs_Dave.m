@@ -12,10 +12,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = 1:5;
+    handles_arr = 1:3;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '114b_tweak_PPstim_amp';
+    currfigname = '115a_sweep_RS_PPstim';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -54,7 +54,7 @@ function save_allfigs_Dave(handles_arr)
         end
         set(i,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-        tic; print(i,'-dpng','-r50','-opengl',fullfile(basepath,sp,savenames{i}));toc
+        tic; print(i,'-dpng','-r100','-opengl',fullfile(basepath,sp,savenames{i}));toc
         %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
