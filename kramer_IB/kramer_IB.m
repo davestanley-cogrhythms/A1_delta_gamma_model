@@ -327,7 +327,7 @@ if ~no_synapses
 %     gAMPA_rsfs=0.4/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
 %     gGABAa_fsfs=1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=.05/Nfs;                     % FS -> RS
+    gGABAa_fsrs=.1/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -425,8 +425,8 @@ switch sim_mode
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'RS','PP_gSYN',[0.07:0.01:.12]; ...
-            'FS->RS','g_SYN',[0.02:0.02:.2]/Nfs;...
+            'FS','PP_gSYN',[.1]; ...
+            'FS->FS','g_SYN',[.1:.1:1]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -603,16 +603,16 @@ if plot_on
         case {1,11}
             %%
             % PlotData(data,'plot_type','waveform');
-            textfontsize = 5;
-            PlotData_with_AP_line(data,'textfontsize',textfontsize,'plot_type','waveform','max_num_overlaid',10);
+            tfs = 5;
+            PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',50);
             
-            t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
-            PlotData_with_AP_line(data3,'textfontsize',textfontsize,'max_num_overlaid',10,'variable','RS_V','plot_type','waveform')
-            
-            
+%             t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
+%             PlotData_with_AP_line(data3,'textfontsize',textfontsize,'max_num_overlaid',10,'variable','RS_V','plot_type','waveform')
             
             
-            %PlotData_with_AP_line(data,'plot_type','rastergram');
+            
+            
+            PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
             
@@ -644,7 +644,16 @@ if plot_on
             
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
             %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
-            PlotData(data,'plot_type','waveform')
+            
+            tfs = 10;
+            PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
+            
+            t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
+            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','waveform')
+            
+            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','rastergram')
+
+            
             %PlotFR2(data,'plot_type','meanFR')
             %             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
             %             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
