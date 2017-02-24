@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -44,7 +44,7 @@ cluster_flag = 0;
 save_data_flag = 0;
 verbose_flag = 1;
 random_seed = 'shuffle';
-random_seed = 2;
+% random_seed = 2;
 
 Now = clock;
 
@@ -322,12 +322,12 @@ if ~no_synapses
 %     gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
-    gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
+    gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-%     gAMPA_rsfs=0.4/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-%     gGABAa_fsfs=1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=.1/Nfs;                     % FS -> RS
+    gGABAa_fsfs=4/Nfs;                      % FS -> FS
+    gGABAa_fsrs=.05/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -480,9 +480,9 @@ FS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-RS_PP_gSYN = 0.1;
+RS_PP_gSYN = 0.12;
 % NG_PP_gSYN = 0.05;
-FS_PP_gSYN = 0.1;
+% FS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
 
 switch pulse_mode
@@ -528,17 +528,9 @@ switch pulse_mode
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
         RSPPFacTau = 100;
-        IBPPstim = 0;
-        NGPPstim = 0;
-        RSPPstim = 0;
-        FSPPstim = 0;
         deepRSPPstim = 0;
-        IBPPstim = -1;
-        RSPPstim = -10;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
-        %         NGPPstim = -4;
-        %         FSPPstim = -5;
         %         deepRSPPstim = -7;
         
     case 2                  % Median nerve stimulation
