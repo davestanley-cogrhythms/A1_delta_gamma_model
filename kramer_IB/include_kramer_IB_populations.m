@@ -139,10 +139,18 @@ end
 %% BEn's deepRS cell
 if include_deepRS
     
-    Cm_Ben = 0.25;
-    gKs = 0.084;
+    % Cm_Ben = 2.7; % 0.25;
+    Cm_factor = Cm_Ben/.25;
+    gKs = .084; % .134; % 
     gNaP_denom = 3.36;
+    gKDR = 5;
+    gNa = 12.5;
+    gKCa = .005; % .013; %  
+    bKCa = .002; % .001; % 
+    gCa = .02; % .05; % 
+    CAF = 24;
     I_const = 0;
+    noise = 0;
     
     tau_fast = 5;
     slow_offset = 0;
@@ -156,13 +164,16 @@ if include_deepRS
     spec.populations(i).size = NdeepRS;
     spec.populations(i).equations = {['V''=(I_const+@current)/Cm; V(0)=' num2str(IC_V) ]};
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
-    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','iPeriodicSpikes','itonicBen'};
+    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'}; % 'iPeriodicPulsesBen','iPeriodicSpikes','itonicBen'};
     spec.populations(i).parameters = {...
       'Cm',Cm_Ben,...
-      'gKs',gKs,'gNaP_denom',gNaP_denom,'gNaP',gKs/gNaP_denom, 'I_const',I_const,...    %  halfKs=-60; halfNaP=-60; gKs=0.084; gNaP=0.025; gl=0.025; gCa=0.02; %%% 
+      'gNa',Cm_factor*gNa,'gKDR',Cm_factor*gKDR,...
+      'gKCa',Cm_factor*gKCa,'gCa',Cm_factor*gCa, 'bKCa', bKCa, 'CAF', CAF/Cm_factor,...
+      'gKs',Cm_factor*gKs,'gNaP_denom',gNaP_denom,'gNaP',Cm_factor*gKs/gNaP_denom, 'I_const',I_const,...    %  halfKs=-60; halfNaP=-60; gKs=0.084; gNaP=0.025; gl=0.025; gCa=0.02; %%% 
       'tau_fast',tau_fast,'tau_h',tau_fast,'tau_m',tau_fast,... 
-      'slow_offset',slow_offset, 'slow_offset_correction',slow_offset_correction,'Ks_offset',slow_offset-slow_offset_correction,'NaP_offset',slow_offset,...
+      'slow_offset',slow_offset, 'slow_offset_correction',slow_offset_correction,...
+      'Ks_offset',slow_offset-slow_offset_correction,'NaP_offset',slow_offset,...
       'fast_offset',0, 'Koffset',fast_offset,'Noffset',fast_offset...                   % 'fast_denom=1; gKDR=5/fast_denom; gNa=12.5/fast_denom;',...
-      'ton',50,'toff',tspan(end),'I_app',JdeepRS,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
+      'ton',500,'toff',tspan(end),'I_app',Cm_factor*JdeepRS,'noise',noise,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
       };
 end

@@ -37,7 +37,7 @@ include_supFS = 0;
 include_deepRS = 1;
 
 % % Simulation controls
-tspan=[0 1000]; dt=.01; solver='euler'; % euler, rk2, rk4
+tspan=[0 6000]; dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % Simulation switches
@@ -428,6 +428,7 @@ TmaxGABAB=0.5;      % See iGABABAustin.txt
 % % % % % % % % % % % % %  ##2.3 Biophysical parameters % % % % % % % % % % % % %  
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
+Cm_Ben = 2.7 % .25 %   
 gl=.1;
 ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
@@ -435,7 +436,7 @@ IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
 ECa=125;     % calcium reversal potential
 IC_noise=.25;% fractional noise in initial conditions
 if no_noise
-    IC_noise= 0;
+    IC_noise = 0;
     IBda_Vnoise = 0;
     IBs_Vnoise = 0;
     IBdb_Vnoise = 0;
@@ -450,7 +451,10 @@ IC_V = -65;
 % % % % % % % % % % % % % % % % ##2.4 Set up parallel sims % % % % % % % % % % 
 switch sim_mode
     case 1                                                                  % Everything default, single simulation
-        vary = [];
+        vary = {'deepRS', 'I_app', Cm_Ben*(-.15:-.015:-.3)/.25,...
+                'deepRS', 'gKCa', Cm_Ben*(.005:.004:.013)/.25,...
+                % 'deepRS', 'gKs', Cm_Ben*[.084 .104 .124],... % Cm_Ben*(-.7:-.01:-1)/.25}; % % [];
+                };
     case 9  % Vary RS cells in RS-FS network
 
         vary = { %'RS','stim2',linspace(2,-2,12); ...
@@ -513,7 +517,7 @@ include_kramer_IB_synapses;
 %% ##4.0 Run simulation & post process
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',double(sim_mode ~= 1),'verbose_flag',1);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,'random_seed',random_seed,'compile_flag',compile_flag,'vary',vary,'parallel_flag',1,'verbose_flag',1);
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
