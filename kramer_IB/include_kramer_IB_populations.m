@@ -72,6 +72,13 @@ end
 
 %% FS cells
 if include_FS
+    
+    if do_FS_reset_pulse
+%         ap_pulse_num0 = ap_pulse_num;
+        pulse_train_preset0 = pulse_train_preset;
+%         ap_pulse_num = ap_pulse_num + 1;
+        pulse_train_preset = 2;
+    end
 
     FS_gM = 0;
     i=i+1;
@@ -89,6 +96,12 @@ if include_FS
       'gKDR',80,'E_KDR',E_EKDR,...
       'gM',FS_gM,'E_M',E_EKDR,...
       };
+  
+  
+    if do_FS_reset_pulse
+%         ap_pulse_num = ap_pulse_num0 ;
+        pulse_train_preset = pulse_train_preset0 ;
+    end
 end
 
 %% LTS cells

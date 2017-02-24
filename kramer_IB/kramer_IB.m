@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -327,7 +327,7 @@ if ~no_synapses
 %     gAMPA_rsfs=0.4/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
 %     gGABAa_fsfs=1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=.6/Nfs;                     % FS -> RS
+    gGABAa_fsrs=.05/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -480,9 +480,10 @@ FS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-RS_PP_gSYN = 0.05;
+RS_PP_gSYN = 0.1;
 % NG_PP_gSYN = 0.05;
 FS_PP_gSYN = 0.1;
+do_FS_reset_pulse = 1;
 
 switch pulse_mode
     case 0                  % No stimulation
@@ -603,8 +604,8 @@ if plot_on
             %%
             % PlotData(data,'plot_type','waveform');
             
-%             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
-            %PlotData_with_AP_line(data,'plot_type','rastergram');
+            PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
+            PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
             
