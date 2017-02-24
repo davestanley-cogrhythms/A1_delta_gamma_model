@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -425,8 +425,8 @@ switch sim_mode
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'RS','PP_gSYN',linspace(0.05,0.1,4); ...
-            'FS->RS','g_SYN',[0.05:0.05:.4]/Nfs;...
+            'RS','PP_gSYN',[0.07:0.01:.12]; ...
+            'FS->RS','g_SYN',[0.02:0.02:.2]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -483,7 +483,7 @@ FS_PP_gSYN = 0;
 RS_PP_gSYN = 0.1;
 % NG_PP_gSYN = 0.05;
 FS_PP_gSYN = 0.1;
-do_FS_reset_pulse = 1;
+do_FS_reset_pulse = 0;
 
 switch pulse_mode
     case 0                  % No stimulation
@@ -603,9 +603,16 @@ if plot_on
         case {1,11}
             %%
             % PlotData(data,'plot_type','waveform');
+            textfontsize = 5;
+            PlotData_with_AP_line(data,'textfontsize',textfontsize,'plot_type','waveform','max_num_overlaid',10);
             
-            PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
-            PlotData_with_AP_line(data,'plot_type','rastergram');
+            t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
+            PlotData_with_AP_line(data3,'textfontsize',textfontsize,'max_num_overlaid',10,'variable','RS_V','plot_type','waveform')
+            
+            
+            
+            
+            %PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
             
