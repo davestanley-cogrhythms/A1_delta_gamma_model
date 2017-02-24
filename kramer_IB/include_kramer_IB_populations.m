@@ -145,7 +145,7 @@ if include_deepRS
     gNaP_denom = 3.36;
     gKDR = 5;
     gNa = 12.5;
-    gKCa = .005; % .013; %  
+    gKCa = .009; % .005; % .013; %  
     bKCa = .002; % .001; % 
     gCa = .02; % .05; % 
     CAF = 24;
@@ -164,7 +164,7 @@ if include_deepRS
     spec.populations(i).size = NdeepRS;
     spec.populations(i).equations = {['V''=(I_const+@current)/Cm; V(0)=' num2str(IC_V) ]};
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
-    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'}; % 'iPeriodicPulsesBen','iPeriodicSpikes','itonicBen'};
+    spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen','iPeriodicPulsesBen'}; %,'iPeriodicSpikes','itonicBen'};
     spec.populations(i).parameters = {...
       'Cm',Cm_Ben,...
       'gNa',Cm_factor*gNa,'gKDR',Cm_factor*gKDR,...
