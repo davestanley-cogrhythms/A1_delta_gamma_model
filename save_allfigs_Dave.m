@@ -61,7 +61,7 @@ function save_allfigs_Dave(handles_arr)
     end
     
 
-    mycomment = ['Found a good stimulus amplitude for FS cells (again, temporary for tuning). Still working on RS cells.'];
+    mycomment = ['Sweeping through RS PPStim and gFSRS'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
