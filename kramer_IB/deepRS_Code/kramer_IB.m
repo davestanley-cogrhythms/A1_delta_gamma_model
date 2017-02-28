@@ -429,7 +429,7 @@ TmaxGABAB=0.5;      % See iGABABAustin.txt
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
 Cm_Ben = 2.7 % .25 %   
-gl=.1;
+gl=.025;
 ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
 IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
@@ -455,9 +455,9 @@ switch sim_mode
                 % 'deepRS', 'PPstim', Cm_Ben*(-.025:-.025:-.1)/.25;...
                 % 'deepRS', 'PPduty', .25;...
                 % 'deepRS', 'kernel_type', 25;...
-                'deepRS', 'I_app', Cm_Ben*(-.15:-.015:-.3)/.25;... % Cm_Ben*(-.125)/.25;... % 
+                'deepRS', 'I_app', 3*Cm_Ben*(-.15:-.015:-.3)/.25;... % Cm_Ben*(-.125)/.25;... % 
                 % 'deepRS', 'PPstim', 0;...
-                % 'deepRS', 'gKCa', Cm_Ben*(.005:.004:.013)/.25;... 
+                'deepRS', 'gKCa', Cm_Ben*(.005:.004:.021)/.25;... 
                 % 'deepRS', 'gKs', Cm_Ben*[.084 .104 .124]/.25;... % Cm_Ben*(-.7:-.01:-1)/.25}; % % [];
                 };
     case 9  % Vary RS cells in RS-FS network
