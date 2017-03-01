@@ -4,7 +4,7 @@ if nargin < 1; sim_struct = []; end
 if isempty(sim_struct); sim_struct = struct; end
 
 Today = datestr(datenum(date),'yy-mm-dd');
-mkdir(Today);
+% mkdir(Today);
 
 savepath = fullfile('Figs_Ben', Today);
 mkdir(savepath);
@@ -23,7 +23,7 @@ include_kramer_IB_populations;
 
 include_kramer_IB_synapses;
 
-save(fullfile(Today, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct');
+save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct');
 
 if cluster_flag
     

@@ -98,11 +98,11 @@ IC_V = -65;         % Starting membrane potential
 % % % % % Parameters for deep RS cells.
 gKs = Cm_factor*0.124; % Cm_factor*0.134; % 
 gNaP_denom = 3.36;
-gKCa = Cm_factor*0.007; % Cm_factor*0.014; % 
+gKCa = Cm_factor*0.005; % Cm_factor*0.014; % 
 bKCa = .002;
 gCa = Cm_factor*.05;
 CAF = 24/Cm_factor;
-gl_dRS = Cm_factor*.025;
+gl_dRS = Cm_factor*.025; % 0; % 
 gNa_dRS = Cm_factor*12.5;
 gKDR_dRS = Cm_factor*5;
 I_const = 0;
@@ -389,11 +389,11 @@ Rr = 6.8*10^-3 + Rd_delta;
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
     case 1                                                                     % Everything default, single simulation
-        vary = {'deepRS', 'PPfreq', 1:23;...
-                'deepRS', 'PPstim', Cm_factor*-.1;... % -.5:-.5:-2;... % Cm_Ben*(-.025:-.025:-.1)/.25;...
+        vary = {'deepRS', 'PPfreq', 1.5;...
+                'deepRS', 'PPstim', -Cm_factor*(0:.025:.05);... % -.5:-.5:-2;... % Cm_Ben*(-.025:-.025:-.1)/.25;...
                 'deepRS', 'PPduty', .25;...
                 'deepRS', 'kernel_type', 25;... % 7;... % 
-                'deepRS', 'I_app', Cm_factor*(-.6);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
+                'deepRS', 'I_app', -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
                 % 'deepRS', '(gKCa,gKs,I_const)', Cm_factor*[.084:.01:.124; .009:.001:.013; .15:.041:.314];...
                 % 'deepRS', 'PPstim', 0;...
                 % 'deepRS', 'gKCa', Cm_Ben*(.005:.004:.021)/.25;... 
