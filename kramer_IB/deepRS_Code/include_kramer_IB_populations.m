@@ -148,6 +148,7 @@ if include_deepRS
     gKCa = .009; % .005; % .013; %  
     bKCa = .002; % .001; % 
     gCa = .02; % .05; % 
+    gl = 0; % .025; % 
     CAF = 24;
     I_const = 0;
     noise = 0;
@@ -175,6 +176,6 @@ if include_deepRS
       'Ks_offset',slow_offset-slow_offset_correction,'NaP_offset',slow_offset,...
       'fast_offset',0, 'Koffset',fast_offset,'Noffset',fast_offset...                   % 'fast_denom=1; gKDR=5/fast_denom; gNa=12.5/fast_denom;',...
       'ton',500,'toff',tspan(end),'I_app',Cm_factor*JdeepRS,'noise',noise,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
-      'PPstim',0,'gl',Cm_factor*.025;...
+      'PPstim',0,'gl',Cm_factor*gl;...
       };
 end
