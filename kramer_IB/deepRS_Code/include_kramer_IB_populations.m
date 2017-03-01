@@ -141,14 +141,14 @@ if include_deepRS
     
     % Cm_Ben = 2.7; % 0.25;
     Cm_factor = Cm_Ben/.25;
-    gKs = .084; % .134; % 
+    gKs = .134; % .084; % 
     gNaP_denom = 3.36;
     gKDR = 5;
     gNa = 12.5;
-    gKCa = .009; % .005; % .013; %  
+    gKCa = .014; %.009; % .005; %   
     bKCa = .002; % .001; % 
-    gCa = .02; % .05; % 
-    gl = 0; % .025; % 
+    gCa = .05; % .02; % 
+    gl = .025; % 0; % 
     CAF = 24;
     I_const = 0;
     noise = 0;
