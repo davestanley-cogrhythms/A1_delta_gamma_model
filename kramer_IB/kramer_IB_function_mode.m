@@ -1,4 +1,4 @@
-function [data, name] = kramer_IB_function_mode(sim_struct)
+function [data, name, sim_spec] = kramer_IB_function_mode(sim_struct)
 
 if nargin < 1; sim_struct = []; end
 if isempty(sim_struct); sim_struct = struct; end

@@ -96,9 +96,9 @@ IC_V = -65;         % Starting membrane potential
 % KDR_offset = 20;
 
 % % % % % Parameters for deep RS cells.
-gKs = Cm_factor*0.124;
+gKs = Cm_factor*0.134;
 gNaP_denom = 3.36;
-gKCa = Cm_factor*0.005;
+gKCa = Cm_factor*0.014;
 bKCa = .002;
 gCa = Cm_factor*.05;
 CAF = 24/Cm_factor;
@@ -388,9 +388,18 @@ Rr = 6.8*10^-3 + Rd_delta;
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
-    case 1                                                                  % Everything default, single simulation
+    case 1                                                                     % Everything default, single simulation
+        vary = {'deepRS', 'PPfreq', 1:23;...
+                'deepRS', 'PPstim', -.5:-.5:-1.5;... % Cm_Ben*(-.025:-.025:-.1)/.25;...
+                'deepRS', 'PPduty', .25;...
+                'deepRS', 'kernel_type', 7;... % 25;...
+                'deepRS', 'I_app', -7.5;... % -7:-.1:-11;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % Cm_Ben*(-.125)/.25;... % 
+                % 'deepRS', 'PPstim', 0;...
+                % 'deepRS', 'gKCa', Cm_Ben*(.005:.004:.021)/.25;... 
+                % 'deepRS', 'gKs', Cm_Ben*[.084 .104 .124]/.25;... % Cm_Ben*(-.7:-.01:-1)/.25}; % % [];
+                };                                                               % Everything default, single simulation
         
-        vary = [];
+        % vary = [];
         
     case 2
         
