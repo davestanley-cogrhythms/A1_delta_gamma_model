@@ -29,7 +29,7 @@ if cluster_flag
     
     data=SimulateModel(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
-        'save_data_flag',1,'study_dir',name);
+        'save_data_flag',1,'qsub_mode','array','study_dir',name);
     
     return
 
