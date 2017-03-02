@@ -65,6 +65,7 @@ include_LTS = 1;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
+include_supNG = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -106,6 +107,8 @@ gl_dRS = Cm_factor*.025; % 0; %
 gNa_dRS = Cm_factor*12.5;
 gKDR_dRS = Cm_factor*5;
 I_const = 0;
+deepRSPPstim = 0;
+deepRSgSpike = 0;
 
 tau_fast = 5;
 slow_offset = 0;
@@ -156,7 +159,7 @@ Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
-JdeepRS = -10;   % Ben's RS theta cells
+JdeepRS = -6;   % Ben's RS theta cells
 
 % % % % % % Tonic current onset and offset times
     % Times at which injected currents turn on and off (in milliseconds). See
@@ -338,7 +341,7 @@ if ~no_synapses
     gNMDA_deepRSdeepRS=0.0/(NdeepRS);
     gAMPA_deepRSdeepFS=1/(NdeepRS);        % Increased by 4x due to sparse firing of deep principal cells.
     gGABA_deepFSdeepFS=0.5/NdeepFS;
-    gGABAa_deepFSdeepRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of deep principal cells
+    gGABAa_deepFSdeepRS=0.6/NdeepFS;       % Decreased by 3x due to reduced stimulation of deep principal cells
     
     % % Delta -> Theta connections (including NG - really should model this separately!)
     gAMPA_IBdeepRS = 0.01/N;
@@ -348,8 +351,9 @@ if ~no_synapses
     % gGABAa_NGdeepRS=0.01/Nng;
     % gGABAb_NGdeepRS=0.05/Nng;
     gAMPA_deepRSIB = 0.1/(NdeepRS);
-    gAMPA_deepRSNG = 0.1/(NdeepRS);
-    gAMPA_deepRSRS = 0.15/Nrs;
+    gAMPA_deepRSsupNG = 0.1/(NdeepRS);
+    gAMPA_deepRSRS = 0.15/NdeepRS;
+    gGABAa_deepFSIB = 0.6/NdeepFS;
     
     % Superficial -> Deep connections
     gAMPA_RSdeepRS = 0.15/NdeepRS;
