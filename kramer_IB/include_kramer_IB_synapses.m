@@ -315,6 +315,17 @@ if include_RS && include_deepRS
         };
 end
 
+% % deepRS->NG
+
+if include_NG && include_deepRS
+    i=i+1;
+    spec.connections(i).direction = 'deepRS->NG';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSNG,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
+        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
 sim_spec = spec;
 
 % %% Supraficial connections

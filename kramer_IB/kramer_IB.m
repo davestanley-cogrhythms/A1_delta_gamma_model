@@ -96,9 +96,9 @@ IC_V = -65;         % Starting membrane potential
 % KDR_offset = 20;
 
 % % % % % Parameters for deep RS cells.
-gKs = Cm_factor*0.124; % Cm_factor*0.134; % 
+gKs = Cm_factor*0.134; % Cm_factor*0.124; % 
 gNaP_denom = 3.36;
-gKCa = Cm_factor*0.005; % Cm_factor*0.014; % 
+gKCa = Cm_factor*0.014; % Cm_factor*0.005; % 
 bKCa = .002;
 gCa = Cm_factor*.05;
 CAF = 24/Cm_factor;
@@ -345,11 +345,13 @@ if ~no_synapses
     % gNMDA_IBdeepRS = 0.2/N;
     % gAMPA_IBdeepFS = 0.01/N;
     % gNMDA_IBdeepFS = 0.1/N;
-    gAMPA_deepRSRS = 0.15/Nrs;
     % gGABAa_NGdeepRS=0.01/Nng;
     % gGABAb_NGdeepRS=0.05/Nng;
+    gAMPA_deepRSIB = 0.1/(NdeepRS);
+    gAMPA_deepRSNG = 0.1/(NdeepRS);
+    gAMPA_deepRSRS = 0.15/Nrs;
     
-    % deep -> Deep connections
+    % Superficial -> Deep connections
     gAMPA_RSdeepRS = 0.15/NdeepRS;
     gAMPA_RSIB = 0.15/NdeepRS;
     
@@ -389,7 +391,7 @@ Rr = 6.8*10^-3 + Rd_delta;
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
     case 1                                                                     % Everything default, single simulation
-        vary = {'deepRS', 'PPfreq', 1.5;...
+       vary = {'deepRS', 'PPfreq', 1.5;...
                 'deepRS', 'PPstim', -Cm_factor*(0:.025:.05);... % -.5:-.5:-2;... % Cm_Ben*(-.025:-.025:-.1)/.25;...
                 'deepRS', 'PPduty', .25;...
                 'deepRS', 'kernel_type', 25;... % 7;... % 
@@ -400,7 +402,7 @@ switch sim_mode
                 % 'deepRS', 'gKs', Cm_Ben*[.084 .104 .124]/.25;... % Cm_Ben*(-.7:-.01:-1)/.25}; % % [];
                 };                                                               % Everything default, single simulation
         
-        % vary = [];
+        vary = [];
         
     case 2
         
