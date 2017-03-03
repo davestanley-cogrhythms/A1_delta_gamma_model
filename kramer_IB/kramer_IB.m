@@ -63,9 +63,7 @@ include_RS = 1;
 include_FS = 1;
 include_LTS = 1;
 include_NG = 1;
-include_supRS = 0;
-include_supFS = 0;
-include_supNG = 0;
+include_deepNG = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -134,6 +132,7 @@ Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
+NdeepNG = N;
 NdeepFS = N;
 NdeepRS = 1;    % Number of deep theta-resonant RS cells
 
@@ -156,9 +155,11 @@ JRS1 = 5; % RS cells
 JRS2 = 1; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
-deepJRS1 = 5;    % RS deep cells
-deepJRS2 = 0.75;
+% deepJRS1 = 5;    % RS deep cells
+% deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
+JdeepNG1 = 3;
+JdeepNG2 = 1;
 JdeepRS = -6;   % Ben's RS theta cells
 
 % % % % % % Tonic current onset and offset times
@@ -189,6 +190,7 @@ LTS_Vnoise = 6;
 RSda_Vnoise = .3;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
+deepNG_Vnoise = 3;
 
 % Steps for tuning
 %     1) Get delta oscillation
@@ -522,6 +524,7 @@ switch pulse_mode
         RSPPFacFactor = 1.0;
         RSPPFacTau = 200;
         IBPPstim = 0;
+        deepNGPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
@@ -546,6 +549,7 @@ switch pulse_mode
         RSPPFacFactor = 1.0;
         RSPPFacTau = 100;
         IBPPstim = 0;
+        deepNGPPstim = 0;
         NGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
@@ -577,6 +581,7 @@ switch pulse_mode
         RSPPFacTau = 200;
         IBPPstim = 0;
         NGPPstim = 0;
+        deepNGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
         deepRSPPstim = 0;
@@ -604,6 +609,7 @@ switch pulse_mode
         RSPPFacTau = 200;
         IBPPstim = 0;
         NGPPstim = 0;
+        deepNGPPstim = 0;
         RSPPstim = 0;
         FSPPstim = 0;
         deepRSPPstim = 0;
