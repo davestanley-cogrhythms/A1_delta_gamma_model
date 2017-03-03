@@ -27,6 +27,24 @@ if include_IB
       };
 end
 
+%% Deep NG Cells
+if include_deepNG
+    i=i+1;
+    spec.populations(i).name = 'deepNG';
+    spec.populations(i).size = NdeepNG;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
+      'PPstim',deepNGPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau,'PPFacFactor',PPFacFactor,...
+      'stim',JdeepNG1,'onset',0,'offset',50,'stim2',JdeepNG2,'onset2',50,'offset2',Inf,...
+      'V_noise',deepNG_Vnoise,...
+      'gNaF',100,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gA',20,'E_A',E_EKDR, ...
+      };
+end
+
 %% RS cells
 if include_RS
     i=i+1;
@@ -102,26 +120,7 @@ if include_LTS
       };
 end
 
-%% Superficial NG cells
-if include_supNG
-    i=i+1;
-    spec.populations(i).name = 'supNG';
-    spec.populations(i).size = NsupNG;
-    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
-    spec.populations(i).mechanism_list = {'iPeriodicPulsesFacilitate','itonicPaired','IBnoise','FSiNaF','FSiKDR','IBleak','iAhuguenard'};
-    spec.populations(i).parameters = {...
-      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
-      'PPstim',supNGPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPshift',PPshift,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,'PPFacTau',PPFacTau,'PPFacFactor',PPFacFactor,...
-      'stim',JsupNG1,'onset',0,'offset',50,'stim2',JsupNG2,'onset2',50,'offset2',Inf,...
-      'V_noise',supNG_Vnoise,...
-      'gNaF',100,'E_NaF',ENa,...
-      'gKDR',80,'E_KDR',E_EKDR,...
-      'gA',20,'E_A',E_EKDR, ...
-      };
-end
-
-%% Deep cells
-
+%% Deep FS cells
 if include_deepFS
     i=i+1;
     spec.populations(i).name = 'deepFS';
@@ -137,6 +136,7 @@ if include_deepFS
       };
 end
 
+%% Deep RS cells
 if include_deepRS
     
     warning('Dave uses a different linker than Ben (D=(current); Ben=@current). To share mechanisms, should unify these.');

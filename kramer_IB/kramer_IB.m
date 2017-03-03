@@ -235,11 +235,17 @@ gNMDA_ibib=0;
 gAMPA_ibng=0;
 gNMDA_ibng=0;
 
+gAMPA_IBdeepNG=0;
+gNMDA_IBdeepNG=0;
+
 gGABAa_ngng=0;
 gGABAb_ngng=0;
 
-gGABAa_ngib=0;
-gGABAb_ngib=0;
+gGABAa_deepNGdeepNG=0;
+gGABAb_deepNGdeepNG=0;
+
+gGABAa_deepNGIB=0;
+gGABAb_deepNGIB=0;
 
 % % IB to LTS
 gAMPA_ibLTS=0;
@@ -250,6 +256,10 @@ gAMPA_ibrs = 0;
 gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
+gGABAa_ngfs = 0;
+gGABAb_ngfs = 0;
+gGABAa_nglts = 0;
+gGABAb_nglts = 0;
 
 % % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0;
@@ -266,25 +276,24 @@ gGABAa_LTSrs = 0;
 gGABAa_fsLTS = 0;
 gGABAa_LTSfs = 0;
 
-% % Gamma oscillator, deep (RS-FS circuit)
+% % Theta oscillator, deep RS-FS circuit
 gAMPA_deepRSdeepRS=0;
 gNMDA_deepRSdeepRS=0;
 gAMPA_deepRSdeepFS=0;
 gGABA_deepFSdeepFS=0;
 gGABAa_deepFSdeepRS=0;
 
-% % Deep -> deep connections (including NG - really should model this separately!)
+% % Delta -> theta connections
 gAMPA_IBdeepRS = 0;
 gNMDA_IBdeepRS = 0;
-gAMPA_IBdeepFS = 0;
-gNMDA_IBdeepFS = 0;
-gAMPA_RSdeepRS = 0;
-gGABAa_NGdeepRS=0;
-gGABAb_NGdeepRS=0;
 
-% % deep -> Deep connections
+% % Theta -> delta connections
+gAMPA_deepFSIB = 0;
+
+% % Theta -> gamma connections
 gAMPA_deepRSRS = 0;
-gAMPA_deepRSIB = 0;
+gGABAa_deepRSNG = 0;
+gGABAb_deepRSNG = 0;
 
 % % Gamma -> Delta connections
 gGABAa_fsib = 0;
@@ -305,21 +314,27 @@ if ~no_synapses
     gAMPA_ibng=0.1/N;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=5/N; end        % IB -> NG NMDA
     
+    gAMPA_IBdeepNG=0.1/N;                          % IB -> NG
+    if ~NMDA_block; gNMDA_IBdeepNG=5/N; end        % IB -> NG NMDA
+    
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
     
-    gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
+    gGABAa_deepNGdeepNG=0.1/Nng;                       % NG -> NG
+    gGABAb_deepNGdeepNG=0.3/Nng;                       % NG -> NG GABA B
+    
+    gGABAa_deepNGIB=0.1/Nng;                       % NG -> IB
+    gGABAb_deepNGIB=0.3/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
     gAMPA_ibLTS=0.02/N;
-%     if ~NMDA_block; gNMDA_ibLTS=5/N; end
+    %     if ~NMDA_block; gNMDA_ibLTS=5/N; end
     
     % % Delta -> Gamma oscillator connections
     gAMPA_ibrs = 0.3/N;
-%     gNMDA_ibrs = 0.02/N;
-%     gGABAa_ngrs = 0.05/Nng;
-%     gGABAb_ngrs = 0.08/Nng;
+    %     gNMDA_ibrs = 0.02/N;
+    %     gGABAa_ngrs = 0.05/Nng;
+    %     gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
@@ -343,27 +358,29 @@ if ~no_synapses
     gGABA_deepFSdeepFS=0.5/NdeepFS;
     gGABAa_deepFSdeepRS=0.6/NdeepFS;       % Decreased by 3x due to reduced stimulation of deep principal cells
     
-    % % Delta -> Theta connections (including NG - really should model this separately!)
+    % % Delta -> Theta connections
     gAMPA_IBdeepRS = 0.01/N;
     % gNMDA_IBdeepRS = 0.2/N;
     % gAMPA_IBdeepFS = 0.01/N;
     % gNMDA_IBdeepFS = 0.1/N;
-    % gGABAa_NGdeepRS=0.01/Nng;
-    % gGABAb_NGdeepRS=0.05/Nng;
-    gAMPA_deepRSIB = 0.1/(NdeepRS);
-    gAMPA_deepRSsupNG = 0.1/(NdeepRS);
-    gAMPA_deepRSRS = 0.15/NdeepRS;
+    
+    % % Theta -> Delta connections
+    % gAMPA_deepRSIB = 0.1/(NdeepRS);
     gGABAa_deepFSIB = 0.6/NdeepFS;
     
+    % % Theta -> Gamma connections
+    gAMPA_deepRSRS = 0.15/NdeepRS;
+    gAMPA_deepRSNG = 0.1/(NdeepRS);
+    
     % Superficial -> Deep connections
-    gAMPA_RSdeepRS = 0.15/NdeepRS;
-    gAMPA_RSIB = 0.15/NdeepRS;
+    gAMPA_RSdeepRS = 0.15/Nrs;
+    gAMPA_RSIB = 0.15/Nrs;
     
     % % Gamma -> Delta connections
-%     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
-    gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
-    if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-%     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
+    %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
+    % gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
+    % if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
+    %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
 
