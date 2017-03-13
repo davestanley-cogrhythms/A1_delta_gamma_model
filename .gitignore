@@ -26,4 +26,4 @@ Thumbs.db
 # DynaSim output files
 solve_ode_*
 params.mat
-
+studyinfo.mat
