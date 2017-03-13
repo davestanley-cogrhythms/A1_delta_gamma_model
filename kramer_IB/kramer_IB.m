@@ -20,7 +20,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -168,8 +168,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=000;         % 200 is a good settling time for RS cells
-RS_onset2=000;
+RS_offset1=300;         % 200 is a good settling time for RS cells
+RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.015;      % synaptic noise conductance IB cells
@@ -326,8 +326,8 @@ if ~no_synapses
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=.1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=1/Nfs;                     % FS -> RS
+    gGABAa_fsfs=4/Nfs;                      % FS -> FS
+    gGABAa_fsrs=.05/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -425,9 +425,8 @@ switch sim_mode
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'RS','stim2',[1.5]; ...
-            %'FS','PP_gSYN',[.1]; ...
-            'FS->RS','g_SYN',[.5:.2:2]/Nfs;...
+            'FS','PP_gSYN',[.1]; ...
+            'FS->FS','g_SYN',[.1:.1:1]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -638,15 +637,13 @@ if plot_on
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
             %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
             
-            %tfs = 10;
-            %PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
+            tfs = 10;
+            PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
             
             t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
-            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','RS_V','plot_type','waveform')
-            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','RS_V','plot_type','rastergram')
             PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','waveform')
             
-            
+            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','rastergram')
 
             
             %PlotFR2(data,'plot_type','meanFR')
