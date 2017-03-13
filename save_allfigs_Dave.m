@@ -10,9 +10,9 @@ function save_allfigs_Dave(handles_arr)
 %     if nargin < 1; handles_arr = [];
 %     end
     
-    do_commit = 1;
-    supersize_me = 0;
-    handles_arr = 1:4;
+    do_commit = 0;
+    supersize_me = 1;
+    handles_arr = 1:2;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
     currfigname = '115e_play_kindof_working';
