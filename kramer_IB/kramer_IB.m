@@ -1,6 +1,6 @@
 % Model: Kramer 2008, PLoS Comp Bio
 %% Initialize
-tic
+tv1 = tic;
 
 if ~exist('function_mode','var'); function_mode = 0; end
 
@@ -11,8 +11,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 700];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -20,7 +20,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -58,11 +58,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
-include_FS = 1;
-include_LTS = 1;
-include_NG = 1;
+include_FS = 0;
+include_LTS = 0;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -153,8 +153,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 2.5; % RS cells
-JRS2 = 2.5; %
+JRS1 = 0; % RS cells
+JRS2 = 0; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -422,11 +422,11 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { %'RS','stim2',linspace(2,-2,12); ...
-            %'RS','PPstim',linspace(-10,-2,8); ...
+        vary = { 'RS','stim',linspace(2,-2,3); ...
+            %'RS','PPstim',linspace(-10,-2,2); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'FS','PP_gSYN',[.1]; ...
-            'FS->FS','g_SYN',[.1:.1:1]/Nfs;...
+            %'FS','PP_gSYN',[.1]; ...
+            %'FS->FS','g_SYN',[.1:.3:1]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -552,7 +552,7 @@ include_kramer_IB_synapses;
 
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
-
+tv2 = tic;
 if cluster_flag
 
     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
@@ -563,10 +563,19 @@ if cluster_flag
 
 else
     
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
-        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,...
-        'compile_flag',compile_flag,'save_results_flag',1);
-    
+%     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+%         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'study_dir',[],...
+%         'compile_flag',compile_flag,'save_results_flag',1,'plot_functions',@PlotData,'plot_options',{'visible','off','format','png'});
+
+    mexpath = fullfile(pwd,'mexes');
+    [data,studyinfo]=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',[],...
+        'compile_flag',1,'save_data_flag',save_data_flag,'save_results_flag',1,'plot_functions',{@PlotData,@PlotData},...
+        'plot_options',{...
+                {'format','png','visible','off','plot_type','waveform',  'figwidth',0.5,'figheight',0.5,'lock_gca',1}, ...
+                {'format','png','visible','off','plot_type','rastergram','figwidth',0.5,'figheight',0.5,'lock_gca',1}});
+
+
 end
 
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
@@ -574,7 +583,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
+% t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
@@ -586,7 +595,7 @@ if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,
 % % Calculate averages across cells (e.g. mean field)
 data2 = CalcAverages(data);
 
-toc;
+toc(tv2);
 
 %% ##5.0 Plotting
 if plot_on
@@ -741,6 +750,6 @@ if plot_on
 end
 
 
-toc
+toc(tv1)
 
 %%
