@@ -11,8 +11,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 700];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 500];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -20,7 +20,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -42,9 +42,15 @@ compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
+save_results_flag = 0;
 verbose_flag = 1;
 random_seed = 'shuffle';
 % random_seed = 2;
+study_dir = [];
+plot_args = {'plot_functions',{@PlotData,@PlotData},'plot_options',{...
+                {'format','png','visible','off','plot_type','waveform',  'figwidth',0.5,'figheight',0.5,'lock_gca',1}, ...
+                {'format','png','visible','off','plot_type','rastergram','figwidth',0.5,'figheight',0.5,'lock_gca',1}}};
+plot_args = {};
 
 Now = clock;
 
@@ -60,8 +66,8 @@ NMDA_block = 0;
 % % % % % Cells to include in model
 include_IB = 0;
 include_RS = 1;
-include_FS = 0;
-include_LTS = 0;
+include_FS = 1;
+include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
@@ -129,7 +135,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=10;   % Number of excitatory cells
+N=30;   % Number of excitatory cells
 Nrs=N; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -153,8 +159,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 0; % RS cells
-JRS2 = 0; %
+JRS1 = 2.5; % RS cells
+JRS2 = 2.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -569,11 +575,9 @@ else
 
     mexpath = fullfile(pwd,'mexes');
     [data,studyinfo]=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
-        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',[],...
-        'compile_flag',1,'save_data_flag',save_data_flag,'save_results_flag',1,'plot_functions',{@PlotData,@PlotData},...
-        'plot_options',{...
-                {'format','png','visible','off','plot_type','waveform',  'figwidth',0.5,'figheight',0.5,'lock_gca',1}, ...
-                {'format','png','visible','off','plot_type','rastergram','figwidth',0.5,'figheight',0.5,'lock_gca',1}});
+        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',study_dir,...
+        'compile_flag',1,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mexpath',mexpath,...
+        plot_args{:});
 
 
 end

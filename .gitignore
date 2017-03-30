@@ -27,3 +27,6 @@ Thumbs.db
 solve_ode_*
 params.mat
 studyinfo.mat
+
+# Study folders
+study_201*
