@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -448,7 +448,7 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim',linspace(2,-2,4); ...
+        vary = { 'RS','stim',linspace(2.5,0,16); ...
             %'RS','PPstim',linspace(-10,-2,2); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
@@ -669,14 +669,14 @@ if plot_on
             
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
             %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
-            
-            tfs = 10;
-            PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
-            
-            t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
-            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','waveform')
-            
-            PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','rastergram')
+%             
+%             tfs = 10;
+%             PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
+%             
+%             t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
+%             PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','waveform')
+%             
+%             PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','rastergram')
 
             
             %PlotFR2(data,'plot_type','meanFR')
