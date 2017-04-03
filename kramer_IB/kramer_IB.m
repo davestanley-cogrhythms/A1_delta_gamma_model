@@ -28,11 +28,26 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
+plot_options = {...
+                {'format','png','visible','off','plot_type','waveform','figwidth',.5,'figheight',.5,'population','all'}, ...
+                {'format','png','visible','off','plot_type','waveform','figwidth',.5,'figheight',.5,'population','RS'}, ...
+                {'format','png','visible','off','plot_type','waveform','figwidth',.5,'figheight',.5,'population','FS'}, ...
+                {'format','png','visible','off','plot_type','imagesc','figwidth',.5,'figheight',.5,'population','all'}, ...
+                {'format','png','visible','off','plot_type','imagesc','figwidth',.5,'figheight',.5,'population','RS'}, ...
+                {'format','png','visible','off','plot_type','imagesc','figwidth',.5,'figheight',.5,'population','FS'}, ...
+                };
+% plot_options = [];
+
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
 end
 
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
+
+% % % % % Get currrent date time string
+mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
+sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
+    
 
 % % % % % Display options
 plot_on = 1;
@@ -42,15 +57,20 @@ compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
-save_results_flag = 0;
+save_results_flag = ~isempty(plot_options);                 % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
 % random_seed = 2;
+% study_dir = ['study_' sp];
 study_dir = [];
-plot_args = {'plot_functions',{@PlotData,@PlotData},'plot_options',{...
-                {'format','png','visible','off','plot_type','waveform',  'figwidth',0.5,'figheight',0.5,'lock_gca',1}, ...
-                {'format','png','visible','off','plot_type','rastergram','figwidth',0.5,'figheight',0.5,'lock_gca',1}}};
-plot_args = {};
+% study_dir = ['study_dave'];
+
+if isempty(plot_options); plot_functions = [];
+else; plot_functions = repmat({@PlotData2},1,length(plot_options));
+end
+plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
+% plot_args = {};
+
 
 Now = clock;
 
@@ -428,7 +448,7 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim',linspace(2,-2,3); ...
+        vary = { 'RS','stim',linspace(2,-2,4); ...
             %'RS','PPstim',linspace(-10,-2,2); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
