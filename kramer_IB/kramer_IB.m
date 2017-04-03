@@ -57,7 +57,7 @@ compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
-save_results_flag = ~isempty(plot_options);                 % If plot_options is supplied, save the results.
+save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
 % random_seed = 2;
