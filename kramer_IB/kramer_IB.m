@@ -20,7 +20,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -36,7 +36,7 @@ plot_options = {...
                 {'format','png','visible','off','plot_type','imagesc','figwidth',.5,'figheight',.5,'population','RS'}, ...
                 {'format','png','visible','off','plot_type','imagesc','figwidth',.5,'figheight',.5,'population','FS'}, ...
                 };
-% plot_options = [];
+plot_options = [];
 
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
@@ -350,10 +350,10 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1/Nrs;                     % RS -> FS
+    gAMPA_rsfs=.4/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=4/Nfs;                      % FS -> FS
-    gGABAa_fsrs=.05/Nfs;                     % FS -> RS
+    gGABAa_fsfs=1/Nfs;                      % FS -> FS
+    gGABAa_fsrs=.6/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
