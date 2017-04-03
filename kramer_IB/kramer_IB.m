@@ -29,13 +29,14 @@ Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
 plot_options = {...
-                %{'format','png','visible','off','plot_type','waveform','figwidth',1,'figheight',.5,'population','all'}, ...
-                {'format','png','visible','off','plot_type','waveform','figwidth',1,'figheight',.5,'population','RS'}, ...
-                {'format','png','visible','off','plot_type','waveform','figwidth',1,'figheight',.5,'population','FS'}, ...
-                %{'format','png','visible','off','plot_type','imagesc','figwidth',1,'figheight',.5,'population','all'}, ...
-                {'format','png','visible','off','plot_type','imagesc','figwidth',1,'figheight',.5,'population','RS'}, ...
-                {'format','png','visible','off','plot_type','imagesc','figwidth',1,'figheight',.5,'population','FS'}, ...
+                {'format','png','visible','off','plot_type','waveform','crop_range',[200 300],'population','RS'}, ...
+                {'format','png','visible','off','plot_type','imagesc','crop_range',[200 300],'population','RS'}, ...
+                {'format','png','visible','off','plot_type','power','xlims',[0 80],'population','RS'}, ...
+                
                 };
+            
+            
+
 % plot_options = [];
 
 if function_mode
@@ -448,11 +449,11 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim',linspace(0,-2.5,8); ...
+        vary = { 'RS','stim',linspace(2.5,-2.5,8); ...
             %'RS','PPstim',linspace(-10,-2,2); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            %'FS->FS','g_SYN',[.1:.3:1]/Nfs;...
+            'FS->RS','g_SYN',[.6:.2:1.6]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -664,11 +665,17 @@ if plot_on
             PlotData(data,'plot_type','waveform','variable','IB_V');
         case {9,10}
             %%
+
+            for i = 1:4:8;  PlotData2(data,'plot_type','imagesc','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'crop_range',[200 300]);end
             
-            for i = 1:4:8;  PlotData2(data,'plot_type','imagesc','varied1',i:i+3,'population','RS|FS','crop_range',[200 300],'dim_stacking',{'varied1','populations'}); end
-            
-            for i = 1:4:8;  PlotData2(data,'plot_type','power','varied1',i:i+3,'population','RS','dim_stacking',{'varied1','populations'},'do_mean',1,'xlims',[0 120]); end
-            
+            for i = 1:4:8; PlotData2(data,'plot_type','heatmap_sortedFR','varied1',i:i+3,'population','RS','varied2',[1:6],'do_zoom',0); end
+
+            for i = 1:4:8;PlotData2(data,'plot_type','power','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'do_mean',1,'xlims',[0 80]); end
+
+            for i = 1:4:8;  PlotData2(data,'plot_type','waveform','varied1',i:i+3,'population','LTS','varied2',[1:1:6],'do_zoom',0,'crop_range',[0 300],'do_mean',1);end
+
+
+
             
             %PlotData(data,'plot_type','waveform');
             %PlotData(data,'plot_type','power');
