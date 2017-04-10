@@ -5,6 +5,7 @@ tv1 = tic;
 if ~exist('function_mode','var'); function_mode = 0; end
 
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
+addpath(genpath(fullfile(pwd,'funcs_supporting_xPlt')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
 %% % % % % % % % % % % % %  ##0.0 Simulation master parameters % % % % % % % % % % % % %
@@ -12,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -20,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation

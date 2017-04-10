@@ -14,12 +14,12 @@ function h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
     i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.LTS_RS_IBaIBdbiSYNseed_s(ind,:),2)*100-150,'LineWidth',1);
     %i=i+1; hold on; h{i} = plot(data.time(ind),data.NG_GABA_gTH(ind,:)*20-6,'b','LineWidth',2);
     
-    i=i+1; hold on; h{i} = plot(data.time(ind),data.RS_iPeriodicPulsesFacilitate_Iext(ind,1)*1-160,'k','LineWidth',1);
+    i=i+1; hold on; h{i} = plot(data.time(ind),data.RS_iPeriodicPulsesiSYN_s(ind,1)*1-160,'k','LineWidth',1);
     %xlim([1440,1560])
     
     % Keep only 1st entry in h. Useful for passing to legend command.
     for i = 1:length(h)
-%         h2(i) = h{i}(1);
+        h2(i) = h{i}(1);
     end
 
 end
