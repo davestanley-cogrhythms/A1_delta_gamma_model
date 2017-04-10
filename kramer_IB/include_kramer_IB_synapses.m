@@ -101,7 +101,7 @@ if include_RS && include_FS
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
     
-    if do_jason_sPING
+    if do_jason_sPING_syn
         js_conn_E_I.direction='RS->FS';
         js_conn_E_I.mechanism_list={'iAMPA'};
         js_conn_E_I.parameters={'tauD',2,'gSYN',.1*80/Nrs,'netcon','ones(N_pre,N_post)'};
@@ -158,7 +158,7 @@ if include_FS && include_RS
     spec.connections(i).parameters = {'g_SYN',gGABAa_fsrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
     
-    if do_jason_sPING
+    if do_jason_sPING_syn
         js_conn_I_E.direction='FS->RS';
         js_conn_I_E.mechanism_list={'iGABAa'};
         js_conn_I_E.parameters={'tauD',10,'gSYN',.1*20/Nfs,'netcon','ones(N_pre,N_post)'};

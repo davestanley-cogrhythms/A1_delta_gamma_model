@@ -51,13 +51,14 @@ mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=cl
 sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
 
 % % % % % Mechanism overrides
-do_jason_sPING = 1;
+do_jason_sPING = 0;
+do_jason_sPING_syn = 0;
 
 % % % % % Display options
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 0;
+compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -183,8 +184,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 1.5; % RS cells
-JRS2 = 1.5; %
+JRS1 = 1.0; % RS cells
+JRS2 = 1.0; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -212,9 +213,9 @@ deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 % % Magnitude of injected current Gaussian noise
 IBda_Vnoise = 6;
 NG_Vnoise = 6;
-FS_Vnoise = 6;
+FS_Vnoise = 40;
 LTS_Vnoise = 6;
-RSda_Vnoise = 6;
+RSda_Vnoise = 40;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
 
@@ -354,10 +355,10 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=.4/Nrs;                     % RS -> FS
+    gAMPA_rsfs=2/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=.3/Nfs;                     % FS -> RS
+    gGABAa_fsrs=2/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA

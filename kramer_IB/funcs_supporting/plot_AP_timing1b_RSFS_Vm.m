@@ -1,7 +1,8 @@
 function h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
 
     if nargin < 2
-        ind = data.time > 150 & data.time < 350;
+        %ind = data.time > 150 & data.time < 350;
+        ind = 1:length(data.time);
     else
         ind = data.time > ind_range(1) & data.time < ind_range(2);
     end
