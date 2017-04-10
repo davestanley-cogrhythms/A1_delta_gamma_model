@@ -38,7 +38,7 @@ plot_options = {...
             
             
 
-% plot_options = [];
+plot_options = [];
 
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
@@ -49,13 +49,15 @@ end
 % % % % % Get currrent date time string
 mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
 sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
-    
+
+% % % % % Mechanism overrides
+do_jason_sPING = 1;
 
 % % % % % Display options
 plot_on = 1;
 save_plots = 0;
 visible_flag = 'on';
-compile_flag = 1;
+compile_flag = 0;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -158,9 +160,9 @@ fast_offset = 0;
 
 % % % % % % Number of cells per population
 N=30;   % Number of excitatory cells
-Nrs=N; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=N;  % Number of FS cells
+Nfs=20;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -181,8 +183,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 2.5; % RS cells
-JRS2 = 2.5; %
+JRS1 = 1.5; % RS cells
+JRS2 = 1.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -355,7 +357,7 @@ if ~no_synapses
     gAMPA_rsfs=.4/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=.6/Nfs;                     % FS -> RS
+    gGABAa_fsrs=.3/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -598,7 +600,7 @@ else
     mexpath = fullfile(pwd,'mexes');
     [data,studyinfo]=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',study_dir,...
-        'compile_flag',1,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mexpath',mexpath,...
+        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mexpath',mexpath,...
         plot_args{:});
 
 
@@ -643,6 +645,7 @@ if plot_on
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
             
+            PlotData2(data,'plot_handle',@xp_plot_AP_timing1b_RSFS_Vm,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});

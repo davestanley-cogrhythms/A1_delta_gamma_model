@@ -49,6 +49,22 @@ if include_RS
       'gM',0.5,'E_M',E_EKDR,...
       'gCaH',0,'E_CaH',ECa,...
       };
+  
+      if do_jason_sPING      % Testing....
+          eqns={ 
+              'dV/dt=Iapp+@current+noise*randn(1,N_pop)';
+              'monitor iGABAa.functions, iAMPA.functions'
+              };
+          js_pop_RS.name='RS';
+          js_pop_RS.size=Nrs;
+          js_pop_RS.equations=eqns;
+          js_pop_RS.mechanism_list={'iPeriodicPulsesiSYN','iNa','iK'};
+          js_pop_RS.parameters={'Iapp',5,'gNa',120,'gK',36,'noise',40,...
+              'PPfreq', PPfreq,'PPwidth', 0.25,'PPshift',PPshift,'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+              'PP_gSYN',RS_PP_gSYN,'E_SYN',EAMPA,'tauRx',width2_rise,'tauDx',PPwidth,...
+              };
+          spec.populations(i) = js_pop_RS;
+      end
 end
 
 %% NG cells
@@ -101,6 +117,18 @@ if include_FS
     if do_FS_reset_pulse
 %         ap_pulse_num = ap_pulse_num0 ;
         pulse_train_preset = pulse_train_preset0 ;
+    end
+    
+    if do_jason_sPING      % Testing....
+        js_pop_FS.name='FS';
+        js_pop_FS.size=Nfs;
+        js_pop_FS.equations=eqns;
+        js_pop_FS.mechanism_list={'iPeriodicPulsesiSYN','iNa','iK'};
+        js_pop_FS.parameters={'Iapp',0,'gNa',120,'gK',36,'noise',40,...
+            'PPfreq', PPfreq,'PPwidth', 0.25,'PPshift',PPshift,'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', width2_rise,...
+            'PP_gSYN',FS_PP_gSYN,'E_SYN',EAMPA,'tauRx',width2_rise,'tauDx',PPwidth,...
+             };
+        spec.populations(i) = js_pop_FS;
     end
 end
 
