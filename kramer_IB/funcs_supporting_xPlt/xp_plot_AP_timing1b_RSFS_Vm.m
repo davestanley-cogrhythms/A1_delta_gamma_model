@@ -1,12 +1,16 @@
 
 
-function hxp = xp_plot_AP_timing1b_RSFS_Vm (xp, op)
+function hxp = xp_plot_AP_timing1b_RSFS_Vm (xp, op,ind_range)
     % xp must be 1xN (e.g. 1 dimensional)
     
     hxp = struct;
     
     if nargin < 2
         op = struct;
+    end
+    
+    if nargin < 3
+        ind_range = [];
     end
     
     if isempty(op); op = struct; end;
@@ -23,7 +27,11 @@ function hxp = xp_plot_AP_timing1b_RSFS_Vm (xp, op)
     data = xPlt2DynaSim(xp);
     
     %h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
-    hxp.hcurr = plot_AP_timing1b_RSFS_Vm(data);
+    if ~isempty(ind_range)
+        hxp.hcurr = plot_AP_timing1b_RSFS_Vm(data,ind_range);
+    else
+        hxp.hcurr = plot_AP_timing1b_RSFS_Vm(data);
+    end
     
     
 %     if ~isempty(xlims); xlim(xlims); end
