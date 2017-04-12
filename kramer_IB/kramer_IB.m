@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -41,7 +41,7 @@ end
 % % % % % Options for saving figures to png for offline viewing
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
-    ind_range = [100 250];
+    ind_range = [150 350];
 
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
 
@@ -67,7 +67,6 @@ do_jason_sPING_syn = 0;
 
 % % % % % Display options
 plot_on = 1;
-save_plots = 0;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -465,11 +464,11 @@ switch sim_mode
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim',linspace(2,.5,4); ...
-            'RS','PP_gSYN',linspace(.03,1,16); ...
+            'RS','PP_gSYN',[.15:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            %'RS->FS','g_SYN',[.5:.5:3.5]/Nrs;...
-            %'FS->RS','g_SYN',[.5:.5:3.5]/Nfs;...
+            'RS->FS','g_SYN',[1.0 1.5 2]/Nrs;...
+            'FS->RS','g_SYN',[.5:.2:1.5]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -683,6 +682,9 @@ if plot_on
             
             if save_figures
                 data_img = ImportPlots(study_dir); xp_img = All2xPlt(data_img);
+                if exist('data_old','var')
+                    data_img = DynaSimMerge(data_img,data_old);
+                end
                 save_path = fullfile('Figs_Dave',sp);
                 if parallel_flag
                     parfor i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
@@ -690,10 +692,12 @@ if plot_on
                     for i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 end
             else
-                PlotData2(data(1:4:end));
+                inds = 1:1:length(data);
+                %inds = 1:5;
+                PlotData2(data(inds),'population','RS|FS','force_last',{'varied2','populations'},'supersize_me',true,'do_overlay_shift',false);
                 
-                ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                PlotData2(data(1:4:end),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
+                ind_range = [150 350]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'varied2','populations','variables'},'population','all','variable','all','supersize_me',false);
             
             end
             
@@ -773,13 +777,6 @@ if plot_on
             %             PlotData(data3,'variable','IB_V','plot_type','waveform');
             %             PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
             
-            if save_plots
-                h = figure('visible','off');
-                h2 = double(h);
-                save_allfigs(1:h2-1);
-                close(h);  % Get most recent figure handle
-                clear h h2
-            end
             
             
         case 14
