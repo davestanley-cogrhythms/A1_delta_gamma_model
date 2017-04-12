@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 250];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 500];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -47,7 +47,7 @@ if save_figures
 
     plot_options = {...
                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','RS|FS','force_last','populations','do_overlay_shift',true}, ...
-                    {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS'}, ...
+                    {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -40]}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
                     {universal_options{:},'plot_type','power','xlims',[0 80],'population','RS'}, ...
                     {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all'}, ...
@@ -195,8 +195,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 2.5; % RS cells
-JRS2 = 2.5; %
+JRS1 = 3; % RS cells
+JRS2 = 3; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -366,7 +366,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=2.0/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
     gGABAa_fsrs=1/Nfs;                     % FS -> RS
@@ -465,11 +465,11 @@ switch sim_mode
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim',linspace(2,.5,4); ...
-            %'FS','PP_gSYN',linspace(.03,.2,7); ...
+            'RS','PP_gSYN',linspace(.03,1,16); ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            'RS->FS','g_SYN',[.5:.5:3.5]/Nrs;...
-            'FS->RS','g_SYN',[.5:.5:3.5]/Nfs;...
+            %'RS->FS','g_SYN',[.5:.5:3.5]/Nrs;...
+            %'FS->RS','g_SYN',[.5:.5:3.5]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -648,19 +648,15 @@ if plot_on
             tfs = 5;
             PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',50);
             
-%             t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
-%             PlotData_with_AP_line(data3,'textfontsize',textfontsize,'max_num_overlaid',10,'variable','RS_V','plot_type','waveform')
+
             
             
             
+            PlotData_with_AP_line(data,'plot_type','rastergram');
             
-%             PlotData_with_AP_line(data,'plot_type','rastergram');
-%             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-%             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
-%             
-%             
-%             ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-%             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
+            
+            ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+            PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
@@ -693,9 +689,16 @@ if plot_on
                 else
                     for i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 end
+            else
+                PlotData2(data(1:4:end));
+                
+                ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+                PlotData2(data(1:4:end),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
+            
             end
             
-
+            
+            
 %             for i = 1:4:8;  PlotData2(data,'plot_type','imagesc','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'crop_range',[200 300]);end
 %             
 %             for i = 1:4:8; PlotData2(data,'plot_type','heatmap_sortedFR','varied1',i:i+3,'population','RS','varied2',[1:6],'do_zoom',0); end
