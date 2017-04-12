@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -365,7 +365,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
+    gAMPA_rsfs=2/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
     gGABAa_fsrs=1/Nfs;                     % FS -> RS
@@ -465,10 +465,12 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim',linspace(2,.5,4); ...
             'RS','PP_gSYN',[.15:.05:.4]; ...
+            %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            'RS->FS','g_SYN',[1.0 1.5 2]/Nrs;...
-            'FS->RS','g_SYN',[.5:.2:1.5]/Nfs;...
+            %'RS->FS','g_SYN',[1.0 1.5 2]/Nrs;...
+            %'FS->FS','g_SYN',[.5:.5:4]/Nfs;...
+            %'FS->RS','g_SYN',[.5:.2:1.5]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -522,7 +524,7 @@ FS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-RS_PP_gSYN = 0.12;
+RS_PP_gSYN = 0.4;
 % NG_PP_gSYN = 0.05;
 % FS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
@@ -694,10 +696,10 @@ if plot_on
             else
                 inds = 1:1:length(data);
                 %inds = 1:5;
-                PlotData2(data(inds),'population','RS|FS','force_last',{'varied2','populations'},'supersize_me',true,'do_overlay_shift',false);
+                PlotData2(data(inds),'population','RS|FS','force_last',{'populations'},'supersize_me',true,'do_overlay_shift',false);
                 
                 ind_range = [150 350]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'varied2','populations','variables'},'population','all','variable','all','supersize_me',false);
+                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false);
             
             end
             
