@@ -26,32 +26,36 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+                            % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
-universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
-ind_range = [100 250];
-
-plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-
-plot_options = {...
-                {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','RS|FS','force_last','populations','do_overlay_shift',true}, ...
-                {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS'}, ...
-                {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
-                {universal_options{:},'plot_type','power','xlims',[0 80],'population','RS'}, ...
-                {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all'}, ...
-                };
-            
-            
-            
-
-if sim_mode == 1; plot_options = []; end
 
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
 end
 
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
+
+% % % % % Options for saving figures to png for offline viewing
+if save_figures
+    universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
+    ind_range = [100 250];
+
+    plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+
+    plot_options = {...
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','RS|FS','force_last','populations','do_overlay_shift',true}, ...
+                    {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS'}, ...
+                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
+                    {universal_options{:},'plot_type','power','xlims',[0 80],'population','RS'}, ...
+                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all'}, ...
+                    };
+            
+else
+    plot_options = [];
+end
 
 % % % % % Get currrent date time string
 mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
@@ -191,8 +195,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 1.0; % RS cells
-JRS2 = 1.0; %
+JRS1 = 2.5; % RS cells
+JRS2 = 2.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -362,7 +366,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1/Nrs;                     % RS -> FS
+    gAMPA_rsfs=2.0/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
     gGABAa_fsrs=1/Nfs;                     % FS -> RS
@@ -650,11 +654,13 @@ if plot_on
             
             
             
-            PlotData_with_AP_line(data,'plot_type','rastergram');
-            %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-            %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
-            
-            PlotData2(data,'plot_handle',@xp_plot_AP_timing1b_RSFS_Vm,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
+%             PlotData_with_AP_line(data,'plot_type','rastergram');
+%             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+%             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
+%             
+%             
+%             ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+%             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
@@ -679,14 +685,16 @@ if plot_on
         case {9,10}
             %%
             
-            
-            data_img = ImportPlots(study_dir); xp_img = All2xPlt(data_img);
-            save_path = fullfile('Figs_Dave',sp);
-            if parallel_flag
-                parfor i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
-            else
-                for i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+            if save_figures
+                data_img = ImportPlots(study_dir); xp_img = All2xPlt(data_img);
+                save_path = fullfile('Figs_Dave',sp);
+                if parallel_flag
+                    parfor i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+                else
+                    for i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+                end
             end
+            
 
 %             for i = 1:4:8;  PlotData2(data,'plot_type','imagesc','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'crop_range',[200 300]);end
 %             
