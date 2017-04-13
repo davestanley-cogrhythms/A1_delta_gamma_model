@@ -12,10 +12,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = 1:3;
+    handles_arr = 1:1;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '120a_single_sim';
+    currfigname = '120b_sweep3D_all_RSFS_syns';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -60,9 +60,9 @@ function save_allfigs_Dave(handles_arr)
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
-    
+    %%
     % Save spec file
-    save(fullfile(basepath,sp,'spec.mat'),'spec');
+    save(fullfile(basepath,sp,'spec.mat'),'spec','pop_struct');
     
     % Save .m file
     zip(fullfile(basepath,sp,'kramer_IB.zip'),{'kramer_IB.m','include_kramer_IB_populations.m','include_kramer_IB_synapses.m'});
@@ -81,8 +81,8 @@ function save_allfigs_Dave(handles_arr)
             movefile(savepath,fullfile(basepath,sp));
         end
     end
-
-    mycomment = ['Do single simulation with seemingly optimal parameters.'];
+    %%
+    mycomment = ['Do huge sweep over all parameters: gRSFS, gFSFS, and gFSRS.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
@@ -94,7 +94,7 @@ function save_allfigs_Dave(handles_arr)
         currd = pwd;
         cd ..
         system('git add *');
-        system(['git commit -am "' currfigname ' ' mycomment '"']);
+        system(['git commit -m "' currfigname ' ' mycomment '"']);
         cd(currd);
     end
 
