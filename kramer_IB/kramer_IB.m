@@ -703,11 +703,11 @@ if plot_on
                     data_img = DynaSimMerge(data_img,data_old);
                 end
                 save_path = fullfile('Figs_Dave',sp);
-                p = gcp('no_create');
+                p = gcp('nocreate');
                 if ~isempty(p)
-                    parfor i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+                    parfor i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 else
-                    for i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+                    for i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 end
             else
                 inds = 1:1:length(data);
