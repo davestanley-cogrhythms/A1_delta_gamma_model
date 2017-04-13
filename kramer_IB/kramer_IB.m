@@ -170,7 +170,8 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=30;   % Number of excitatory cells
+N=30;   % Default number of cells
+Nib=N;   % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=20;  % Number of FS cells
@@ -246,8 +247,8 @@ deepFS_Vnoise = 3;
 %% % % % % % % % % % % % %  ##2.3 Synaptic connectivity parameters % % % % % % % % % % % % %
 % % Gap junction connections.
 % % Deep cells
-ggjaRS=.2/N;  % RS -> RS
-ggja=.2/N;  % IB -> IB
+ggjaRS=.2/Nib;  % RS -> RS
+ggja=.2/Nib;  % IB -> IB
 ggjFS=.2/Nfs;  % FS -> FS
 ggjLTS=.2/Nlts;  % LTS -> LTS
 % % deep cells
@@ -340,11 +341,11 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-    gAMPA_ibib=0.1/N;                          % IB -> IB
-    if ~NMDA_block; gNMDA_ibib=5/N; end        % IB -> IB NMDA
+    gAMPA_ibib=0.1/Nib;                          % IB -> IB
+    if ~NMDA_block; gNMDA_ibib=5/Nib; end        % IB -> IB NMDA
     
-    gAMPA_ibng=0.1/N;                          % IB -> NG
-    if ~NMDA_block; gNMDA_ibng=5/N; end        % IB -> NG NMDA
+    gAMPA_ibng=0.1/Nib;                          % IB -> NG
+    if ~NMDA_block; gNMDA_ibng=5/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
@@ -353,12 +354,12 @@ if ~no_synapses
     gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
-    gAMPA_ibLTS=0.02/N;
-%     if ~NMDA_block; gNMDA_ibLTS=5/N; end
+    gAMPA_ibLTS=0.02/Nib;
+%     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.3/N;
-%     gNMDA_ibrs = 0.02/N;
+    gAMPA_ibrs = 0.3/Nib;
+%     gNMDA_ibrs = 0.02/Nib;
 %     gGABAa_ngrs = 0.05/Nng;
 %     gGABAb_ngrs = 0.08/Nng;
     
@@ -385,10 +386,10 @@ if ~no_synapses
     gGABAa_deepFSdeepRS=0.2/NdeepFS;       % Decreased by 3x due to reduced stimulation of deep principal cells
     
     % % Delta -> Theta connections (including NG - really should model this separately!)
-    gAMPA_IBdeepRS = 0.01/N;
-    % gNMDA_IBdeepRS = 0.2/N;
-    % gAMPA_IBdeepFS = 0.01/N;
-    % gNMDA_IBdeepFS = 0.1/N;
+    gAMPA_IBdeepRS = 0.01/Nib;
+    % gNMDA_IBdeepRS = 0.2/Nib;
+    % gAMPA_IBdeepFS = 0.01/Nib;
+    % gNMDA_IBdeepFS = 0.1/Nib;
     gAMPA_deepRSRS = 0.15/Nrs;
     % gGABAa_NGdeepRS=0.01/Nng;
     % gGABAb_NGdeepRS=0.05/Nng;
@@ -487,16 +488,16 @@ switch sim_mode
             %'NG','PPstim',[-7:1:-1]; ...
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
-            %'IB->RS','g_SYN',linspace(0.05,0.10,8)/N;...
+            %'IB->RS','g_SYN',linspace(0.05,0.10,8)/Nib;...
             %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
             'FS->IB','g_SYN',[.1:.1:.7]/Nfs;...
-            'RS->NG','gNMDA',[1:1:6]/N;...
-            %'RS->NG','gNMDA',[0:1:5]/N*0.00001;...
+            'RS->NG','gNMDA',[1:1:6]/Nib;...
+            %'RS->NG','gNMDA',[0:1:5]/Nib*0.00001;...
             %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
-            %'IB->RS','g_SYN',[0.01:0.003:0.03]/N;...
-            %'IB->NG','gNMDA',[5,7,9,11]/N;...
+            %'IB->RS','g_SYN',[0.01:0.003:0.03]/Nib;...
+            %'IB->NG','gNMDA',[5,7,9,11]/Nib;...
             % For NMDA block conditions
-            %'IB->NG','gNMDA',[0.005,0.007,0.009,0.011]/N;...
+            %'IB->NG','gNMDA',[0.005,0.007,0.009,0.011]/Nib;...
             %'RS->NG','g_SYN',[.1:.1:.3]/Nfs;...
             %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
             };

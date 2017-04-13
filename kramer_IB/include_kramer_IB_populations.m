@@ -9,7 +9,7 @@ i=0;
 if include_IB
     i=i+1;
     spec.populations(i).name = 'IB';
-    spec.populations(i).size = N;
+    spec.populations(i).size = Nib;
     spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPeriodicPulsesiSYN','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak','IBleak2'};
     spec.populations(i).parameters = {...
