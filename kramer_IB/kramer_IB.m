@@ -629,6 +629,19 @@ end
 % t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
 
 
+% % When varying synaptic connectivity, convert connectivity measure from
+% synaptic conductance / cell to total synaptic conductange 
+% (e.g. g_RSFS*N)
+pop_struct.Nib = Nib;
+pop_struct.Nrs = Nrs;
+pop_struct.Nfs = Nfs;
+pop_struct.Nlts = Nlts;
+pop_struct.Nng = Nng;
+xp = DynaSim2xPlt(data);
+xp = calc_synaptic_totals(xp,pop_struct);
+data = xPlt2DynaSim(xp);
+
+
 % % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
 % if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
@@ -684,12 +697,14 @@ if plot_on
             %%
             
             if save_figures
-                data_img = ImportPlots(study_dir); xp_img = All2xPlt(data_img);
+                data_img = ImportPlots(study_dir); xp_img_temp = All2xPlt(data_img);
+                xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
                 if exist('data_old','var')
                     data_img = DynaSimMerge(data_img,data_old);
                 end
                 save_path = fullfile('Figs_Dave',sp);
-                if parallel_flag
+                p = gcp('no_create');
+                if ~isempty(p)
                     parfor i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 else
                     for i = 1:length(plot_options); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
