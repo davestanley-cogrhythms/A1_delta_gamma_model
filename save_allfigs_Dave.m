@@ -82,7 +82,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %%
-    mycomment = ['Do huge sweep over all parameters: gRSFS, gFSFS, and gFSRS.'];
+    mycomment = ['Redo previous sweep over different range.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

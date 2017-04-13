@@ -11,7 +11,8 @@ UB = max(Npre,Npost)
 Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
 Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
 mask = (abs(Xpre-Xpost)<=fanout)
-gsyn=unifrnd(g_SYN-g_SYN_hetero,g_SYN+g_SYN_hetero,[Npost 1])'
+gsyn0=unifrnd(g_SYN*(1-g_SYN_hetero),g_SYN*(1+g_SYN_hetero),[Npost 1])'
+gsyn=gsyn0.* double(gsyn0 > 0)
 
 ISYN(X,s) = (gsyn.*(s*mask).*(X-E_SYN))
  

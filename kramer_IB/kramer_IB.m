@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 350];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,12 +21,12 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -66,7 +66,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 1;
+plot_on = 0;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -75,7 +75,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-% random_seed = 2;
+random_seed = 2;
 study_dir = ['study_' sp];
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -102,7 +102,7 @@ NMDA_block = 0;
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS = 1;
+include_LTS = 0;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
@@ -195,8 +195,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 3; % RS cells
-JRS2 = 3; %
+JRS1 = 1.5; % RS cells
+JRS2 = 1.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -247,7 +247,7 @@ deepFS_Vnoise = 3;
 %% % % % % % % % % % % % %  ##2.3 Synaptic connectivity parameters % % % % % % % % % % % % %
 % % Gap junction connections.
 % % Deep cells
-ggjaRS=.2/Nib;  % RS -> RS
+ggjaRS=.0/Nib;  % RS -> RS
 ggja=.2/Nib;  % IB -> IB
 ggjFS=.2/Nfs;  % FS -> FS
 ggjLTS=.2/Nlts;  % LTS -> LTS
@@ -257,7 +257,7 @@ ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
 
 % % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
-gsyn_hetero = 0;
+gsyn_hetero = 2;
 
 % % Eleak heterogenity (makes excitability of cells variable)
 RS_Eleak_std = 0;
@@ -366,7 +366,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=0.5/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=2/Nfs;                      % FS -> FS
     gGABAa_fsrs=1/Nfs;                     % FS -> RS
@@ -667,7 +667,7 @@ if plot_on
             
             
             
-            PlotData_with_AP_line(data,'plot_type','rastergram');
+            % PlotData_with_AP_line(data,'plot_type','rastergram');
             
             
             ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
