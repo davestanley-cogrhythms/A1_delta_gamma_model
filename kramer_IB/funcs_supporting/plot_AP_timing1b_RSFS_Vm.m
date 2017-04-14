@@ -10,9 +10,11 @@ function h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
     i=0;
 %     i=i+1; hold on; h{i} = plot(data.time(ind),data.RS_V(ind,:)+0,'b');
 %     i=i+1; hold on; h{i} = plot(data.time(ind),data.FS_V(ind,:)+0,'r');
-    i=i+1; hold on; h{i} = plot(data.time(ind),data.LTS_V(ind,1:10),'g');
-    i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.LTS_FS_IBaIBdbiSYNseed_s(ind,:),2)*100-150,'LineWidth',2);
-    i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.LTS_RS_IBaIBdbiSYNseed_s(ind,:),2)*100-150,'LineWidth',2);
+    if isfield(data(1),'LTS_V')
+        i=i+1; hold on; h{i} = plot(data.time(ind),data.LTS_V(ind,:),'g');
+    end
+    i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.FS_FS_IBaIBdbiSYNseed_s(ind,:),2)*100-150,'LineWidth',2);
+    i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.FS_RS_IBaIBdbiSYNseed_s(ind,:),2)*100-150,'LineWidth',2);
     %i=i+1; hold on; h{i} = plot(data.time(ind),data.NG_GABA_gTH(ind,:)*20-6,'b','LineWidth',2);
     
     i=i+1; hold on; h{i} = plot(data.time(ind),-1*data.RS_iPeriodicPulsesiSYN_s(ind,1)*30-160,'k','LineWidth',2);
@@ -22,5 +24,7 @@ function h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
     for i = 1:length(h)
         h2(i) = h{i}(1);
     end
+    
+    hold on; add_AP_vertical_lines
 
 end
