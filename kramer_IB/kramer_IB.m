@@ -222,6 +222,7 @@ RSgRAN=0.0;   % synaptic noise conductance to RS cells
 deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
+% #mynoise
 IBda_Vnoise = 6;
 NG_Vnoise = 6;
 FS_Vnoise = 6;
@@ -247,6 +248,7 @@ deepFS_Vnoise = 3;
 %% % % % % % % % % % % % %  ##2.3 Synaptic connectivity parameters % % % % % % % % % % % % %
 % % Gap junction connections.
 % % Deep cells
+% #mygap
 ggjaRS=.0/Nib;  % RS -> RS
 ggja=.2/Nib;  % IB -> IB
 ggjFS=.0/Nfs;  % FS -> FS
