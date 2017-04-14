@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 350];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -195,8 +195,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 1.5; % RS cells
-JRS2 = 1.5; %
+JRS1 = 0; % RS cells
+JRS2 = 0; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -214,11 +214,11 @@ RS_offset1=300;         % 200 is a good settling time for RS cells
 RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.015;      % synaptic noise conductance IB cells
+gRAN=.0;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 1000;  % Mean frequency Poisson IPSPs
-RSgRAN=0.015;   % synaptic noise conductance to RS cells
+RSgRAN=0.0;   % synaptic noise conductance to RS cells
 deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
@@ -226,7 +226,7 @@ IBda_Vnoise = 6;
 NG_Vnoise = 6;
 FS_Vnoise = 6;
 LTS_Vnoise = 6;
-RSda_Vnoise = 40;
+RSda_Vnoise = 6;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
 
@@ -249,7 +249,7 @@ deepFS_Vnoise = 3;
 % % Deep cells
 ggjaRS=.0/Nib;  % RS -> RS
 ggja=.2/Nib;  % IB -> IB
-ggjFS=.2/Nfs;  % FS -> FS
+ggjFS=.0/Nfs;  % FS -> FS
 ggjLTS=.2/Nlts;  % LTS -> LTS
 % % deep cells
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
@@ -257,7 +257,7 @@ ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
 
 % % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
-gsyn_hetero = 2;
+gsyn_hetero = 0;
 
 % % Eleak heterogenity (makes excitability of cells variable)
 RS_Eleak_std = 0;
@@ -368,7 +368,7 @@ if ~no_synapses
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=2/Nfs;                      % FS -> FS
+    gGABAa_fsfs=1/Nfs;                      % FS -> FS
     gGABAa_fsrs=1/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
@@ -469,9 +469,9 @@ switch sim_mode
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
-            'RS->FS','g_SYN',[.3:.2:1.3]/Nrs;...
-            'FS->RS','g_SYN',[.5:.2:1.3]/Nfs;...
+            %'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
+            'RS->FS','g_SYN',[.3:.3:.9]/Nrs;...
+            'FS->RS','g_SYN',[.3:.3:.9]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
