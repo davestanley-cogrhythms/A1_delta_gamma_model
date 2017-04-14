@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 350];
+tspan=[0 500];
 sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -66,7 +66,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 0;
+plot_on = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -249,17 +249,17 @@ deepFS_Vnoise = 3;
 % % Gap junction connections.
 % % Deep cells
 % #mygap
-ggjaRS=.0/Nib;  % RS -> RS
-ggja=.2/Nib;  % IB -> IB
-ggjFS=.0/Nfs;  % FS -> FS
-ggjLTS=.2/Nlts;  % LTS -> LTS
+ggjaRS=.02/Nib;  % RS -> RS
+ggja=.02/Nib;  % IB -> IB
+ggjFS=.02/Nfs;  % FS -> FS
+ggjLTS=.02/Nlts;  % LTS -> LTS
 % % deep cells
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
-ggjdeepFS=.2/NdeepFS;  % deepFS -> deepFS
+ggjdeepFS=.02/NdeepFS;  % deepFS -> deepFS
 
 % % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
-gsyn_hetero = 0;
+gsyn_hetero = .3;
 
 % % Eleak heterogenity (makes excitability of cells variable)
 RS_Eleak_std = 0;
@@ -471,9 +471,9 @@ switch sim_mode
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            %'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
-            'RS->FS','g_SYN',[.5 1]/Nrs;...
-            'FS->RS','g_SYN',[.5 1]/Nfs;...
+            'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
+            'RS->FS','g_SYN',[.3:.3:.9]/Nrs;...
+            'FS->RS','g_SYN',[.3:.3:.9]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -693,7 +693,7 @@ if plot_on
             PlotData(data,'plot_type','waveform','variable','IB_V');
         case {9,10}
             %%
-            
+            % #myfigs9
             if save_figures
                 data_img = ImportPlots(study_dir); xp_img_temp = All2xPlt(data_img);
                 xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
@@ -712,7 +712,9 @@ if plot_on
                 %inds = 1:5;
                 h = PlotData2(data(inds),'population','RS|FS','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP);
                 
-                h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
+%                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
+%                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
+                h = PlotData(data,'plot_type','rastergram');
                 
                 ind_range = [150 350]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false);
