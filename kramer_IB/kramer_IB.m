@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -66,7 +66,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 1;
+plot_on = 0;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -191,6 +191,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % and then the value that kicks in after this is second (e.g. JRS2).
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
+% #mystim
 Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
@@ -210,8 +211,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=300;         % 200 is a good settling time for RS cells
-RS_onset2=300;
+RS_offset1=000;         % 200 is a good settling time for RS cells
+RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.0;      % synaptic noise conductance IB cells
@@ -368,7 +369,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
     gGABAa_fsrs=1/Nfs;                     % FS -> RS
@@ -466,14 +467,14 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { %'RS','stim',linspace(2,.5,4); ...
+        vary = { 'RS','stim2',0:-1:-3; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
-            'RS->FS','g_SYN',[.3:.3:1.5]/Nrs;...
-            'FS->RS','g_SYN',[.3:.3:1.5]/Nfs;...
+            %'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
+            %'RS->FS','g_SYN',[.3:.3:1.5]/Nrs;...
+            %'FS->RS','g_SYN',[.3:.3:1.5]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -661,6 +662,7 @@ if plot_on
     switch sim_mode
         case {1,11}
             %%
+            % #myfigs1
             % PlotData(data,'plot_type','waveform');
             tfs = 5;
             %PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',50);
