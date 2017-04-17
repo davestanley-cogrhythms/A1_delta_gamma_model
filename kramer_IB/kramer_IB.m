@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -216,11 +216,11 @@ RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.0;      % synaptic noise conductance IB cells
+gRAN=.015;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 1000;  % Mean frequency Poisson IPSPs
-RSgRAN=0.0;   % synaptic noise conductance to RS cells
+RSgRAN=0.015;   % synaptic noise conductance to RS cells
 deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
@@ -468,7 +468,7 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim2',-1*[6:2:12]; ...
+        vary = { 'RS','stim2',-2.5:1:1.5; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
