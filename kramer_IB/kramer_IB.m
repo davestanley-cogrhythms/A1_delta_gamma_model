@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -39,9 +39,10 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
+ind_range = [300 500];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
-    ind_range = [150 350];
+    
 
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
 
@@ -66,7 +67,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 0;
+plot_on = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [9:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -196,8 +197,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 0; % RS cells
-JRS2 = 0; %
+JRS1 = -2; % RS cells
+JRS2 = -2; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -467,14 +468,14 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim2',0:-1:-3; ...
+        vary = { %'RS','stim2',0:-1:-3; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            %'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
-            %'RS->FS','g_SYN',[.3:.3:1.5]/Nrs;...
-            %'FS->RS','g_SYN',[.3:.3:1.5]/Nfs;...
+            'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
+            'RS->FS','g_SYN',[.3:.3:1.5 2 2.5]/Nrs;...
+            'FS->RS','g_SYN',[.3:.3:1.5 2 2.5]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -624,6 +625,10 @@ else
 
 end
 
+% Save everything to data.mat several different ways, just incase
+save('data1.mat');
+save('data1a.mat','data');
+
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
@@ -670,7 +675,7 @@ if plot_on
             % PlotData_with_AP_line(data,'plot_type','rastergram');
             
             
-            ind_range = [0 tspan(end)]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+            plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
@@ -712,13 +717,13 @@ if plot_on
             else
                 inds = 1:1:length(data);
                 %inds = 1:5;
-                h = PlotData2(data(inds),'population','RS|FS','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP);
+                h = PlotData2(data(inds),'population','RS|FS','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
                 
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
-                h = PlotData(data,'plot_type','rastergram');
+                h = PlotData(data,'plot_type','rastergram','crop_range',ind_range);
                 
-                ind_range = [150 350]; plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+                plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false);
             
             end
