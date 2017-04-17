@@ -25,6 +25,12 @@ function h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
         h2(i) = h{i}(1);
     end
     
+    xlims = xlim;
+    ylims = ylim;
     hold on; add_AP_vertical_lines
+    
+    % Reset axis limits incase adding vertical lines disrupted them
+    xlim(xlims);
+    ylim(ylims);
 
 end
