@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -372,8 +372,8 @@ if ~no_synapses
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=1/Nfs;                      % FS -> FS
-    gGABAa_fsrs=1/Nfs;                     % FS -> RS
+    gGABAa_fsfs=1.5/Nfs;                      % FS -> FS
+    gGABAa_fsrs=1.5/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -468,14 +468,14 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { %'RS','stim2',0:-1:-3; ...
+        vary = { 'RS','stim2',-1*[6:2:12]; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
-            'RS->FS','g_SYN',[.3:.3:1.5 2 2.5]/Nrs;...
-            'FS->RS','g_SYN',[.3:.3:1.5 2 2.5]/Nfs;...
+            %'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
+            %'RS->FS','g_SYN',[.3:.3:1.5 2 2.5]/Nrs;...
+            %'FS->RS','g_SYN',[.3:.3:1.5 2 2.5]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -625,10 +625,6 @@ else
 
 end
 
-% Save everything to data.mat several different ways, just incase
-save('data1.mat');
-save('data1a.mat','data');
-
 % SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
 %     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
@@ -721,7 +717,7 @@ if plot_on
                 
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
-                h = PlotData(data,'plot_type','rastergram','crop_range',ind_range);
+                h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false);
