@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 700];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -50,8 +50,8 @@ if save_figures
                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','RS|FS','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
                     {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -40],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
-                    {universal_options{:},'plot_type','power','crop_range',ind_range,'xlims',[0 80],'population','RS'}, ...
-                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .5],'lock_axes',false}, ...
+                    {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
+                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .8],'lock_axes',false}, ...
                     };
             
 else
@@ -469,8 +469,8 @@ switch sim_mode
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
-            %'RS','PP_gSYN',[.15:.05:.4]; ...
-            %'FS','PP_gSYN',[.0:.05:.4]; ...
+            'RS','PP_gSYN',[.0:0.05:.3]; ...
+            'FS','PP_gSYN',[.0:0.05:.3]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
@@ -672,7 +672,7 @@ if plot_on
             
             
 %             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-%             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .5],'lock_axes',false);
+%             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .8],'lock_axes',false);
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
@@ -718,10 +718,10 @@ if plot_on
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
                 h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
-                PlotData2(data,'do_mean',1,'plot_type','power','xlims',[0 120],'crop_range',ind_range);
+                PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
+                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .8],'lock_axes',false);
             
             end
             
