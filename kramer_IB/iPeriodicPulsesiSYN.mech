@@ -28,6 +28,10 @@ tauDx = [100]
 tauRx = [.5]
 IC = [0.0]
 IC_noise = [0]
+PP_g_SYN_hetero = 0
+
+PPgsyn0=unifrnd(PP_gSYN*(1-PP_g_SYN_hetero),PP_gSYN*(1+PP_g_SYN_hetero),[Npop 1])'
+PPgsyn=PPgsyn0.* double(PPgsyn0 > 0)
 
 % Build pulse train
 s1 = getDeltaTrainPresets(PPfreq,PPshift,Tend,dt,PPonset,PPoffset,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
@@ -38,7 +42,7 @@ X_pseudo(k) = 100*s2(k,:) - 60;           % Membrane voltage of simulated pre-sy
 
 
 % iSYN: Generic 2-state synapse
-ISYN(X,s) = (PP_gSYN.*s.*(X-E_SYN))
+ISYN(X,s) = (PPgsyn.*s.*(X-E_SYN))
  
 s' = -s./tauDx + ((1-s)/tauRx).*(1+tanh(X_pseudo(k)/10));
 s(0) = IC*ones(Npop,1)+IC_noise.*rand(Npop,1)

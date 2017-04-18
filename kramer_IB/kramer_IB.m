@@ -527,12 +527,14 @@ IB_PP_gSYN = 0;
 RS_PP_gSYN = 0;
 NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
+LTS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.05;
 FS_PP_gSYN = 0.1;
+LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
 
 switch pulse_mode
@@ -558,6 +560,7 @@ switch pulse_mode
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
+        LTS_PP_gSYN = 0;
         deepRSPPstim = 0;
         IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
@@ -669,7 +672,7 @@ if plot_on
             tfs = 5;
             PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',100);
             
-            PlotData_with_AP_line(data,'plot_type','rastergram');
+            %PlotData_with_AP_line(data,'plot_type','rastergram');
             
             
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
