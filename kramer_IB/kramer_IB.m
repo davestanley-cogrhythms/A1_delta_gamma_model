@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -93,7 +93,6 @@ Now = clock;
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-dsfact = 100;
 
 % % % % % Simulation switches
 no_noise = 0;
@@ -474,9 +473,9 @@ switch sim_mode
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            'FS->FS','g_SYN',[1,1.5]/Nfs;...
-            'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
-            'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
+            %'FS->FS','g_SYN',[1,1.5]/Nfs;...
+            %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
+            %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -564,7 +563,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = tauAMPAd*2; % in ms        % Broaden by factor of 2x due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 200;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
