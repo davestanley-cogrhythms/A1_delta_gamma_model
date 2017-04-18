@@ -10,12 +10,12 @@ function save_allfigs_Dave(handles_arr)
 %     if nargin < 1; handles_arr = [];
 %     end
     
-    do_commit = 0;
+    do_commit = 1;
     supersize_me = 0;
-    handles_arr = 1:1;
+    handles_arr = 1:4;
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '124b_sweep2D_RS_FS_PPStim';
+    currfigname = '124c_single_sim_test';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -68,7 +68,9 @@ function save_allfigs_Dave(handles_arr)
     zip(fullfile(basepath,sp,'kramer_IB.zip'),{'kramer_IB.m','include_kramer_IB_populations.m','include_kramer_IB_synapses.m'});
     
     % Copy study info file
-    copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
+    if exist(fullfile(study_dir,'studyinfo.mat'),'file')
+        copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
+    end
     
     % Copy raw plots if not empty
     if exist(fullfile(study_dir,'plots'),'dir')
@@ -82,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Sweep through RS and FS PPStim values'];
+    mycomment = ['Did a test with a single sim; set to seemingly optimal values'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
