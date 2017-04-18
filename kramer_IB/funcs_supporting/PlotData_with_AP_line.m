@@ -701,7 +701,7 @@ for figset=1:num_fig_sets
     
     % ADd vertical lines fr AP pulse
     axis_counter=0;
-    shift = 25*0;          % Shift of 0 corresponds to pulse_num = 12. shift of 25*-8 is pulse_num=4. Etc.
+    shift = 25*8;          % Shift of 0 corresponds to pulse_num = 12. shift of 25*-8 is pulse_num=4. Etc.
         for row=1:num_rows
           for col=1:num_cols
             

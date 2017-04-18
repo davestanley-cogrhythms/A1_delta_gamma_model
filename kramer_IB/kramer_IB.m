@@ -39,7 +39,7 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [300 500];
+ind_range = [400 600];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
     
@@ -51,7 +51,7 @@ if save_figures
                     {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -40],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
                     {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
-                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .8],'lock_axes',false}, ...
+                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
                     };
             
 else
@@ -103,7 +103,7 @@ NMDA_block = 0;
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS = 0;
+include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
@@ -372,7 +372,7 @@ if ~no_synapses
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=1.5/Nfs;                      % FS -> FS
+    gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.5/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
@@ -564,10 +564,10 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPwidth = tauAMPAd*2; % in ms        % Broaden by factor of 2x due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 12;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
@@ -669,11 +669,11 @@ if plot_on
             tfs = 5;
             PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',100);
             
-            % PlotData_with_AP_line(data,'plot_type','rastergram');
+            PlotData_with_AP_line(data,'plot_type','rastergram');
             
             
-%             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-%             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .8],'lock_axes',false);
+            plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+            PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
@@ -722,7 +722,7 @@ if plot_on
                 PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .8],'lock_axes',false);
+                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 1.2],'lock_axes',false);
             
             end
             
