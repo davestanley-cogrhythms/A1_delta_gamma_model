@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -51,7 +51,7 @@ if save_figures
                     {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -40],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
                     {universal_options{:},'plot_type','power','xlims',[0 80],'population','RS'}, ...
-                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all'}, ...
+                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .5],'lock_axes',false}, ...
                     };
             
 else
@@ -197,8 +197,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = -2; % RS cells
-JRS2 = -2; %
+JRS1 = 5; % RS cells
+JRS2 = 2; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -212,24 +212,24 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=000;         % 200 is a good settling time for RS cells
-RS_onset2=000;
+RS_offset1=300;         % 200 is a good settling time for RS cells
+RS_onset2=300;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.015;      % synaptic noise conductance IB cells
+gRAN=.05;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
-lambda = 1000;  % Mean frequency Poisson IPSPs
-RSgRAN=0.015;   % synaptic noise conductance to RS cells
+lambda = 100;  % Mean frequency Poisson IPSPs
+RSgRAN=0.05;   % synaptic noise conductance to RS cells
 deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
 % #mynoise
-IBda_Vnoise = 6;
-NG_Vnoise = 6;
-FS_Vnoise = 6;
-LTS_Vnoise = 6;
-RSda_Vnoise = 6;
+IBda_Vnoise = 12;
+NG_Vnoise = 12;
+FS_Vnoise = 12;
+LTS_Vnoise = 12;
+RSda_Vnoise = 12;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
 
@@ -251,9 +251,9 @@ deepFS_Vnoise = 3;
 % % Gap junction connections.
 % % Deep cells
 % #mygap
-ggjaRS=.02/Nib;  % RS -> RS
+ggjaRS=.01/Nib;  % RS -> RS
 ggja=.02/Nib;  % IB -> IB
-ggjFS=.02/Nfs;  % FS -> FS
+ggjFS=.01/Nfs;  % FS -> FS
 ggjLTS=.02/Nlts;  % LTS -> LTS
 % % deep cells
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
@@ -468,7 +468,7 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim2',-1*[-3.5:.3:-2.5]; ...
+        vary = { 'RS','stim2',-1*[-3:.5:-1.5]-2; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
@@ -666,13 +666,13 @@ if plot_on
             % #myfigs1
             % PlotData(data,'plot_type','waveform');
             tfs = 5;
-            %PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',50);
+            PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',100);
             
             % PlotData_with_AP_line(data,'plot_type','rastergram');
             
             
-            plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-            PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all');
+%             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+%             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .5],'lock_axes',false);
             
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
@@ -718,9 +718,10 @@ if plot_on
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
                 h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
+                PlotData2(data,'do_mean',1,'plot_type','power','xlims',[0 120])
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false);
+                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
             
             end
             
