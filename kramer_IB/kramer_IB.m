@@ -468,7 +468,7 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim2',-1*[-3:.5:-1.5]-2; ...
+        vary = { 'RS','stim2',-1*[-.5:1:5]; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
@@ -630,7 +630,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-% t = data(1).time; data = CropData(data, t > 150 & t <= t(end));
+t = data(1).time; data = CropData(data, t > 300 & t <= t(end));
 
 
 % % When varying synaptic connectivity, convert connectivity measure from
