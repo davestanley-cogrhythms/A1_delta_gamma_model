@@ -26,7 +26,7 @@ pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -50,7 +50,7 @@ if save_figures
                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','RS|FS','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
                     {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -40],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','RS|FS'}, ...
-                    {universal_options{:},'plot_type','power','xlims',[0 80],'population','RS'}, ...
+                    {universal_options{:},'plot_type','power','crop_range',ind_range,'xlims',[0 80],'population','RS'}, ...
                     {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 .5],'lock_axes',false}, ...
                     };
             
@@ -93,6 +93,7 @@ Now = clock;
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
+dsfact = 100;
 
 % % % % % Simulation switches
 no_noise = 0;
@@ -198,7 +199,7 @@ Jd2=0;    %
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
-JRS2 = 2; %
+JRS2 = 0.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -468,14 +469,14 @@ switch sim_mode
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
     case 9  % Vary RS cells in RS-FS network
-        vary = { 'RS','stim2',-1*[-.5:1:5]; ...
+        vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'RS','PP_gSYN',[.15:.05:.4]; ...
             %'FS','PP_gSYN',[.0:.05:.4]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
-            %'FS->FS','g_SYN',[.5:.5:3]/Nfs;...
-            %'RS->FS','g_SYN',[.3:.3:1.5 2 2.5]/Nrs;...
-            %'FS->RS','g_SYN',[.3:.3:1.5 2 2.5]/Nfs;...
+            'FS->FS','g_SYN',[1,1.5]/Nfs;...
+            'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
+            'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -630,7 +631,7 @@ end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
-t = data(1).time; data = CropData(data, t > 300 & t <= t(end));
+% t = data(1).time; data = CropData(data, t > 300 & t <= t(end));
 
 
 % % When varying synaptic connectivity, convert connectivity measure from
@@ -718,7 +719,7 @@ if plot_on
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
                 h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
-                PlotData2(data,'do_mean',1,'plot_type','power','xlims',[0 120])
+                PlotData2(data,'do_mean',1,'plot_type','power','xlims',[0 120],'crop_range',ind_range);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
