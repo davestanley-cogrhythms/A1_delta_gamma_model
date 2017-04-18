@@ -34,8 +34,8 @@ function hxp = xp_plot_AP_timing1b_RSFS_Vm (xp, op,ind_range)
     end
     
     
-%     if ~isempty(xlims); xlim(xlims); end
-%     if ~isempty(ylims); ylim(ylims); end
+    if ~isempty(xlims); xlim(xlims); end
+    if ~isempty(ylims); ylim(ylims); end
     
 end
 
