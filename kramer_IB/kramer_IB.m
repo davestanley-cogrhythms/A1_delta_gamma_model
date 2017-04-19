@@ -197,7 +197,7 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 5; % RS cells
+JRS1 = 0.5; % RS cells
 JRS2 = 0.5; %
 Jfs=1;    % FS cells
 Jlts=.75; % LTS cells
@@ -545,7 +545,7 @@ jitter_fall = 0.0;
 jitter_rise = 0.0;
 PPtauDx_LTS = tauAMPAd_LTS + jitter_fall;
 PPtauRx_LTS = tauAMPAr_LTS + jitter_rise;
-PP_width = 0.5;
+PP_width = 0.25;
 PPwidth2_rise = 0.25;
 
 switch pulse_mode
