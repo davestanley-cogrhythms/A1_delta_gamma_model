@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -93,7 +93,6 @@ Now = clock;
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-dsfact=100;
 
 % % % % % Simulation switches
 no_noise = 0;
@@ -373,14 +372,14 @@ if ~no_synapses
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
+    gGABAa_fsfs=1.5/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.5/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
+    gAMPA_rsLTS = 0.5/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
 %     gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
     %
-    gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
     % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
@@ -413,8 +412,10 @@ end
 
 
 % % % % % Synaptic time constants & reversals
+tauAMPAr_LTS = .25;
+tauAMPAd_LTS = 1;
 tauAMPAr=.25;  % ms, AMPA rise time; Jung et al
-tauAMPAd=1;   % ms, AMPA decay time; Jung et al
+tauAMPAd=1;   % ms, increased to be slightly longer to allow greater overlap
 tauNMDAr=5; % ms, NMDA rise time; Jung et al
 tauNMDAd=100; % ms, NMDA decay time; Jung et al
 tauGABAar=.5;  % ms, GABAa rise time; Jung et al
@@ -477,9 +478,9 @@ switch sim_mode
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
-            'LTS','PP_gSYN',[.03,.05,.07,.1,.15,.2]; ...
-            'RS->LTS','g_SYN',[.2:.2:1]/Nrs;...
-            'FS->LTS','g_SYN',[.2:.2:1]/Nfs;...
+            'LTS','PP_gSYN',[.15 .2 .25 .35]-.1; ...
+            %'RS->LTS','g_SYN',[.2:.2:1]/Nrs;...
+            %'FS->LTS','g_SYN',[.5:.3:1.4]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -535,16 +536,22 @@ LTS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-RS_PP_gSYN = 0.15;
+% RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.05;
-FS_PP_gSYN = 0.1;
-LTS_PP_gSYN = 0.1;
+FS_PP_gSYN = 0.5;
+LTS_PP_gSYN = 0.2;
 do_FS_reset_pulse = 0;
+jitter_fall = 0.0;
+jitter_rise = 0.0;
+PPtauDx_LTS = tauAMPAd_LTS + jitter_fall;
+PPtauRx_LTS = tauAMPAr_LTS + jitter_rise;
+PP_width = 0.5;
+PPwidth2_rise = 0.25;
 
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 4; % in Hz
-        PPwidth = tauAMPAd*2; % in ms        % Broaden by factor of 2x due to presynaptic jitter
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
@@ -552,7 +559,7 @@ switch pulse_mode
         ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = tauAMPAr*2;      % Broaden by factor of 2x due to presynaptic jitter
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 2;
         PPFacTau = 200;
         PPFacFactor = 1.0;
@@ -569,7 +576,7 @@ switch pulse_mode
         IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
-        PPwidth = tauAMPAd*2; % in ms        % Broaden by factor of 2x due to presynaptic jitter
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
@@ -578,7 +585,7 @@ switch pulse_mode
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        width2_rise = tauAMPAr*2;      % Broaden by factor of 2x due to presynaptic jitter
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
         PPFacTau = 100;
         PPFacFactor = 1.0;
@@ -721,12 +728,12 @@ if plot_on
             else
                 inds = 1:1:length(data);
                 %inds = 1:5;
-                h = PlotData2(data(inds),'population','RS|FS','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
+                h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
                 
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
 %                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
-                h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
-                PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
+                %h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
+                %PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 1.2],'lock_axes',false);

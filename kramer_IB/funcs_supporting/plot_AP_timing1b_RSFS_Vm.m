@@ -12,12 +12,14 @@ function h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
 %     i=i+1; hold on; h{i} = plot(data.time(ind),data.FS_V(ind,:)+0,'r');
     if isfield(data(1),'LTS_V')
         i=i+1; hold on; h{i} = plot(data.time(ind),(data.LTS_V(ind,:)-mean(data.LTS_V(ind,:)))/100+0.8,'g');
+        i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.LTS_FS_IBaIBdbiSYNseed_s(ind,:),2)*1,'LineWidth',2);
+        i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.LTS_RS_IBaIBdbiSYNseed_s(ind,:),2)*1,'LineWidth',2);
+        i=i+1; hold on; h{i} = plot(data.time(ind),-1*data.LTS_iPeriodicPulsesiSYN_s(ind,1)*1-.0,'k','LineWidth',2);
+    else
+        i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.FS_FS_IBaIBdbiSYNseed_s(ind,:),2)*1,'LineWidth',2);
+        i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.FS_RS_IBaIBdbiSYNseed_s(ind,:),2)*1,'LineWidth',2);
+        i=i+1; hold on; h{i} = plot(data.time(ind),-1*data.RS_iPeriodicPulsesiSYN_s(ind,1)*1-.0,'k','LineWidth',2);
     end
-    i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.FS_FS_IBaIBdbiSYNseed_s(ind,:),2)*1,'LineWidth',2);
-    i=i+1; hold on; h{i} = plot(data.time(ind),mean(data.FS_RS_IBaIBdbiSYNseed_s(ind,:),2)*1,'LineWidth',2);
-    %i=i+1; hold on; h{i} = plot(data.time(ind),data.NG_GABA_gTH(ind,:)*20-6,'b','LineWidth',2);
-    
-    i=i+1; hold on; h{i} = plot(data.time(ind),-1*data.RS_iPeriodicPulsesiSYN_s(ind,1)*.30-.1,'k','LineWidth',2);
     %xlim([1440,1560])
     
     % Keep only 1st entry in h. Useful for passing to legend command.
