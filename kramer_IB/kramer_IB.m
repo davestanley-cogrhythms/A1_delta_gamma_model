@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -103,7 +103,7 @@ NMDA_block = 0;
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS = 1;
+include_LTS = 0;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
@@ -372,7 +372,7 @@ if ~no_synapses
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=1.5/Nfs;                      % FS -> FS
+    gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.5/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.5/Nrs;                 % RS -> LTS
@@ -471,14 +471,14 @@ switch sim_mode
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
-            %'RS','PP_gSYN',[.0:0.05:.3]; ...
-            %'FS','PP_gSYN',[.0:0.05:.3]; ...
+            'RS','PP_gSYN',[.0:0.05:.3]; ...
+            'FS','PP_gSYN',[.0:0.05:.3]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
-            'LTS','PP_gSYN',[.15 .2 .25 .35]-.1; ...
+            %'LTS','PP_gSYN',[.15 .2 .25 .35]-.1; ...
             %'RS->LTS','g_SYN',[.2:.2:1]/Nrs;...
             %'FS->LTS','g_SYN',[.5:.3:1.4]/Nfs;...
             };
@@ -536,9 +536,9 @@ LTS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-% RS_PP_gSYN = 0.2;
+RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.05;
-FS_PP_gSYN = 0.5;
+FS_PP_gSYN = 0.2;
 LTS_PP_gSYN = 0.2;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
