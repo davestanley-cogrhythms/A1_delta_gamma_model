@@ -39,7 +39,7 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [400 600];
+ind_range = [400 700];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
     
@@ -48,11 +48,12 @@ if save_figures
 
     plot_options = {...
                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
-                    {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -40],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
+                    {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
-                    {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
                     {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
                     };
+                
+                % {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
             
 else
     plot_options = [];
@@ -103,7 +104,7 @@ NMDA_block = 0;
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS = 0;
+include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
@@ -375,7 +376,7 @@ if ~no_synapses
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.5/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.5/Nrs;                 % RS -> LTS
+%     gAMPA_rsLTS = 0.5/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
 %     gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
     %
@@ -471,16 +472,16 @@ switch sim_mode
         
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
-            'RS','PP_gSYN',[.0:0.05:.3]; ...
-            'FS','PP_gSYN',[.0:0.05:.3]; ...
+            %'RS','PP_gSYN',[.0:0.05:.3]; ...
+            %'FS','PP_gSYN',[.0:0.05:.3]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
-            %'LTS','PP_gSYN',[.15 .2 .25 .35]-.1; ...
-            %'RS->LTS','g_SYN',[.2:.2:1]/Nrs;...
-            %'FS->LTS','g_SYN',[.5:.3:1.4]/Nfs;...
+            'LTS','PP_gSYN',[.0:.03:.2]; ...
+            %'RS->LTS','g_SYN',[.2:.3:1.4]/Nrs;...
+            'FS->LTS','g_SYN',[.3:.3:2]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -536,10 +537,10 @@ LTS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-RS_PP_gSYN = 0.2;
+RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.05;
-FS_PP_gSYN = 0.2;
-LTS_PP_gSYN = 0.2;
+FS_PP_gSYN = 0.15;
+LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
 jitter_rise = 0.0;
@@ -680,11 +681,11 @@ if plot_on
             %%
             % #myfigs1
             % PlotData(data,'plot_type','waveform');
-            tfs = 5;
-            PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',100);
+            inds = 1:1:length(data);
+            h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
             
             %PlotData_with_AP_line(data,'plot_type','rastergram');
-            
+            PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
             
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
             PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
@@ -727,12 +728,11 @@ if plot_on
                 end
             else
                 inds = 1:1:length(data);
-                %inds = 1:5;
                 h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
                 
-%                 h = PlotData2(data(inds),'plot_type','imagesc','population','RS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
-%                 h = PlotData2(data(inds),'plot_type','imagesc','population','FS','supersize_me',false,'plot_handle',@xp_matrix_imagesc_with_AP);
-                %h = PlotData(data,'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range);
+                PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
+%               
+                h = PlotData2(data(1:3),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
                 %PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
