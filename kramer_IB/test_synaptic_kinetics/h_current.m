@@ -2,7 +2,7 @@
 
 %%
 
-scaling_mode = 2;
+scaling_mode = 3;
 
 V=-100:100
 AR_V12 = [-87.5]
@@ -19,7 +19,7 @@ switch scaling_mode
         c_ARaM = [2.75]
         c_ARbM = [3]
     case 3
-        % Unmodified
+        % Unmodified (Traub 2003 / Huguenard 1992)
         c_ARaM = [1]
         c_ARbM = [1]
 end
