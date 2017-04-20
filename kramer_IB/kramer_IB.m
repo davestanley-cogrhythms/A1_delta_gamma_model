@@ -250,7 +250,7 @@ if include_IB
     spec.populations(i).equations = {['V''=(current)/Cm; V(0)=' num2str(IC_V) ]};
     %spec.populations(i).mechanism_list = {'iPeriodicPulses','IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBleak'};
         warning('Uncomment this later');
-    spec.populations(i).mechanism_list = {'IBdbiPoissonExpJason','itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBiAR','IBleak'};
+    spec.populations(i).mechanism_list = {'itonicPaired','IBnoise','IBiNaF','IBiKDR','IBiMMich','IBiCaH','IBiAR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',gl,...
       'PPstim',IBPPstim,'PPfreq',PPfreq,'PPwidth',PPwidth,'PPonset',PPonset,'PPoffset',PPoffset,'ap_pulse_num',ap_pulse_num,'ap_pulse_delay',ap_pulse_delay,...
@@ -373,7 +373,7 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',0,'vary',vary,'parallel_flag',1);
 
 
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 
