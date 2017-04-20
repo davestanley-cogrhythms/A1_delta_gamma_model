@@ -12,10 +12,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 1;
     supersize_me = 0;
-    handles_arr = [1,2,3,5,6,7,8];
+    handles_arr = [1:5];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '128b_test_LTS_iAR_gating';
+    currfigname = '128c_test_LTS_iAR_gating2';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Added h current to LTS cells. Default settings from Sherfeys Kramer 2008 IB cell model'];
+    mycomment = ['Tested responses to various current injections. Only LTS cells. PP Stim turns on around 400ms'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
