@@ -371,10 +371,10 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.0/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
-    gGABAa_fsrs=1.5/Nfs;                     % FS -> RS
+    gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
 %     gAMPA_rsLTS = 0.5/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
@@ -477,8 +477,8 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'LTS','stim',[.75:.25:1.5]; ...
-            'RS','PP_gSYN',[.0:0.05:.3]; ...
-            %'FS','PP_gSYN',[.0:0.05:.3]; ...
+            %'RS','PP_gSYN',[.0:0.05:.3]; ...
+            'FS','PP_gSYN',[.0:0.05:.3]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
@@ -544,7 +544,7 @@ LTS_PP_gSYN = 0;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.05;
-% FS_PP_gSYN = 0.15;
+FS_PP_gSYN = 0.15;
 LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
@@ -732,7 +732,7 @@ if plot_on
                     for i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 end
             else
-                inds = 4:7;
+                inds = 5:7;
                 h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
                 
                 PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
