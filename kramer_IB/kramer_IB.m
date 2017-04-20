@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -470,8 +470,13 @@ switch sim_mode
         
         % vary = {'IB', 'PPfreq', [1, 2, 4, 8, 16, 32]};
         
+    case 8
+        vary = { ...
+            '(RS,FS,LTS)','stim',[-1:1:2]; ...
+            };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
+            'LTS','stim',[0:1:3]; ...
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
             %'FS','PP_gSYN',[.0:0.05:.3]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
@@ -479,9 +484,9 @@ switch sim_mode
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
-            'LTS','PP_gSYN',[.0:.03:.2]; ...
+            %'LTS','PP_gSYN',[.0:.03:.2]; ...
             %'RS->LTS','g_SYN',[.2:.3:1.4]/Nrs;...
-            'FS->LTS','g_SYN',[.3:.3:2]/Nfs;...
+            %'FS->LTS','g_SYN',[.3:.3:2]/Nfs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -732,7 +737,7 @@ if plot_on
                 
                 PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
 %               
-                h = PlotData2(data(1:3),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
+%                 h = PlotData2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
                 %PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
                 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
