@@ -104,7 +104,7 @@ NMDA_block = 0;
 include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS = 0;
+include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
@@ -477,7 +477,7 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'LTS','stim',[.75:.25:1.5]; ...
-            'RS','PP_gSYN',[.0:0.05:.3]; ...
+            %'RS','PP_gSYN',[.0:0.05:.3]; ...
             %'FS','PP_gSYN',[.0:0.05:.3]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
@@ -485,7 +485,7 @@ switch sim_mode
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
-            %'RS->LTS','g_SYN',[.2:.3:1.4]/Nrs;...
+            'RS->LTS','g_SYN',[.5:.3:2]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.3:2]/Nfs;...
             };
         
@@ -542,10 +542,10 @@ LTS_PP_gSYN = 0;
 
 % IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
-RS_PP_gSYN = 0.15;
+RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.05;
 % FS_PP_gSYN = 0.15;
-LTS_PP_gSYN = 0.1;
+% LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
 jitter_rise = 0.0;
@@ -732,7 +732,7 @@ if plot_on
                     for i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 end
             else
-                inds = 1:4;
+                inds = 1:3;
                 h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
                 
                 PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
@@ -743,7 +743,7 @@ if plot_on
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
             
-                inds = 5:7;
+                inds = 4:6;
                 h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
                 
                 PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
