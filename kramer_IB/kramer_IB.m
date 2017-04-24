@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,12 +21,12 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -102,8 +102,8 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 0;
-include_RS = 1;
-include_FS = 1;
+include_RS = 0;
+include_FS = 0;
 include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
@@ -172,7 +172,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=30;   % Default number of cells
+N=2;   % Default number of cells
 Nib=N;   % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -472,7 +472,7 @@ switch sim_mode
         
     case 8
         vary = { ...
-            '(RS,FS,LTS)','stim',[-1:1:2]; ...
+            '(LTS)','stim',[-1:.5:1]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -567,12 +567,12 @@ switch pulse_mode
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
-        kernel_type = 2;
-        PPFacTau = 200;
+        kernel_type = 1;
+        PPFacTau = 100;
         PPFacFactor = 1.0;
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
-        RSPPFacTau = 200;
+        RSPPFacTau = 100;
         IB_PP_gNMDA = 0;               
         IB_PP_gSYN = 0;
         RS_PP_gSYN = 0;
@@ -716,6 +716,8 @@ if plot_on
             
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');
+        case 8
+            PlotData(data);
         case {9,10}
             %%
             % #myfigs9

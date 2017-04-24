@@ -10,12 +10,12 @@ function save_allfigs_Dave(handles_arr)
 %     if nargin < 1; handles_arr = [];
 %     end
     
-    do_commit = 1;
+    do_commit = 0;
     supersize_me = 0;
-    handles_arr = [1:1];
+    handles_arr = [2:4];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '131a_sweep_gRSLTS_gFSLTS';
+    currfigname = '132a_single_LTS_test_threshold';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Back to the drawing board - sweep all inputs to LTS cells to see if can get a better AP response.'];
+    mycomment = ['Went back to single LTS cell. Try to tune so get more depolarized firing potentials. Fig2 - Default Jung LTS (gNa=100; gK=80; gleak=0.1). Fig3 - Kramer LTS (gNa=200; gK=20; gleak=1); Fig4 - High leak LTS (gNa=100; gK=80; gleak=1)'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
