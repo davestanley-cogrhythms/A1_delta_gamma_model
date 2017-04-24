@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -39,7 +39,7 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [400 700];
+ind_range = [200 700];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
     
@@ -485,8 +485,9 @@ switch sim_mode
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
-            'RS->LTS','g_SYN',[.5:.3:2]/Nrs;...
+            %'RS->LTS','g_SYN',[.5:.3:2]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.3:2]/Nfs;...
+            'LTS->RS','g_SYN',[.5:1:3.5]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
