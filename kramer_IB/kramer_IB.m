@@ -103,7 +103,7 @@ NMDA_block = 0;
 % % % % % Cells to include in model
 include_IB = 0;
 include_RS = 0;
-include_FS = 0;
+include_FS = 1;
 include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
@@ -174,9 +174,9 @@ fast_offset = 0;
 % % % % % % Number of cells per population
 N=2;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=80; % Number of RS cells
+Nrs=2; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=20;  % Number of FS cells
+Nfs=2;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -229,7 +229,7 @@ deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 IBda_Vnoise = 12;
 NG_Vnoise = 12;
 FS_Vnoise = 12;
-LTS_Vnoise = 12;
+LTS_Vnoise = 0;
 RSda_Vnoise = 12;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
@@ -472,7 +472,7 @@ switch sim_mode
         
     case 8
         vary = { ...
-            '(LTS)','stim',[-1:.5:1]; ...
+            '(LTS)','stim',[-3, -2.5, -2,-1.5]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
