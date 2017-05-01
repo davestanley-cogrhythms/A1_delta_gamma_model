@@ -39,7 +39,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 %   
 % Examples:
 % One cell:
-% data=SimulateModel('dv/dt=@current+10; {iNa,iK}','tspan',[0 500]);
+% data=dsSimulate('dv/dt=@current+10; {iNa,iK}','tspan',[0 500]);
 % PlotData(data); % plot first state variable ('v')
 % PlotData(data,'variable','*'); % plot all state variables
 % PlotData(data,'variable','*','time_limits',[30 60]); % plot all variables and time 30-60ms
@@ -48,7 +48,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 % PlotData(data,'variable','*','plot_type','power');
 % 
 % One population: with noisy input
-% data=SimulateModel('dv[5]/dt=@current+10*(1+randn(1,Npop)); {iNa,iK}','tspan',[0 250]);
+% data=dsSimulate('dv[5]/dt=@current+10*(1+randn(1,Npop)); {iNa,iK}','tspan',[0 250]);
 % PlotData(data);
 % PlotData(data,'variable','*'); % plot all state variables (all cells)
 % PlotData(data,'variable','m'); % plot state variable 'm' (all cells)
@@ -63,7 +63,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 % One population varying one parameter (input amplitude):
 % eqns='dv[5]/dt=@current+amp*(1+randn(1,Npop)); {iNa,iK}';
 % vary={'','amp',[0 10 20]};
-% data=SimulateModel(eqns,'vary',vary,'tspan',[0 200]);
+% data=dsSimulate(eqns,'vary',vary,'tspan',[0 200]);
 % PlotData(data);
 % PlotData(data,'variable','m');
 % PlotData(data,'variable','*');
@@ -75,7 +75,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 % One population varying two parameters (input amplitude and membrane capacitance):
 % eqns='dv[5]/dt=@current/Cm+amp*(1+randn(1,Npop)); {iNa,iK}';
 % vary={'','Cm',[1 2]; '','amp',[0 10 20]};
-% data=SimulateModel(eqns,'vary',vary,'tspan',[0 200]);
+% data=dsSimulate(eqns,'vary',vary,'tspan',[0 200]);
 % PlotData(data);
 % PlotData(data,'variable','*');
 % % plot power spectrum
@@ -91,7 +91,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 % spec.populations(2).equations='dv[2]/dt=@current; {iNa,iK}';
 % spec.connections(1).direction='E1->E2';
 % spec.connections(1).mechanism_list='iAMPA';
-% data=SimulateModel(spec,'tspan',[0 200]);
+% data=dsSimulate(spec,'tspan',[0 200]);
 % PlotData(data); % plot first state variable
 % PlotData(data,'variable','*'); 
 % % plot monitored synaptic current with post-synaptic voltages:
@@ -106,7 +106,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 % 
 % Two populations varying one parameter (input amplitude):
 % vary={'E1','amp',[0 10 20]};
-% data=SimulateModel(spec,'vary',vary,'tspan',[0 200]);
+% data=dsSimulate(spec,'vary',vary,'tspan',[0 200]);
 % PlotData(data);
 % PlotData(data,'variable','*');
 % PlotData(data,'variable','*_iNa_*');
@@ -117,7 +117,7 @@ function handles=PlotData_with_AP_line(data,varargin)
 % 
 % Two populations varying two parameters (input amplitude and synaptic conductance):
 % vary={'E1','amp',[0 10 20]; 'E1->E2','gSYN',[0 .05 .1]};
-% data=SimulateModel(spec,'vary',vary,'tspan',[0 200]);
+% data=dsSimulate(spec,'vary',vary,'tspan',[0 200]);
 % % plot voltage waveforms
 % PlotData(data,'variable','v','plot_type','power');
 % % plot voltage power spectrum

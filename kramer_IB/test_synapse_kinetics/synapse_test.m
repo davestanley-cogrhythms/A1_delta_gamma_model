@@ -40,7 +40,7 @@ s.populations(1).parameters={'stim',stim,'onset',onset,'offset',offset ...
 vary = {'E','PPstim',[.01 .1 1 10] };       % vary something randomly
 vary = {};
 
-data=SimulateModel(s,'vary',vary,'tspan',[0 800]);
+data=dsSimulate(s,'vary',vary,'tspan',[0 800]);
 % PlotData(data);
 
 
@@ -98,7 +98,7 @@ s.populations(1).parameters={'stim',stim,'onset',onset,'offset',offset ...
 vary = {'E','PPstim',[.01 .1 1 10] };       % vary something randomly
 vary = {};
 
-data=SimulateModel(s,'vary',vary,'tspan',[0 800]);
+data=dsSimulate(s,'vary',vary,'tspan',[0 800]);
 % PlotData(data);
 
 figure('Position',[440   143   579   655]); 
@@ -160,7 +160,7 @@ s.populations(1).parameters={'stim',stim,'onset',onset,'offset',offset ...
 vary = {'E','PPstim',[.01 .1 1 10] };       % vary something randomly
 vary = {};
 
-data=SimulateModel(s,'vary',vary,'tspan',[0 800]);
+data=dsSimulate(s,'vary',vary,'tspan',[0 800]);
 % PlotData(data);
 
 figure('Position',[440   143   579   655]); 

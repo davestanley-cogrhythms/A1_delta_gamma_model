@@ -561,7 +561,7 @@ end
 
 
 % % % % % % % % % % % %  Run simulation  % % % % % % % % % % % % % 
-data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+data=dsSimulate(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
 
 
 % % % % % % % % % % % %  Plotting  % % % % % % % % % % % % % 

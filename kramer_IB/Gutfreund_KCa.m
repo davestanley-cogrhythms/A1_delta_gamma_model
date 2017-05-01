@@ -53,11 +53,11 @@ if ~isempty(varargin)
     
     % if strcmp(version('-release'), '2012a')
     
-        data = SimulateModel(model_eqns, 'tspan', [0 tspan], 'vary', vary_cell, 'parallel_flag', 1, 'downsample_factor', 25, 'verbose_flag', 0);
+        data = dsSimulate(model_eqns, 'tspan', [0 tspan], 'vary', vary_cell, 'parallel_flag', 1, 'downsample_factor', 25, 'verbose_flag', 0);
     
     % else
     % 
-    %     data = SimulateModel(model_eqns, 'tspan', [0 tspan], 'vary', vary_cell, 'compile_flag', 1);
+    %     data = dsSimulate(model_eqns, 'tspan', [0 tspan], 'vary', vary_cell, 'compile_flag', 1);
     % 
     % end
     
@@ -65,11 +65,11 @@ else
     
     % if strcmp(version('-release'), '2012a')
     
-        data = SimulateModel(model_eqns, 'tspan', [0 tspan], 'parallel_flag', 1, 'downsample_factor', 25, 'verbose_flag', 0);
+        data = dsSimulate(model_eqns, 'tspan', [0 tspan], 'parallel_flag', 1, 'downsample_factor', 25, 'verbose_flag', 0);
     
     % else
     % 
-    %     data=SimulateModel(model_eqns, 'tspan', [0 tspan], 'compile_flag', 1);
+    %     data=dsSimulate(model_eqns, 'tspan', [0 tspan], 'compile_flag', 1);
     % 
     % end
      

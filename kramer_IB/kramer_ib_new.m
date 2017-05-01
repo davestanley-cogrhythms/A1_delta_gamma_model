@@ -253,9 +253,9 @@ switch sim_mode
 
     case 1
         % DynaSim code
-        % data=SimulateModel(spec);
+        % data=dsSimulate(spec);
         %tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
+        data=dsSimulate(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1);
         %toc
         PlotData(data,'plot_type','waveform');
         
@@ -275,7 +275,7 @@ switch sim_mode
         
         vary = {'IBda','stim',[-10 , -20 , -30, -40, -50]};
         tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+        data=dsSimulate(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
         PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','rastergram');
@@ -283,7 +283,7 @@ switch sim_mode
     case 3
         vary = {'IBs','stim',[4 -1 -6 -11 -16]};
         tic
-        data=SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
+        data=dsSimulate(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary);
         toc
         PlotData(data,'plot_type','waveform');
         %PlotData(data,'plot_type','rastergram');

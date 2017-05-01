@@ -11,7 +11,7 @@
 % s.connections(1).direction='Edend->Esoma';
 % s.connections(1).mechanism_list={'iCOM'};
 % s.connections(1).parameters={'gCOM',.2};
-% data=SimulateModel(s);
+% data=dsSimulate(s);
 % PlotData(data,'plot_type','waveform');
 % PlotData(data,'plot_type','rastergram');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
