@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 500];
+tspan=[0 700];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,7 +21,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -102,7 +102,7 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 0;
-include_RS = 0;
+include_RS = 1;
 include_FS = 1;
 include_LTS = 1;
 include_NG = 0;
@@ -172,11 +172,11 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=2;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=2; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=2;  % Number of FS cells
+Nfs=20;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -376,9 +376,9 @@ if ~no_synapses
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.8/Nrs;                 % RS -> LTS
+%     gAMPA_rsLTS = 0.8/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-%     gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
+    gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
     %
     gGABAa_fsLTS = 2.0/Nfs;                  % FS -> LTS
     % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
@@ -486,7 +486,7 @@ switch sim_mode
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
             'RS->LTS','g_SYN',[.5:.2:1.5]/Nrs;...
-            'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
+            %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[.5:1:3.5]/Nlts;...
             };
         
