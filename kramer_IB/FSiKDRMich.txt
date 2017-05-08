@@ -1,0 +1,15 @@
+gKDR = [10]
+IC = [0]
+IC_noise = [0.01]
+KDR_offset = 0
+ 
+
+
+aM(X) = minf(X) ./ mtau(X)
+bM(X) = (1-minf(X))./mtau(X)
+IKDR(X,mKDR) = gKDR.*mKDR.^4.*(X-E_KDR)
+ 
+mKDR' = aM(X).*(1-mKDR)-bM(X).*mKDR;
+mKDR(0) = IC+IC_noise.*rand(Npop,1)
+ 
+@current += -IKDR(X,mKDR)

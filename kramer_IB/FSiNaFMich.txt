@@ -1,0 +1,22 @@
+gNaF = [50]
+E_NaF = [50]
+IC = [0]
+IC_noise = [0.01]
+NaF_offset = 0
+ 
+
+malpha(X) = 0.32*(X+54) ./ (1-exp(-(X+54)/4))
+mbeta(X) = 0.28 * (V + 27) ./ (exp((V + 27)/5) - 1)
+halpha(X) = 0.128*exp(-(V + 50)/18)
+hbeta(X) = 4 ./ (1 + exp(-(V+27)/5))
+
+INaF(X,m,h) = gNaF.*m.^3.*h.*(X-E_NaF)
+
+m' = malpha(X).*(1-m)-mbeta(X).*m; 
+h' = halpha(X).*(1-h)-hbeta(X).*h;
+
+m(0) = IC+IC_noise.*rand(Npop,1)
+h(0) = IC+IC_noise.*rand(Npop,1)
+ 
+@current += -INaFMich(X,m,h)
+ 
