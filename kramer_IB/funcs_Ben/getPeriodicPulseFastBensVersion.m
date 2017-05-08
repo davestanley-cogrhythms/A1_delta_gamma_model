@@ -1,4 +1,4 @@
-function s3 = getPeriodicPulseFastBensVersion(freq,width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,plot_demo_on)
+function s3 = getPeriodicPulseFastBensVersion(freq,width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,norm_flag,plot_demo_on)
 
 % plot_demo_on = 1;  % Plot if desired
 
@@ -108,8 +108,7 @@ if plot_demo_on                 % Plot if desired
     
 end
 
-
-% s3 = s3 - mean(s3);
+if norm_flag, s3 = s3 - mean(s3); end
 
 s3 = repmat(s3(:),[1,Npop]);
     

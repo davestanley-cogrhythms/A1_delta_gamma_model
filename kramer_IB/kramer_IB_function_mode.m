@@ -1,4 +1,4 @@
-function [data, name, sim_spec] = kramer_IB_function_mode(sim_struct)
+function [data, name, sim_spec, result] = kramer_IB_function_mode(sim_struct)
 
 if nargin < 1; sim_struct = []; end
 if isempty(sim_struct); sim_struct = struct; end
@@ -28,22 +28,22 @@ save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct');
 if cluster_flag
     
     data=dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
-        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
-        'save_data_flag',1,'qsub_mode','loop','study_dir',name);
+        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,'one_solve_file_flag',1,...
+        'save_data_flag',1,'qsub_mode',qsub_mode,'study_dir',name);
     
     return
 
 else
     
-    data=dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+    [data, ~, result] =dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',verbose_flag,'parallel_flag',parallel_flag,...
-        'compile_flag',compile_flag);
+        'compile_flag',compile_flag,'analysis_functions',{@phase_metrics},'analysis_options',{{'v_pop','deepRS','i_pop','deepRS'}});
 
 end
 
 close('all')
 
-PlotData(data)
+dsPlot(data)
 
 figHandles = findobj('Type', 'Figure');
 

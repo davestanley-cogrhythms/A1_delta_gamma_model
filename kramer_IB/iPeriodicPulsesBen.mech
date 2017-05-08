@@ -8,6 +8,7 @@ PPfreq = 1.5; % in Hz
 PPduty = .25; % fraction of cycle during which pulse is "on"
 PPshift = 0; % in ms
 PPwidth = (1000/PPfreq)*PPduty;
+PPnorm = 0;
 
 % Time series properties
 Tend=T(end); 	    % ms, max simulation duration
@@ -18,7 +19,7 @@ PPoffset = Inf;   % ms, offset time
 kernel_type = 7;
 width2_rise = 0.25;
 
-s2 = getPeriodicPulseFastBensVersion(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,Npop,kernel_type,width2_rise,0);
+s2 = getPeriodicPulseFastBensVersion(PPfreq,PPwidth,PPshift,Tend,dt,PPonset,PPoffset,Npop,kernel_type,width2_rise,PPnorm,0);
 
 % Functions
 input(X) = s2(k,:)
