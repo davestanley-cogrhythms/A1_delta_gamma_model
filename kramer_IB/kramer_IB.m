@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 500];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -97,7 +97,7 @@ dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % % % % Simulation switches
 no_noise = 0;
-no_synapses = 1;
+no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
@@ -229,7 +229,7 @@ deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 IBda_Vnoise = 12;
 NG_Vnoise = 12;
 FS_Vnoise = 12;
-LTS_Vnoise = 0;
+LTS_Vnoise = 12;
 RSda_Vnoise = 12;
 deepRSda_Vnoise = .3;
 deepFS_Vnoise = 3;
@@ -380,7 +380,7 @@ if ~no_synapses
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
 %     gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
     %
-    gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 2.0/Nfs;                  % FS -> LTS
     % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
