@@ -1,0 +1,3 @@
+[submodule "model-dnsim-kramer_IB_Figs"]
+	path = model-dnsim-kramer_IB_Figs
+	url = https://github.com/davestanley-cogrhythms/model-dnsim-kramer_IB_Figs.git
