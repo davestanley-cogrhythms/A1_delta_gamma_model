@@ -77,7 +77,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-random_seed = 2;
+% random_seed = 2;
 study_dir = ['study_' sp];
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -201,7 +201,8 @@ Jng2=1;   %
 JRS1 = 0.5; % RS cells
 JRS2 = 0.5; %
 Jfs=1;    % FS cells
-Jlts=.75; % LTS cells
+Jlts1=-2; % LTS cells
+Jlts2=-2; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -376,11 +377,11 @@ if ~no_synapses
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
-%     gAMPA_rsLTS = 0.8/Nrs;                 % RS -> LTS
+    gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
     %
-    gGABAa_fsLTS = 2.0/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
     % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
@@ -485,7 +486,7 @@ switch sim_mode
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
-            'RS->LTS','g_SYN',[.5:.2:1.5]/Nrs;...
+            'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[.5:1:3.5]/Nlts;...
             };
