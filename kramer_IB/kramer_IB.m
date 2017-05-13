@@ -198,11 +198,11 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 0.5; % RS cells
-JRS2 = 0.5; %
+JRS1 = 0.0; % RS cells
+JRS2 = 0.0; %
 Jfs=1;    % FS cells
-Jlts1=-2; % LTS cells
-Jlts2=-2; % LTS cells
+Jlts1=-4; % LTS cells
+Jlts2=-4; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -377,12 +377,12 @@ if ~no_synapses
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
+    gAMPA_rsLTS = 0.4/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
-    %
+    
     gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
-    % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
+    gGABAa_LTSfs = 1/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);

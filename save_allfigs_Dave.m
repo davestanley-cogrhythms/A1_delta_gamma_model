@@ -12,10 +12,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = [1:8];
+    handles_arr = [1:5];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '132f_play';
+    currfigname = '133a_LTS_FS_competition_play';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Tried many different sims. See readme.'];
+    mycomment = ['Added feedback from LTS cells to FS cells, allowing them to inhibit. Also increased RS injected current allowing to fire by rebound. Need to add M current to them as well.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
@@ -99,6 +99,5 @@ function save_allfigs_Dave(handles_arr)
         system(['git commit -m "' currfigname ' ' mycomment '"']);
         cd(currd);
     end
-
 
 end
