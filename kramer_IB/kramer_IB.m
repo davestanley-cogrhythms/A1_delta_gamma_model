@@ -198,11 +198,11 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 0.0; % RS cells
-JRS2 = 0.0; %
+JRS1 = 0.5; % RS cells
+JRS2 = 0.5; %
 Jfs=1;    % FS cells
-Jlts1=-4; % LTS cells
-Jlts2=-4; % LTS cells
+Jlts1=-3.5; % LTS cells
+Jlts2=-3.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -382,7 +382,7 @@ if ~no_synapses
     gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 1/Nlts;                % LTS -> FS
+    gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -583,7 +583,7 @@ switch pulse_mode
         deepRSPPstim = 0;
         IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
-        PPfreq = 40; % in Hz
+        PPfreq = 30; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 300;    % ms, onset time
@@ -591,7 +591,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
