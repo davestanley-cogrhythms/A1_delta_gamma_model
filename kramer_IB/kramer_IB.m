@@ -172,9 +172,9 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=10;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=10; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -198,9 +198,9 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = -8; % RS cells
-JRS2 = -8; %
-Jfs=.25;    % FS cells
+JRS1 = -10; % RS cells
+JRS2 = -10; %
+Jfs=3;    % FS cells
 Jlts1=-3.0; % LTS cells
 Jlts2=-3.0; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -371,19 +371,19 @@ if ~no_synapses
 %     gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
-    gAMPA_rsrs=.1/Nrs;                     % RS -> RS
+    gAMPA_rsrs=.3/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
+    gAMPA_rsfs=3/Nrs;                     % RS -> FS
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
-    gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
+    gGABAa_fsfs=3.0/Nfs;                      % FS -> FS
+    gGABAa_fsrs=3.0/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.4/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-    gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
+%     gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.4/Nlts;                % LTS -> FS
+%     gGABAa_LTSfs = 0.4/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -587,7 +587,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 450;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
