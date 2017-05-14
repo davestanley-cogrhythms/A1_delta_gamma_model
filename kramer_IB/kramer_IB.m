@@ -116,7 +116,7 @@ include_deepFS = 0;
 % for deep RS cells.
 % constant biophysical parameters
 Cm=.9;        % membrane capacitance
-gl=1;
+gl=.1;
 ENa=50;      % sodium reversal potential
 E_EKDR=-95;  % potassium reversal potential for excitatory cells
 IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
@@ -172,11 +172,11 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=10;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=10; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=N;  % Number of FS cells
+Nfs=20;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -198,11 +198,11 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = -8; % RS cells
-JRS2 = -8; %
-Jfs=.25;    % FS cells
-Jlts1=-3.0; % LTS cells
-Jlts2=-3.0; % LTS cells
+JRS1 = -1.5; % RS cells
+JRS2 = -1.5; %
+Jfs=1;    % FS cells
+Jlts1=-3.5; % LTS cells
+Jlts2=-3.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -227,14 +227,13 @@ deepRSgRAN = 0.005; % synaptic noise conductance to deepRS cells
 
 % % Magnitude of injected current Gaussian noise
 % #mynoise
-noisefactor = 2;
-IBda_Vnoise = 12*noisefactor;
-NG_Vnoise = 12*noisefactor;
-FS_Vnoise = 12*noisefactor;
-LTS_Vnoise = 12*noisefactor;
-RSda_Vnoise = 12*noisefactor;
-deepRSda_Vnoise = .3*noisefactor;
-deepFS_Vnoise = 3*noisefactor;
+IBda_Vnoise = 12;
+NG_Vnoise = 12;
+FS_Vnoise = 12;
+LTS_Vnoise = 12;
+RSda_Vnoise = 12;
+deepRSda_Vnoise = .3;
+deepFS_Vnoise = 3;
 
 
 
