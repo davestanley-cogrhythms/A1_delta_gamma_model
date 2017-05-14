@@ -198,8 +198,8 @@ Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=3;   % NG cells
 Jng2=1;   %
-JRS1 = 0.5; % RS cells
-JRS2 = 0.5; %
+JRS1 = -1.5; % RS cells
+JRS2 = -1.5; %
 Jfs=1;    % FS cells
 Jlts1=-3.5; % LTS cells
 Jlts2=-3.5; % LTS cells
@@ -382,7 +382,7 @@ if ~no_synapses
     gGABAa_LTSrs = .5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
+    gGABAa_LTSfs = 0.4/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
