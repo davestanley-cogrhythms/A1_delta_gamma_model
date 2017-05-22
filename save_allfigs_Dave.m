@@ -15,7 +15,7 @@ function save_allfigs_Dave(handles_arr)
     handles_arr = [1:6];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '134a_add_RS_LTS';
+    currfigname = '136b_sweep_single_LTS_gNa_gK';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Added M-current to RS cells, so they now fire by rebound just like LTS. Tweaked network slightly.'];
+    mycomment = ['Swept gLTS through a variety of Jlts, for different gNa, gK, and gM combinations. Seems I will just leave things as default. '];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
