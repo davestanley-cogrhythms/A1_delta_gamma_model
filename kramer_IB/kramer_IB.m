@@ -21,7 +21,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -102,8 +102,8 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 0;
-include_RS = 0;
-include_FS = 0;
+include_RS = 1;
+include_FS = 1;
 include_LTS = 1;
 include_NG = 0;
 include_supRS = 0;
@@ -172,7 +172,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=3;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -201,8 +201,8 @@ Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 Jfs=1;    % FS cells
-Jlts1=-3.5; % LTS cells
-Jlts2=-3.5; % LTS cells
+Jlts1=-.5; % LTS cells
+Jlts2=-.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
