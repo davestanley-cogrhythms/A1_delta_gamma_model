@@ -12,7 +12,7 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = [1:3];
+    handles_arr = [3:5];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
     currfigname = '136c_test_gLTS_normal';
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Made gLTS all normal (gNa/gK and gM values of 100, 80, and 4). Couldnt get good firing. '];
+    mycomment = ['Tried running full network with LTS cells at gNa=100; gNa=80. No luck - still too hyperpolarized. '];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
