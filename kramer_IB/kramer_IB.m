@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -39,21 +39,22 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [300 700];
+ind_range = [0 700];
 if save_figures
-    universal_options = {'format','png','visible','off','figheight',.5,'figwidth',.5,};
+    universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
 
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
 
     plot_options = {...
-                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
-                    {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
-                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
-                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...    
                     };
                 
-                % {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
+%                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
+%                 {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
+%                 {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
+%                 {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
+%                 {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
             
 else
     plot_options = [];
@@ -681,6 +682,16 @@ data2 = CalcAverages(data);
 toc(tv2);
 
 %% ##5.0 Plotting
+
+% Load figures from save if necessary
+if save_figures
+    data_img = ImportPlots(study_dir); xp_img_temp = All2xPlt(data_img);
+    xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
+    if exist('data_old','var')
+        data_img = DynaSimMerge(data_img,data_old);
+    end
+    save_path = fullfile('Figs_Dave',sp);
+end
 if plot_on
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
@@ -717,18 +728,10 @@ if plot_on
             
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');
-        case 8
-            PlotData(data);
-        case {9,10}
+        case {8,9,10}
             %%
             % #myfigs9
             if save_figures
-                data_img = ImportPlots(study_dir); xp_img_temp = All2xPlt(data_img);
-                xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
-                if exist('data_old','var')
-                    data_img = DynaSimMerge(data_img,data_old);
-                end
-                save_path = fullfile('Figs_Dave',sp);
                 p = gcp('nocreate');
                 if ~isempty(p)
                     parfor i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
