@@ -11,7 +11,9 @@ bM(X) = c_MbM.*(-0.0001*Qs*(X+30)) ./ (1-exp((X+30)/9))
 IM(X,mM) = gM.*mM.*(X-E_M)
  
 mM' = (aM(V).*(1-mM)-bM(V).*mM);
-mM(0) = IC+IC_noise.*rand(Npop,1)
+%mM(0) = IC+IC_noise.*rand(Npop,1)
+% Start close to steady state
+mM(0) = 0.01.*ones(Npop,1)
 
 % monitor functions % always record the synaptic current
  
