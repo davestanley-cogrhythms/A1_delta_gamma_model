@@ -24,7 +24,7 @@ function hxp = xp_plot_AP_timing1b_RSFS_Vm (xp, op,ind_range)
 %     shift_val0 = op.shift_val;
     
     %xp = xp.mergeDim(1:ndims(xp));
-    data = xPlt2DynaSim(xp);
+    data = ds.mdd2ds(xp);
     
     %h2 = plot_AP_timing1b_RSFS_Vm(data,ind_range)
     if ~isempty(ind_range)

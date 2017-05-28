@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -628,7 +628,7 @@ include_kramer_IB_synapses;
 tv2 = tic;
 if cluster_flag
 
-    data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+    data=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
         'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
     
@@ -638,7 +638,7 @@ else
     
 %     data=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
 %         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'study_dir',[],...
-%         'compile_flag',compile_flag,'save_results_flag',1,'plot_functions',@PlotData,'plot_options',{'visible','off','format','png'});
+%         'compile_flag',compile_flag,'save_results_flag',1,'plot_functions',@dsPlot,'plot_options',{'visible','off','format','png'});
 
     mexpath = fullfile(pwd,'mexes');
     [data,studyinfo]=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
@@ -648,9 +648,6 @@ else
 
 
 end
-
-% SimulateModel(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
-%     'cluster_flag',1,'save_data_flag',1,'study_dir','kramerout_cluster_2','verbose_flag',1);
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
 % % Crop data within a time range
@@ -665,19 +662,19 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-xp = DynaSim2xPlt(data);
+xp = ds.ds2mdd(data);
 xp = calc_synaptic_totals(xp,pop_struct);
-data = xPlt2DynaSim(xp);
+data = ds.mdd2ds(xp);
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_FS; data = ThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
-% if include_IB && include_NG; data = ThevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
-if include_IB && include_FS; data = ThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
-if include_FS; data = ThevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
+if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_GABA'); end
+% if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
+if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
+if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
 
 % % Calculate averages across cells (e.g. mean field)
-data2 = CalcAverages(data);
+data2 = ds.calcAverages(data);
 
 toc(tv2);
 
@@ -685,10 +682,10 @@ toc(tv2);
 
 % Load figures from save if necessary
 if save_figures
-    data_img = ImportPlots(study_dir); xp_img_temp = All2xPlt(data_img);
+    data_img = ds.importPlots(study_dir); xp_img_temp = ds.all2mdd(data_img);
     xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
     if exist('data_old','var')
-        data_img = DynaSimMerge(data_img,data_old);
+        data_img = ds.mergeData(data_img,data_old);
     end
     save_path = fullfile('Figs_Dave',sp);
 end
@@ -698,77 +695,77 @@ if plot_on
         case {1,11}
             %%
             % #myfigs1
-            % PlotData(data,'plot_type','waveform');
+            % dsPlot(data,'plot_type','waveform');
             inds = 1:1:length(data);
-            h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
+            h = dsPlot2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
             
             %PlotData_with_AP_line(data,'plot_type','rastergram');
-            PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
+            dsPlot2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
             
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-            PlotData2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
+            dsPlot2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
             
-            if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
-%             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-            elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
+            if include_IB && include_NG && include_FS; dsPlot(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
+%             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
+            elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
             elseif include_FS;
-                %PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
+                %dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
             end
             
-            %             PlotData(data,'plot_type','power');
+            %             dsPlot(data,'plot_type','power');
             
-            %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
+            %elseif include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
             %PlotFR(data);
         case {2,3}
-            PlotData(data,'plot_type','waveform');
-            % PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
-            % PlotData(data,'variable','iNMDA_s','plot_type','waveform');
+            dsPlot(data,'plot_type','waveform');
+            % dsPlot(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
+            % dsPlot(data,'variable','iNMDA_s','plot_type','waveform');
             
             save_as_pdf(gcf, sprintf('kramer_IB_sim_%d', sim_mode))
             
         case {5,6}
-            PlotData(data,'plot_type','waveform','variable','IB_V');
+            dsPlot(data,'plot_type','waveform','variable','IB_V');
         case {8,9,10}
             %%
             % #myfigs9
             if save_figures
                 p = gcp('nocreate');
                 if ~isempty(p)
-                    parfor i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+                    parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 else
-                    for i = 1:length(xp_img.data{1}); PlotData2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+                    for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
                 end
             else
                 inds = 1:length(data);
-                h = PlotData2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
+                h = dsPlot2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
 
-                PlotData2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
+                dsPlot2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
 
-                h = PlotData2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
-                %PlotData2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
+                h = dsPlot2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
+                %dsPlot2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                PlotData2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
+                dsPlot2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
             end
             
             
             
-%             for i = 1:4:8;  PlotData2(data,'plot_type','imagesc','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'crop_range',[200 300]);end
+%             for i = 1:4:8;  dsPlot2(data,'plot_type','imagesc','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'crop_range',[200 300]);end
 %             
-%             for i = 1:4:8; PlotData2(data,'plot_type','heatmap_sortedFR','varied1',i:i+3,'population','RS','varied2',[1:6],'do_zoom',0); end
+%             for i = 1:4:8; dsPlot2(data,'plot_type','heatmap_sortedFR','varied1',i:i+3,'population','RS','varied2',[1:6],'do_zoom',0); end
 % 
-%             for i = 1:4:8;PlotData2(data,'plot_type','power','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'do_mean',1,'xlims',[0 80]); end
+%             for i = 1:4:8;dsPlot2(data,'plot_type','power','varied1',i:i+3,'population','RS','varied2',[1:2:6],'do_zoom',0,'do_mean',1,'xlims',[0 80]); end
 % 
-%             for i = 1:4:8;  PlotData2(data,'plot_type','waveform','varied1',i:i+3,'population','LTS','varied2',[1:1:6],'do_zoom',0,'crop_range',[0 300],'do_mean',1);end
+%             for i = 1:4:8;  dsPlot2(data,'plot_type','waveform','varied1',i:i+3,'population','LTS','varied2',[1:1:6],'do_zoom',0,'crop_range',[0 300],'do_mean',1);end
 
 
 
             
-            %PlotData(data,'plot_type','waveform');
-            %PlotData(data,'plot_type','power');
+            %dsPlot(data,'plot_type','waveform');
+            %dsPlot(data,'plot_type','power');
             
-            %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-            %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
+            %dsPlot(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+            %dsPlot(data,'variable','RS_V'); dsPlot(data,'variable','FS_V');
 %             
 %             tfs = 10;
 %             PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
@@ -780,18 +777,18 @@ if plot_on
 
             
             %PlotFR2(data,'plot_type','meanFR')
-            %             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V','plot_type','power'); end
-            %             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_V'); end
-            %             for i = 1:9:54; PlotData(data(i:i+8),'variable','FS_V'); end
-            %             for i = 1:9:54; PlotData(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
+            %             for i = 1:9:54; dsPlot(data(i:i+8),'variable','RS_V','plot_type','power'); end
+            %             for i = 1:9:54; dsPlot(data(i:i+8),'variable','RS_V'); end
+            %             for i = 1:9:54; dsPlot(data(i:i+8),'variable','FS_V'); end
+            %             for i = 1:9:54; dsPlot(data(i:i+8),'variable','RS_FS_IBaIBdbiSYNseed_s'); end
             %             PlotStudy(data,@plot_AP_decay1_RSFS)
             %             PlotStudy(data,@plot_AP_timing1_RSFS)
-            %         PlotData(data,'plot_type','rastergram','variable','RS_V'); PlotData(data,'plot_type','rastergram','variable','FS_V')
-            %         PlotData(data2,'plot_type','waveform','variable','RS_V');
-            %         PlotData(data2,'plot_type','waveform','variable','FS_V');
+            %         dsPlot(data,'plot_type','rastergram','variable','RS_V'); dsPlot(data,'plot_type','rastergram','variable','FS_V')
+            %         dsPlot(data2,'plot_type','waveform','variable','RS_V');
+            %         dsPlot(data2,'plot_type','waveform','variable','FS_V');
             
-            %         PlotData(data,'plot_type','rastergram','variable','RS_V');
-            %         PlotData(data,'plot_type','rastergram','variable','FS_V');
+            %         dsPlot(data,'plot_type','rastergram','variable','RS_V');
+            %         dsPlot(data,'plot_type','rastergram','variable','FS_V');
             %         PlotFR2(data,'variable','RS_V');
             %         PlotFR2(data,'variable','FS_V');
             %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
@@ -801,42 +798,42 @@ if plot_on
             
         case 12
             %%
-            %PlotData(data,'plot_type','rastergram','variable','RS_V');
-            %             if include_IB && include_NG && include_FS; PlotData(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
-            %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
-            %             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
+            %dsPlot(data,'plot_type','rastergram','variable','RS_V');
+            %             if include_IB && include_NG && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
+            %             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
+            %             elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
             close all
-            PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
+            dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
             
-            %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
+            %dsPlot(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
             
-            PlotData(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
-            PlotData(data2,'variable','IB_V','plot_type','waveform','visible',visible_flag);
-            %PlotData(data,'variable','IB_V','plot_type','rastergram');
-            %PlotData(data,'plot_type','rastergram');
+            dsPlot(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
+            dsPlot(data2,'variable','IB_V','plot_type','waveform','visible',visible_flag);
+            %dsPlot(data,'variable','IB_V','plot_type','rastergram');
+            %dsPlot(data,'plot_type','rastergram');
             
             
-            %         PlotData(data,'plot_type','rastergram','variable','RS_V');
-            %         PlotData(data,'plot_type','rastergram','variable','FS_V');
+            %         dsPlot(data,'plot_type','rastergram','variable','RS_V');
+            %         dsPlot(data,'plot_type','rastergram','variable','FS_V');
             %         PlotFR2(data,'variable','RS_V');
             %         PlotFR2(data,'variable','FS_V');
             %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
             %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
             
             %             t = data(1).time; data3 = CropData(data, t > 1200 & t < 2300);
-            %             PlotData(data3,'variable','IB_V','plot_type','waveform');
-            %             PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
+            %             dsPlot(data3,'variable','IB_V','plot_type','waveform');
+            %             dsPlot(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
             
             
             
         case 14
             %% Case 14
-            data_var = CalcAverages(data);                  % Average all cells together
+            data_var = ds.calcAverages(data);                  % Average all cells together
             data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
             PlotData_with_AP_line(data_var,'plot_type','waveform')
             PlotData_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
-            data_var2 = CalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
+            data_var2 = ds.calcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
             figl;
             subplot(211);plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]); ylabel('LTS->RS synapse');
             subplot(212); plot_data_stdev(data_var2,'RS_V',[]); ylabel('RS Vm');
@@ -850,7 +847,7 @@ if plot_on
             
         otherwise
             if 0
-                PlotData(data,'plot_type','waveform');
+                dsPlot(data,'plot_type','waveform');
                 %PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
                 %PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
                 %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
