@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -84,7 +84,7 @@ study_dir = ['study_' sp];
 % study_dir = ['study_dave'];
 
 if isempty(plot_options); plot_functions = [];
-else; plot_functions = repmat({@PlotData2},1,length(plot_options));
+else; plot_functions = repmat({@dsPlot2},1,length(plot_options));
 end
 plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
 % plot_args = {};
@@ -641,9 +641,9 @@ else
 %         'compile_flag',compile_flag,'save_results_flag',1,'plot_functions',@PlotData,'plot_options',{'visible','off','format','png'});
 
     mexpath = fullfile(pwd,'mexes');
-    [data,studyinfo]=SimulateModel(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+    [data,studyinfo]=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',study_dir,...
-        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mexpath',mexpath,...
+        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mex_dir',mexpath,...
         plot_args{:});
 
 
