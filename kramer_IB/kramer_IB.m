@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -48,12 +48,12 @@ if save_figures
 
     plot_options = {...
                     {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...    
+                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
+                    {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
                     };
                 
 %                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 %                 {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
-%                 {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
-%                 {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
 %                 {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
             
 else
@@ -488,9 +488,10 @@ switch sim_mode
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
-            'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
+            %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
-            %'LTS->RS','g_SYN',[.5:1:3.5]/Nlts;...
+            'LTS->RS','g_SYN',[0:0.25:1.5]/Nlts;...
+            'LTS->FS','g_SYN',[0:.1:.5]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -734,10 +735,10 @@ if plot_on
         case {8,9,10}
             
             %%
-            for i = 1:length(data); dsPlot(data(i)); end
-            for i = 1:length(data); dsPlot2(data(i),'plot_type','raster'); end
-            for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
-            for i = 1:length(data); dsPlot2(data(i),'plot_type','power','do_mean',true,'xlims',[0 110]); end
+%             for i = 1:length(data); dsPlot(data(i)); end
+%             for i = 1:length(data); dsPlot2(data(i),'plot_type','raster'); end
+%             for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
+%             for i = 1:length(data); dsPlot2(data(i),'plot_type','power','do_mean',true,'xlims',[0 110]); end
             
             %%
             % #myfigs9
