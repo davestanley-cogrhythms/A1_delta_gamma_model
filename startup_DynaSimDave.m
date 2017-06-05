@@ -12,7 +12,7 @@ function startup_DynaSimDave
 %     'DefaultTextFontSize', get_fontlevel(4)*scaling_factor, ...
 %     'DefaultAxesFontSize', get_fontlevel(2)*scaling_factor);
     
-    addpath(genpath(fullfile('~','src','DynaSimSherfey')));
+    addpath(genpath(fullfile(pwd,'DynaSim')));
     
     % Add libdave path
     addpath(genpath(fullfile('~','src','ds_kb3','funcs_general','lib_dav')));
