@@ -1,0 +1,21 @@
+%%
+% Poisson mechanism based on Jason's email implementation. For some
+% reason this produces huge PSPs
+
+% Pulse train properties
+FMPstim = -.1;
+FMPfreqs = [3 9]; % in Hz
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+sampling_freq = 1000/dt;
+
+s2 = linear_chirp(dt, Tend, sampling_freq, FMPfreqs, 1)
+
+% Functions
+input(X) = s2(k,:)
+Iext(X) = FMPstim*input(X)
+
+@current += -Iext(X)
+
