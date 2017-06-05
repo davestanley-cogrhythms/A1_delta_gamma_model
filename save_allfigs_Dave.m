@@ -12,10 +12,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = [1:1];
+    handles_arr = [1:15];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '137e_case9_gLTS_to_RSFS';
+    currfigname = '137f_case8_Jlts';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Swept feedback inhibition from LTS cells to RS and FS. Seems like 1st large burst of LTS cells might be enough.'];
+    mycomment = ['Swepth through Jlts to find a lower stim level (compensates for lower spontaneous Jrs level).'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

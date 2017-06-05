@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 700];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1500];
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -474,8 +474,8 @@ switch sim_mode
         
     case 8
         vary = { ...
-            %'(LTS)','stim2',-1*[.25:.25:1.0]; ...
-            'RS','stim2',-1*[1.5:.5:3]; ...
+            'LTS','stim2',-1*[.2:.1:1.0]; ...
+            %'RS','stim2',-1*[1.5:.5:3]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -589,10 +589,10 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 800;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
@@ -735,9 +735,9 @@ if plot_on
         case {8,9,10}
             
             %%
-%             for i = 1:length(data); dsPlot(data(i)); end
-%             for i = 1:length(data); dsPlot2(data(i),'plot_type','raster'); end
-%             for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
+            for i = 1:length(data); dsPlot(data(i)); end
+            for i = 1:length(data); dsPlot2(data(i),'plot_type','raster'); end
+            for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
 %             for i = 1:length(data); dsPlot2(data(i),'plot_type','power','do_mean',true,'xlims',[0 110]); end
             
             %%
