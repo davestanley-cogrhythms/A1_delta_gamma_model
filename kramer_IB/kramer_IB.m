@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1600];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 700];
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,7 +21,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -215,8 +215,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=200;         % 200 is a good settling time for RS cells
-RS_onset2=200;
+RS_offset1=000;         % 200 is a good settling time for RS cells
+RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.05;      % synaptic noise conductance IB cells
@@ -474,7 +474,8 @@ switch sim_mode
         
     case 8
         vary = { ...
-            '(LTS)','stim2',-1*[.25:.25:1.0]; ...
+            %'(LTS)','stim2',-1*[.25:.25:1.0]; ...
+            'RS','stim2',-1*[1.5:.5:3]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -692,7 +693,7 @@ end
 if plot_on
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
-        case {1,11}
+        case {1,11}            
             %%
             % #myfigs1
             % dsPlot(data,'plot_type','waveform');
@@ -726,6 +727,13 @@ if plot_on
         case {5,6}
             dsPlot(data,'plot_type','waveform','variable','IB_V');
         case {8,9,10}
+            
+            %%
+            for i = 1:length(data); dsPlot(data(i)); end
+            for i = 1:length(data); dsPlot(data(i),'plot_type','raster'); end
+            for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
+            for i = 1:length(data); dsPlot2(data(i),'plot_type','power','do_mean',true,'xlims',[0 110]); end
+            
             %%
             % #myfigs9
             if save_figures
