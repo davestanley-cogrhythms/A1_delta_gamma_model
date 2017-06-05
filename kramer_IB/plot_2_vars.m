@@ -1,6 +1,14 @@
-function plot_2_vars(data, var1, var2, subplot_dims)
+function plot_2_vars(data, var1, var2, mode, start, subplot_dims, titles)
 
-if nargin < 4, subplot_dims = []; end
+if nargin < 4, mode = []; end
+if isempty(mode), mode = 'plotyy'; end
+
+if nargin < 5, mode = []; end
+if isempty(start), start = 1; end
+
+if nargin < 6, subplot_dims = []; end
+
+if nargin < 7, titles = []; end
 
 no_sims = length(data);
 
@@ -20,29 +28,57 @@ for s = 1:no_sims
     
     axes(ha(s))
     
-    [ax, h1, h2] = plotyy(t, variable1(:, s), t, variable2(:, s));
-    
-    axis(ax, 'tight'), box off
-    
-    if mod(s, subplot_dims(2)) == 1
-    
-        ax(1).YLabel.String = var1;
-    
-    elseif mod(s, subplot_dims(2)) == 0
+    if strcmp(mode, 'plotyy')
         
-        ax(2).YLabel.String = var2;
+        [ax, h1, h2] = plotyy(t, variable1(start:end, s), t, variable2(start:end, s));
+        
+        axis(ax, 'tight'), box off
+        
+        if mod(s, subplot_dims(2)) == 1
+            
+            ax(1).YLabel.String = var1;
+            
+        elseif mod(s, subplot_dims(2)) == 0
+            
+            ax(2).YLabel.String = var2;
+            
+        end
+        
+        if floor(s/subplot_dims(2)) == subplot_dims(1) - 1
+            
+            xlabel('Time (ms)')
+            
+        end
+        
+        set(h1, 'LineWidth', 1)
+    
+        % set(h2, 'LineWidth', 1)
+    
+    elseif strcmp(mode, 'against')
+        
+        plot(variable1(start:end, s), variable2(start:end, s));
+        
+        axis tight, box off
+        
+        if mod(s, subplot_dims(2)) == 1
+            
+            ylabel(var2)
+            
+        end
+        
+        if ceil(s/subplot_dims(1)) == subplot_dims(1)
+            
+            xlabel(var1)
+            
+        end
+        
+        if ~isempty(titles)
+            
+            title(titles{s})
+            
+        end
         
     end
-    
-    if floor(s/subplot_dims(2)) == subplot_dims(1) - 1
-        
-        xlabel('Time (ms)')
-        
-    end
-    
-    set(h1, 'LineWidth', 1)
-    
-    % set(h2, 'LineWidth', 1)
     
 end
 
