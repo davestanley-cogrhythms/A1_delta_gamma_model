@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 700];
+tspan=[0 1600];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -215,8 +215,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % hyperpolarization step.
 IB_offset1=000;
 IB_onset2=000;
-RS_offset1=300;         % 200 is a good settling time for RS cells
-RS_onset2=300;
+RS_offset1=200;         % 200 is a good settling time for RS cells
+RS_onset2=200;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
 gRAN=.05;      % synaptic noise conductance IB cells
@@ -587,10 +587,10 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 300;    % ms, onset time
+        PPonset = 600;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
@@ -662,7 +662,7 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-xp = ds.ds2mdd(data);
+xp = ds.ds2mdd(data,false,false);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
