@@ -21,7 +21,7 @@ sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -588,10 +588,10 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 600;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
@@ -730,7 +730,7 @@ if plot_on
             
             %%
             for i = 1:length(data); dsPlot(data(i)); end
-            for i = 1:length(data); dsPlot(data(i),'plot_type','raster'); end
+            for i = 1:length(data); dsPlot2(data(i),'plot_type','raster'); end
             for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
             for i = 1:length(data); dsPlot2(data(i),'plot_type','power','do_mean',true,'xlims',[0 110]); end
             

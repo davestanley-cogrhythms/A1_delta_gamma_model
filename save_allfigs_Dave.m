@@ -12,10 +12,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = [1:16];
+    handles_arr = [1:12];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '137b_case8_RS';
+    currfigname = '137c_case8_RS_PPStim';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -55,7 +55,7 @@ function save_allfigs_Dave(handles_arr)
         end
         set(i,'PaperPositionMode','auto');
         %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-        tic; print(i,'-dpng','-r50','-opengl',fullfile(basepath,sp,savenames{i}));toc
+        tic; print(i,'-dpng','-r75','-opengl',fullfile(basepath,sp,savenames{i}));toc
         %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
@@ -84,12 +84,16 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Swept through JRS. PPStim off. LTS feedback to RS and FS disabled. '];
+    mycomment = ['As before, but with PPStim turned on. '];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
+    
+    % Play Hallelujah
+    load handel.mat;
+    sound(y, 1*Fs);
     
     if do_commit
         %% Commit
@@ -103,5 +107,7 @@ function save_allfigs_Dave(handles_arr)
         system(['git commit -m "' currfigname ' ' mycomment '"']);
         cd(currd);
     end
+    
+    
 
 end
