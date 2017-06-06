@@ -95,13 +95,13 @@ IC_V = -65;         % Starting membrane potential
 % KDR_offset = 20;
 
 % % % % % Parameters for deep RS cells.
-gKs = Cm_factor*0.134; % Cm_factor*0.084; % Cm_factor*0.124; % 
+gKs = Cm_factor*0.134; % Cm_factor*0.084; % Cm_factor*0.124; %
 gNaP_denom = 3.36;
-gKCa = Cm_factor*0.014; % Cm_factor*0.009; % Cm_factor*0.005; % 
+gKCa = Cm_factor*0.014; % Cm_factor*0.009; % Cm_factor*0.005; %
 bKCa = .002;
-gCa = Cm_factor*0.05; % Cm_factor*0.02; % 
+gCa = Cm_factor*0.05; % Cm_factor*0.02; %
 CAF = 24/Cm_factor;
-gl_dRS = Cm_factor*.025; % 0; % 
+gl_dRS = Cm_factor*.025; % 0; %
 gNa_dRS = Cm_factor*12.5;
 gKDR_dRS = Cm_factor*5;
 I_const = 0;
@@ -113,7 +113,7 @@ slow_offset = 0;
 slow_offset_correction = 0;
 fast_offset = 0;
 
-%% % % % % % % % % % % %  ##2.1 Number of cells % % % % % % % % % % % % % 
+%% % % % % % % % % % % %  ##2.1 Number of cells % % % % % % % % % % % % %
 % Note: For some of these parameters I will define them twice - once I will
 % initially define them as set to zero, and then I will define them a
 % second time. I do this so that you can easily comment out the second
@@ -148,7 +148,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 Jd1=5;    % IB cells
-Jd2=0;    %         
+Jd2=0;    %
 Jng1=3;   % NG cells
 Jng2=1;   %
 JRS1 = 5; % RS cells
@@ -308,36 +308,36 @@ gGABAa_LTSib = 0;
 if ~no_synapses
     % % Synaptic connection strengths
     % #mysynapses
-    
+
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
     gAMPA_ibib=0.1/N;                          % IB -> IB
     if ~NMDA_block; gNMDA_ibib=5/N; end        % IB -> IB NMDA
-    
+
     gAMPA_ibng=0.1/N;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=5/N; end        % IB -> NG NMDA
-    
+
     gAMPA_IBdeepNG=0.1/N;                          % IB -> NG
     if ~NMDA_block; gNMDA_IBdeepNG=5/N; end        % IB -> NG NMDA
-    
+
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
-    
+
     gGABAa_deepNGdeepNG=0.1/Nng;                       % NG -> NG
     gGABAb_deepNGdeepNG=0.3/Nng;                       % NG -> NG GABA B
-    
+
     gGABAa_deepNGIB=0.1/Nng;                       % NG -> IB
     gGABAb_deepNGIB=0.3/Nng;                       % NG -> IB GABA B
-    
+
     % % IB -> LTS
     gAMPA_ibLTS=0.02/N;
     %     if ~NMDA_block; gNMDA_ibLTS=5/N; end
-    
+
     % % Delta -> Gamma oscillator connections
     gAMPA_ibrs = 0.3/N;
     %     gNMDA_ibrs = 0.02/N;
     %     gGABAa_ngrs = 0.05/Nng;
     %     gGABAb_ngrs = 0.08/Nng;
-    
+
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=0.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
@@ -345,45 +345,45 @@ if ~no_synapses
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1/Nfs;                      % FS -> FS
     gGABAa_fsrs=.6/Nfs;                     % FS -> RS
-    
+
     gAMPA_rsLTS = 0.15/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 3/Nlts;                  % LTS -> RS
     %
     gGABAa_fsLTS = .2/Nfs;                  % FS -> LTS
     % gGABAa_LTSfs = 5/Nlts;                % LTS -> FS
-    
+
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
     gNMDA_deepRSdeepRS=0.0/(NdeepRS);
     gAMPA_deepRSdeepFS=1/(NdeepRS);        % Increased by 4x due to sparse firing of deep principal cells.
     gGABA_deepFSdeepFS=0.5/NdeepFS;
     gGABAa_deepFSdeepRS=0.6/NdeepFS;       % Decreased by 3x due to reduced stimulation of deep principal cells
-    
+
     % % Delta -> Theta connections
     gAMPA_IBdeepRS = 0.01/N;
     % gNMDA_IBdeepRS = 0.2/N;
     % gAMPA_IBdeepFS = 0.01/N;
     % gNMDA_IBdeepFS = 0.1/N;
-    
+
     % % Theta -> Delta connections
     % gAMPA_deepRSIB = 0.1/(NdeepRS);
     gGABAa_deepFSIB = 0.6/NdeepFS;
-    
+
     % % Theta -> Gamma connections
     gAMPA_deepRSRS = 0.15/NdeepRS;
     gAMPA_deepRSNG = 0.1/(NdeepRS);
-    
+
     % Superficial -> Deep connections
     gAMPA_RSdeepRS = 0.15/Nrs;
     gAMPA_RSIB = 0.15/Nrs;
-    
+
     % % Gamma -> Delta connections
     %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
     % gAMPA_rsng = 0.1/Nrs;                       % RS -> NG
     % if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
     %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
-    
+
 end
 
 
@@ -416,25 +416,25 @@ switch sim_mode
     case 1                                                                     % Everything default, single simulation
        vary = {'deepRS', 'PPfreq', [.25 .5 1 1.5 2:23];...
             'deepRS', 'PPstim', 0:-.5:-2;... % -Cm_factor*(0:.05:.15);... % Cm_Ben*(-.025:-.025:-.1)/.25;...
-            'deepRS', 'I_app', -6:-1:-9;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
+            'deepRS', 'I_app', -6:-1:-9;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... %
             'deepRS', 'PPduty', .25;...
-            'deepRS', 'kernel_type', 25;... % 7;... % 
+            'deepRS', 'kernel_type', 25;... % 7;... %
             'deepRS', 'PPnorm', 1;...
             'deepRS', 'FMPstim', 0;...
             % 'deepRS', '(gKCa,gKs,I_const)', Cm_factor*[.084:.01:.124; .009:.001:.013; .15:.041:.314];...
             % 'deepRS', 'PPstim', 0;...
-            % 'deepRS', 'gKCa', Cm_Ben*(.005:.004:.021)/.25;... 
+            % 'deepRS', 'gKCa', Cm_Ben*(.005:.004:.021)/.25;...
             % 'deepRS', 'gKs', Cm_Ben*[.084 .104 .124]/.25;... % Cm_Ben*(-.7:-.01:-1)/.25}; % % [];
             };                                                               % Everything default, single simulation
-        
+
         % vary = [];
-        
+
     case 2
-        
+
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
         % [include_deepRS, include_deepFS] = deal(1);
         include_deepRS = 1;
-        
+
         tspan = [0 6000];
         vary = {
             'deepRS', 'I_app', -7:-.5:-11;...
@@ -442,31 +442,31 @@ switch sim_mode
             % 'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
             % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
-        
+
     case 3
-        
+
         [include_IB, include_NG] = deal(1);
         [include_deepRS, include_deepFS, include_RS, include_FS, include_LTS] = deal(0);
-        
+
         tspan = [0 6000];
-        
+
         % vary = {'IB', 'stim2', -6.3:.01:-6.2};
-        
+
         vary = {'IB', 'PPfreq', 1:15;...
             'IB', 'PPstim', 0:-.5:-2;...
             'IB', 'stim2', 0:-.5:-2}; % [1, 2, 4, 8, 16, 32]};
-        
+
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',linspace(2,-2,12); ...
             %'RS','PPstim',linspace(-10,-2,8); ...
             'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             'FS->RS','g_SYN',[0.2:0.2:1]/Nfs;...
             };
-        
+
     case 10     % Vary PP stimulation frequency to all input cells
         vary = { '(IB,RS,deepRS)','PPfreq',[1,2,4,8,16,32];
             };
-        
+
     case 11     % Vary just FS cells
         vary = { %'FS','stim',linspace(-2,1,1); ...
             'FS','PPstim',linspace(-6,0,8); ...
@@ -490,23 +490,23 @@ switch sim_mode
             %'RS->NG','g_SYN',[.1:.1:.3]/Nfs;...
             %'(IB,NG,RS)', 'ap_pulse_num',[25:5:70];...
             };
-        
+
     case 13         % LTS Cell synapses
         vary = { 'RS->LTS','g_SYN',[.1:.025:.2]/Nrs;...
             'FS->LTS','g_SYN',[.1:.1:.6]/Nfs;...
             %'LTS','stim',[-.5:.1:.5]; ...
-            
+
             };
-        
+
     case 14         % Vary random parameter to force shuffling random seed
         vary = {'RS','asdfasdfadf',1:8 };       % shuffle starting seed 8 times
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
-        
-        
+
+
 end
 
 %% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
-gNMDA_pseudo = 0;               
+gNMDA_pseudo = 0;
 gNMDA_pseudo = 10;              % Pseudo NMDA input from thalmus to L5 IB cells
 switch pulse_mode
     case 0                  % No stimulation
@@ -564,7 +564,7 @@ switch pulse_mode
         %         NGPPstim = -4;
         %         FSPPstim = -5;
         %         deepRSPPstim = -7;
-        
+
     case 2                  % Median nerve stimulation
         PPfreq = 2; % 2 Hz delta
         PPwidth = 10; % in mscd
@@ -642,15 +642,15 @@ if cluster_flag
     data=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
         'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
-    
+
     return
 
 else
-    
+
     data=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,...
         'compile_flag',compile_flag,'save_data_flag',save_data_flag);
-    
+
 end
 
 % dsSimulate(spec,'tspan',tspan,'dt',dt,'dsfact',dsfact,'solver',solver,'coder',0,'random_seed',1,'compile_flag',1,'vary',vary,'parallel_flag',0,...
@@ -679,38 +679,38 @@ if plot_on
         case {1,11}
             %%
             % PlotData(data,'plot_type','waveform');
-            
+
             PlotData_with_AP_line(data,'plot_type','waveform','max_num_overlaid',50);
             %PlotData_with_AP_line(data,'plot_type','rastergram');
             %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
             %             PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_V');
-            
-            
+
+
             if include_IB && include_NG && include_FS; PlotData(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
 %             elseif include_IB && include_NG; PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
             elseif include_FS;
                 %PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
             end
-            
+
             %             PlotData(data,'plot_type','power');
-            
+
             %elseif include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
             %PlotFR(data);
         case {2,3}
             PlotData(data,'plot_type','waveform');
             % PlotData(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
             % PlotData(data,'variable','iNMDA_s','plot_type','waveform');
-            
+
             save_as_pdf(gcf, sprintf('kramer_IB_sim_%d', sim_mode))
-            
+
         case {5,6}
             PlotData(data,'plot_type','waveform','variable','IB_V');
         case {9,10}
             %%
             %PlotData(data,'plot_type','waveform');
             %PlotData(data,'plot_type','power');
-            
+
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
             %PlotData(data,'variable','RS_V'); PlotData(data,'variable','FS_V');
             PlotData(data,'plot_type','waveform')
@@ -724,16 +724,16 @@ if plot_on
             %         PlotData(data,'plot_type','rastergram','variable','RS_V'); PlotData(data,'plot_type','rastergram','variable','FS_V')
             %         PlotData(data2,'plot_type','waveform','variable','RS_V');
             %         PlotData(data2,'plot_type','waveform','variable','FS_V');
-            
+
             %         PlotData(data,'plot_type','rastergram','variable','RS_V');
             %         PlotData(data,'plot_type','rastergram','variable','FS_V');
             %         PlotFR2(data,'variable','RS_V');
             %         PlotFR2(data,'variable','FS_V');
             %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
             %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
-            
+
             save_as_pdf(gcf, 'kramer_IB')
-            
+
         case 12
             %%
             %PlotData(data,'plot_type','rastergram','variable','RS_V');
@@ -742,26 +742,26 @@ if plot_on
             %             elseif include_IB && include_FS; PlotData(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
             close all
             PlotData(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
-            
+
             %PlotData(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-            
+
             PlotData(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
             PlotData(data2,'variable','IB_V','plot_type','waveform','visible',visible_flag);
             %PlotData(data,'variable','IB_V','plot_type','rastergram');
             %PlotData(data,'plot_type','rastergram');
-            
-            
+
+
             %         PlotData(data,'plot_type','rastergram','variable','RS_V');
             %         PlotData(data,'plot_type','rastergram','variable','FS_V');
             %         PlotFR2(data,'variable','RS_V');
             %         PlotFR2(data,'variable','FS_V');
             %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
             %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
-            
+
             %             t = data(1).time; data3 = CropData(data, t > 1200 & t < 2300);
             %             PlotData(data3,'variable','IB_V','plot_type','waveform');
             %             PlotData(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
-            
+
             if save_plots
                 h = figure('visible','off');
                 h2 = double(h);
@@ -769,8 +769,8 @@ if plot_on
                 close(h);  % Get most recent figure handle
                 clear h h2
             end
-            
-            
+
+
         case 14
             %% Case 14
             data_var = CalcAverages(data);                  % Average all cells together
@@ -784,12 +784,12 @@ if plot_on
             subplot(212); plot_data_stdev(data_var2,'RS_V',[]); ylabel('RS Vm');
             xlabel('Time (ms)');
             %plot_data_stdev(data_var2,'RS_RS_IBaIBdbiSYNseed_s',[]);
-            
+
             %PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
             PlotData_with_AP_line(data(5),'plot_type','waveform')
             PlotData_with_AP_line(data(5),'plot_type','rastergram')
-            
-            
+
+
         otherwise
             if 0
                 PlotData(data,'plot_type','waveform');
@@ -798,13 +798,13 @@ if plot_on
                 %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
                 %PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
             end
-            
+
             if 0
                 %% Plot overlaid Vm data
                 data_cat = cat(3,data.RS_V,data.FS_V,data.LTS_V);
                 figure; plott_matrix3D(data_cat);
             end
-            
+
     end
 end
 
