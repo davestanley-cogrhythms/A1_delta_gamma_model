@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -70,7 +70,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 0;
+plot_on = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -475,8 +475,9 @@ switch sim_mode
         
     case 8
         vary = { ...
-            'LTS','stim2',-1*[.2:.1:1.0]; ...
+            'LTS','stim2',-1*[.1:.1:0.6]; ...
             %'RS','stim2',-1*[1.5:.5:3]; ...
+            'RS->LTS','g_SYN',[0.1:0.1:0.8]/Nrs;...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
