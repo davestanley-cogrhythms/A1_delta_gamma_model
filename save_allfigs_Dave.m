@@ -12,7 +12,7 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 0;
     supersize_me = 0;
-    handles_arr = [1:15];
+    handles_arr = [1:1];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
     currfigname = '137f_case8_Jlts';
@@ -84,7 +84,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Swepth through Jlts to find a lower stim level (compensates for lower spontaneous Jrs level).'];
+    mycomment = ['Swept through inhib feedback from LTS to RS and FS.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 700];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -44,10 +44,11 @@ if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
 
-    plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+    plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,[400 600]);
 
     plot_options = {...
-                    {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...    
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...       
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'variable','Mich','do_mean',true}, ...    
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
                     {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
                     };
@@ -202,8 +203,8 @@ Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 Jfs=1;    % FS cells
-Jlts1=-.5; % LTS cells
-Jlts2=-.5; % LTS cells
+Jlts1=-.2; % LTS cells
+Jlts2=-.2; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -490,8 +491,8 @@ switch sim_mode
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
-            'LTS->RS','g_SYN',[0:0.25:1.5]/Nlts;...
-            'LTS->FS','g_SYN',[0:.1:.5]/Nlts;...
+            'LTS->RS','g_SYN',[0:0.25:2.0]/Nlts;...
+            'LTS->FS','g_SYN',[0:.05:.3]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -589,10 +590,10 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 800;    % ms, onset time
+        PPonset = 300;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
