@@ -1,10 +1,10 @@
-function plot_2_vars(data, var1, var2, mode, start, subplot_dims, titles)
+function plot_2_vars(data, var1, var2, mode, start_index, subplot_dims, titles)
 
 if nargin < 4, mode = []; end
 if isempty(mode), mode = 'plotyy'; end
 
 if nargin < 5, mode = []; end
-if isempty(start), start = 1; end
+if isempty(start_index), start_index = 1; end
 
 if nargin < 6, subplot_dims = []; end
 
@@ -30,7 +30,8 @@ for s = 1:no_sims
     
     if strcmp(mode, 'plotyy')
         
-        [ax, h1, h2] = plotyy(t, variable1(start:end, s), t, variable2(start:end, s));
+        [ax, h1, h2] = plotyy(t(start_index:end), variable1(start_index:end, s),...
+            t(start_index:end), variable2(start_index:end, s));
         
         axis(ax, 'tight'), box off
         
@@ -56,7 +57,7 @@ for s = 1:no_sims
     
     elseif strcmp(mode, 'against')
         
-        plot(variable1(start:end, s), variable2(start:end, s));
+        plot(variable1(start_index:end, s), variable2(start_index:end, s));
         
         axis tight, box off
         
