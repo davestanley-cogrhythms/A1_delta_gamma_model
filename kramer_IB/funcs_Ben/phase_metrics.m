@@ -68,15 +68,23 @@ v_hat_smoothed = conv(v_hat, gauss_kernel, 'same');
 
 peak_freq = f(v_hat_smoothed == max(v_hat_smoothed));
 
-freqs = [data.(f_field) 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
+freqs = [NaN 4.5 peak_freq]'; no_cycles = [NaN 7 7]'; no_freqs = length(freqs);
+
+freq_labels = cell(no_freqs, 1);
+
+for f = 2:no_freqs, freq_labels{f} = num2str(freqs(f), '%.2g'); end
 
 %% Getting wavelet components.
 
 if strcmp(input_transform, 'wavelet')
+    
+    freq_labels{1} = num2str(data.(f_field), '%.2g');
 
-    v_bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, freqs(1), no_cycles(1), 0, '');
+    v_bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, data.(f_field), no_cycles(1), 0, '');
     
 elseif strcmp(input_transform, 'hilbert')
+    
+    freq_labels{1} = i_field;
     
     v_bandpassed(:, 1) = hilbert(i);
     
