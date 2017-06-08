@@ -117,7 +117,7 @@ else
     
     no_cols = 1; no_rows = 1;
     
-    no_varied = 1;
+    no_varied = 0;
     
     no_figures = 1;
     
@@ -177,19 +177,15 @@ for f = 1:no_figures
     
     for v = 1:no_varied
         
-        if no_varied > 1
+        figure_index = figure_index & ([data.(vary_labels{v + 2})] == figure_params(f, v));
+        
+        if v == 1
             
-            figure_index = figure_index & ([data.(vary_labels{v + 2})] == figure_params(f, v));
+            figure_labels{f} = [vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
             
-            if v == 1
-                
-                figure_labels{f} = [vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
-                
-            else
-                
-                figure_labels{f} = [figure_labels{f}, '; ', vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
-                
-            end
+        else
+            
+            figure_labels{f} = [figure_labels{f}, '; ', vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
             
         end
         
@@ -205,34 +201,30 @@ for f = 1:no_figures
             
             study_label = '';
             
-            if no_varied > 1
+            if strcmp(vary_labels{1}, vary_labels{2})
                 
-                if strcmp(vary_labels{1}, vary_labels{2})
+                if s <= vary_lengths(1)
                     
-                    if s <= vary_lengths(1)
-                        
-                        study_index = figure_index & ([data.(vary_labels{1})] == vary_vectors{1}(s));
-                        
-                        study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(s), '%.3g')];
-                        
-                    else
-                        
-                        study_index = []; % zeros(size(figure_index));
-                        
-                        study_label = '';
-                        
-                    end
+                    study_index = figure_index & ([data.(vary_labels{1})] == vary_vectors{1}(s));
+                    
+                    study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(s), '%.3g')];
                     
                 else
                     
-                    row_index = figure_index & ([data.(vary_labels{2})] == vary_vectors{2}(r));
+                    study_index = []; % zeros(size(figure_index));
                     
-                    study_index = row_index & ([data.(vary_labels{1})] == vary_vectors{1}(c));
-                    
-                    study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(c), '%.3g'),...
-                        ', ', vary_labels{2}, ' = ', num2str(vary_vectors{2}(r), '%.3g')];
+                    study_label = '';
                     
                 end
+                
+            else
+                
+                row_index = figure_index & ([data.(vary_labels{2})] == vary_vectors{2}(r));
+                
+                study_index = row_index & ([data.(vary_labels{1})] == vary_vectors{1}(c));
+                
+                study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(c), '%.3g'),...
+                    ', ', vary_labels{2}, ' = ', num2str(vary_vectors{2}(r), '%.3g')];
                 
             end
             
@@ -330,7 +322,7 @@ end
 %     
 % end
 
-if no_varied > 1
+if no_varied > 0
     
     if strcmp(vary_labels{1}, vary_labels{2})
         
