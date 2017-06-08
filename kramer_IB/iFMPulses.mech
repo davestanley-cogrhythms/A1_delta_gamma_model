@@ -1,18 +1,17 @@
-%%
-% Poisson mechanism based on Jason's email implementation. For some
-% reason this produces huge PSPs
+%% Produces frequency modulated input.
 
 % Pulse train properties
 FMPstim = -.1;
-FMPfreqs = [3 9]; % in Hz
-FMPwindowlength = (1000/mean(FMPfreqs));
+FMPlowfreq = 3;
+FMPhighfreq = 9; % in Hz
+FMPwindowlength = (1000/mean([FMPlowfreq FMPhighfreq]));
 
 % Time series properties
 Tend=T(end); 	    % ms, max simulation duration
 dt = 0.01;        % ms, time step duration
 sampling_freq = 1000/dt;
 
-s2 = phase_modulated(dt, Tend, sampling_freq, FMPfreqs, FMPwindowlength, 1);
+s2 = phase_modulated(dt, Tend, sampling_freq, [FMPlowfreq FMPhighfreq], FMPwindowlength, 1);
 
 % Functions
 input(X) = s2(k,:)
