@@ -1,38 +1,47 @@
 function results = spike_locking_to_input_plot(data, results, name, varargin)
 
-v_pop = 'pop1'; i_pop = 'pop1'; label = '';
+v_field = 'deepRS_V'; i_field = 'deepRS_iPeriodicPulsesBen_input'; f_field = 'deepRS_PPfreq';
+input_transform = 'wavelet'; label = '';
 
 if ~isempty(varargin)
     
     for v = 1:(length(varargin)/2)
         
-        if strcmp(varargin{2*v - 1}, 'i_pop')
+        if strcmp(varargin{2*v - 1}, 'i_field')
             
-            i_pop = varargin{2*v};
+            i_field = varargin{2*v};
             
-            label = [label, '_', i_pop, 'i'];
+            label = [label, '_', i_field];
         
-        elseif strcmp(varargin{2*v - 1}, 'v_pop')
+        elseif strcmp(varargin{2*v - 1}, 'v_field')
             
-            v_pop = varargin{2*v};
+            v_field = varargin{2*v};
             
-            label = [label, '_', v_pop, 'v'];
+            label = [label, '_', v_field];
+        
+        elseif strcmp(varargin{2*v - 1}, 'f_field')
+            
+            f_field = varargin{2*v};
+            
+            label = [label, '_', f_field];
+        
+        elseif strcmp(varargin{2*v - 1}, 'input_transform')
+            
+            input_transform = varargin{2*v};
+            
+            label = [label, '_', input_transform];
             
         end
         
     end
     
 end
-            
-% input = [i_pop, '_iPeriodicPulses_input'];
-% 
-% voltage = [v_pop, '_v'];
 
 close('all')
 
 if isempty(results)
     
-    results = dsAnalyze(data, @phase_metrics, 'v_pop', v_pop, 'i_pop', i_pop);
+    results = dsAnalyze(data, @phase_metrics, varargin{:});
     
 end
 
@@ -76,31 +85,43 @@ vary_vectors(vary_lengths <= 1) = [];
 
 vary_lengths(vary_lengths <= 1) = [];
 
-if vary_lengths(1) <= 10 && vary_lengths(2) <= 10
+if length(vary_lengths) > 1
 
-    no_cols = vary_lengths(1); no_rows = vary_lengths(2);
+    if vary_lengths(1) <= 10 && vary_lengths(2) <= 10
+        
+        no_cols = vary_lengths(1); no_rows = vary_lengths(2);
+        
+    else
+        
+        [no_rows, no_cols] = subplot_size(vary_lengths(1));
+        
+        vary_labels(3:(end + 1)) = vary_labels(2:end);
+        
+        vary_labels(1:2) = vary_labels(1);
+        
+        vary_vectors(3:(end + 1)) = vary_vectors(2:end);
+        
+        vary_vectors(1:2) = vary_vectors(1);
+        
+        vary_lengths(3:(end + 1)) = vary_lengths(2:end);
+        
+        vary_lengths(1:2) = vary_lengths(1);
+        
+    end
+    
+    no_varied = length(vary_lengths) - 2;
+    
+    no_figures = prod(vary_lengths(3:end));
     
 else
     
-    [no_rows, no_cols] = subplot_size(vary_lengths(1));
+    no_cols = 1; no_rows = 1;
     
-    vary_labels(3:(end + 1)) = vary_labels(2:end);
+    no_varied = 1;
     
-    vary_labels(1:2) = vary_labels(1);
+    no_figures = 1;
     
-    vary_vectors(3:(end + 1)) = vary_vectors(2:end);
-    
-    vary_vectors(1:2) = vary_vectors(1);
-    
-    vary_lengths(3:(end + 1)) = vary_lengths(2:end);
-    
-    vary_lengths(1:2) = vary_lengths(1);
-
 end
-
-no_varied = length(vary_lengths) - 2;
-
-no_figures = prod(vary_lengths(3:end));
 
 [peak_freqs, v_mean_spike_mrvs, no_spikes] = deal(nan(no_rows, no_cols, no_figures));
 
@@ -155,16 +176,20 @@ for f = 1:no_figures
     figure_labels{f} = 'Spike Locking to Input';
     
     for v = 1:no_varied
-       
-        figure_index = figure_index & ([data.(vary_labels{v + 2})] == figure_params(f, v));
         
-        if v == 1
-        
-            figure_labels{f} = [vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
+        if no_varied > 1
             
-        else
-        
-            figure_labels{f} = [figure_labels{f}, '; ', vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
+            figure_index = figure_index & ([data.(vary_labels{v + 2})] == figure_params(f, v));
+            
+            if v == 1
+                
+                figure_labels{f} = [vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
+                
+            else
+                
+                figure_labels{f} = [figure_labels{f}, '; ', vary_labels{v + 2}, ' = ', num2str(figure_params(f, v), '%.3g')];
+                
+            end
             
         end
         
@@ -176,30 +201,38 @@ for f = 1:no_figures
                 
             s = (r - 1)*no_cols + c;
             
-            if strcmp(vary_labels{1}, vary_labels{2})
+            study_index = figure_index;
+            
+            study_label = '';
+            
+            if no_varied > 1
                 
-                if s <= vary_lengths(1)
+                if strcmp(vary_labels{1}, vary_labels{2})
                     
-                    study_index = figure_index & ([data.(vary_labels{1})] == vary_vectors{1}(s));
-                    
-                    study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(s), '%.3g')];
+                    if s <= vary_lengths(1)
+                        
+                        study_index = figure_index & ([data.(vary_labels{1})] == vary_vectors{1}(s));
+                        
+                        study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(s), '%.3g')];
+                        
+                    else
+                        
+                        study_index = []; % zeros(size(figure_index));
+                        
+                        study_label = '';
+                        
+                    end
                     
                 else
                     
-                    study_index = []; % zeros(size(figure_index));
+                    row_index = figure_index & ([data.(vary_labels{2})] == vary_vectors{2}(r));
                     
-                    study_label = '';
+                    study_index = row_index & ([data.(vary_labels{1})] == vary_vectors{1}(c));
+                    
+                    study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(c), '%.3g'),...
+                        ', ', vary_labels{2}, ' = ', num2str(vary_vectors{2}(r), '%.3g')];
                     
                 end
-                
-            else
-                
-                row_index = figure_index & ([data.(vary_labels{2})] == vary_vectors{2}(r));
-                
-                study_index = row_index & ([data.(vary_labels{1})] == vary_vectors{1}(c));
-                
-                study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(c), '%.3g'),...
-                    ', ', vary_labels{2}, ' = ', num2str(vary_vectors{2}(r), '%.3g')];
                 
             end
             
@@ -297,87 +330,91 @@ end
 %     
 % end
 
-if strcmp(vary_labels{1}, vary_labels{2})
+if no_varied > 1
     
-    mrv_for_plot = reshape(permute(v_mean_spike_mrvs, [2 1 3:length(size(v_mean_spike_mrvs))]), no_rows*no_cols, no_figures);
-    
-    mrv_for_plot = mrv_for_plot(1:vary_lengths(1), :);
-    
-    nspikes_for_plot = reshape(permute(no_spikes, [2 1 3:length(size(no_spikes))]), no_rows*no_cols, no_figures);
-    
-    nspikes_for_plot = nspikes_for_plot(1:vary_lengths(1), :);
-    
-else
-    
-    mrv_for_plot = v_mean_spike_mrvs;
-    
-    nspikes_for_plot = no_spikes;
-    
-end
-
-no_figures = size(mrv_for_plot, 3);
-
-for f = 1:no_figures
-
-    figure
-    
-    subplot(3, 1, 1)
-    
-    plot(vary_vectors{1}', abs(mrv_for_plot(:, :, f))')
-    
-    axis tight
-    
-    box off
-    
-    ylim([0 1])
-    
-    title(['Spike PLV to Input by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
-    
-    xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
-    
-    ylabel('Spike PLV', 'FontSize', 14)
-    
-    legend(figure_labels)
-    
-    subplot(3, 1, 2)
-    
-    adjusted_plv = ((abs(mrv_for_plot(:, :, f)).^2).*nspikes_for_plot(:, :, f) - 1)./(nspikes_for_plot(:, :, f) - 1);
-    
-    plot(vary_vectors{1}, adjusted_plv') % (unique([data(:).(vary_labels{1})])', adjusted_plv')
-    
-    axis tight
-    
-    box off
-    
-    ylim([0 1])
-    
-    title(['Adjusted Spike PLV to Input by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
-    
-    xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
-    
-    ylabel('Spike PLV', 'FontSize', 14)
-    
-    subplot(3, 1, 3)
-    
-    plot(vary_vectors{1}, nspikes_for_plot(:, :, f)')
-    
-    axis tight
-    
-    box off
-    
-    title(['Number of Spikes by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
-    
-    xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
-    
-    ylabel('Number of Spikes', 'FontSize', 14)
-    
-    if no_figures > 1
+    if strcmp(vary_labels{1}, vary_labels{2})
         
-        save_as_pdf(gcf, [name, label, '_MRV_', num2str(f)])
+        mrv_for_plot = reshape(permute(v_mean_spike_mrvs, [2 1 3:length(size(v_mean_spike_mrvs))]), no_rows*no_cols, no_figures);
+        
+        mrv_for_plot = mrv_for_plot(1:vary_lengths(1), :);
+        
+        nspikes_for_plot = reshape(permute(no_spikes, [2 1 3:length(size(no_spikes))]), no_rows*no_cols, no_figures);
+        
+        nspikes_for_plot = nspikes_for_plot(1:vary_lengths(1), :);
         
     else
         
-        save_as_pdf(gcf, [name, label, '_MRV'])
+        mrv_for_plot = v_mean_spike_mrvs;
+        
+        nspikes_for_plot = no_spikes;
+        
+    end
+    
+    no_figures = size(mrv_for_plot, 3);
+    
+    for f = 1:no_figures
+        
+        figure
+        
+        subplot(3, 1, 1)
+        
+        plot(vary_vectors{1}', abs(mrv_for_plot(:, :, f))')
+        
+        axis tight
+        
+        box off
+        
+        ylim([0 1])
+        
+        title(['Spike PLV to Input by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
+        
+        xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
+        
+        ylabel('Spike PLV', 'FontSize', 14)
+        
+        legend(figure_labels)
+        
+        subplot(3, 1, 2)
+        
+        adjusted_plv = ((abs(mrv_for_plot(:, :, f)).^2).*nspikes_for_plot(:, :, f) - 1)./(nspikes_for_plot(:, :, f) - 1);
+        
+        plot(vary_vectors{1}, adjusted_plv') % (unique([data(:).(vary_labels{1})])', adjusted_plv')
+        
+        axis tight
+        
+        box off
+        
+        ylim([0 1])
+        
+        title(['Adjusted Spike PLV to Input by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
+        
+        xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
+        
+        ylabel('Spike PLV', 'FontSize', 14)
+        
+        subplot(3, 1, 3)
+        
+        plot(vary_vectors{1}, nspikes_for_plot(:, :, f)')
+        
+        axis tight
+        
+        box off
+        
+        title(['Number of Spikes by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
+        
+        xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
+        
+        ylabel('Number of Spikes', 'FontSize', 14)
+        
+        if no_figures > 1
+            
+            save_as_pdf(gcf, [name, label, '_MRV_', num2str(f)])
+            
+        else
+            
+            save_as_pdf(gcf, [name, label, '_MRV'])
+            
+        end
         
     end
     

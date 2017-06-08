@@ -1,8 +1,12 @@
 function results = phase_metrics(data, varargin)
 
-v_pop = 'pop1';
+v_field = 'deepRS_V';
 
-i_pop = 'pop1';
+i_field = 'deepRS_iPeriodicPulsesBen_input';
+
+f_field = 'deepRS_PPfreq';
+
+input_transform = 'wavelet';
 
 figure_flag = 0;
 
@@ -12,13 +16,21 @@ if ~isempty(varargin)
 
     for v = 1:(length(varargin)/2)
 
-        if strcmp(varargin{2*v - 1}, 'i_pop')
+        if strcmp(varargin{2*v - 1}, 'i_field')
 
-            i_pop = varargin{2*v};
+            i_field = varargin{2*v};
 
-        elseif strcmp(varargin{2*v - 1}, 'v_pop')
+        elseif strcmp(varargin{2*v - 1}, 'v_field')
 
-            v_pop = varargin{2*v};
+            v_field = varargin{2*v};
+
+        elseif strcmp(varargin{2*v - 1}, 'f_field')
+
+            f_field = varargin{2*v};
+
+        elseif strcmp(varargin{2*v - 1}, 'input_transform')
+
+            input_transform = varargin{2*v};
 
         elseif strcmp(varargin{2*v - 1}, 'figure_flag')
 
@@ -34,17 +46,11 @@ if ~isempty(varargin)
 
 end
 
-voltage = [v_pop, '_V'];
-
-input = [i_pop, '_iPeriodicPulsesBen_input'];
-
-freq = [i_pop, '_PPfreq'];
-
-v = getfield(data, voltage);
+v = data.(v_field);
 
 t = data.time;
 
-i = getfield(data, input);
+i = data.(i_field);
 
 sampling_freq = round(1000*length(t)/t(end));
 
@@ -62,11 +68,19 @@ v_hat_smoothed = conv(v_hat, gauss_kernel, 'same');
 
 peak_freq = f(v_hat_smoothed == max(v_hat_smoothed));
 
-freqs = [getfield(data, freq) 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
+freqs = [data.(f_field) 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
 
 %% Getting wavelet components.
 
-v_bandpassed(:, 1) = wavelet_spectrogram(-i, sampling_freq, freqs(1), no_cycles(1), 0, '');
+if strcmp(input_transform, 'wavelet')
+
+    v_bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, freqs(1), no_cycles(1), 0, '');
+    
+elseif strcmp(input_transform, 'hilbert')
+    
+    v_bandpassed(:, 1) = hilbert(i);
+    
+end
 
 v_bandpassed(:, 2:3) = wavelet_spectrogram(v, sampling_freq, freqs(2:3), no_cycles(2:3), 0, '');
 
