@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -71,7 +71,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 1;
+plot_on = 0;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -204,8 +204,8 @@ Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 Jfs=1;    % FS cells
-Jlts1=-.2; % LTS cells
-Jlts2=-.2; % LTS cells
+Jlts1=-1.2; % LTS cells
+Jlts2=-1.2; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
