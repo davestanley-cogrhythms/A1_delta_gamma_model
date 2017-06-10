@@ -711,7 +711,7 @@ if plot_on
             inds = 1:1:length(data);
             h = dsPlot2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
             
-            %PlotData_with_AP_line(data,'plot_type','rastergram');
+            %dsPlot_with_AP_line(data,'plot_type','rastergram');
             dsPlot2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
             
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
@@ -787,12 +787,12 @@ if plot_on
             %dsPlot(data,'variable','RS_V'); dsPlot(data,'variable','FS_V');
 %             
 %             tfs = 10;
-%             PlotData_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
+%             dsPlot_with_AP_line(data,'textfontsize',tfs,'plot_type','waveform','max_num_overlaid',10);
 %             
 %             t = data(1).time; data3 = CropData(data, t > 350 & t <= t(end));
-%             PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','waveform')
+%             dsPlot_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','waveform')
 %             
-%             PlotData_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','rastergram')
+%             dsPlot_with_AP_line(data3,'textfontsize',tfs,'max_num_overlaid',10,'variable','FS_V','plot_type','rastergram')
 
             
             %PlotFR2(data,'plot_type','meanFR')
@@ -849,8 +849,8 @@ if plot_on
             %% Case 14
             data_var = ds.calcAverages(data);                  % Average all cells together
             data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
-            PlotData_with_AP_line(data_var,'plot_type','waveform')
-            PlotData_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
+            dsPlot_with_AP_line(data_var,'plot_type','waveform')
+            dsPlot_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
             data_var2 = ds.calcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
             figl;
@@ -859,18 +859,18 @@ if plot_on
             xlabel('Time (ms)');
             %plot_data_stdev(data_var2,'RS_RS_IBaIBdbiSYNseed_s',[]);
             
-            %PlotData_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
-            PlotData_with_AP_line(data(5),'plot_type','waveform')
-            PlotData_with_AP_line(data(5),'plot_type','rastergram')
+            %dsPlot_with_AP_line(data,'variable','RS_V','plot_type','rastergram')
+            dsPlot_with_AP_line(data(5),'plot_type','waveform')
+            dsPlot_with_AP_line(data(5),'plot_type','rastergram')
             
             
         otherwise
             if 0
                 dsPlot(data,'plot_type','waveform');
-                %PlotData_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
-                %PlotData_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
-                %PlotData_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
-                %PlotData_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
+                %dsPlot_with_AP_line(data,'plot_type','waveform','variable','LTS_V','max_num_overlaid',50);
+                %dsPlot_with_AP_line(data,'plot_type','rastergram','variable','LTS_V');
+                %dsPlot_with_AP_line(data2,'plot_type','waveform','variable','RS_LTS_IBaIBdbiSYNseed_s');
+                %dsPlot_with_AP_line(data2,'plot_type','waveform','variable','LTS_IBiMMich_mM');
             end
             
             if 0
