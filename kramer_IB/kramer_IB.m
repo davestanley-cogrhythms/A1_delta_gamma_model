@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1000];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 700];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -104,11 +104,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
-include_NG = 1;
+include_IB = 0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -382,10 +382,10 @@ if ~no_synapses
     
     gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-    gGABAa_LTSrs = 1.25/Nlts;                  % LTS -> RS
+    gGABAa_LTSrs = 1.5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
+    gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -495,7 +495,8 @@ switch sim_mode
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[1:0.25:1.75]/Nlts;...
-            'LTS->FS','g_SYN',[0:0.1:.5]/Nlts;...
+            %'LTS->FS','g_SYN',[0:0.1:.5]/Nlts;...
+            'LTS','asdfadsf',[1:4]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
