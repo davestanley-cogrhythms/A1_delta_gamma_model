@@ -385,7 +385,7 @@ if ~no_synapses
     gGABAa_LTSrs = 1.5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
+%     gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -496,7 +496,7 @@ switch sim_mode
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[1:0.25:1.75]/Nlts;...
             %'LTS->FS','g_SYN',[0:0.1:.5]/Nlts;...
-            'LTS','shuffle',[1:4]/Nlts;...
+            'LTS','shuffle',[1:8]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -740,10 +740,22 @@ if plot_on
         case {8,9,10}
             
             %%
-%             for i = 1:length(data); dsPlot(data(i)); end
-%             for i = 1:length(data); dsPlot2(data(i),'plot_type','raster'); end
-%             for i = 1:length(data); dsPlot2(data(i),'variable','Mich','do_mean',true); end
-%             for i = 1:length(data); dsPlot2(data(i),'plot_type','power','do_mean',true,'xlims',[0 110]); end
+            ind = 1:4;
+            dsPlot_with_AP_line(data(ind))
+            dsPlot(data(ind),'plot_type','raster')
+            dsPlot_with_AP_line(data(ind),'variable','RS_V')
+            dsPlot_with_AP_line(data(ind),'variable','LTS_V')
+            
+            ind = 5:8;
+            dsPlot_with_AP_line(data(ind))
+            dsPlot(data(ind),'plot_type','raster')
+            dsPlot_with_AP_line(data(ind),'variable','RS_V')
+            dsPlot_with_AP_line(data(ind),'variable','LTS_V')
+            
+            
+            % Play Hallelujah
+            load handel.mat;
+            sound(y, 1*Fs);
             
             %%
             % #myfigs9
