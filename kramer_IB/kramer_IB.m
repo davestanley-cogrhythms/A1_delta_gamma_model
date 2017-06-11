@@ -382,7 +382,7 @@ if ~no_synapses
     
     gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-    gGABAa_LTSrs = 1.5/Nlts;                  % LTS -> RS
+    gGABAa_LTSrs = 1.25/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
