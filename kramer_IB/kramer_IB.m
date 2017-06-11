@@ -740,6 +740,11 @@ if plot_on
         case {8,9,10}
             
             %%
+            
+            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
+            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
+            
+            
             ind = 1:4;
             dsPlot_with_AP_line(data(ind))
             dsPlot(data(ind),'plot_type','raster')
