@@ -385,7 +385,7 @@ if ~no_synapses
     gGABAa_LTSrs = 1.5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
-%     gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
+    gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
