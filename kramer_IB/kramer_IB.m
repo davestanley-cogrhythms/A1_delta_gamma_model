@@ -495,8 +495,8 @@ switch sim_mode
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
-            %'LTS->FS','g_SYN',[0:0.1:.5]/Nlts;...
-            'LTS','shuffle',[1:8]/Nlts;...
+            'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
+            %'LTS','shuffle',[1:8]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -738,13 +738,7 @@ if plot_on
         case {5,6}
             dsPlot(data,'plot_type','waveform','variable','IB_V');
         case {8,9,10}
-            
             %%
-            
-            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
-            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
-            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS','do_overlay_shift',true,'overlay_shift_val',.4);
-            
             
             ind = 1:4;
             dsPlot_with_AP_line(data(ind))
@@ -758,6 +752,11 @@ if plot_on
             dsPlot(data(ind),'plot_type','raster')
             dsPlot_with_AP_line(data(ind),'variable','RS_V')
             dsPlot_with_AP_line(data(ind),'variable','LTS_V')
+            
+            %%
+            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
+            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
+            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS','do_overlay_shift',true,'overlay_shift_val',.4);
             
             
             % Play Hallelujah
