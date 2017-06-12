@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1500];
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -367,8 +367,8 @@ if ~no_synapses
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.02/Nib;
-    if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
+%     gAMPA_ibrs = 0.02/Nib;
+%     if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
     gGABAb_ngrs = 0.08/Nng;
     
@@ -409,7 +409,7 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
 %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
-    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
@@ -480,9 +480,9 @@ switch sim_mode
         vary = { ...
             %'LTS','gM',[6,8]; ...
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
-            'RS','stim2',-1*[1.1:.1:1.5]; ...
+            %'RS','stim2',-1*[1.1:.1:1.5]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            %'IB','PP_gSYN',[0.0:0.1:0.3]; ...
+            'IB','PP_gSYN',[0.1:0.1:0.4]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -503,10 +503,10 @@ switch sim_mode
 %             'IB->IB','gNMDA',[3:2:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[3:2:10]/Nib;...
-            'NG->IB','gGABAB',[.2:.2:.8]/Nng;...
+            %'NG->IB','gGABAB',[.2:.2:.8]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
             %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            %'NG->RS','gGABAB',[.3:.1:.6]/Nng;...
+            'NG->RS','gGABAB',[.2:.2:.8]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -560,7 +560,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.1;
+IB_PP_gSYN = 0.2;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.05;
@@ -604,7 +604,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 650;    % ms, onset time
+        PPonset = 550;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
