@@ -370,7 +370,7 @@ if ~no_synapses
     gAMPA_ibrs = 0.02/Nib;
     if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
-%     gGABAb_ngrs = 0.08/Nng;
+    gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
@@ -499,13 +499,14 @@ switch sim_mode
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
-            'LTS','shuffle',[1:2];...
+            %'LTS','shuffle',[1:2];...
             %'IB->IB','gNMDA',[6:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
             %'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
             %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
+            'NG->RS','gGABAB',[.3:.1:.6]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -775,10 +776,11 @@ if plot_on
             
             
             %%
-            dsPlot2(data(2),'force_last','populations','plot_type','imagesc')
-            dsPlot2(data(2),'force_last','populations','plot_type','raster')
-            dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+            dsPlot2(data(4),'force_last','populations','plot_type','imagesc')
+            dsPlot2(data(3),'force_last','populations','plot_type','raster')
+            %dsPlot2(data,'plot_type','raster','population','RS')
+            %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
             dsPlot2(data,'population','IB','variable','/NMDA_s|GABA_gTH/','do_mean',true,'force_last','variable')
             
