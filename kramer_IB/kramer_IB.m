@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -367,7 +367,7 @@ if ~no_synapses
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.05/Nib;
+%     gAMPA_ibrs = 0.05/Nib;
     if ~NMDA_block; gNMDA_ibrs = 1/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
 %     gGABAb_ngrs = 0.08/Nng;
@@ -503,7 +503,8 @@ switch sim_mode
             %'IB->IB','gNMDA',[6:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
-            'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
+            %'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
+            'IB->RS','gNMDA',[2:5]/Nib;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -773,7 +774,8 @@ if plot_on
             
             
             %%
-            dsPlot2(data,'force_last','populations','plot_type','imagesc')
+            dsPlot2(data(4),'force_last','populations','plot_type','imagesc')
+            dsPlot2(data(4),'force_last','populations','plot_type','raster')
             dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
