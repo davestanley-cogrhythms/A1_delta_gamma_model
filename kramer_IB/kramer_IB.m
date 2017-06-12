@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1500];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -105,9 +105,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
@@ -215,8 +215,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=200;
-IB_onset2=200;
+IB_offset1=000;
+IB_onset2=000;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
