@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -350,17 +350,17 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-%     gAMPA_ibib=0.1/Nib;                          % IB -> IB
+    gAMPA_ibib=0.05/Nib;                          % IB -> IB
     if ~NMDA_block; gNMDA_ibib=6/Nib; end        % IB -> IB NMDA
     
-%     gAMPA_ibng=0.1/Nib;                          % IB -> NG
+    gAMPA_ibng=0.05/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=6/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.7/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
     gAMPA_ibLTS=0.02/Nib;
@@ -478,10 +478,10 @@ switch sim_mode
         
     case 8
         vary = { ...
-            'LTS','gM',[6,8]; ...
-            'LTS','stim2',-1*[1.2:.2:2]; ...
+            %'LTS','gM',[6,8]; ...
+            'IB','stim2',-1*[-0.5:0.5:1]; ...
             %'RS','stim2',-1*[1.5:.5:3]; ...
-            'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
+            %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -685,6 +685,7 @@ if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaI
 % if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'NG_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'FS_GABA'); end  % GABA A only
 if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_GABA2'); end  % GABA A only
+if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
 data2 = ds.calcAverages(data);
@@ -770,7 +771,8 @@ if plot_on
             %%
             dsPlot2(data,'force_last','populations','plot_type','imagesc')
             dsPlot2(data,'population','NG','variable','IBaIBdbiSYNseed_s','do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+            %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+            dsPlot2(data,'population','IB','variable','GABA_gTH','do_mean',true)
             dsPlot2(data,'population','NG','variable','NMDA_s','do_mean',true)
             
             
