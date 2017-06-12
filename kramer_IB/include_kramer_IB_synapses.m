@@ -193,7 +193,7 @@ if include_LTS && include_IB
     i=i+1;
     spec.connections(i).direction = 'LTS->IB';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_LTSib,'E_SYN',EGABA,'tauDx',tauGABAaLTSd,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_LTSib,'E_SYN',EGABA,'tauDx',tauGABAaLTSd_IB,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 
@@ -202,7 +202,7 @@ if include_LTS && include_RS
     i=i+1;
     spec.connections(i).direction = 'LTS->RS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_LTSrs,'E_SYN',EGABA,'tauDx',tauGABAaLTSd,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_LTSrs,'E_SYN',EGABA,'tauDx',tauGABAaLTSd_RS,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 
@@ -212,7 +212,7 @@ if include_LTS && include_FS
     i=i+1;
     spec.connections(i).direction = 'LTS->FS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_LTSfs,'E_SYN',EGABA,'tauDx',tauGABAaLTSd,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_LTSfs,'E_SYN',EGABA,'tauDx',tauGABAaLTSd_FS,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 
