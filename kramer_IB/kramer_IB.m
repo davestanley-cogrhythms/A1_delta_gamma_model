@@ -385,7 +385,7 @@ if ~no_synapses
     gGABAa_LTSrs = 1.25/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
+    %gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -494,9 +494,9 @@ switch sim_mode
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
-            %'LTS->RS','g_SYN',[1:0.25:1.75]/Nlts;...
+            'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0:0.1:.5]/Nlts;...
-            'LTS','shuffle',[1:8]/Nlts;...
+            %'LTS','shuffle',[1:8]/Nlts;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -743,6 +743,7 @@ if plot_on
             
             dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
             dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
+            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS','do_overlay_shift',true,'overlay_shift_val',.4);
             
             
             ind = 1:4;
@@ -751,6 +752,7 @@ if plot_on
             dsPlot_with_AP_line(data(ind),'variable','RS_V')
             dsPlot_with_AP_line(data(ind),'variable','LTS_V')
             
+            %%
             ind = 5:8;
             dsPlot_with_AP_line(data(ind))
             dsPlot(data(ind),'plot_type','raster')
