@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -367,8 +367,8 @@ if ~no_synapses
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-%     gAMPA_ibrs = 0.05/Nib;
-    if ~NMDA_block; gNMDA_ibrs = 1/Nib; end
+    gAMPA_ibrs = 0.02/Nib;
+    if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
 %     gGABAb_ngrs = 0.08/Nng;
     
@@ -504,7 +504,8 @@ switch sim_mode
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
             %'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
-            'IB->RS','gNMDA',[2:5]/Nib;...
+            %'IB->RS','gNMDA',[2:5]/Nib;...
+            'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -602,7 +603,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 1000;    % ms, onset time
+        PPonset = 650;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 20;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -774,8 +775,8 @@ if plot_on
             
             
             %%
-            dsPlot2(data(4),'force_last','populations','plot_type','imagesc')
-            dsPlot2(data(4),'force_last','populations','plot_type','raster')
+            dsPlot2(data(2),'force_last','populations','plot_type','imagesc')
+            dsPlot2(data(2),'force_last','populations','plot_type','raster')
             dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)

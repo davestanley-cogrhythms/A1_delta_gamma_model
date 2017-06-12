@@ -7,7 +7,10 @@ function xp = calc_synaptic_totals(xp,pop_struct);
     ax_vals = xp.exportAxisVals;
     
     % Find any varied statements that vary synaptic conductance
-    ind = find(strcmpi_any(ax_names,'g_SYN') & ~strcmpi_any(ax_names,'PP_gSYN'));  % find axis names that are ending in g_SYN but not PP_gSYN
+    ind = find((strcmpi_any(ax_names,'g_SYN') | ...
+        strcmpi_any(ax_names,'gNMDA') | ...
+        strcmpi_any(ax_names,'gGABAB') )...
+         & ~strcmpi_any(ax_names,'PP_gSYN'));  % find axis names that are ending in g_SYN but not PP_gSYN
     
     % For each axis, find the presynaptic population name and multiply all
     % values by Npre
