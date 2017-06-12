@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
+tspan=[0 700];
 sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,7 +21,7 @@ sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -104,11 +104,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
-include_NG = 1;
+include_IB = 0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -480,9 +480,9 @@ switch sim_mode
         vary = { ...
             %'LTS','gM',[6,8]; ...
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
-            %'RS','stim2',-1*[1.5:.5:3]; ...
+            'RS','stim2',-1*[1.1:.1:1.5]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            'IB','PP_gSYN',[0.0:0.1:0.3]; ...
+            %'IB','PP_gSYN',[0.0:0.1:0.3]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -557,7 +557,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-% IB_PP_gSYN = 0.1;
+IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.05;
@@ -685,7 +685,7 @@ data = ds.mdd2ds(xp);
 if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end
 % if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'IB_TH_GABA'); end           % GABA B only
 if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end  % GABA A only
-if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'IB_TH_GABA'); end  % GABA A only
+if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
 if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_TH_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
@@ -768,7 +768,7 @@ if plot_on
             dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
             dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/IB_IBaIBdbiSYNseed_s|NG_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
             
-            dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
+            %dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
             %dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/IB_IBaIBdbiSYNseed_s|NG_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
             
             
