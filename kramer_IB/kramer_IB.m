@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -204,8 +204,8 @@ Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 Jfs=1;    % FS cells
-Jlts1=-1.2; % LTS cells
-Jlts2=-1.2; % LTS cells
+Jlts1=-1.8; % LTS cells
+Jlts2=-1.8; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -380,12 +380,12 @@ if ~no_synapses
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
+    gAMPA_rsLTS = 0.4/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-    gGABAa_LTSrs = 0.75/Nlts;                  % LTS -> RS
+    gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.0/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.3/Nlts;                % LTS -> FS
+    gGABAa_LTSfs = 0.2/Nlts;                % LTS -> FS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -426,7 +426,7 @@ tauNMDAd=100; % ms, NMDA decay time; Jung et al
 tauGABAar=.5;  % ms, GABAa rise time; Jung et al
 tauGABAad=8;   % ms, GABAa decay time; Jung et al
 tauGABAaLTSr = .5;  % ms, LTS rise time; Jung et al
-tauGABAaLTSd = 20;  % ms, LTS decay time; Jung et al
+tauGABAaLTSd = 40;  % ms, LTS decay time; Jung et al
 tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
 tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
 EAMPA=0;
