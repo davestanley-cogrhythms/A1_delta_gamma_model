@@ -104,10 +104,10 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 0;
-include_RS = 1;
-include_FS = 1;
-include_LTS =1;
+include_IB = 1;
+include_RS = 0;
+include_FS = 0;
+include_LTS =0;
 include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
