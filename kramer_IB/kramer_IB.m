@@ -108,7 +108,7 @@ include_IB = 1;
 include_RS = 0;
 include_FS = 0;
 include_LTS =0;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -197,10 +197,10 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=5;    % IB cells
+Jd1=0;    % IB cells
 Jd2=0;    %         
-Jng1=3;   % NG cells
-Jng2=1;   %
+Jng1=-2.5;   % NG cells
+Jng2=10;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 Jfs=1;    % FS cells
@@ -351,10 +351,10 @@ if ~no_synapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
 %     gAMPA_ibib=0.1/Nib;                          % IB -> IB
-    if ~NMDA_block; gNMDA_ibib=5/Nib; end        % IB -> IB NMDA
+    if ~NMDA_block; gNMDA_ibib=3/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.1/Nib;                          % IB -> NG
-    if ~NMDA_block; gNMDA_ibng=5/Nib; end        % IB -> NG NMDA
+    if ~NMDA_block; gNMDA_ibng=3/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
@@ -499,7 +499,7 @@ switch sim_mode
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
             %'LTS','shuffle',[1:8]/Nlts;...
-            'IB->IB','gNMDA',[1:4]/Nib;...
+            'IB->IB','gNMDA',[6:10]/Nib;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
