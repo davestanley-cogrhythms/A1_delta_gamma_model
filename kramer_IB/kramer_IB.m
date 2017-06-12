@@ -175,7 +175,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=5;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -369,8 +369,8 @@ if ~no_synapses
     % % Delta -> Gamma oscillator connections
 %     gAMPA_ibrs = 0.02/Nib;
 %     if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
-%     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.08/Nng;
+    gGABAa_ngrs = 0.05/Nng;
+    gGABAb_ngrs = 0.2/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
@@ -410,7 +410,7 @@ if ~no_synapses
     % % Gamma -> Delta connections
 %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
-    if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
+%     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
@@ -505,8 +505,8 @@ switch sim_mode
             %'IB->NG','gNMDA',[3:2:10]/Nib;...
             %'NG->IB','gGABAB',[.2:.2:.8]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
-            %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            'NG->RS','gGABAB',[.1:.1:.4]/Nng;...
+            'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
+            %'NG->RS','gGABAB',[.1:.1:.4]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -779,10 +779,11 @@ if plot_on
             dsPlot2(data,'force_last','populations','plot_type','imagesc')
             dsPlot2(data,'force_last','populations','plot_type','raster')
             dsPlot2(data,'plot_type','raster','population','RS')
+            dsPlot2(data,'plot_type','waveform','population','NG')
             %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','/NMDA_s|GABA_gTH/','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','IB','variable','/NMDA_s|THALL_GABA_gTH/','do_mean',true,'force_last','variable')
             
             
             % Play Hallelujah
