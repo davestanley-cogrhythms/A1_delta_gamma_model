@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 700];
+tspan=[0 1500];
 sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -199,7 +199,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 % #mystim
 Jd1=0;    % IB cells
 Jd2=0;    %         
-Jng1=-2.5;   % NG cells
+Jng1=1;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -215,8 +215,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=000;
-IB_onset2=000;
+IB_offset1=200;
+IB_onset2=200;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
@@ -501,7 +501,8 @@ switch sim_mode
             %'LTS','shuffle',[1:8]/Nlts;...
             %'IB->IB','gNMDA',[6:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
-            'IB->NG','gNMDA',[7:10]/Nib;...
+            %'IB->NG','gNMDA',[7:10]/Nib;...
+            'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -767,10 +768,11 @@ if plot_on
             
             
             %%
-            dsPlot2(data,'population','NG')
-            dsPlot2(data,'population','NG','variable','IBaIBdbiSYNseed_s','do_mean',true)
-            dsPlot2(data,'population','NG','variable','NMDA_s','do_mean',true)
+            dsPlot2(data,'force_last','populations','plot_type','imagesc')
+            dsPlot2(data,'population','NG','variable','IBaIBdbiSYNseed_s','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+            dsPlot2(data,'population','NG','variable','NMDA_s','do_mean',true)
+            
             
             % Play Hallelujah
             load handel.mat;
