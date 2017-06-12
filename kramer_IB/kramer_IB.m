@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 2500];
 sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -350,17 +350,17 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-    gAMPA_ibib=0.05/Nib;                          % IB -> IB
-    if ~NMDA_block; gNMDA_ibib=6/Nib; end        % IB -> IB NMDA
+    gAMPA_ibib=0.02/Nib;                          % IB -> IB
+    if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
-    gAMPA_ibng=0.05/Nib;                          % IB -> NG
-    if ~NMDA_block; gNMDA_ibng=6/Nib; end        % IB -> NG NMDA
+    gAMPA_ibng=0.02/Nib;                          % IB -> NG
+    if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.7/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.9/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
     gAMPA_ibLTS=0.02/Nib;
@@ -770,10 +770,9 @@ if plot_on
             
             %%
             dsPlot2(data,'force_last','populations','plot_type','imagesc')
-            dsPlot2(data,'population','NG','variable','IBaIBdbiSYNseed_s','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','GABA_gTH','do_mean',true)
-            dsPlot2(data,'population','NG','variable','NMDA_s','do_mean',true)
+            dsPlot2(data,'population','IB','variable','/NMDA_s|GABA_gTH/','do_mean',true,'force_last','variable')
             
             
             % Play Hallelujah
