@@ -200,7 +200,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 Jd1=0;    % IB cells
 Jd2=0;    %         
 Jng1=-2.5;   % NG cells
-Jng2=10;   %
+Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 Jfs=1;    % FS cells
@@ -351,10 +351,10 @@ if ~no_synapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
 %     gAMPA_ibib=0.1/Nib;                          % IB -> IB
-    if ~NMDA_block; gNMDA_ibib=3/Nib; end        % IB -> IB NMDA
+    if ~NMDA_block; gNMDA_ibib=6/Nib; end        % IB -> IB NMDA
     
-    gAMPA_ibng=0.1/Nib;                          % IB -> NG
-    if ~NMDA_block; gNMDA_ibng=3/Nib; end        % IB -> NG NMDA
+%     gAMPA_ibng=0.1/Nib;                          % IB -> NG
+    if ~NMDA_block; gNMDA_ibng=6/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
@@ -499,7 +499,9 @@ switch sim_mode
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
             %'LTS','shuffle',[1:8]/Nlts;...
-            'IB->IB','gNMDA',[6:10]/Nib;...
+            %'IB->IB','gNMDA',[6:10]/Nib;...
+            %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
+            'IB->NG','gNMDA',[7:10]/Nib;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -763,6 +765,12 @@ if plot_on
             dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS');
             dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','FS','do_overlay_shift',true,'overlay_shift_val',.4);
             
+            
+            %%
+            dsPlot2(data,'population','NG')
+            dsPlot2(data,'population','NG','variable','IBaIBdbiSYNseed_s','do_mean',true)
+            dsPlot2(data,'population','NG','variable','NMDA_s','do_mean',true)
+            dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
             
             % Play Hallelujah
             load handel.mat;
