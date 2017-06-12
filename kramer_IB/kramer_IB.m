@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 700];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -350,7 +350,7 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-    gAMPA_ibib=0.1/Nib;                          % IB -> IB
+%     gAMPA_ibib=0.1/Nib;                          % IB -> IB
     if ~NMDA_block; gNMDA_ibib=5/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.1/Nib;                          % IB -> NG
@@ -497,8 +497,9 @@ switch sim_mode
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
-            'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
+            %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
             %'LTS','shuffle',[1:8]/Nlts;...
+            'IB->IB','gNMDA',[1:4]/Nib;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
