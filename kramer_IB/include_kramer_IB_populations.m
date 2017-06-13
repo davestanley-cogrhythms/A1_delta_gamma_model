@@ -158,7 +158,7 @@ if include_deepFS
     i=i+1;
     spec.populations(i).name = 'deepFS';
     spec.populations(i).size = NdeepFS;
-    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) ';']};
     spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak'};
     spec.populations(i).parameters = {...
       'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'g_l',0.1,...
@@ -176,7 +176,7 @@ if include_deepRS
     i=i+1;
     spec.populations(i).name = 'deepRS';
     spec.populations(i).size = NdeepRS;
-    spec.populations(i).equations = {['V''=(I_const+current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
+    spec.populations(i).equations = {['V''=(I_const+current)/Cm; V(0)=' num2str(IC_V) ';']};
     %spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak','CaDynT','iCaT','iKCaT','itonicBen'};
     spec.populations(i).mechanism_list = {'iNaP','iKs','iKDRG','iNaG','gleak',...
         'CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','itonicBen'}; % 'iPeriodicSpikes',

@@ -15,7 +15,7 @@ mM' = (aM(V).*(1-mM)-bM(V).*mM);
 % Start close to steady state
 mM(0) = 0.01.*ones(Npop,1)
 
-% monitor functions % always record the synaptic current
+%  % always record the synaptic current
  
 @current += -IM(V,mM)
 

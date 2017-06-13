@@ -47,7 +47,7 @@ ISYN(X,s) = (PPgsyn.*s.*(X-E_SYN))
 s' = -s./tauDx + ((1-s)/tauRx).*(1+tanh(X_pseudo(k)/10));
 s(0) = IC*ones(Npop,1)+IC_noise.*rand(Npop,1)
 
-monitor functions % always record the synaptic current
+ % always record the synaptic current
  
 % Linkers
 @current += -ISYN(X,s)
