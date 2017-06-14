@@ -711,7 +711,7 @@ if include_IB && include_FS
     additional_constants = struct;
     mechanism_prefix = 'IB_FS_IBaIBdbiSYNseed';
     additional_constants.E_SYN = EGABA;
-    additional_constants.gsyn = gGABAa_ngib;
+    additional_constants.gsyn = gGABAa_fsib;
     additional_constants.mask = ones(Nfs,Nib);
     current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
     additional_fields = {'IB_V'};
