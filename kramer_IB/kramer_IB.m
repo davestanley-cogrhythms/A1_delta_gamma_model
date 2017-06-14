@@ -732,10 +732,8 @@ end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
-% if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'IB_TH_GABA'); end           % GABA B only
-if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THA_GABA'); end  % GABA A only
-%if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
-if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_THB_GABA'); end
+if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
+if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
 data2 = ds.calcAverages(data);
@@ -776,9 +774,9 @@ if plot_on
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
             dsPlot2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
             
-            if include_IB && include_NG && include_FS; dsPlot(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
-%             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-            elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
+            if include_IB && include_NG && include_FS; dsPlot(data,'plot_type','waveform','variable',{'IB_NG_GABA_gTH','IB_THALL_GABA_gTH','IB_FS_GABA_gTH'});
+%             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'IB_NG_GABA_gTH'});
+            elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'IB_FS_GABA_gTH'});
             elseif include_FS;
                 %dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
             end
