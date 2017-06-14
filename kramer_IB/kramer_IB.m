@@ -731,11 +731,11 @@ if include_FS
 end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end
+if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
 % if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'IB_TH_GABA'); end           % GABA B only
-if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end  % GABA A only
-if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
-if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_TH_GABA'); end
+if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THA_GABA'); end  % GABA A only
+%if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
+if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_THB_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
 data2 = ds.calcAverages(data);
@@ -822,14 +822,15 @@ if plot_on
             
             
             %%
-            dsPlot2(data(4),'force_last','populations','plot_type','imagesc')
-            dsPlot2(data(3),'force_last','populations','plot_type','raster')
-            %dsPlot2(data,'plot_type','raster','population','RS')
+            dsPlot2(data,'force_last','populations','plot_type','imagesc')
+            dsPlot2(data,'force_last','populations','plot_type','raster')
+            dsPlot2(data,'plot_type','raster','population','RS')
+            dsPlot2(data,'plot_type','waveform','population','NG')
             %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','/NMDA_s|GABA_gTH/','do_mean',true,'force_last','variable')
-            
+            dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+            dsPlot2(data,'population','IB','variable','/NMDA_s|THALL_GABA_gTH/','do_mean',true,'force_last','variable')
+
             
             % Play Hallelujah
             load handel.mat;
