@@ -683,6 +683,52 @@ xp = ds.ds2mdd(data,false,false);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
+% Re-add synaptic currents to data
+if include_IB && include_NG                     % NG GABA A / B
+    % GABA B
+    additional_constants = struct;
+    mechanism_prefix = 'IB_NG_iGABABAustin';
+    additional_constants.EGABAB = EGABA;
+    additional_constants.gGABAB = gGABAb_ngib;
+    additional_constants.netcon = ones(Nng,Nib);
+    current_string = 'gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(IB_V-EGABAB)';    % Taken from mechanism file, iGABABAustin.txt
+    additional_fields = {'IB_V'};
+    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'IGABAB');
+    
+    % GABA A
+    additional_constants = struct;
+    mechanism_prefix = 'IB_NG_IBaIBdbiSYNseed';
+    additional_constants.E_SYN = EGABA;
+    additional_constants.gsyn = gGABAa_ngib;
+    additional_constants.mask = ones(Nng,Nib);
+    current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+    additional_fields = {'IB_V'};
+    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+end
+
+if include_IB && include_FS
+    % GABA A
+    additional_constants = struct;
+    mechanism_prefix = 'IB_FS_IBaIBdbiSYNseed';
+    additional_constants.E_SYN = EGABA;
+    additional_constants.gsyn = gGABAa_ngib;
+    additional_constants.mask = ones(Nfs,Nib);
+    current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+    additional_fields = {'IB_V'};
+    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+end
+
+if include_FS
+    % GABA A
+    additional_constants = struct;
+    mechanism_prefix = 'FS_FS_IBaIBdbiSYNseed';
+    additional_constants.E_SYN = EGABA;
+    additional_constants.gsyn = gGABAa_fsfs;
+    additional_constants.mask = ones(Nfs,Nfs);
+    current_string = 'gsyn.*(s*mask).*(FS_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+    additional_fields = {'FS_V'};
+    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
 if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end
