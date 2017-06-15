@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 150];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -301,6 +301,10 @@ gAMPA_ibrs = 0;
 gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
+gGABAa_ngfs = 0;
+gGABAb_ngfs = 0;
+gGABAa_nglts = 0;
+gGABAb_nglts = 0;
 
 % % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0;
@@ -370,7 +374,11 @@ if ~no_synapses
     gAMPA_ibrs = 0.02/Nib;
     if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.08/Nng;
+%     gGABAb_ngrs = 0.6/Nng;
+%     gGABAa_ngfs = 0.05/Nng;
+%     gGABAb_ngfs = 0.6/Nng;
+%     gGABAa_nglts = 0.05/Nng;
+%     gGABAb_nglts = 0.6/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
@@ -480,7 +488,7 @@ switch sim_mode
         vary = { ...
             %'LTS','gM',[6,8]; ...
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
-            'RS','stim2',-1*[1.1:.1:1.5]; ...
+            'RS','stim2',-1*[1.6:.2:2.2]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
             %'IB','PP_gSYN',[0.0:0.1:0.3]; ...
             };
