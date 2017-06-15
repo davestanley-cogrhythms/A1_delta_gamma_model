@@ -59,6 +59,7 @@ r(0) = IC+IC_noise.*rand(1,Npre);
 g' = K3GABAB.*r - K4GABAB.*g;
 g(0) = IC+IC_noise.*rand(1,Npre);
 
+monitor IGABAB
 
 % Interface
 @current += -IGABAB(Vpost,g)

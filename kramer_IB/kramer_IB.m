@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -89,7 +89,7 @@ if isempty(plot_options); plot_functions = [];
 else; plot_functions = repmat({@dsPlot2},1,length(plot_options));
 end
 plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
-% plot_args = {};
+% plot_args = 
 
 
 Now = clock;
@@ -609,7 +609,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
@@ -684,50 +684,53 @@ xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
 % Re-add synaptic currents to data
-if include_IB && include_NG                     % NG GABA A / B
-    % GABA B
-    additional_constants = struct;
-    mechanism_prefix = 'IB_NG_iGABABAustin';
-    additional_constants.EGABAB = EGABA;
-    additional_constants.gGABAB = gGABAb_ngib;
-    additional_constants.netcon = ones(Nng,Nib);
-    current_string = 'gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(IB_V-EGABAB)';    % Taken from mechanism file, iGABABAustin.txt
-    additional_fields = {'IB_V'};
-    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'IGABAB');
-    
-    % GABA A
-    additional_constants = struct;
-    mechanism_prefix = 'IB_NG_IBaIBdbiSYNseed';
-    additional_constants.E_SYN = EGABA;
-    additional_constants.gsyn = gGABAa_ngib;
-    additional_constants.mask = ones(Nng,Nib);
-    current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
-    additional_fields = {'IB_V'};
-    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
-end
+recalc_synaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
+if recalc_synaptic_currents
+    if include_IB && include_NG                     % NG GABA A / B
+        % GABA B
+        additional_constants = struct;
+        mechanism_prefix = 'IB_NG_iGABABAustin';
+        additional_constants.EGABAB = EGABA;
+        additional_constants.gGABAB = gGABAb_ngib;
+        additional_constants.netcon = ones(Nng,Nib);
+        current_string = 'gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(IB_V-EGABAB)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'IB_V'};
+        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'IGABAB');
 
-if include_IB && include_FS
-    % GABA A
-    additional_constants = struct;
-    mechanism_prefix = 'IB_FS_IBaIBdbiSYNseed';
-    additional_constants.E_SYN = EGABA;
-    additional_constants.gsyn = gGABAa_fsib;
-    additional_constants.mask = ones(Nfs,Nib);
-    current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
-    additional_fields = {'IB_V'};
-    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
-end
+        % GABA A
+        additional_constants = struct;
+        mechanism_prefix = 'IB_NG_IBaIBdbiSYNseed';
+        additional_constants.E_SYN = EGABA;
+        additional_constants.gsyn = gGABAa_ngib;
+        additional_constants.mask = true(Nng,Nib);
+        current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'IB_V'};
+        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    end
 
-if include_FS
-    % GABA A
-    additional_constants = struct;
-    mechanism_prefix = 'FS_FS_IBaIBdbiSYNseed';
-    additional_constants.E_SYN = EGABA;
-    additional_constants.gsyn = gGABAa_fsfs;
-    additional_constants.mask = ones(Nfs,Nfs);
-    current_string = 'gsyn.*(s*mask).*(FS_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
-    additional_fields = {'FS_V'};
-    data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    if include_IB && include_FS
+        % GABA A
+        additional_constants = struct;
+        mechanism_prefix = 'IB_FS_IBaIBdbiSYNseed';
+        additional_constants.E_SYN = EGABA;
+        additional_constants.gsyn = gGABAa_fsib;
+        additional_constants.mask = ones(Nfs,Nib);
+        current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'IB_V'};
+        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    end
+
+    if include_FS
+        % GABA A
+        additional_constants = struct;
+        mechanism_prefix = 'FS_FS_IBaIBdbiSYNseed';
+        additional_constants.E_SYN = EGABA;
+        additional_constants.gsyn = gGABAa_fsfs;
+        additional_constants.mask = ones(Nfs,Nfs);
+        current_string = 'gsyn.*(s*mask).*(FS_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'FS_V'};
+        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    end
 end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
@@ -740,9 +743,9 @@ data2 = ds.calcAverages(data);
 
 toc(tv2);
 
-% Play Hallelujah
-load handel.mat;
-sound(y, 1*Fs);
+% % Play Hallelujah
+% load handel.mat;
+% sound(y, 1*Fs);
     
 
 %% ##5.0 Plotting
