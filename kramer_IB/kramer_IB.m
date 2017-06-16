@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -571,7 +571,7 @@ LTS_PP_gSYN = 0;
 IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
-NG_PP_gSYN = 0.1;
+NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
@@ -751,9 +751,9 @@ data2 = ds.calcAverages(data);
 
 toc(tv2);
 
-% % Play Hallelujah
-% load handel.mat;
-% sound(y, 1*Fs);
+% Play Hallelujah
+load handel.mat;
+sound(y, 1*Fs);
     
 
 %% ##5.0 Plotting

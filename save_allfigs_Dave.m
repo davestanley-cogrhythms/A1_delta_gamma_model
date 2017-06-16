@@ -15,10 +15,10 @@ function save_allfigs_Dave(handles_arr)
     
     do_commit = 1;
     supersize_me = 0;
-    handles_arr = [5:7];
+    handles_arr = [1:12];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '149c2_sweep_NG_PPStim';
+    currfigname = '149d_sweep_RSstim2';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -63,7 +63,7 @@ function save_allfigs_Dave(handles_arr)
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
-    
+    %%
     % Save spec file
     save(fullfile(basepath,sp,'spec.mat'),'spec','pop_struct');
     
@@ -87,16 +87,16 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Swept through NG PPStim to stabilize NG input during pulse train'];
+    mycomment = ['Swept through RS stim2 values. Figs 1-6 using NG PPStim 1.5; Figs 7-12 using 1.25'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
     
-%     % Play Hallelujah
-%     load handel.mat;
-%     sound(y, 1*Fs);8
+    % Play Hallelujah
+    load handel.mat;
+    sound(y, 1*Fs);8
     
     if do_commit
         %% Commit
@@ -112,10 +112,10 @@ function save_allfigs_Dave(handles_arr)
         cd(currd);
         
 %         %% Push
-%         cd ../model-dnsim-kramer_IB_Figs
-%         system('git push');
-%         cd(currd);
-%         system('git push');
+        cd ../model-dnsim-kramer_IB_Figs
+        system('git push');
+        cd(currd);
+        system('git push');
     end
     
     
