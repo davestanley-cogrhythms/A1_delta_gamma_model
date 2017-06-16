@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -374,7 +374,7 @@ if ~no_synapses
     gAMPA_ibrs = 0.02/Nib;
     if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.7/Nng;
+    gGABAb_ngrs = 0.8/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
@@ -496,7 +496,7 @@ switch sim_mode
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'LTS','stim',[.75:.25:1.5]; ...
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
-            'NG','PP_gSYN',[.0:0.05:.3]; ...
+            'NG','PP_gSYN',[.075:0.025:.15]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
@@ -514,7 +514,7 @@ switch sim_mode
             %'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
             %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            'NG->RS','gGABAB',[.3:.2:1.3]/Nng;...
+            %'NG->RS','gGABAB',[.3:.2:1.3]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -571,7 +571,7 @@ LTS_PP_gSYN = 0;
 IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
-% NG_PP_gSYN = 0.05;
+NG_PP_gSYN = 0.1;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
@@ -615,9 +615,9 @@ switch pulse_mode
         PPonset = 650;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
