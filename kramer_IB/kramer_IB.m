@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -105,9 +105,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
@@ -514,7 +514,7 @@ switch sim_mode
             %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
             %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            %'NG->RS','gGABAB',[0.6:0.2:1.2]/Nng;...
+            'NG->RS','gGABAB',[0.6:0.2:1.2]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -568,7 +568,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.1;
+IB_PP_gSYN = 0.2;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
 NG_PP_gSYN = 0.125;
