@@ -413,11 +413,17 @@ Rr = 6.8*10^-3 + Rd_delta;
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
-    case 1                                                                     % Everything default, single simulation
-        include_deepRS = 1;
+    case 1
+        vary = {'deepRS', 'I_app', -7:-.2:-11;...
+            'deepRS', 'Inoise', 0:.05:.25;...
+            'deepRS', 'PPstim', 0;...
+            'deepRS', 'FMPstim', 0;...
+            };
+    
+    case 2                                                                   % Everything default, single simulation.
         vary = {'deepRS', 'PPfreq', [.25 .5 1 1.5 2:23];...
             'deepRS', 'PPstim', 0:-.5:-2;... % -Cm_factor*(0:.05:.15);... % Cm_Ben*(-.025:-.025:-.1)/.25;...
-            'deepRS', 'I_app', -8:-.5:-10;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
+            'deepRS', 'I_app', -5.5:-.5:-7.5;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
             'deepRS', 'PPduty', .25;...
             'deepRS', 'kernel_type', 25;... % 7;... % 
             'deepRS', 'PPnorm', 0;... % 1;...
@@ -430,8 +436,7 @@ switch sim_mode
 
         % vary = [];
 
-    case 2
-
+    case 3
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
         % [include_deepRS, include_deepFS] = deal(1);
         include_deepRS = 1;
@@ -445,18 +450,6 @@ switch sim_mode
             % 'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
             % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
-
-    case 3
-        [include_IB, include_NG] = deal(1);
-        [include_deepRS, include_deepFS, include_RS, include_FS, include_LTS] = deal(0);
-
-        tspan = [0 6000];
-
-        % vary = {'IB', 'stim2', -6.3:.01:-6.2};
-
-        vary = {'IB', 'PPfreq', 1:15;...
-            'IB', 'PPstim', 0:-.5:-2;...
-            'IB', 'stim2', 0:-.5:-2}; % [1, 2, 4, 8, 16, 32]};
 
     case 4
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
@@ -480,6 +473,18 @@ switch sim_mode
             % 'deepRS', 'gKCa', 2.7*(.005:.002:.013)/.25
             % 'deepFS->deepRS', 'g_SYN', .2:.2:1,...
             };
+
+    case 5
+        [include_IB, include_NG] = deal(1);
+        [include_deepRS, include_deepFS, include_RS, include_FS, include_LTS] = deal(0);
+
+        tspan = [0 6000];
+
+        % vary = {'IB', 'stim2', -6.3:.01:-6.2};
+
+        vary = {'IB', 'PPfreq', 1:15;...
+            'IB', 'PPstim', 0:-.5:-2;...
+            'IB', 'stim2', 0:-.5:-2}; % [1, 2, 4, 8, 16, 32]};
         
 
     case 9  % Vary RS cells in RS-FS network
