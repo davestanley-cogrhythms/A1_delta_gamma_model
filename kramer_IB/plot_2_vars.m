@@ -3,7 +3,7 @@ function plot_2_vars(data, var1, var2, mode, start_index, subplot_dims, titles)
 if nargin < 4, mode = []; end
 if isempty(mode), mode = 'plotyy'; end
 
-if nargin < 5, mode = []; end
+if nargin < 5, start_index = []; end
 if isempty(start_index), start_index = 1; end
 
 if nargin < 6, subplot_dims = []; end
