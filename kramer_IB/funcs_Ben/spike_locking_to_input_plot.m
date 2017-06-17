@@ -117,7 +117,7 @@ else
     
     no_cols = 1; no_rows = 1;
     
-    no_varied = 0;
+    no_varied = -1;
     
     no_figures = 1;
     
@@ -322,7 +322,7 @@ end
 %     
 % end
 
-if no_varied > 0
+if no_varied >= 0
     
     if strcmp(vary_labels{1}, vary_labels{2})
         
