@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -105,9 +105,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_LTS =1;
+include_RS = 0;
+include_FS = 0;
+include_LTS =0;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
@@ -197,9 +197,9 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=0;    % IB cells
+Jd1=5;    % IB cells
 Jd2=0;    %         
-Jng1=1;   % NG cells
+Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -215,8 +215,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=000;
-IB_onset2=000;
+IB_offset1=50;
+IB_onset2=50;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
@@ -512,9 +512,10 @@ switch sim_mode
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
             %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
-            %'NG->NG','gGABAB',[.1:.05:.25]/Nng;...
+            'NG->NG','g_SYN',[.1:.1:.4]/Nng;...
+            %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
-            'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
+            %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
             %'NG->RS','gGABAB',[0.6:0.2:1.2]/Nng;...
             };
         
@@ -572,7 +573,7 @@ LTS_PP_gSYN = 0;
 IB_PP_gSYN = 0.2;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
-% NG_PP_gSYN = 0.125;
+NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
