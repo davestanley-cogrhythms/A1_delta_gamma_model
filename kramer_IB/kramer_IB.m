@@ -105,9 +105,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
@@ -507,14 +507,14 @@ switch sim_mode
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
-            'LTS','shuffle',[1:4];...
+            %'LTS','shuffle',[1:4];...
             %'IB->IB','gNMDA',[6:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
             %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
             %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            %'NG->RS','gGABAB',[.3:.2:1.3]/Nng;...
+            'NG->RS','gGABAB',[0.6:0.2:1.2]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -612,12 +612,12 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
+        PPonset = 650;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
