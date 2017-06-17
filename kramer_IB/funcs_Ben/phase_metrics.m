@@ -68,7 +68,7 @@ v_hat_smoothed = conv(v_hat, gauss_kernel, 'same');
 
 peak_freq = f(v_hat_smoothed == max(v_hat_smoothed));
 
-freqs = [NaN 4.5 peak_freq]'; no_cycles = [NaN 7 7]'; no_freqs = length(freqs);
+freqs = [NaN 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
 
 freq_labels = cell(no_freqs, 1);
 
