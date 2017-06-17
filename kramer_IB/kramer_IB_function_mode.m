@@ -35,9 +35,10 @@ if cluster_flag
 
 else
     
-    [data, ~, result] =dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+    data = dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,... % [data, ~, result]
         'random_seed',random_seed,'vary',vary,'verbose_flag',verbose_flag,'parallel_flag',parallel_flag,...
-        'compile_flag',compile_flag,'analysis_functions',{@phase_metrics},'analysis_options',{{'v_pop','deepRS','i_pop','deepRS'}});
+        'debug_flag',debug_flag); % ,...
+        % 'compile_flag',compile_flag,'analysis_functions',{@phase_metrics},'analysis_options',{{'v_pop','deepRS','i_pop','deepRS'}});
 
 end
 
