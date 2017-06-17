@@ -18,7 +18,7 @@ function save_allfigs_Dave(handles_arr)
     handles_arr = [1:5];
     if isempty(handles_arr); handles_arr = 1:4; end
     currfname = 'kr'; 
-    currfigname = '150c_fullnet_NGRS';
+    currfigname = '150d_IBNG_sweep_IBBPPStim';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -87,7 +87,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Quick run of full net sweep NGRS. First IB burst still bad.'];
+    mycomment = ['Tried increasing IB PPStim.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
@@ -96,7 +96,7 @@ function save_allfigs_Dave(handles_arr)
     
     % Play Hallelujah
     load handel.mat;
-    sound(y, 1*Fs);8
+    sound(y, 1*Fs);
     
     if do_commit
         %% Commit
