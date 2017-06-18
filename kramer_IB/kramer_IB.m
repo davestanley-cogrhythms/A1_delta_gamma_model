@@ -515,6 +515,7 @@ switch sim_mode
             %'NG->NG','g_SYN',[.1:.1:.4]/Nng;...
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
+            'RS','stim2',-1*[1.6:.2:2.2]; ...
             'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
             %'NG->RS','gGABAB',[0.6:0.2:1.2]/Nng;...
             };
@@ -614,7 +615,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 650;    % ms, onset time
+        PPonset = 450;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 50;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -839,6 +840,7 @@ if plot_on
             dsPlot2(data,'plot_type','waveform','population','NG')
             %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','RS','variable','/NMDA_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
             dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','do_mean',true,'force_last','variable')
 
@@ -863,6 +865,7 @@ if plot_on
                 dsPlot2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
 
                 h = dsPlot2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
+                h = dsPlot2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'supersize_me',true)
                 %dsPlot2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
