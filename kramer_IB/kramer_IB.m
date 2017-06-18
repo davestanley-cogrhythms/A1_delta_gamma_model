@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
+tspan=[0 1500];
 sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -105,9 +105,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
 include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
@@ -361,7 +361,7 @@ if ~no_synapses
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.4/Nng;                       % NG -> NG
-    gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
+    gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
     gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
@@ -513,9 +513,9 @@ switch sim_mode
             %'IB->NG','gNMDA',[7:10]/Nib;...
             %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
             %'NG->NG','g_SYN',[.1:.1:.4]/Nng;...
-            'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
+            %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
-            %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
+            'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
             %'NG->RS','gGABAB',[0.6:0.2:1.2]/Nng;...
             };
         
@@ -573,7 +573,7 @@ LTS_PP_gSYN = 0;
 IB_PP_gSYN = 0.2;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
-NG_PP_gSYN = 0.125;
+% NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
