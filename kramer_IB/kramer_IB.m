@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 7000];
 sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,7 +21,7 @@ sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 3;             % % % % Choise of periodic pulsing input
+pulse_mode = 4;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -538,9 +538,9 @@ switch sim_mode
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
-                 'RS','PPshift',[650,750,850,950]; ...
+                 %'RS','PPshift',[650,750,850,950]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
-                 %'RS','(PPfreq,PPwidth)',temp; ...
+                 'RS','(PPfreq,PPwidth)',temp; ...
             };
         
     case 11     % Vary just FS cells
@@ -763,7 +763,7 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-xp = ds.ds2mdd(data,true,false);           % Turned off merging by default
+xp = ds.ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
