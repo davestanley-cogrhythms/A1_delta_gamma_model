@@ -705,10 +705,7 @@ xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
 % Re-add synaptic currents to data
-recalc_srd_b1: []
-                                              RS_iAhuguenard_b2: []
-                                       RS_iPeriodicPulsesiSYN_s: [15001×80 single]
-                                                          model:ynaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
+recalc_synaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
 if recalc_synaptic_currents
     if include_IB && include_NG                     % NG GABA A / B
         % GABA B
