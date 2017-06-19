@@ -107,11 +107,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
 include_LTS =1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -700,7 +700,7 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-xp = ds.ds2mdd(data,false,false);           % Turned off merging by default
+xp = ds.ds2mdd(data,true,false);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
