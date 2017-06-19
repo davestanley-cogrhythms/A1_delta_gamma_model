@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -39,7 +39,7 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [0 1500];
+ind_range = [400 1500];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
@@ -510,7 +510,7 @@ switch sim_mode
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
             %'LTS->IB','g_SYN',[0.0:0.5:1.5]/Nlts;...
-            %'LTS','shuffle',[1:4];...
+            'LTS','shuffle',[1:4];...
             %'IB->IB','gNMDA',[7:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
