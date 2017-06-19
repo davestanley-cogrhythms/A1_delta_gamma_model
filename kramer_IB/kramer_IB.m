@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,7 +21,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 3;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -109,11 +109,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
 include_LTS =1;
-include_NG = 1;
+include_NG = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -533,7 +533,9 @@ switch sim_mode
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
-        vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40];
+        vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
+                 %'RS','PPfreq',[100,200,300,400]; ...
+                 'RS','PP_gSYN',[0.05:0.05:0.2]; ...
             };
         
     case 11     % Vary just FS cells
@@ -648,8 +650,34 @@ switch pulse_mode
         
     case 2                  % Median nerve stimulation
         % Disabled for now...
-    case 3                  % Auditory stimulation at 10Hz (possibly not used...)
-        % Disabled for now...
+    case 3                  % Amplitude --> Phase modulation
+        PPfreq = 2; % in Hz
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        PPshift = 250; % in ms
+        PPonset = 450;    % ms, onset time
+        PPoffset = tspan(end);   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        kernel_type = 1;
+        PPFacTau = 100;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 100;
+        deepRSPPstim = 0;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        %         deepRSPPstim = -7;
+            % Turn off IB stim; leave RS stim on
+        IB_PP_gSYN = 0;
+        IB_PP_gNMDA = 0;
+        
+        PP_width = 100;
+
 end
 
 if function_mode, return, end
