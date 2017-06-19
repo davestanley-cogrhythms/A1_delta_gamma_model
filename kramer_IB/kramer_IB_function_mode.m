@@ -29,7 +29,8 @@ if cluster_flag
     
     data=dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,'one_solve_file_flag',1,...
-        'save_data_flag',1,'qsub_mode',qsub_mode,'study_dir',name);
+        'analysis_functions',{@phase_metrics},...
+        'save_data_flag',1,'qsub_mode',qsub_mode,'study_dir',fullfile(savepath, name));
     
     return
 

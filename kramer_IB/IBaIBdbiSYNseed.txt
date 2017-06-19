@@ -4,14 +4,14 @@ tauDx = [100]
 tauRx = [.5]
 IC = [0.1]
 IC_noise = [0]
-g_SYN_hetero = [0.005]
+gSYNhetero = [0.005]
  
 fanout = inf
 UB = max(Npre,Npost)
 Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
 Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
 mask = (abs(Xpre-Xpost)<=fanout)
-gsyn=unifrnd(g_SYN-g_SYN_hetero,g_SYN+g_SYN_hetero,[Npost 1])'
+gsyn=unifrnd(g_SYN-gSYNhetero,g_SYN+gSYNhetero,[Npost 1])'
 
 ISYN(X,s) = (gsyn.*(s*mask).*(X-E_SYN))
  
