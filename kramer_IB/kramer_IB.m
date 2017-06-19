@@ -534,8 +534,8 @@ switch sim_mode
         
     case 10     % Vary PP stimulation frequency to all input cells
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
-                 %'RS','PPfreq',[100,200,300,400]; ...
-                 'RS','PP_gSYN',[0.1:0.05:0.25]; ...
+                 'RS','PPshift',[150,250,350,450]; ...
+                 %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
         
     case 11     % Vary just FS cells
@@ -655,7 +655,7 @@ switch pulse_mode
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 250; % in ms
         PPonset = 450;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
+        PPoffset = 1000;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
@@ -675,8 +675,9 @@ switch pulse_mode
             % Turn off IB stim; leave RS stim on
         IB_PP_gSYN = 0;
         IB_PP_gNMDA = 0;
+        RS_PP_gSYN = 0.1;
         
-        PP_width = 50;
+        PP_width = 100;
 
 end
 

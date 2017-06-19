@@ -63,7 +63,7 @@ function save_allfigs_Dave(handles_arr)
         %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
 %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
     end
-    
+    %%
     % Save spec file
     save(fullfile(basepath,sp,'spec.mat'),'spec','pop_struct');
     
