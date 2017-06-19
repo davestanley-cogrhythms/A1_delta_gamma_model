@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 7000];
+tspan=[0 1500];
 sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -533,9 +533,14 @@ switch sim_mode
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
+        stretchfactor = [1:.5:2.5];
+        freq_temp = [2,2,2,2];
+        width_temp = [100,100,100,100];
+        temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
-                 %'RS','PPshift',[150,250,350,450]; ...
-                 'RS','PP_gSYN',[0.05:0.025:0.125]; ...
+                 'RS','PPshift',[650,750,850,950]; ...
+                 %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
+                 %'RS','(PPfreq,PPwidth)',temp; ...
             };
         
     case 11     % Vary just FS cells
@@ -651,13 +656,12 @@ switch pulse_mode
     case 2                  % Median nerve stimulation
         % Disabled for now...
     case 3                  % Amplitude --> Phase modulation
-        PPfreq = 1.5; % in Hz
+        PPfreq = 2; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
-        PPshift = 250; % in ms
-        PPonset = 501;    % ms, onset time
+        PPshift = 750; % in ms
+        PPonset = 0;    % ms, onset time
         PPoffset = 999;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
@@ -675,10 +679,38 @@ switch pulse_mode
             % Turn off IB stim; leave RS stim on
         IB_PP_gSYN = 0;
         IB_PP_gNMDA = 0;
-        RS_PP_gSYN = 0.1;
+        RS_PP_gSYN = 0.15;
         
         PP_width = 100;
-
+        
+    case 4                  % Amplitude --> Phase modulation LONG
+        stretchfactor = 1;
+        PPfreq = 2/stretchfactor; % in Hz
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        PPshift = 500; % in ms
+        PPonset = 0;    % ms, onset time
+        PPoffset = tspan(end);   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        kernel_type = 1;
+        PPFacTau = 100;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 100;
+        deepRSPPstim = 0;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        %         deepRSPPstim = -7;
+            % Turn off IB stim; leave RS stim on
+        IB_PP_gSYN = 0;
+        IB_PP_gNMDA = 0;
+        RS_PP_gSYN = 0.15;
+        
+        PP_width = 100*stretchfactor;
 end
 
 if function_mode, return, end
