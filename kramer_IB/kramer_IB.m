@@ -538,7 +538,7 @@ switch sim_mode
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
-                 'RS','PPshift',[650,750,850,950]; ...
+                 'RS','PPshift',[650,800,950,1100]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
                  %'RS','(PPfreq,PPwidth)',temp; ...
             };
@@ -660,7 +660,7 @@ switch pulse_mode
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 750; % in ms
         PPonset = 0;    % ms, onset time
-        PPoffset = 999;   % ms, offset time
+        PPoffset = 1125;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
@@ -679,7 +679,7 @@ switch pulse_mode
             % Turn off IB stim; leave RS stim on
         IB_PP_gSYN = 0;
         IB_PP_gNMDA = 0;
-        RS_PP_gSYN = 0.25;
+        RS_PP_gSYN = 0.15;
         
         PP_width = 100;
         
