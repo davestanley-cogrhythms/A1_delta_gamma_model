@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -47,9 +47,10 @@ if save_figures
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,[400 600]);
 
     plot_options = {...
-                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...                    
                     };
+%                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 %                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 %                     {universal_options{:},'plot_type','waveform','crop_range',[100, 300]}, ...       
 %                     {universal_options{:},'plot_type','waveform','crop_range',[400 600]}, ...       
@@ -205,6 +206,10 @@ Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
+if include_NG
+    JRS1 = -1.9; % RS cells
+    JRS2 = -1.9; %
+end
 Jfs=1;    % FS cells
 Jlts1=-2.5; % LTS cells
 Jlts2=-2.5; % LTS cells
@@ -519,14 +524,14 @@ switch sim_mode
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'IB->RS','g_SYN',[0.06:0.02:0.12]/Nib;...
 %             'IB->RS','gNMDA',[6:2:12]/Nib;...
-            'RS','stim2',-1*[1.5:.2:2.1]; ...
+%             'RS','stim2',-1*[1.5:.2:2.1]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
             %'IB','PP_gSYN',[.15:.05:.3]; ...
             %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
-        vary = { '(RS,FS,LTS)','PPfreq',[25:5:35,45];
+        vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40];
             };
         
     case 11     % Vary just FS cells
@@ -623,9 +628,9 @@ switch pulse_mode
         PPonset = 450;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = round(tspan(end)/25)-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
@@ -700,7 +705,10 @@ xp = calc_synaptic_totals(xp,pop_struct);
 data = ds.mdd2ds(xp);
 
 % Re-add synaptic currents to data
-recalc_synaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
+recalc_srd_b1: []
+                                              RS_iAhuguenard_b2: []
+                                       RS_iPeriodicPulsesiSYN_s: [15001×80 single]
+                                                          model:ynaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
 if recalc_synaptic_currents
     if include_IB && include_NG                     % NG GABA A / B
         % GABA B
