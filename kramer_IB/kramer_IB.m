@@ -526,7 +526,7 @@ switch sim_mode
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'IB->RS','g_SYN',[0.06:0.02:0.12]/Nib;...
 %             'IB->RS','gNMDA',[6:2:12]/Nib;...
-            'RS','stim2',-1*[1.5:.2:2.1]; ...
+            'RS','stim2',-1*[1.9:.2:2.5]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
             %'IB','PP_gSYN',[.15:.05:.3]; ...
             %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
@@ -624,7 +624,7 @@ switch pulse_mode
         deepRSPPstim = 0;
         IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
-        PPfreq = 25; % in Hz
+        PPfreq = 30; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 450;    % ms, onset time
@@ -632,7 +632,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
