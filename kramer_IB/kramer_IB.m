@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 7000];
 sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -534,8 +534,8 @@ switch sim_mode
         
     case 10     % Vary PP stimulation frequency to all input cells
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
-                 'RS','PPshift',[150,250,350,450]; ...
-                 %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
+                 %'RS','PPshift',[150,250,350,450]; ...
+                 'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
         
     case 11     % Vary just FS cells
@@ -651,7 +651,7 @@ switch pulse_mode
     case 2                  % Median nerve stimulation
         % Disabled for now...
     case 3                  % Amplitude --> Phase modulation
-        PPfreq = 2; % in Hz
+        PPfreq = 1.5; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 250; % in ms
         PPonset = 501;    % ms, onset time
