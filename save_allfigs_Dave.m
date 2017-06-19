@@ -77,7 +77,7 @@ function save_allfigs_Dave(handles_arr)
     
     % Copy raw plots if not empty
     if exist(fullfile(study_dir,'plots'),'dir')
-        % copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp));
+        copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
     end
     
     % Copy saved plots if not empty
