@@ -708,7 +708,7 @@ switch pulse_mode
             % Turn off IB stim; leave RS stim on
         IB_PP_gSYN = 0;
         IB_PP_gNMDA = 0;
-        RS_PP_gSYN = 0.15;
+        RS_PP_gSYN = 0.25;
         
         PP_width = 100*stretchfactor;
 end
