@@ -654,8 +654,8 @@ switch pulse_mode
         PPfreq = 2; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 250; % in ms
-        PPonset = 450;    % ms, onset time
-        PPoffset = 1000;   % ms, offset time
+        PPonset = 501;    % ms, onset time
+        PPoffset = 999;   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
