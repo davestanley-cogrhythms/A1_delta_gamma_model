@@ -624,7 +624,7 @@ switch pulse_mode
         deepRSPPstim = 0;
         IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
-        PPfreq = 30; % in Hz
+        PPfreq = 25; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 450;    % ms, onset time
