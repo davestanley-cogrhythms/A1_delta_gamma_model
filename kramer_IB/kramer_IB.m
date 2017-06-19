@@ -109,11 +109,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
 include_LTS =1;
-include_NG = 0;
+include_NG = 1;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -535,7 +535,7 @@ switch sim_mode
     case 10     % Vary PP stimulation frequency to all input cells
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
                  %'RS','PPfreq',[100,200,300,400]; ...
-                 'RS','PP_gSYN',[0.05:0.05:0.2]; ...
+                 'RS','PP_gSYN',[0.1:0.05:0.25]; ...
             };
         
     case 11     % Vary just FS cells
