@@ -535,7 +535,7 @@ switch sim_mode
     case 10     % Vary PP stimulation frequency to all input cells
         vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
                  %'RS','PPfreq',[100,200,300,400]; ...
-                 'RS','PP_gSYN',[0.025:0.025:0.1]; ...
+                 'RS','PP_gSYN',[0.1:0.05:0.25]; ...
             };
         
     case 11     % Vary just FS cells
@@ -676,7 +676,7 @@ switch pulse_mode
         IB_PP_gSYN = 0;
         IB_PP_gNMDA = 0;
         
-        PP_width = 100;
+        PP_width = 50;
 
 end
 
