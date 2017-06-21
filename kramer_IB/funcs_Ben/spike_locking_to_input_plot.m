@@ -61,15 +61,33 @@ varied = data(1).varied;
 
 no_varied = length(varied);
 
-[vary_labels, vary_vectors] = deal(cell(no_varied, 1));
+[vary_labels, vary_params] = deal(cell(no_varied, 1));
+
+vary_vectors = nan(length(data), no_varied);
 
 for variable = 1:no_varied
     
     vary_labels{variable} = varied{variable};
     
-    vary_vectors{variable} = unique([data.(varied{variable})]);
+    vary_vectors(:, variable) = [data.(varied{variable})];
     
-    vary_lengths(variable) = length(vary_vectors{variable});
+    vary_params{variable} = unique(vary_vectors(:, variable));
+    
+    vary_lengths(variable) = length(vary_params{variable});
+    
+end
+
+effective_vary_indices = ds.checkCovary(vary_lengths, vary_vectors);
+
+if prod(vary_lengths(effective_vary_indices)) == length(data)
+    
+    vary_labels = vary_labels(effective_vary_indices);
+    vary_params = vary_params(effective_vary_indices);
+    vary_lengths = vary_lengths(effective_vary_indices);
+    
+else
+    
+    warning('unable to determine which parameters are covaried. Data will be plotted as a lattice.')
     
 end
 
@@ -77,11 +95,11 @@ end
 
 vary_labels = vary_labels(vary_permute);
 
-vary_vectors = vary_vectors(vary_permute);
+vary_params = vary_params(vary_permute);
 
 vary_labels(vary_lengths <= 1) = ''; 
 
-vary_vectors(vary_lengths <= 1) = [];
+vary_params(vary_lengths <= 1) = [];
 
 vary_lengths(vary_lengths <= 1) = [];
 
@@ -99,9 +117,9 @@ if length(vary_lengths) > 1
         
         vary_labels(1:2) = vary_labels(1);
         
-        vary_vectors(3:(end + 1)) = vary_vectors(2:end);
+        vary_params(3:(end + 1)) = vary_params(2:end);
         
-        vary_vectors(1:2) = vary_vectors(1);
+        vary_params(1:2) = vary_params(1);
         
         vary_lengths(3:(end + 1)) = vary_lengths(2:end);
         
@@ -133,11 +151,11 @@ if no_figures > 1
     
     for f = 1:no_figures
         
-        figure_params(f, 1) = vary_vectors{3}(mod(f - 1, vary_lengths(3)) + 1);
+        figure_params(f, 1) = vary_params{3}(mod(f - 1, vary_lengths(3)) + 1);
         
         for v = 2:no_varied
             
-            figure_params(f, v) = vary_vectors{v + 2}(ceil(f/vary_lengths_cp(v - 1)));
+            figure_params(f, v) = vary_params{v + 2}(ceil(f/vary_lengths_cp(v - 1)));
             
         end
         
@@ -205,9 +223,9 @@ for f = 1:no_figures
                 
                 if s <= vary_lengths(1)
                     
-                    study_index = figure_index & ([data.(vary_labels{1})] == vary_vectors{1}(s));
+                    study_index = figure_index & ([data.(vary_labels{1})] == vary_params{1}(s));
                     
-                    study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(s), '%.3g')];
+                    study_label = [vary_labels{1}, ' = ', num2str(vary_params{1}(s), '%.3g')];
                     
                 else
                     
@@ -219,12 +237,12 @@ for f = 1:no_figures
                 
             else
                 
-                row_index = figure_index & ([data.(vary_labels{2})] == vary_vectors{2}(r));
+                row_index = figure_index & ([data.(vary_labels{2})] == vary_params{2}(r));
                 
-                study_index = row_index & ([data.(vary_labels{1})] == vary_vectors{1}(c));
+                study_index = row_index & ([data.(vary_labels{1})] == vary_params{1}(c));
                 
-                study_label = [vary_labels{1}, ' = ', num2str(vary_vectors{1}(c), '%.3g'),...
-                    ', ', vary_labels{2}, ' = ', num2str(vary_vectors{2}(r), '%.3g')];
+                study_label = [vary_labels{1}, ' = ', num2str(vary_params{1}(c), '%.3g'),...
+                    ', ', vary_labels{2}, ' = ', num2str(vary_params{2}(r), '%.3g')];
                 
             end
             
@@ -350,7 +368,7 @@ if no_varied >= 0
         
         subplot(3, 1, 1)
         
-        plot(vary_vectors{1}', abs(mrv_for_plot(:, :, f))')
+        plot(vary_params{1}', abs(mrv_for_plot(:, :, f))')
         
         axis tight
         
@@ -370,7 +388,7 @@ if no_varied >= 0
         
         adjusted_plv = ((abs(mrv_for_plot(:, :, f)).^2).*nspikes_for_plot(:, :, f) - 1)./(nspikes_for_plot(:, :, f) - 1);
         
-        plot(vary_vectors{1}, adjusted_plv') % (unique([data(:).(vary_labels{1})])', adjusted_plv')
+        plot(vary_params{1}, adjusted_plv') % (unique([data(:).(vary_labels{1})])', adjusted_plv')
         
         axis tight
         
@@ -386,7 +404,7 @@ if no_varied >= 0
         
         subplot(3, 1, 3)
         
-        plot(vary_vectors{1}, nspikes_for_plot(:, :, f)')
+        plot(vary_params{1}, nspikes_for_plot(:, :, f)')
         
         axis tight
         
