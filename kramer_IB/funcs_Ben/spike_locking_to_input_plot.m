@@ -131,6 +131,28 @@ if length(vary_lengths) > 1
     
     no_figures = prod(vary_lengths(3:end));
     
+elseif length(vary_lengths) == 1
+
+    if vary_lengths(1) <= 10
+        
+        no_cols = vary_lengths(1); no_rows = 1;
+        
+    else
+        
+        [no_rows, no_cols] = subplot_size(vary_lengths(1));
+        
+    end
+    
+    vary_labels(1:2) = vary_labels(1);
+    
+    vary_params(1:2) = vary_params(1);
+    
+    vary_lengths(1:2) = vary_lengths(1);
+    
+    no_varied = 0;
+    
+    no_figures = 1;
+    
 else
     
     no_cols = 1; no_rows = 1;
@@ -141,7 +163,7 @@ else
     
 end
 
-[peak_freqs, v_mean_spike_mrvs, no_spikes] = deal(nan(no_rows, no_cols, no_figures));
+[peak_freqs, v_mean_spike_mrvs, no_spikes, mean_spikes_per_cycle] = deal(nan(no_rows, no_cols, no_figures));
 
 if no_figures > 1
     
@@ -260,6 +282,8 @@ for f = 1:no_figures
                 
                 no_spikes(r, c, f) = size(results(study_index).v_spike_phases, 1);
                 
+                mean_spikes_per_cycle(r, c, f) = nanmean(results(study_index).spikes_per_cycle{1});
+                
                 v_mean_spike_mrvs(r, c, f) = mean_spike_mrvs(1); % circ_r(results(s).v_spike_phases); %
                 
                 % f_index = mod(s - 1, no_input_freqs) + 1;
@@ -352,11 +376,17 @@ if no_varied >= 0
         
         nspikes_for_plot = nspikes_for_plot(1:vary_lengths(1), :);
         
+        spc_for_plot = reshape(permute(mean_spikes_per_cycle, [2 1 3:length(size(mean_spikes_per_cycle))]), no_rows*no_cols, no_figures);
+        
+        spc_for_plot = spc_for_plot(1:vary_lengths(1), :);
+        
     else
         
         mrv_for_plot = v_mean_spike_mrvs;
         
         nspikes_for_plot = no_spikes;
+        
+        spc_for_plot = mean_spikes_per_cycle;
         
     end
     
@@ -366,9 +396,9 @@ if no_varied >= 0
         
         figure
         
-        subplot(3, 1, 1)
+        subplot(4, 1, 1)
         
-        plot(vary_params{1}', abs(mrv_for_plot(:, :, f))')
+        plot(vary_params{1}, abs(mrv_for_plot(:, :, f)))
         
         axis tight
         
@@ -384,7 +414,7 @@ if no_varied >= 0
         
         legend(figure_labels)
         
-        subplot(3, 1, 2)
+        subplot(4, 1, 2)
         
         adjusted_plv = ((abs(mrv_for_plot(:, :, f)).^2).*nspikes_for_plot(:, :, f) - 1)./(nspikes_for_plot(:, :, f) - 1);
         
@@ -402,15 +432,29 @@ if no_varied >= 0
         
         ylabel('Spike PLV', 'FontSize', 14)
         
-        subplot(3, 1, 3)
+        subplot(4, 1, 3)
         
-        plot(vary_params{1}, nspikes_for_plot(:, :, f)')
+        plot(vary_params{1}, nspikes_for_plot(:, :, f))
         
         axis tight
         
         box off
         
         title(['Number of Spikes by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
+        
+        xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
+        
+        ylabel('Number of Spikes', 'FontSize', 14)
+        
+        subplot(4, 1, 4)
+        
+        plot(vary_params{1}, spc_for_plot(:, :, f))
+        
+        axis tight
+        
+        box off
+        
+        title(['Mean Number of Spikes/Cycle by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
         
         xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
         

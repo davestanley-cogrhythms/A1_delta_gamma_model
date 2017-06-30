@@ -50,7 +50,7 @@ v = data.(v_field);
 
 t = data.time;
 
-i = data.(i_field);
+i = detrend(data.(i_field), 'constant');
 
 sampling_freq = round(1000*length(t)/t(end));
 
@@ -178,9 +178,29 @@ for f = 1:no_freqs
 
 end
 
-% end
+%% Getting number of spikes per cycle.
 
-% %% Computing phase-phase relationships.
+spikes_per_cycle = cell(no_freqs, 1);
+
+for f = 1:no_freqs
+    
+    v_cycle_times = t(find(abs(diff(v_phase(:, f))) > pi));
+    
+    no_cycles = length(v_cycle_times) - 1;
+    
+    spikes_per_cycle{f} = nan(no_cycles, 1);
+    
+    for cycle = 1:no_cycles
+        
+        cycle_indicator = blocks_to_index(v_cycle_times(cycle + [0 1])', t);
+        
+        spikes_per_cycle{f}(cycle) = sum(logical(v_spikes & cycle_indicator));
+        
+    end
+    
+end
+
+%% Computing phase-phase relationships.
 %
 % no_bins = 18;
 %
@@ -224,4 +244,5 @@ end
 %
 % end
 
-results = struct('v_spike_phases', v_spike_phases, 'peak_freq', peak_freq); % , 'v_phase_coh', v_phase_coh, 'v_phase_angle', v_phase_angle, 'v_phase_phase', v_phase_phase);
+results = struct('v_spike_phases', v_spike_phases, 'peak_freq', peak_freq); 
+results.spikes_per_cycle = spikes_per_cycle; % , 'v_phase_coh', v_phase_coh, 'v_phase_angle', v_phase_angle, 'v_phase_phase', v_phase_phase);
