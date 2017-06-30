@@ -23,7 +23,7 @@ include_kramer_IB_populations;
 
 include_kramer_IB_synapses;
 
-save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct');
+save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct', 'vary');
 
 if cluster_flag
     
@@ -35,11 +35,15 @@ if cluster_flag
 
 else
     
+    tic;
+    
     data = dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,... % [data, ~, result]
         'random_seed',random_seed,'vary',vary,'verbose_flag',verbose_flag,'parallel_flag',parallel_flag,...
         'debug_flag',debug_flag); % ,...
         % 'compile_flag',compile_flag,'analysis_functions',{@phase_metrics},'analysis_options',{{'v_pop','deepRS','i_pop','deepRS'}});
 
+    toc;
+        
 end
 
 close('all')
