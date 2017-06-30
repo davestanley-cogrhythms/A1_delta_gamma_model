@@ -268,47 +268,51 @@ for f = 1:no_figures
                 
             end
             
-            if ~isempty(study_index) % study_index = logical(study_index);
+            if ~isempty(study_index)
                 
-                nonempty_plots(r, c, f) = 1;
-                
-                peak_freqs(r, c, f) = results(study_index).peak_freq;
-                
-                % no_spikes = size(results(study_index).v_spike_phases, 1);
-                
-                % v_spike_phases(vsp_index + (1:no_spikes), :, :) = results(s).v_spike_phases;
-                
-                mean_spike_mrvs = nanmean(exp(sqrt(-1)*results(study_index).v_spike_phases));
-                
-                no_spikes(r, c, f) = size(results(study_index).v_spike_phases, 1);
-                
-                mean_spikes_per_cycle(r, c, f) = nanmean(results(study_index).spikes_per_cycle{1});
-                
-                v_mean_spike_mrvs(r, c, f) = mean_spike_mrvs(1); % circ_r(results(s).v_spike_phases); %
-                
-                % f_index = mod(s - 1, no_input_freqs) + 1;
-                %
-                % o_index = ceil(s/no_input_freqs);
-                
-                % subplot_index = (r - 1)*no_cols + c; % no_other_conditions*(f_index - 1) + o_index;
-                
-                ax(r, c, f) = subplot(no_rows, no_cols, s); % no_input_freqs, no_other_conditions, (f_index - 1)*no_other_conditions + o_index)
-                
-                rose(gca, results(study_index).v_spike_phases(:, 1, 1)) % , 60)
-                
-                hold on
-                
-                title(study_label, 'interpreter', 'none')
-                
-                % if ~strcmp(vary_labels{1}, vary_labels{2})
-                %
-                %     ylabel([num2str(data(study_index).(vary_labels{2}), '%.3g'), ' ', vary_labels{2}])
-                %
-                % end
-                
-                % v_mean_spike_phases(s, :, :) = circ_mean(results(s).v_spike_phases);
-                
-                % vsp_index = vsp_index + no_spikes;
+                if sum(study_index == 1)
+                    
+                    nonempty_plots(r, c, f) = 1;
+                    
+                    peak_freqs(r, c, f) = results(study_index).peak_freq;
+                    
+                    % no_spikes = size(results(study_index).v_spike_phases, 1);
+                    
+                    % v_spike_phases(vsp_index + (1:no_spikes), :, :) = results(s).v_spike_phases;
+                    
+                    mean_spike_mrvs = nanmean(exp(sqrt(-1)*results(study_index).v_spike_phases));
+                    
+                    no_spikes(r, c, f) = size(results(study_index).v_spike_phases, 1);
+                    
+                    mean_spikes_per_cycle(r, c, f) = nanmean(results(study_index).spikes_per_cycle{1});
+                    
+                    v_mean_spike_mrvs(r, c, f) = mean_spike_mrvs(1); % circ_r(results(s).v_spike_phases); %
+                    
+                    % f_index = mod(s - 1, no_input_freqs) + 1;
+                    %
+                    % o_index = ceil(s/no_input_freqs);
+                    
+                    % subplot_index = (r - 1)*no_cols + c; % no_other_conditions*(f_index - 1) + o_index;
+                    
+                    ax(r, c, f) = subplot(no_rows, no_cols, s); % no_input_freqs, no_other_conditions, (f_index - 1)*no_other_conditions + o_index)
+                    
+                    rose(gca, results(study_index).v_spike_phases(:, 1, 1)) % , 60)
+                    
+                    hold on
+                    
+                    title(study_label, 'interpreter', 'none')
+                    
+                    % if ~strcmp(vary_labels{1}, vary_labels{2})
+                    %
+                    %     ylabel([num2str(data(study_index).(vary_labels{2}), '%.3g'), ' ', vary_labels{2}])
+                    %
+                    % end
+                    
+                    % v_mean_spike_phases(s, :, :) = circ_mean(results(s).v_spike_phases);
+                    
+                    % vsp_index = vsp_index + no_spikes;
+                    
+                end
                 
             end
             
