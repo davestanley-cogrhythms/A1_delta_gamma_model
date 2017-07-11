@@ -1,4 +1,13 @@
-function s3 = getPeriodicPulseFastBensVersion(freq,width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,norm_flag,plot_demo_on)
+function s4 = getPeriodicPulseFastBensVersion(freq,width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,center_flag,norm,plot_demo_on)
+
+switch norm
+    case 0
+        norm = 'total';
+    case 1
+        norm = 'pulse';
+    case 2
+        norm = 'max';
+end
 
 % plot_demo_on = 1;  % Plot if desired
 
@@ -51,16 +60,19 @@ elseif kernel_type > 0
         
         % Build kernel
         smooth_kernel = exp(-t3.^2/(width/kernel_type)^2);      % Build kernel. Peaks at 1.0.
-        kernel = conv(kernel, smooth_kernel, 'same');
-        
+        kernel = conv(kernel, smooth_kernel, 'same'); 
 else
         % For debugging; should not reach this!!
         error ('kernel_type should be either 1 (double exponential) or n (Gaussian^n).');
 end
 
-kernel = kernel./max(kernel);
-
 kernel = kernel(:);
+
+if strcmp(norm, 'max')
+    kernel = kernel./max(kernel);
+elseif strcmp(norm, 'pulse')
+    kernel = kernel./sum(kernel*dt);
+end
 
 Nnegatives = length(t2a)-1;
 Npositives = length(t2b)-1;
@@ -90,26 +102,37 @@ starting = round((N2-N)/2);
 s3=s2(1+starting:N+starting);       % Each edge we're dropping should be half the difference in the length of the two vectors.
 %s2=wkeep(s2,length(s),'c');        % wkeep doesn't work with compiled code
 
+if strcmp(norm, 'total')
+    s4 = sum(t>=onset & t<=offset)*dt*s3/sum(s3*dt);
+else
+    s4 = s3;
+end
+
+if center_flag
+    s4 = s4 - mean(s4);
+end
+
 if plot_demo_on                 % Plot if desired
 
     figure; 
-    subplot(311); plot(t,s);
+    subplot(411); plot(t, s);
     plot_t2=[1:length(s2)]*dt;
     plot_t3=plot_t2(1+starting:N+starting);
     axis tight
     legend('Delta train');
-    subplot(312); plot(t2,kernel);
+    subplot(412); plot(t2, kernel);
     axis tight
     legend('Kernel');
-    subplot(313); plot(plot_t2,s2);
-    hold on; plot(plot_t3,s3);
+    subplot(413); plot(plot_t2, s2);
+    hold on; plot(plot_t3, s3);
     axis tight
     legend('Original convolution','Keep only center');
+    subplot(414); plot(plot_t3, s4);
+    axis tight
+    legend('Normalized')
     
 end
 
-if norm_flag, s3 = s3 - mean(s3); end
-
-s3 = repmat(s3(:),[1,Npop]);
+s4 = repmat(s4(:),[1,Npop]);
     
 end
