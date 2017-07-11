@@ -1,6 +1,6 @@
 function results = spike_metrics(data, varargin)
 
-v_pop = 'pop1';
+v_field = 'deepRS_V';
 
 figure_flag = 0;
 
@@ -10,33 +10,29 @@ if ~isempty(varargin)
     
     for v = 1:(length(varargin)/2)
         
-        if strcmp(varargin{2*v - 1}, 'i_pop')
+        switch varargin{2*v - 1}
             
-            i_pop = varargin{2*v};
-        
-        elseif strcmp(varargin{2*v - 1}, 'v_pop')
-            
-            v_pop = varargin{2*v};
-            
-        elseif strcmp(varargin{2*v - 1}, 'figure_flag')
-            
-            figure_flag = varargin{2*v};
-            
-        elseif strcmp(varargin{2*v - 1}, 'no_periods')
-            
-            no_periods = varargin{2*v};
-            
+            case 'v_field'
+                
+                v_field = varargin{2*v};
+                
+            case 'figure_flag'
+                
+                figure_flag = varargin{2*v};
+                
+            case 'no_periods'
+                
+                no_periods = varargin{2*v};
+                
         end
         
     end
     
 end
 
-voltage = [v_pop, '_V'];
-
 t = data.time;
 
-v = data.(voltage);
+v = data.(v_field);
 
 v = v(t >= 1000); t = t(t >= 1000);
 
@@ -62,4 +58,4 @@ for p = 1:no_periods
    
 end
 
-results = struct('ISIs', ISIs, 'Freqs', Freqs);
+results = struct('ISIs', ISIs, 'Freqs', Freqs, 'no_spikes', no_spikes);
