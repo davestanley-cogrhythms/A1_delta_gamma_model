@@ -81,6 +81,28 @@ if include_NG && include_RS
         };
 end
 
+% % NG->FS Synaptic connections
+if include_NG && include_FS
+    i=i+1;
+    spec.connections(i).direction = 'NG->FS';                  
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_ngfs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAb_ngfs,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
+        'TmaxGABAB',TmaxGABAB ...
+        };
+end
+
+% % NG->LTS Synaptic connections
+if include_NG && include_FS
+    i=i+1;
+    spec.connections(i).direction = 'NG->LTS';                  
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_nglts,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'gGABAB',gGABAb_nglts,'EGABAB',EGABA,'tauGABABd',tauGABAbd,'tauGABABr',tauGABAbr,'gGABAB_hetero',gsyn_hetero, ...
+        'TmaxGABAB',TmaxGABAB ...
+        };
+end
+
 %% RS Cells
 % % % % %  RS Cells  % % % % %
 % % RS->RS recurrent synaptic and gap connections

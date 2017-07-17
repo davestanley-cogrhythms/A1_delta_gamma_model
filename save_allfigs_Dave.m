@@ -16,9 +16,9 @@ function save_allfigs_Dave(handles_arr)
     do_commit = 1;
     supersize_me = 0;
     handles_arr = [1:7];
-    if isempty(handles_arr); handles_arr = 1:4; end
+    if isempty(handles_arr); handles_arr = 1:2; end
     currfname = 'kr'; 
-    currfigname = '147e_add_gRSNG';
+    currfigname = '155d_GABA_B';
     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
@@ -77,7 +77,7 @@ function save_allfigs_Dave(handles_arr)
     
     % Copy raw plots if not empty
     if exist(fullfile(study_dir,'plots'),'dir')
-        % copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp));
+        copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
     end
     
     % Copy saved plots if not empty
@@ -87,7 +87,7 @@ function save_allfigs_Dave(handles_arr)
         end
     end
     %
-    mycomment = ['Added varying levels of feedback from RS to NG cells. Unstable.'];
+    mycomment = ['Decreasd RS RSPPStim slightly to 2.0'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
@@ -112,10 +112,10 @@ function save_allfigs_Dave(handles_arr)
         cd(currd);
         
 %         %% Push
-%         cd ../model-dnsim-kramer_IB_Figs
-%         system('git push');
-%         cd(currd);
-%         system('git push');
+        cd ../model-dnsim-kramer_IB_Figs
+        system('git push');
+        cd(currd);
+        system('git push');
     end
     
     

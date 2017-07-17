@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -39,7 +39,7 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [0 700];
+ind_range = [400 1500];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
@@ -47,12 +47,17 @@ if save_figures
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,[400 600]);
 
     plot_options = {...
-                    {universal_options{:},'plot_type','waveform','crop_range',[100, 300]}, ...       
-                    {universal_options{:},'plot_type','waveform','crop_range',[400 600]}, ...       
-                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...
-                    {universal_options{:},'plot_type','imagesc','crop_range',[400 600],'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
+                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...                    
                     };
-%                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
+%                 {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...
+%                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
+
+%                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','force_last','populations','do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
+%                     {universal_options{:},'plot_type','waveform','crop_range',[100, 300]}, ...       
+%                     {universal_options{:},'plot_type','waveform','crop_range',[400 600]}, ...       
+%                     {universal_options{:},'plot_type','imagesc','crop_range',[400 600],'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
+
 %                 {universal_options{:},'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP}, ...
 %                 {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','RS'}, ...
 %               {universal_options{:},'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false}, ...
@@ -89,7 +94,7 @@ if isempty(plot_options); plot_functions = [];
 else; plot_functions = repmat({@dsPlot2},1,length(plot_options));
 end
 plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
-% plot_args = {};
+% plot_args = 
 
 
 Now = clock;
@@ -179,7 +184,7 @@ N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
-Nfs=20;  % Number of FS cells
+Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -197,12 +202,16 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=0;    % IB cells
+Jd1=5;    % IB cells
 Jd2=0;    %         
-Jng1=1;   % NG cells
+Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
+if include_NG
+    JRS1 = -2.1; % RS cells
+    JRS2 = -2.1; %
+end
 Jfs=1;    % FS cells
 Jlts1=-2.5; % LTS cells
 Jlts2=-2.5; % LTS cells
@@ -215,8 +224,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=000;
-IB_onset2=000;
+IB_offset1=50;
+IB_onset2=50;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
@@ -301,6 +310,10 @@ gAMPA_ibrs = 0;
 gNMDA_ibrs = 0;
 gGABAa_ngrs = 0;
 gGABAb_ngrs = 0;
+gGABAa_ngfs = 0;
+gGABAb_ngfs = 0;
+gGABAa_nglts = 0;
+gGABAb_nglts = 0;
 
 % % Gamma oscillator (RS-FS-LTS circuit)
 gAMPA_rsrs=0;
@@ -356,21 +369,25 @@ if ~no_synapses
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
     
-    gGABAa_ngng=0.1/Nng;                       % NG -> NG
-    gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
+    gGABAa_ngng=0.4/Nng;                       % NG -> NG
+    gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.9/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
 %     gAMPA_ibLTS=0.02/Nib;
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.02/Nib;
-    if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
+    gAMPA_ibrs = 0.08/Nib;
+    if ~NMDA_block; gNMDA_ibrs = 8/Nib; end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.08/Nng;
+    gGABAb_ngrs = 0.8/Nng;
+%     gGABAa_ngfs = 0.05/Nng;
+%     gGABAb_ngfs = 0.6/Nng;
+%     gGABAa_nglts = 0.05/Nng;
+%     gGABAb_nglts = 0.6/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
@@ -410,7 +427,7 @@ if ~no_synapses
     % % Gamma -> Delta connections
 %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
-    if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
+%     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
@@ -480,15 +497,15 @@ switch sim_mode
         vary = { ...
             %'LTS','gM',[6,8]; ...
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
-            'RS','stim2',-1*[1.1:.1:1.5]; ...
+            %'RS','stim2',-1*[1.6:.2:2.2]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            %'IB','PP_gSYN',[0.0:0.1:0.3]; ...
+            'IB','PP_gSYN',[.1:.05:0.25]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'LTS','stim',[.75:.25:1.5]; ...
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
-            %'FS','PP_gSYN',[.0:0.05:.3]; ...
+            %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
             %'FS','PP_gSYN',[.1]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
@@ -499,18 +516,31 @@ switch sim_mode
             %'FS->LTS','g_SYN',[.3:.2:1.5]/Nfs;...
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
-            %'LTS','shuffle',[1:2];...
-            %'IB->IB','gNMDA',[6:10]/Nib;...
+            %'LTS->IB','g_SYN',[0.0:0.5:1.5]/Nlts;...
+            %'LTS','shuffle',[1:4];...
+            %'IB->IB','gNMDA',[7:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
-            %'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
-            %'IB->RS','gNMDA',[2:5]/Nib;...
-            %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            'NG->RS','gGABAB',[.3:.1:.6]/Nng;...
+            %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
+            %'NG->NG','g_SYN',[.1:.1:.4]/Nng;...
+            %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
+%             'IB->RS','g_SYN',[0.06:0.02:0.12]/Nib;...
+%             'IB->RS','gNMDA',[6:2:12]/Nib;...
+            'RS','stim2',-1*[1.9:.2:2.5]; ...
+            %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
+            %'IB','PP_gSYN',[.15:.05:.3]; ...
+            %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
-        vary = { '(RS,FS,LTS)','PPfreq',[25:5:35,45];
+        stretchfactor = [1:.5:2.5];
+        freq_temp = [2,2,2,2];
+        width_temp = [100,100,100,100];
+        temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
+        vary = { %'(RS,FS,LTS,IB,NG)','PPfreq',[10,20,30,40]; ...
+                 %'RS','PPshift',[650,750,850,950]; ...
+                 %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
+                 'RS','(PPfreq,PPwidth)',temp; ...
             };
         
     case 11     % Vary just FS cells
@@ -560,10 +590,10 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.1;
+IB_PP_gSYN = 0.25;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
-% NG_PP_gSYN = 0.05;
+% NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 do_FS_reset_pulse = 0;
@@ -604,11 +634,11 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 650;    % ms, onset time
+        PPonset = 450;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 11;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 %         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
@@ -625,8 +655,62 @@ switch pulse_mode
         
     case 2                  % Median nerve stimulation
         % Disabled for now...
-    case 3                  % Auditory stimulation at 10Hz (possibly not used...)
-        % Disabled for now...
+    case 3                  % Amplitude --> Phase modulation
+        PPfreq = 2; % in Hz
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        PPshift = 750; % in ms
+        PPonset = 0;    % ms, onset time
+        PPoffset = 999;   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        kernel_type = 1;
+        PPFacTau = 100;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 100;
+        deepRSPPstim = 0;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        %         deepRSPPstim = -7;
+            % Turn off IB stim; leave RS stim on
+        IB_PP_gSYN = 0;
+        IB_PP_gNMDA = 0;
+        RS_PP_gSYN = 0.15;
+        
+        PP_width = 100;
+        
+    case 4                  % Amplitude --> Phase modulation LONG
+        stretchfactor = 1;
+        PPfreq = 2/stretchfactor; % in Hz
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        PPshift = 500; % in ms
+        PPonset = 0;    % ms, onset time
+        PPoffset = tspan(end);   % ms, offset time
+        %PPoffset=270;   % ms, offset time
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        kernel_type = 1;
+        PPFacTau = 100;
+        PPFacFactor = 1.0;
+        IBPPFacFactor = 1.0;
+        RSPPFacFactor = 1.0;
+        RSPPFacTau = 100;
+        deepRSPPstim = 0;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        %         deepRSPPstim = -7;
+            % Turn off IB stim; leave RS stim on
+        IB_PP_gSYN = 0;
+        IB_PP_gNMDA = 0;
+        RS_PP_gSYN = 0.20;
+        
+        PP_width = 100*stretchfactor;
 end
 
 if function_mode, return, end
@@ -679,20 +763,67 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-xp = ds.ds2mdd(data,false,false);           % Turned off merging by default
+xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
-data = ds.mdd2ds(xp);
+data = dsMdd2ds(xp);
 
+% Re-add synaptic currents to data
+recalc_synaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
+if recalc_synaptic_currents
+    if include_IB && include_NG                     % NG GABA A / B
+        % GABA B
+        additional_constants = struct;
+        mechanism_prefix = 'IB_NG_iGABABAustin';
+        additional_constants.EGABAB = EGABA;
+        additional_constants.gGABAB = gGABAb_ngib;
+        additional_constants.netcon = ones(Nng,Nib);
+        current_string = 'gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(IB_V-EGABAB)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'IB_V'};
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'IGABAB');
+
+        % GABA A
+        additional_constants = struct;
+        mechanism_prefix = 'IB_NG_IBaIBdbiSYNseed';
+        additional_constants.E_SYN = EGABA;
+        additional_constants.gsyn = gGABAa_ngib;
+        additional_constants.mask = true(Nng,Nib);
+        current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'IB_V'};
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    end
+
+    if include_IB && include_FS
+        % GABA A
+        additional_constants = struct;
+        mechanism_prefix = 'IB_FS_IBaIBdbiSYNseed';
+        additional_constants.E_SYN = EGABA;
+        additional_constants.gsyn = gGABAa_fsib;
+        additional_constants.mask = ones(Nfs,Nib);
+        current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'IB_V'};
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    end
+
+    if include_FS
+        % GABA A
+        additional_constants = struct;
+        mechanism_prefix = 'FS_FS_IBaIBdbiSYNseed';
+        additional_constants.E_SYN = EGABA;
+        additional_constants.gsyn = gGABAa_fsfs;
+        additional_constants.mask = ones(Nfs,Nfs);
+        current_string = 'gsyn.*(s*mask).*(FS_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
+        additional_fields = {'FS_V'};
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+    end
+end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end
-% if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'IB_TH_GABA'); end           % GABA B only
-if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end  % GABA A only
-if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
-if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_TH_GABA'); end
+if include_IB && include_NG && include_FS; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
+if include_IB && include_FS; data = dsThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
+if include_IB && include_NG; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
-data2 = ds.calcAverages(data);
+data2 = dsCalcAverages(data);
 
 toc(tv2);
 
@@ -705,10 +836,10 @@ sound(y, 1*Fs);
 
 % Load figures from save if necessary
 if save_figures
-    data_img = ds.importPlots(study_dir); xp_img_temp = ds.all2mdd(data_img);
+    data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
     xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
     if exist('data_old','var')
-        data_img = ds.mergeData(data_img,data_old);
+        data_img = dsMergeData(data_img,data_old);
     end
     save_path = fullfile('Figs_Dave',sp);
 end
@@ -730,9 +861,9 @@ if plot_on
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
             dsPlot2(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
             
-            if include_IB && include_NG && include_FS; dsPlot(data,'plot_type','waveform','variable',{'NG_GABA_gTH','IB_GABA_gTH','FS_GABA_gTH'});
-%             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'});
-            elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'});
+            if include_IB && include_NG && include_FS; dsPlot(data,'plot_type','waveform','variable',{'IB_NG_GABA_gTH','IB_THALL_GABA_gTH','IB_FS_GABA_gTH'});
+%             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'IB_NG_GABA_gTH'});
+            elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'IB_FS_GABA_gTH'});
             elseif include_FS;
                 %dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
             end
@@ -776,14 +907,16 @@ if plot_on
             
             
             %%
-            dsPlot2(data(4),'force_last','populations','plot_type','imagesc')
-            dsPlot2(data(3),'force_last','populations','plot_type','raster')
-            %dsPlot2(data,'plot_type','raster','population','RS')
+            dsPlot2(data,'force_last','populations','plot_type','imagesc')
+            dsPlot2(data,'force_last','populations','plot_type','raster')
+            dsPlot2(data,'plot_type','raster','population','RS')
+            dsPlot2(data,'plot_type','waveform','population','NG')
             %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','/NMDA_s|GABA_gTH/','do_mean',true,'force_last','variable')
-            
+            dsPlot2(data,'population','RS','variable','/NMDA_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+            dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','do_mean',true,'force_last','variable')
+
             
             % Play Hallelujah
             load handel.mat;
@@ -805,6 +938,7 @@ if plot_on
                 dsPlot2(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
 
                 h = dsPlot2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
+                h = dsPlot2(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'supersize_me',true)
                 %dsPlot2(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
@@ -891,12 +1025,12 @@ if plot_on
             
         case 14
             %% Case 14
-            data_var = ds.calcAverages(data);                  % Average all cells together
+            data_var = dsCalcAverages(data);                  % Average all cells together
             data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
             dsPlot_with_AP_line(data_var,'plot_type','waveform')
             dsPlot_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
-            data_var2 = ds.calcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
+            data_var2 = dsCalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
             figl;
             subplot(211);plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]); ylabel('LTS->RS synapse');
             subplot(212); plot_data_stdev(data_var2,'RS_V',[]); ylabel('RS Vm');

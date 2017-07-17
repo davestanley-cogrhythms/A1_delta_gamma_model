@@ -40,6 +40,6 @@ b1(0) = IC+IC_noise.*rand(Npop,1)
 a2(0) = IC+IC_noise.*rand(Npop,1)
 b2(0) = IC+IC_noise.*rand(Npop,1)
 
-monitor functions % always record the synaptic current
+ % always record the synaptic current
  
 @current += -IA(X,a1,b1,a2,b2)

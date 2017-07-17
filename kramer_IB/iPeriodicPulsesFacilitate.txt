@@ -38,7 +38,7 @@ facilitation_mask = (exp(-(((T-PPonset)>0).*(T-PPonset))/PPFacTau))*(1-PPFacFact
 % Apply facilitation mask to data
 s3 = s2 .* repmat(facilitation_mask(:),1,Npop);
 
-monitor functions % always record the current
+ % always record the current
 
 Iext(X)=PPstim*s3(k,:)
 @current += -Iext(X)
