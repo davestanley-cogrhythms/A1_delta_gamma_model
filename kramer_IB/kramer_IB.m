@@ -350,27 +350,27 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-    gAMPA_ibib=0.1/Nib;                          % IB -> IB
+    gAMPA_ibib=0.02/Nib;                          % IB -> IB
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
-    gAMPA_ibng=0.1/Nib;                          % IB -> NG
+    gAMPA_ibng=0.02/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
     
     gGABAa_ngng=0.1/Nng;                       % NG -> NG
     gGABAb_ngng=0.3/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.4/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.9/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
 %     gAMPA_ibLTS=0.02/Nib;
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-%     gAMPA_ibrs = 0.02/Nib;
-%     if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
-    gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.2/Nng;
+    gAMPA_ibrs = 0.02/Nib;
+    if ~NMDA_block; gNMDA_ibrs = 4/Nib; end
+%     gGABAa_ngrs = 0.05/Nng;
+    gGABAb_ngrs = 0.08/Nng;
     
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
@@ -409,8 +409,8 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
 %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
-%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
-%     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
+    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+    if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
 end
@@ -480,9 +480,9 @@ switch sim_mode
         vary = { ...
             %'LTS','gM',[6,8]; ...
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
-            %'RS','stim2',-1*[1.1:.1:1.5]; ...
+            'RS','stim2',-1*[1.1:.1:1.5]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            'IB','PP_gSYN',[0.1:0.1:0.4]; ...
+            %'IB','PP_gSYN',[0.0:0.1:0.3]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -500,13 +500,13 @@ switch sim_mode
             %'LTS->RS','g_SYN',[0.5:0.25:1.25]/Nlts;...
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
             %'LTS','shuffle',[1:2];...
-%             'IB->IB','gNMDA',[3:2:10]/Nib;...
+            %'IB->IB','gNMDA',[6:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
-            %'IB->NG','gNMDA',[3:2:10]/Nib;...
-            %'NG->IB','gGABAB',[.2:.2:.8]/Nng;...
+            %'IB->NG','gNMDA',[7:10]/Nib;...
+            %'NG->IB','gGABAB',[.6:.1:.9]/Nng;...
             %'IB->RS','gNMDA',[2:5]/Nib;...
-            'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
-            %'NG->RS','gGABAB',[.1:.1:.4]/Nng;...
+            %'RS->NG','g_SYN',[0.1:0.2:0.7]/Nrs;...
+            'NG->RS','gGABAB',[.3:.1:.6]/Nng;...
             };
         
     case 10     % Vary PP stimulation frequency to all input cells
@@ -560,7 +560,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.2;
+IB_PP_gSYN = 0.1;
 % IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.05;
@@ -604,7 +604,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 550;    % ms, onset time
+        PPonset = 650;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = 40;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -685,11 +685,11 @@ data = ds.mdd2ds(xp);
 
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
+if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end
 % if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95],'IB_TH_GABA'); end           % GABA B only
-if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THA_GABA'); end  % GABA A only
-%if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
-if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_THB_GABA'); end
+if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_TH_GABA'); end  % GABA A only
+if include_FS; data = ds.thevEquiv(data,{'FS_FS_IBaIBdbiSYNseed_ISYN'},'FS_V',[-95,-95,-95],'FS_TH_GABA'); end  % GABA A only
+if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_TH_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
 data2 = ds.calcAverages(data);
@@ -776,14 +776,13 @@ if plot_on
             
             
             %%
-            dsPlot2(data,'force_last','populations','plot_type','imagesc')
-            dsPlot2(data,'force_last','populations','plot_type','raster')
-            dsPlot2(data,'plot_type','raster','population','RS')
-            dsPlot2(data,'plot_type','waveform','population','NG')
+            dsPlot2(data(4),'force_last','populations','plot_type','imagesc')
+            dsPlot2(data(3),'force_last','populations','plot_type','raster')
+            %dsPlot2(data,'plot_type','raster','population','RS')
             %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','/NMDA_s|THALL_GABA_gTH/','do_mean',true,'force_last','variable')
+            %dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+            dsPlot2(data,'population','IB','variable','/NMDA_s|GABA_gTH/','do_mean',true,'force_last','variable')
             
             
             % Play Hallelujah
