@@ -763,9 +763,9 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-xp = ds.ds2mdd(data,true,true);           % Turned off merging by default
+xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
-data = ds.mdd2ds(xp);
+data = dsMdd2ds(xp);
 
 % Re-add synaptic currents to data
 recalc_synaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
@@ -779,7 +779,7 @@ if recalc_synaptic_currents
         additional_constants.netcon = ones(Nng,Nib);
         current_string = 'gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(IB_V-EGABAB)';    % Taken from mechanism file, iGABABAustin.txt
         additional_fields = {'IB_V'};
-        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'IGABAB');
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'IGABAB');
 
         % GABA A
         additional_constants = struct;
@@ -789,7 +789,7 @@ if recalc_synaptic_currents
         additional_constants.mask = true(Nng,Nib);
         current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
         additional_fields = {'IB_V'};
-        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
     end
 
     if include_IB && include_FS
@@ -801,7 +801,7 @@ if recalc_synaptic_currents
         additional_constants.mask = ones(Nfs,Nib);
         current_string = 'gsyn.*(s*mask).*(IB_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
         additional_fields = {'IB_V'};
-        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
     end
 
     if include_FS
@@ -813,17 +813,17 @@ if recalc_synaptic_currents
         additional_constants.mask = ones(Nfs,Nfs);
         current_string = 'gsyn.*(s*mask).*(FS_V-E_SYN)';    % Taken from mechanism file, iGABABAustin.txt
         additional_fields = {'FS_V'};
-        data = ds.calcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
+        data = dsCalcCurrentPosthoc(data,mechanism_prefix, current_string, additional_fields, additional_constants, 'ISYN');
     end
 end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_FS; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
-if include_IB && include_FS; data = ds.thevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
-if include_IB && include_NG; data = ds.thevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABA'); end
+if include_IB && include_NG && include_FS; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
+if include_IB && include_FS; data = dsThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
+if include_IB && include_NG; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
-data2 = ds.calcAverages(data);
+data2 = dsCalcAverages(data);
 
 toc(tv2);
 
@@ -836,10 +836,10 @@ sound(y, 1*Fs);
 
 % Load figures from save if necessary
 if save_figures
-    data_img = ds.importPlots(study_dir); xp_img_temp = ds.all2mdd(data_img);
+    data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
     xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
     if exist('data_old','var')
-        data_img = ds.mergeData(data_img,data_old);
+        data_img = dsMergeData(data_img,data_old);
     end
     save_path = fullfile('Figs_Dave',sp);
 end
@@ -1025,12 +1025,12 @@ if plot_on
             
         case 14
             %% Case 14
-            data_var = ds.calcAverages(data);                  % Average all cells together
+            data_var = dsCalcAverages(data);                  % Average all cells together
             data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
             dsPlot_with_AP_line(data_var,'plot_type','waveform')
             dsPlot_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
-            data_var2 = ds.calcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
+            data_var2 = dsCalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
             figl;
             subplot(211);plot_data_stdev(data_var2,'RS_LTS_IBaIBdbiSYNseed_s',[]); ylabel('LTS->RS synapse');
             subplot(212); plot_data_stdev(data_var2,'RS_V',[]); ylabel('RS Vm');
