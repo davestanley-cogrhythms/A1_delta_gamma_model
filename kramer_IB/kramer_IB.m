@@ -425,8 +425,8 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=0.1/Nfs;                        % FS -> IB
-%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+%     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
@@ -537,7 +537,7 @@ switch sim_mode
         freq_temp = [2,2,2,2];
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
-        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[250,350,450,550]; ...
+        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[150, 250,350,450,550, 650]; ...
                  %'RS','PPshift',[650,750,850,950]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
                  %'RS','(PPfreq,PPwidth)',temp; ...
