@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 2500];
-sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -425,8 +425,8 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-%     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
-    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+    gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
@@ -634,7 +634,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 450;    % ms, onset time
+        PPonset = 350;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
