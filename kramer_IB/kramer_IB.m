@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 2500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -21,12 +21,12 @@ sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -39,7 +39,7 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-ind_range = [100 2500];
+ind_range = [0 2500];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
@@ -47,9 +47,9 @@ if save_figures
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,[400 600]);
 
     plot_options = {...
-                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...                    
                     };
+%                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 %                 {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...
 %                     {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 
@@ -202,9 +202,9 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=5;    % IB cells
+Jd1=0;    % IB cells
 Jd2=0;    %         
-Jng1=-7;   % NG cells
+Jng1=1;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -537,7 +537,7 @@ switch sim_mode
         freq_temp = [2,2,2,2];
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
-        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[150, 250,350,450,550, 650]; ...
+        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[750, 850, 950, 1050]; ...
                  %'RS','PPshift',[650,750,850,950]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
                  %'RS','(PPfreq,PPwidth)',temp; ...
