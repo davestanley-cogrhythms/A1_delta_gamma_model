@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -426,7 +426,7 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
 %     gGABAa_fsib=1.3/Nfs;                        % FS -> IB
-    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
@@ -526,7 +526,7 @@ switch sim_mode
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'IB->RS','g_SYN',[0.06:0.02:0.12]/Nib;...
 %             'IB->RS','gNMDA',[6:2:12]/Nib;...
-            'RS','stim2',-1*[1.9:.2:2.5]; ...
+%             'RS','stim2',-1*[1.9:.2:2.5]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
             %'IB','PP_gSYN',[.15:.05:.3]; ...
             %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
@@ -554,9 +554,9 @@ switch sim_mode
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->RS','g_SYN',linspace(0.05,0.10,8)/Nib;...
-            %'FS->IB','g_SYN',[0.3:0.1:.5]/Nfs;...
-            'FS->IB','g_SYN',[.1:.1:.7]/Nfs;...
-            'RS->NG','gNMDA',[1:1:6]/Nib;...
+            'FS->IB','g_SYN',[0.3:0.2:1.5]/Nfs;...
+%             'FS->IB','g_SYN',[.1:.1:.7]/Nfs;...
+%             'RS->NG','gNMDA',[1:1:6]/Nib;...
             %'RS->NG','gNMDA',[0:1:5]/Nib*0.00001;...
             %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
             %'IB->RS','g_SYN',[0.01:0.003:0.03]/Nib;...
@@ -639,7 +639,7 @@ switch pulse_mode
         %PPoffset=270;   % ms, offset time
         ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-%         ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
@@ -915,7 +915,7 @@ if plot_on
             dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','RS','variable','/NMDA_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH|Mich/','do_mean',true,'force_last','variable')
 
             
             % Play Hallelujah
