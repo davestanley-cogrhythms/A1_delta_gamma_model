@@ -21,7 +21,7 @@ sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -425,8 +425,8 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=0.1/Nfs;                        % FS -> IB
-%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+%     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
@@ -537,7 +537,7 @@ switch sim_mode
         freq_temp = [2,2,2,2];
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
-        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[750, 850, 950, 1050]; ...
+        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[1350,1450,1550,1650]; ...
                  %'RS','PPshift',[650,750,850,950]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
                  %'RS','(PPfreq,PPwidth)',temp; ...
