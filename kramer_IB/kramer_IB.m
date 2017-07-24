@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
+tspan=[0 1500];
 sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,7 +21,7 @@ sim_mode = 10;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 3;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -202,9 +202,9 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=0;    % IB cells
+Jd1=5;    % IB cells
 Jd2=0;    %         
-Jng1=1;   % NG cells
+Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -425,8 +425,8 @@ if ~no_synapses
     gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-%     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
-    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+    gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
@@ -537,8 +537,8 @@ switch sim_mode
         freq_temp = [2,2,2,2];
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
-        vary = { '(RS,FS,LTS,IB,NG)','PPonset',[1350,1450,1550,1650]; ...
-                 %'RS','PPshift',[650,750,850,950]; ...
+        vary = { %'(RS,FS,LTS,IB,NG)','PPonset',[1350,1450,1550,1650]; ...
+                 'RS','PPshift',[650,750,850,950]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
                  %'RS','(PPfreq,PPwidth)',temp; ...
             };
@@ -916,6 +916,7 @@ if plot_on
             dsPlot2(data,'population','RS','variable','/NMDA_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
             dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
             dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH|Mich/','do_mean',true,'force_last','variable')
+            dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','do_mean',true,'force_last','variable')
 
             
             % Play Hallelujah
