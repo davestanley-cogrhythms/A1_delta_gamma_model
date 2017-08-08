@@ -80,7 +80,7 @@ for p = 1:no_band_pairs
         
         F_band(nesting_index) = F(nesting_index);
         
-        handles(index) = plot(-I, F_band, 'LineWidth', 2, 'Color', band_colors(no_bands + p, :));
+        handles(index) = plot(-I, F_band, 'LineWidth', 2.5, 'Color', band_colors(no_bands + p, :));
         
         mylegend{index} = sprintf('%s in %s', band_names{band_pairs(p, :)});
         
