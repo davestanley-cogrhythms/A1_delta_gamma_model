@@ -77,7 +77,7 @@ for variable = 1:no_varied
     
 end
 
-effective_vary_indices = ds.checkCovary(vary_lengths, vary_vectors);
+effective_vary_indices = dsCheckCovary(vary_lengths, vary_vectors);
 
 if prod(vary_lengths(effective_vary_indices)) == length(data)
     
@@ -452,13 +452,17 @@ if no_varied >= 0
         
         subplot(4, 1, 4)
         
-        plot(vary_params{1}, spc_for_plot(:, :, f))
+        plot(vary_params{1}, zeros(size(spc_for_plot, 1), 1), 'k:')
+        
+        hold on, plot(vary_params{1}, spc_for_plot(:, :, f) - 1)
         
         axis tight
         
         box off
         
-        title(['Mean Number of Spikes/Cycle by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
+        set(gca, 'YScale', 'log')
+        
+        title(['Mean Number of Spikes/Cycle - 1 by ', vary_labels{1}], 'FontSize', 16, 'interpreter', 'none')
         
         xlabel(vary_labels{1}, 'FontSize', 14, 'interpreter', 'none')
         
