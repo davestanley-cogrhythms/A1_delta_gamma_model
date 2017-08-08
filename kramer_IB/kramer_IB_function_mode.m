@@ -6,6 +6,9 @@ if isempty(sim_struct); sim_struct = struct; end
 Today = datestr(datenum(date),'yy-mm-dd');
 % mkdir(Today);
 
+start_dir = pwd;
+cd ('/projectnb/crc-nak/brpp/model-dnsim-kramer_IB/kramer_IB')
+
 savepath = fullfile('Figs_Ben', Today);
 mkdir(savepath);
 
@@ -23,7 +26,7 @@ include_kramer_IB_populations;
 
 include_kramer_IB_synapses;
 
-save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct', 'vary');
+save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct', 'vary', 'name');
 
 if cluster_flag
     
@@ -33,6 +36,8 @@ if cluster_flag
         'analysis_functions',analysis_functions,'analysis_options',analysis_options,...
         'overwrite_flag',1,'one_solve_file_flag',1,'qsub_mode',qsub_mode,...
         'save_data_flag',1,'study_dir',fullfile(savepath, name));
+    
+    cd (start_dir)
     
     return
 
@@ -61,5 +66,7 @@ for f = 1:length(figHandles)
     save_as_pdf(figHandles(f), fullfile(savepath, [name, '_', num2str(f)]))
     
 end
+
+cd (start_dir)
 
 end
