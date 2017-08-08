@@ -39,11 +39,11 @@ for s = 1:no_sims
         
         if mod(s, subplot_dims(2)) == 1
             
-            ax(1).YLabel.String = var1;
+            ylabel(var1) % ax(1).YLabel.String = var1;
             
         elseif mod(s, subplot_dims(2)) == 0
             
-            ax(2).YLabel.String = var2;
+            ylabel(var2) % ax(2).YLabel.String = var2;
             
         end
         
