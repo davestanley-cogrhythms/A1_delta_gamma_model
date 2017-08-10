@@ -923,7 +923,7 @@ if plot_on
             dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','xlims',[400 1500],'do_mean',true,'force_last','variable')
             dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',[400 1500],'do_mean',true)
             
-            dsPlot2(data,'plot_type','raster','xlims',[1100 1400],'plot_handle',@xp_PlotData_with_AP)
+            dsPlot2(data,'plot_type','raster','xlims',[1150 1325],'plot_handle',@xp_PlotData_with_AP)
             
             % Play Hallelujah
             load handel.mat;
