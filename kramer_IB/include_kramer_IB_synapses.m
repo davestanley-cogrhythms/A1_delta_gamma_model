@@ -150,6 +150,15 @@ if include_RS && include_NG
         };
 end
 
+% % RS->IB synaptic connection
+if include_RS && include_IB
+    i=i+1;
+    spec.connections(i).direction = 'RS->IB';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsib,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
 %% FS Cells
 % % % % %  FS Cells  % % % % %
 % % FS->FS Synaptic connections

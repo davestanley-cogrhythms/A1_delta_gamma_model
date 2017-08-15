@@ -426,9 +426,11 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+    gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
 %     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
+    
     
 end
 
