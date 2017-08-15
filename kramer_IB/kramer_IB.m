@@ -352,6 +352,7 @@ gAMPA_deepRSIB = 0;
 
 % % Gamma -> Delta connections
 gGABAa_fsib = 0;
+gAMPA_rsib= 0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
 gGABAa_LTSib = 0;
@@ -422,14 +423,13 @@ if ~no_synapses
     
     % deep -> Deep connections
     gAMPA_RSdeepRS = 0.15/NdeepRS;
-    gAMPA_RSIB = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-%     gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
+    gGABAa_LTSib = 1.3/Nfs;                     % LTS -> IB
     
     
 end
