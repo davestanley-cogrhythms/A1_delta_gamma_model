@@ -160,11 +160,11 @@ if include_RS && include_IB
 end
 
 
-% % RS->FS5 synaptic connection
-if include_RS && include_FS5
+% % RS->dFS5 synaptic connection
+if include_RS && include_dFS5
     ind = find(strcmp({spec.connections.direction},'RS->FS'));  % Find equivalent FS mechanism
     i=i+1;
-    spec.connections(i).direction = 'RS->FS5';                  
+    spec.connections(i).direction = 'RS->dFS5';                  
     
     % Import all other values from equivalent FS mechanism
     spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
@@ -189,7 +189,7 @@ end
 
 
 % % FS->IB Synaptic connections (do not include if have deep FS cells!)
-if include_FS && include_IB && ~include_FS5
+if include_FS && include_IB && ~include_dFS5
     i=i+1;
     spec.connections(i).direction = 'FS->IB';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
@@ -226,11 +226,11 @@ end
 
 
 %% L5 FS Cells
-% % FS5->FS5 Synaptic connections
-if include_FS5
+% % dFS5->dFS5 Synaptic connections
+if include_dFS5
     ind = find(strcmp({spec.connections.direction},'FS->FS'));  % Find equivalent FS mechanism
     i=i+1;
-    spec.connections(i).direction = 'FS5->FS5';                  
+    spec.connections(i).direction = 'dFS5->dFS5';                  
     
     % Import all other values from equivalent FS mechanism
     spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
@@ -242,10 +242,10 @@ if include_FS5
 end
 
 
-% % FS5->IB Synaptic connections
-if include_FS5 && include_IB
+% % dFS5->IB Synaptic connections
+if include_dFS5 && include_IB
     i=i+1;
-    spec.connections(i).direction = 'FS5->IB';                  
+    spec.connections(i).direction = 'dFS5->IB';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gGABAa_fsib,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };

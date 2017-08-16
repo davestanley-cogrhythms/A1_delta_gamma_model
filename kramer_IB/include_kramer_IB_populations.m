@@ -158,11 +158,11 @@ if include_RS
 end
 
 %% L5 FS cells
-if include_FS5
+if include_dFS5
     ind = find(strcmp({spec.populations.name},'FS'));
     i=i+1;
     % Inherit properties from default FS cells
-    spec.populations(i).name = 'FS5';           % RS cells layer 5
+    spec.populations(i).name = 'dFS5';           % RS cells layer 5
     spec.populations(i).size = spec.populations(ind).size;
     spec.populations(i).equations = spec.populations(ind).equations;
     spec.populations(i).mechanism_list = spec.populations(ind).mechanism_list;

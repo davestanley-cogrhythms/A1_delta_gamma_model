@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 1500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -114,7 +114,7 @@ include_RS = 1;
 include_FS = 1;
 include_LTS =1;
 include_NG = 1;
-include_FS5 = 1;
+include_dFS5 = 1;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -823,8 +823,10 @@ if recalc_synaptic_currents
 end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_FS; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95,-95],'IB_THALL_GABA2'); end
-if include_IB && include_FS; data = dsThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
+if include_IB && include_NG && include_FS && include_dFS5; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_dFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95,-95],'IB_THALL_GABA2'); end
+if include_IB && include_NG && include_FS && ~include_dFS5; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95,-95],'IB_THALL_GABA2'); end
+if include_IB && include_FS && include_dFS5; data = dsThevEquiv(data,{'IB_dFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
+if include_IB && include_FS && ~include_dFS5; data = dsThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABA'); end  % GABA A only
 if include_IB && include_NG; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABA'); end
 
 % % Calculate averages across cells (e.g. mean field)
