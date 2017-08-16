@@ -157,6 +157,30 @@ if include_RS
       end
 end
 
+%% L5 FS cells
+if include_FS5
+    ind = find(strcmp({spec.populations.name},'FS'));
+    i=i+1;
+    % Inherit properties from default FS cells
+    spec.populations(i).name = 'FS5';           % RS cells layer 5
+    spec.populations(i).size = spec.populations(ind).size;
+    spec.populations(i).equations = spec.populations(ind).equations;
+    spec.populations(i).mechanism_list = spec.populations(ind).mechanism_list;
+    
+    params_list1 = spec.populations(ind).parameters;
+    myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
+    params_list2 = dsOptions2Keyval(myoptions); 
+    
+    spec.populations(i).parameters = params_list2;
+    
+    % Rearrange cells so this one comes after IB cells.
+    ind = find(strcmp({spec.populations.name},'IB'));
+    spec.populations = [spec.populations(1:ind), spec.populations(i), spec.populations(ind+1:i-1)];
+    
+end
+
+
+
 
 %% Deep cells
 
