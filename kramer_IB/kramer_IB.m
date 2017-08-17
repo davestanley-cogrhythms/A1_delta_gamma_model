@@ -21,7 +21,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
