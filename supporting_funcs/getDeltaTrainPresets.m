@@ -76,7 +76,7 @@ end
 
 function s = delete_pulse (s,pulse_period,shift,dt,pulse_num)
         ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(pulse_num-1);    % Index of the aperiodic pulse in the time series.
-        s(ap_ind_orig) = 0;                 % Delete the original pulse
+        s(min(ap_ind_orig,end)) = 0;                 % Delete the original pulse        
 end
 
 function s = delay_pulsetrain(s,pulse_period,shift,dt,pulse_num,shift_amount)
@@ -85,7 +85,7 @@ function s = delay_pulsetrain(s,pulse_period,shift,dt,pulse_num,shift_amount)
     % Add zeros after original index
     %s = cat(1,s(1:ap_ind_orig+1),zeros(round(shift_amount/dt),1),s(ap_ind_orig+2:end-round(shift_amount/dt)));
     s(ap_ind_orig+1+round(shift_amount/dt):end) = s(ap_ind_orig+1:end-round(shift_amount/dt));
-    s(ap_ind_orig+1:ap_ind_orig+1+round(shift_amount/dt)-1) = 0;
+    s(ap_ind_orig+1:min(ap_ind_orig+1+round(shift_amount/dt)-1,end)) = 0;
         % Sets a total of round(shift_amount/dt) data points to zero.
         % This makes sense if you draw it out on paper. (E.g. assume
         % round(shift_amount/dt)-1 is 2).
