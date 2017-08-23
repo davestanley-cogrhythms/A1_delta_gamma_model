@@ -24,7 +24,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = [];
         do_commit = 1;
-        currfigname = '162a_vary_IBIB_AMPA2';
+        currfigname = '162b_vary_FSIB_GABAA';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -92,7 +92,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Redo previous. Varied IB->IB AMPA. Batch2=full sim. Batch3=drive IB only. Batch4=spontaneous '];
+    mycomment = ['Tried creating a sim with increased IBIB. Now varied FS->IB to compensate. Seems a high level of FS->IB is needed (0.2 instead of 0.1 that was used previously). Note that values in composite rastergrams are not scaled due to error (now fixed) in calc_synaptic_totals. '];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

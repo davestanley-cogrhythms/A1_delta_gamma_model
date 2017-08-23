@@ -372,6 +372,7 @@ if ~no_synapses
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
     gAMPA_ibib=0.02/Nib;                          % IB -> IB
     if high_IB_IB_connectivity
+        gAMPA_ibib = 0.1/Nib;
     end
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
@@ -434,6 +435,9 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+    if high_IB_IB_connectivity
+        gGABAa_fsib=0.2/Nfs;                        % FS -> IB
+    end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
@@ -562,12 +566,11 @@ switch sim_mode
             %'NG','PPstim',[-7:1:-1]; ...
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
-            'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
+            %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB->RS','g_SYN',linspace(0.05,0.10,8)/Nib;...
-            %'FS->IB','g_SYN',[0:0.025:0.125]/Nfs;...
+            'dFS5->IB','g_SYN',[0, 0.1:0.025:0.2]/Nfs;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
             %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
-%             'FS->IB','g_SYN',[.1:.1:.7]/Nfs;...
 %             'RS->NG','gNMDA',[1:1:6]/Nib;...
             %'RS->NG','gNMDA',[0:1:5]/Nib*0.00001;...
             %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
@@ -647,11 +650,11 @@ switch pulse_mode
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 550;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
+        PPoffset = tspan(end)-300;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = round(tspan(end)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = round((tspan(end)-300)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;

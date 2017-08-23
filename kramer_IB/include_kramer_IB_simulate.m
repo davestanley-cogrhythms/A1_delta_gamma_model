@@ -29,6 +29,7 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
+pop_struct.NdFS5 = Nfs;
 xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = dsMdd2ds(xp);

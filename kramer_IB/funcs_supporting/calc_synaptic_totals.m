@@ -25,7 +25,7 @@ function xp = calc_synaptic_totals(xp,pop_struct);
                 vals_curr = vals_curr * Npre;
             end
         else
-            fprintf('Note: Scaling value of g_SYN in vary statement by Npre failed \n');
+            fprintf('Note: Scaling value of g_SYN in vary statement by Npre=%d failed for population %s \n',Npre,ax_curr);
         end
         ax_vals{i} = vals_curr;
     end
@@ -38,5 +38,7 @@ end
 function out = strcmpi_any(cell_arry_of_strings,exp)
 
 out = ~cellfun(@isempty,regexpi(cell_arry_of_strings,exp));
+%out = ~cellfun(@isempty,regexpi(cell_arry_of_strings,['^' exp]));       % Has to match the beginning of the string
+
 
 end
