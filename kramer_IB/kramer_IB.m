@@ -12,8 +12,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 2500];
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Vary iPeriodicPulses in all cells
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -76,7 +76,7 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 0;
+plot_on = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -89,6 +89,7 @@ random_seed = 2;
 study_dir = ['study_' sp];
 % study_dir = [];
 % study_dir = ['study_dave'];
+save_path = fullfile('Figs_Dave',sp);                       % For saving figures
 
 if isempty(plot_options); plot_functions = [];
 else; plot_functions = repmat({@dsPlot2},1,length(plot_options));
@@ -521,7 +522,6 @@ switch sim_mode
             %'LTS->FS','g_SYN',[0.05:0.05:.2]/Nlts;...
             %'LTS->IB','g_SYN',[0.0:0.5:1.5]/Nlts;...
             %'LTS','shuffle',[1:4];...
-            %'IB->IB','gNMDA',[7:10]/Nib;...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
             %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
@@ -556,10 +556,11 @@ switch sim_mode
             %'NG','PPstim',[-7:1:-1]; ...
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
+            'IB->IB','g_SYN',[0.05,0.08,0.1:0.05:0.25]/Nib;...
             %'IB->RS','g_SYN',linspace(0.05,0.10,8)/Nib;...
             %'FS->IB','g_SYN',[0:0.025:0.125]/Nfs;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
-            'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
+            %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
 %             'FS->IB','g_SYN',[.1:.1:.7]/Nfs;...
 %             'RS->NG','gNMDA',[1:1:6]/Nib;...
             %'RS->NG','gNMDA',[0:1:5]/Nib*0.00001;...
@@ -740,7 +741,6 @@ if save_figures
     if exist('data_old','var')
         data_img = dsMergeData(data_img,data_old);
     end
-    save_path = fullfile('Figs_Dave',sp);
 end
 if plot_on
     % % Do different plots depending on which parallel sim we are running
@@ -780,53 +780,8 @@ if plot_on
             
         case {5,6}
             dsPlot(data,'plot_type','waveform','variable','IB_V');
-        case {8,9,10}
-            %%
-            
-            ind = 1:4;
-            dsPlot_with_AP_line(data(ind))
-            dsPlot(data(ind),'plot_type','raster')
-            dsPlot_with_AP_line(data(ind),'variable','RS_V')
-            dsPlot_with_AP_line(data(ind),'variable','LTS_V')
-            
-            %%
-            ind = 5:8;
-            dsPlot_with_AP_line(data(ind))
-            dsPlot(data(ind),'plot_type','raster')
-            dsPlot_with_AP_line(data(ind),'variable','RS_V')
-            dsPlot_with_AP_line(data(ind),'variable','LTS_V')
-            
-            %%
-            
-            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
-            dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/IB_IBaIBdbiSYNseed_s|NG_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
-            
-            %dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
-            %dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/IB_IBaIBdbiSYNseed_s|NG_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
-            
-            
-            %%
-            dsPlot2(data,'force_last','populations','plot_type','imagesc')
-            dsPlot2(data,'force_last','populations','plot_type','raster')
-            dsPlot2(data,'plot_type','raster','population','RS')
-            dsPlot2(data,'plot_type','waveform','population','NG')
-            %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','RS','variable','/NMDA_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
-            dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH|Mich/','do_mean',true,'force_last','variable')
-            
-            
-            
-            dsPlot2(data,'plot_type','raster','xlims',[400 1500]);
-            dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','xlims',[400 1500],'do_mean',true,'force_last','variable')
-            dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',[400 1500],'do_mean',true)
-            
-            dsPlot2(data,'plot_type','raster','xlims',[1150 1325],'plot_handle',@xp_PlotData_with_AP)
-            
-            % Play Hallelujah
-            load handel.mat;
-            sound(y, 1*Fs);
+        case {8,9,10,12}
+
             
             %%
             % #myfigs9
@@ -899,35 +854,6 @@ if plot_on
             
 %             save_as_pdf(gcf, 'kramer_IB')
             
-        case 12
-            %%
-            %dsPlot(data,'plot_type','rastergram','variable','RS_V');
-            %             if include_IB && include_NG && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'IB_GABA_gTH','NG_GABA_gTH','FS_GABA_gTH'},'visible',visible_flag);
-            %             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
-            %             elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA_gTH'},'visible',visible_flag); end
-            close all
-            dsPlot(data2,'plot_type','waveform','variable',{'NG_GABA_gTH'},'visible',visible_flag);
-            
-            %dsPlot(data2,'plot_type','waveform','variable','FS_FS_IBaIBdbiSYNseed_s');
-            
-            dsPlot(data,'variable','IB_V','plot_type','waveform','visible',visible_flag);
-            dsPlot(data2,'variable','IB_V','plot_type','waveform','visible',visible_flag);
-            %dsPlot(data,'variable','IB_V','plot_type','rastergram');
-            %dsPlot(data,'plot_type','rastergram');
-            
-            
-            %         dsPlot(data,'plot_type','rastergram','variable','RS_V');
-            %         dsPlot(data,'plot_type','rastergram','variable','FS_V');
-            %         PlotFR2(data,'variable','RS_V');
-            %         PlotFR2(data,'variable','FS_V');
-            %         PlotFR2(data,'variable','RS_V','plot_type','meanFR');
-            %         PlotFR2(data,'variable','FS_V','plot_type','meanFR');
-            
-            %             t = data(1).time; data3 = CropData(data, t > 1200 & t < 2300);
-            %             dsPlot(data3,'variable','IB_V','plot_type','waveform');
-            %             dsPlot(data3,'variable','IB_V','plot_type','power','ylim',[0 12]);
-            
-            
             
         case 14
             %% Case 14
@@ -963,6 +889,55 @@ if plot_on
                 figure; plott_matrix3D(data_cat);
             end
             
+    end
+else
+    if 0        % Other plotting code that is run manually
+        %%
+        
+        ind = 1:4;
+        dsPlot_with_AP_line(data(ind))
+        dsPlot(data(ind),'plot_type','raster')
+        dsPlot_with_AP_line(data(ind),'variable','RS_V')
+        dsPlot_with_AP_line(data(ind),'variable','LTS_V')
+        
+        %%
+        ind = 5:8;
+        dsPlot_with_AP_line(data(ind))
+        dsPlot(data(ind),'plot_type','raster')
+        dsPlot_with_AP_line(data(ind),'variable','RS_V')
+        dsPlot_with_AP_line(data(ind),'variable','LTS_V')
+        
+        %%
+        
+        dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
+        dsPlot2(data,'do_mean',true,'force_last','varied1','plot_type','waveform','Ndims_per_subplot',2,'variable','/IB_IBaIBdbiSYNseed_s|NG_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
+        
+        %dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
+        %dsPlot2(data,'do_mean',false,'force_last','varied1','plot_type','waveformErr','Ndims_per_subplot',2,'variable','/IB_IBaIBdbiSYNseed_s|NG_IBaIBdbiSYNseed_s/','population','RS','force_last','variable');
+        
+        
+        %%
+        dsPlot2(data,'force_last','populations','plot_type','imagesc')
+        dsPlot2(data,'force_last','populations','plot_type','raster')
+        dsPlot2(data,'plot_type','raster','population','RS')
+        dsPlot2(data,'plot_type','waveform','population','NG')
+        %dsPlot2(data,'population','IB','variable','/IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+        dsPlot2(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_s|FS_IBaIBdbiSYNseed_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+        dsPlot2(data,'population','RS','variable','/NMDA_s|LTS_IBaIBdbiSYNseed_s/','do_mean',true,'force_last','variable')
+        dsPlot2(data,'population','IB','variable','NG_iGABABAustin_g','do_mean',true)
+        dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH|Mich/','do_mean',true,'force_last','variable')
+        
+        
+        
+        dsPlot2(data,'plot_type','raster','xlims',[400 1500]);
+        dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','xlims',[400 1500],'do_mean',true,'force_last','variable')
+        dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',[400 1500],'do_mean',true)
+        
+        dsPlot2(data,'plot_type','raster','xlims',[1150 1325],'plot_handle',@xp_PlotData_with_AP)
+        
+        % Play Hallelujah
+        load handel.mat;
+        sound(y, 1*Fs);
     end
 end
 
