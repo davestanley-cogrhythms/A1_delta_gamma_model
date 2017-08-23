@@ -62,6 +62,25 @@ end
 data = datac{1};
 
 
+%% Figures 2b Test everything default block gIBRS AMPA
+
+% Setup
+clear s
+f = 0;
+
+% Simulation batch 1
+f = f + 1;
+s{f} = struct;
+s{f}.gAMPA_ibrs = 0;
+s{f}.repo_studyname = ['Batch2bp' num2str(f)];
+
+clear data;
+for f = 1:length(s)
+    datac{f} = kramer_IB_function_mode(s{f});
+end
+data = datac{1};
+
+
 %% Figures 3 Test without RS PPStim
 
 % Setup
@@ -79,6 +98,27 @@ for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f});
 end
 data = datac{1};
+
+
+%% Figures 3b Test without RS PPStim block gIBRS AMPA
+
+% Setup
+clear s
+f = 0;
+
+% Simulation batch 1
+f = f + 1;
+s{f} = struct;
+s{f}.RS_PP_gSYN = 0;     % Set RS PPStim to zero
+s{f}.gAMPA_ibrs = 0;
+s{f}.repo_studyname = ['Batch3p' num2str(f)];
+
+clear data;
+for f = 1:length(s)
+    datac{f} = kramer_IB_function_mode(s{f});
+end
+data = datac{1};
+
 
 
 %% Figures 4 Spontaneous 

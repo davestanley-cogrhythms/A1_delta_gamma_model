@@ -24,7 +24,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = [];
         do_commit = 1;
-        currfigname = '162b_vary_FSIB_GABAA';
+        currfigname = '162c_vary_IBRS_NMDA';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -92,7 +92,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Tried creating a sim with increased IBIB. Now varied FS->IB to compensate. Seems a high level of FS->IB is needed (0.2 instead of 0.1 that was used previously). Note that values in composite rastergrams are not scaled due to error (now fixed) in calc_synaptic_totals. '];
+    mycomment = ['Varied IB->RS NMDA to see if lower values would produce greater difference. Seems to work. Batch 2b and 3b are like batches 2 and 3, respectively, except IB->RS AMPA is blocked. Seems AMPA doesnt make much difference, so can disregard. IB->RS gNMDA of 5 seems like a good value!'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
