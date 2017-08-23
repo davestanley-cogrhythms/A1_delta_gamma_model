@@ -12,12 +12,12 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1800];
+sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
-                            % 10 - Vary iPeriodicPulses in all cells
-                            % 11 - Vary FS cells
+                            % 10 - Inverse PAC
+                            % 11 - Vary iPeriodicPulses in all cells
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
@@ -186,9 +186,9 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=20;   % Default number of cells
+N=2;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=80; % Number of RS cells
+Nrs=2; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -548,22 +548,26 @@ switch sim_mode
             %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
             };
         
-    case 10     % Vary PP stimulation frequency to all input cells
+    case 10     % Inverse phase amplitude coupling tests
         stretchfactor = [1:.5:2.5];
         freq_temp = [2,2,2,2];
         width_temp = [100,100,100,100];
         temp = [freq_temp ./ stretchfactor; width_temp .* stretchfactor];
         vary = { %'(RS,FS,LTS,IB,NG)','PPonset',[1350,1450,1550,1650]; ...
-                 'RS','PPshift',[1050,1150,1250,1350]; ...
+                 %'RS','PPshift',[1050,1150,1250,1350]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
-                 %'RS','(PPfreq,PPwidth)',temp; ...
+                 'RS','(PPfreq,PPwidth)',temp; ...
             };
         
-    case 11     % Vary just FS cells
-        vary = { %'FS','stim',linspace(-2,1,1); ...
-            'FS','PPstim',linspace(-6,0,8); ...
-            'FS->FS','g_SYN', linspace(0.2,1,4)/Nfs...
+    case 11     % Vary PP stimulation frequency to all input cells
+        vary = { %'(RS,FS,LTS,IB,NG)','PPshift',[1050,1150,1250,1350];...
+                'IB','PPshift',[1050,1150,1250];...
+                 %'RS','PPshift',[1050,1150,1250,1350]; ...
+                 %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
+        
+        ap_pulse_num = 0;
+        
     case 12     % Vary IB cells
         vary = { %'IB','PPstim',[-1:-1:-5]; ...
             %'NG','PPstim',[-7:1:-1]; ...
@@ -750,15 +754,33 @@ include_kramer_IB_simulate;
 %% ##5.0 Plotting
 
 % Load figures from save if necessary
-if save_figures
+if plot_on && save_figures
+    % mysaves
     data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
     xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
     if exist('data_old','var')
         data_img = dsMergeData(data_img,data_old);
     end
     save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
+    
+    p = gcp('nocreate');
+    if ~isempty(p)
+        parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+    else
+        for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+    end
+    
+    i=i+1;
+    dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','xlims',[400 1500],'do_mean',true,'force_last','variable', ...
+        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+
+    dsPlot2(data,'population','IB','variable','/NMDA_s|iMMich_mM/','xlims',[400 1500],'do_mean',true,'force_last','variable', ...
+        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+     dsPlot2(data,'population','IB','variable','/NMDA_s|iMMich_mM/','xlims',[400 1500],'do_mean',true,'force_last','variable');
 end
-if plot_on
+
+
+if plot_on && ~save_figures
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
         case {1,11}            
@@ -801,14 +823,7 @@ if plot_on
             
             %%
             % #myfigs9
-            if save_figures
-                p = gcp('nocreate');
-                if ~isempty(p)
-                    parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
-                else
-                    for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
-                end
-            else
+
                 inds = 1:length(data);
                 h = dsPlot2(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
 
@@ -820,7 +835,7 @@ if plot_on
 
                 plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
                 dsPlot2(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
-            end
+
             
             
             
@@ -906,9 +921,9 @@ if plot_on
             end
             
     end
-else
+end
     if 0        % Other plotting code that is run manually
-        %%
+        %% myfigs
         
         ind = 1:4;
         dsPlot_with_AP_line(data(ind))
@@ -955,11 +970,11 @@ else
         load handel.mat;
         sound(y, 1*Fs);
     end
-end
 
+    
 spec_all.spec = spec;
 spec_all.pop_struct = pop_struct;
-%% Save figures
+%% ##6.0 Move composite figures and individual figs to Figs repo.
 if save_figures_move_to_Figs_repo && save_figures
     save_allfigs_Dave(study_dir,spec_all,[],false,repo_studyname)
 end

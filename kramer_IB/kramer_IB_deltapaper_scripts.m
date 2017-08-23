@@ -11,6 +11,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.sim_mode = 1;
 s{f}.parallel_flag = 1;
 i=0;
 i=i+1; s{f}.vary{i} = {'(IB,RS,FS)','PP_gSYN',[0.25, 0.2, 0.2]};     % Rows are applied to populations
@@ -138,3 +139,5 @@ for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f});
 end
 data = datac{1};
+
+
