@@ -36,6 +36,9 @@ if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
 end
 
+% % % % % % Parameter modifier flags
+high_IB_IB_connectivity = true;
+
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
@@ -368,6 +371,8 @@ if ~no_synapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
     gAMPA_ibib=0.02/Nib;                          % IB -> IB
+    if high_IB_IB_connectivity
+    end
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
@@ -557,7 +562,7 @@ switch sim_mode
             %'NG','PPstim',[-7:1:-1]; ...
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
-            'IB->IB','g_SYN',[0.05:0.01:0.1]/Nib;...
+            'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB->RS','g_SYN',linspace(0.05,0.10,8)/Nib;...
             %'FS->IB','g_SYN',[0:0.025:0.125]/Nfs;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
