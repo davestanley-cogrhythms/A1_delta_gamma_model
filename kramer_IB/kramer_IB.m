@@ -39,6 +39,8 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
+save_figures_move_to_Figs_repo = true;
+repo_studyname = 'batch01';
 ind_range = [tspan(1) tspan(2)];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
@@ -89,7 +91,6 @@ random_seed = 2;
 study_dir = ['study_' sp];
 % study_dir = [];
 % study_dir = ['study_dave'];
-save_path = fullfile('Figs_Dave',sp);                       % For saving figures
 
 if isempty(plot_options); plot_functions = [];
 else; plot_functions = repmat({@dsPlot2},1,length(plot_options));
@@ -741,6 +742,7 @@ if save_figures
     if exist('data_old','var')
         data_img = dsMergeData(data_img,data_old);
     end
+    save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
 end
 if plot_on
     % % Do different plots depending on which parallel sim we are running
@@ -941,6 +943,10 @@ else
     end
 end
 
+%% Save figures
+if save_figures_move_to_Figs_repo && save_figures
+    save_allfigs_Dave(study_dir,[],false,repo_studyname)
+end
 
 toc(tv1)
 

@@ -53,9 +53,8 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
-s{f}.parallel_flag = 0;
 s{f}.RS_PP_gSYN = 0;     % Set RS PPStim to zero
-s{f}.save_path = ['Fig3p' num2str(f)];
+s{f}.repo_studyname = ['Batch3p' num2str(f)];
 
 clear data;
 for f = 1:length(s)
