@@ -557,7 +557,7 @@ switch sim_mode
             %'NG','PPstim',[-7:1:-1]; ...
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
-            'IB->IB','g_SYN',[0.05,0.08,0.1:0.05:0.25]/Nib;...
+            'IB->IB','g_SYN',[0.05:0.01:0.1]/Nib;...
             %'IB->RS','g_SYN',linspace(0.05,0.10,8)/Nib;...
             %'FS->IB','g_SYN',[0:0.025:0.125]/Nfs;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
@@ -720,7 +720,10 @@ switch pulse_mode
         PP_width = 100*stretchfactor;
 end
 
-if function_mode, return, end
+% if function_mode, return, end
+if function_mode
+    unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
+end
 
 %% % % % % % % % % % % % %  ##3.0 Build populations and synapses % % % % % % % % % % % % %
 % % % % % % % % % % ##3.1 Populations % % % % % % % % %
@@ -943,9 +946,11 @@ else
     end
 end
 
+spec_all.spec = spec;
+spec_all.pop_struct = pop_struct;
 %% Save figures
 if save_figures_move_to_Figs_repo && save_figures
-    save_allfigs_Dave(study_dir,[],false,repo_studyname)
+    save_allfigs_Dave(study_dir,spec_all,[],false,repo_studyname)
 end
 
 toc(tv1)

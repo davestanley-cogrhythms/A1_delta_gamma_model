@@ -1,6 +1,6 @@
 
 
-function save_allfigs_Dave(study_dir,handles_arr,do_commit,currfigname)
+function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     %% save_allfigs
     % % For loop for saving figs
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
@@ -9,9 +9,10 @@ function save_allfigs_Dave(study_dir,handles_arr,do_commit,currfigname)
     
     %% Control inputs
     if nargin < 1; error('study_dir must be specified'); end
-    if nargin < 2; handles_arr = []; end
-    if nargin < 3; do_commit = true; end
-    if nargin < 4; currfigname = 'unnamed'; end
+    if nargin < 2; spec_all = []; end
+    if nargin < 3; handles_arr = []; end
+    if nargin < 4; do_commit = true; end
+    if nargin < 5; currfigname = 'unnamed'; end
 
 
     %% Set up
@@ -21,9 +22,10 @@ function save_allfigs_Dave(study_dir,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = [1:4];
+        handles_arr = [];
         do_commit = 1;
-        currfigname = '161c_add_deepFS_noAP';
+        currfigname = '162a_vary_IBIB_AMPA';
+        if ~exist('study_dir','var'); study_dir = []; end
     end
     
     currfname = 'kr'; 
@@ -57,24 +59,30 @@ function save_allfigs_Dave(study_dir,handles_arr,do_commit,currfigname)
     end
     
     % Save spec file
-    save(fullfile(basepath,sp,'spec.mat'),'spec','pop_struct');
+    if exist('spec_all','var')
+        if ~isempty(spec_all)
+            save(fullfile(basepath,sp,'spec_all.mat'),'spec_all');
+        end
+    end
     
     % Save .m file
     zip(fullfile(basepath,sp,'kramer_IB.zip'),{'kramer_IB.m','include_kramer_IB_populations.m','include_kramer_IB_synapses.m'});
     
-    % Copy study info file
-    if exist(fullfile(study_dir,'studyinfo.mat'),'file')
-        copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
-    end
-    
-    % Copy raw plots if not empty
-    if exist(fullfile(study_dir,'plots'),'dir')
-        copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
-    end
-    
-    % Copy saved composite plots if not empty
-    if exist(fullfile(study_dir,'Figs_Composite'),'dir')
-        copyfile(fullfile(study_dir,'Figs_Composite'),fullfile(basepath,sp));
+    if ~isempty(study_dir)
+        % Copy study info file
+        if exist(fullfile(study_dir,'studyinfo.mat'),'file')
+            copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
+        end
+
+        % Copy raw plots if not empty
+        if exist(fullfile(study_dir,'plots'),'dir')
+            copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
+        end
+
+        % Copy saved composite plots if not empty
+        if exist(fullfile(study_dir,'Figs_Composite'),'dir')
+            copyfile(fullfile(study_dir,'Figs_Composite'),fullfile(basepath,sp));
+        end
     end
     
 %     % Copy saved plots if not empty

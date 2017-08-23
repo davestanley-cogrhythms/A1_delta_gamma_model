@@ -44,7 +44,25 @@ end
 data = datac{1};
 
 
-%% Figures 3 Test without 
+%% Figures 2 Test everything default
+
+% Setup
+clear s
+f = 0;
+
+% Simulation batch 1
+f = f + 1;
+s{f} = struct;
+s{f}.repo_studyname = ['Batch2p' num2str(f)];
+
+clear data;
+for f = 1:length(s)
+    datac{f} = kramer_IB_function_mode(s{f});
+end
+data = datac{1};
+
+
+%% Figures 3 Test without RS PPStim
 
 % Setup
 clear s
@@ -55,6 +73,25 @@ f = f + 1;
 s{f} = struct;
 s{f}.RS_PP_gSYN = 0;     % Set RS PPStim to zero
 s{f}.repo_studyname = ['Batch3p' num2str(f)];
+
+clear data;
+for f = 1:length(s)
+    datac{f} = kramer_IB_function_mode(s{f});
+end
+data = datac{1};
+
+
+%% Figures 4 Spontaneous 
+
+% Setup
+clear s
+f = 0;
+
+% Simulation batch 1
+f = f + 1;
+s{f} = struct;
+s{f}.pulse_mode = 0;     % Turn off pulsemode
+s{f}.repo_studyname = ['Batch4p' num2str(f)];
 
 clear data;
 for f = 1:length(s)

@@ -12,17 +12,17 @@ function_mode = 1;
 kramer_IB
 
 %unpack_sim_struct
-vars_pull(sim_struct);
+% vars_pull(sim_struct);
 
 % % % % % % % % % % % % %  ##3.0 Build populations and synapses % % % % % % % % % % % % %
 % % % % % % % % % % ##3.1 Populations % % % % % % % % %
-include_kramer_IB_populations;
+% include_kramer_IB_populations;
 
 % % % % % % % % % % ##3.2 Connections % % % % % % % % %
-include_kramer_IB_synapses;
+% include_kramer_IB_synapses;
 
 % % % % % % % % % % % % %  ##4.0 Run simulation & post process % % % % % % % % % % % % %
-include_kramer_IB_simulate;
+% include_kramer_IB_simulate;
 
 
 % dsPlot2(data,'plot_type','imagesc')
