@@ -23,8 +23,8 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = [];
-        do_commit = 1;
-        currfigname = '162g_redo_prev3';
+        do_commit = 0;
+        currfigname = '162h_vary_PPonset_only';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -92,7 +92,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Varying PPonset and PPoffset again.'];
+    mycomment = ['Doing long 40 Hz trains with varying PPonset. Testing resilience of transient delta response.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
