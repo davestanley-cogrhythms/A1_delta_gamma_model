@@ -24,7 +24,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = [];
         do_commit = 1;
-        currfigname = '162c_vary_IBRS_NMDA';
+        currfigname = '162d_default_case14_randseed';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -92,7 +92,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Varied IB->RS NMDA to see if lower values would produce greater difference. Seems to work. Batch 2b and 3b are like batches 2 and 3, respectively, except IB->RS AMPA is blocked. Seems AMPA doesnt make much difference, so can disregard. IB->RS gNMDA of 5 seems like a good value!'];
+    mycomment = ['Ran a bunch of default simulations with different random seeds.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

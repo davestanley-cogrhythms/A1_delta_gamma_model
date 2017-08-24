@@ -11,6 +11,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.sim_mode = 1;
 s{f}.parallel_flag = 1;
 i=0;
@@ -35,6 +36,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.parallel_flag = 1;
 s{f}.vary = {'(IB,RS,FS)','PPfreq',[10,30,50,70]};     % Rows are applied to populations
 
@@ -54,6 +56,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.repo_studyname = ['Batch2p' num2str(f)];
 
 clear data;
@@ -72,6 +75,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.gAMPA_ibrs = 0;
 s{f}.repo_studyname = ['Batch2bp' num2str(f)];
 
@@ -91,6 +95,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.RS_PP_gSYN = 0;     % Set RS PPStim to zero
 s{f}.repo_studyname = ['Batch3p' num2str(f)];
 
@@ -110,6 +115,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.RS_PP_gSYN = 0;     % Set RS PPStim to zero
 s{f}.gAMPA_ibrs = 0;
 s{f}.repo_studyname = ['Batch3bp' num2str(f)];
@@ -131,6 +137,7 @@ f = 0;
 % Simulation batch 1
 f = f + 1;
 s{f} = struct;
+s{f}.save_figures_move_to_Figs_repo = true;
 s{f}.pulse_mode = 0;     % Turn off pulsemode
 s{f}.repo_studyname = ['Batch4p' num2str(f)];
 

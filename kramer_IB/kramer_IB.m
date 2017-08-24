@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 2500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -42,7 +42,7 @@ high_IB_IB_connectivity = true;
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-save_figures_move_to_Figs_repo = true;
+save_figures_move_to_Figs_repo = false;
 repo_studyname = 'batch01';
 ind_range = [tspan(1) tspan(2)];
 if save_figures
