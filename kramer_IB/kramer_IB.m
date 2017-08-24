@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1800];
+tspan=[0 2500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -186,9 +186,9 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=2;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=2; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -560,8 +560,8 @@ switch sim_mode
             };
         
     case 11     % Vary PP stimulation frequency to all input cells
-        vary = { %'(RS,FS,LTS,IB,NG)','PPshift',[1050,1150,1250,1350];...
-                'IB','PPshift',[1050,1150,1250];...
+        vary = { '(RS,FS,LTS,IB,NG)','PPshift',[1050,1150,1250,1350];...
+                 %'IB','PPshift',[1050,1150,1250];...
                  %'RS','PPshift',[1050,1150,1250,1350]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
@@ -597,7 +597,7 @@ switch sim_mode
             };
         
     case 14         % Vary random parameter to force shuffling random seed
-        vary = {'RS','asdfasdfadf',1:8 };       % shuffle starting seed 8 times
+        vary = {'RS','asdfasdfadf',1:4 };       % shuffle starting seed 8 times
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
         
@@ -771,12 +771,17 @@ if plot_on && save_figures
     end
     
     i=i+1;
-    dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','xlims',[400 1500],'do_mean',true,'force_last','variable', ...
+    tic
+    dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
         'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+    toc
+    
+    i=i+1;
+    tic
+    dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
+        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+    toc
 
-    dsPlot2(data,'population','IB','variable','/NMDA_s|iMMich_mM/','xlims',[400 1500],'do_mean',true,'force_last','variable', ...
-        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
-     dsPlot2(data,'population','IB','variable','/NMDA_s|iMMich_mM/','xlims',[400 1500],'do_mean',true,'force_last','variable');
 end
 
 
@@ -962,7 +967,7 @@ end
         
         dsPlot2(data,'plot_type','raster','xlims',[400 1500]);
         dsPlot2(data,'population','IB','variable','/NMDA_s|NG_GABA_gTH/','xlims',[400 1500],'do_mean',true,'force_last','variable')
-        dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',[400 1500],'do_mean',true)
+        dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',[tspan(1) tspan(2)],'do_mean',true)
         
         dsPlot2(data,'plot_type','raster','xlims',[1150 1325],'plot_handle',@xp_PlotData_with_AP)
         
