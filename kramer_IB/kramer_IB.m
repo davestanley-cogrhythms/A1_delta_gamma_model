@@ -770,17 +770,24 @@ if plot_on && save_figures
         for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     end
    
-    %NMDA_s, NMDAgbar, AMPANMDA_gTH
+    %NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
     
     i=i+1;
     tic
-    dsPlot2(data,'population','IB','variable','/NMDAgbar|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
+    dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.35],'force_last','variable','LineWidth',2,...
         'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
     toc
     
     i=i+1;
     tic
     dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
+        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+    toc
+    
+    % Compare different IB->IB currents (NMDA, AMPA, total)
+    i=i+1;
+    tic
+    dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
         'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
     toc
 
