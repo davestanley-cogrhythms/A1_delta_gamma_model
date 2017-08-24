@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 2500];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -769,10 +769,12 @@ if plot_on && save_figures
     else
         for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     end
+   
+    %NMDA_s, NMDAgbar, AMPANMDA_gTH
     
     i=i+1;
     tic
-    dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
+    dsPlot2(data,'population','IB','variable','/NMDAgbar|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
         'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
     toc
     
