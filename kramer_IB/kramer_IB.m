@@ -91,7 +91,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-random_seed = 2;
+% random_seed = 2;
 study_dir = ['study_' sp];
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -562,7 +562,8 @@ switch sim_mode
         
     case 11     % Vary PP stimulation frequency to all input cells
                 %myonsets = [950,1050,1150,1250,1350,1450];
-                myonsets = [550,750,950,1150,1350,1550];
+                %myonsets = [550,750,950,1150,1350,1550];
+                myonsets = [750,850,950,1050,1150,1250];
                 myoffsets = myonsets + 100;
         vary = { %'(RS,FS,LTS,IB,NG)','PPshift',[950,1050,1150,1250,1350,1450];...
                  %'IB','PPshift',[1050,1150,1250];...
