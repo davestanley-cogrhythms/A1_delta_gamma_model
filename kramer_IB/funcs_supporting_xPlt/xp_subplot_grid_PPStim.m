@@ -74,11 +74,12 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     sz = size(xp);
     
     
-    % % % Arrange axes so that 
+    % % % Arrange axes so that the MDD object containing our ticks
+    % information (xpp) aligns with the object we're actually plotting.
     xp_temp = unifyAxes(xp,xpp);        % Add extra axes from xpp onto xp. This will define the final ordering that we want.
     xpp = unifyAxes(xpp,xp_temp);       % Add any axes xpp is missing
     xpp = alignAxes(xpp,xp_temp);       % Perform the alignment. This makes xpp ordering follow xp_temp.
-    
+    clear xp_temp
     
     if ndims(xp.data) <= 2
         N1 = sz(1);
@@ -103,17 +104,34 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
             for i = 1:N1
                 
                 for j = 1:N2
+                    
+                    % Plots the actual graph
                     c=c+1;
                     hxp.hcurr.set_gca(c);
                     hxp.hsub{i,j} = xp.data{i,j}();
+                    
+                    % % Now add the ticks. 
+                    % First, pull out the PPStim state variable data. This
+                    % will be generally zero where there are no pulses, and
+                    % 1 where there are pulses.
                     time= xpp.meta.datainfo(1).values;
-                    blocks = xpp.data{i,j,1,1,1}(:,1);
+                    blocks = xpp.data{i,j,1,1,1,1,1,1}(:,1);      % These are the ticks that correspond to our current subplot. Add a bunch of extra 1's just incase it's very high dimensional. This type of indexing bad form but is OK
+                    
+                    % Now we will set all values to NaN where we're below
+                    % threshold, and values above threshold to be at the
+                    % top of our plot. We use NaNs because they are ignored
+                    % when plotting. I call them blocks because the ticks
+                    % could in principle be longer than a few milliseconds
+                    % if we give them a  long decay time
                     thresh = 0.5;
                     ind = blocks < thresh;
                     blocks(ind) = NaN;
                     yl = ylim;
                     blocks(~ind) = yl(2);
                     
+                    % This clause just looks at the subplot on the grid directly above
+                    % the above the current one and sees if the ticks are
+                    % the same. If they are, it skips plotting. 
                     plot_ppstim = true;
                     if ~isempty(blocks_j{j})
                         if isequal(~isnan(blocks_j{j}),~isnan(blocks)) && suppress_PP_ticks_columns
@@ -121,10 +139,13 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                         end
                     end
                         
+                    % Finally, plot the ticks.
                     if plot_ppstim && show_PP_ticks
                         hold on; plot(time, blocks,'r','LineWidth',20);
                     end
                     
+                    % Stores the current ticks for comparison in the next
+                    % round. 
                     blocks_j{j} = blocks;
                     
                     if i == 1 && j == 1 && ~isempty(legend1b)
