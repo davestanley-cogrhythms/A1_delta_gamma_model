@@ -98,7 +98,7 @@ study_dir = ['study_' sp];
 % study_dir = ['study_dave'];
 
 if isempty(plot_options); plot_functions = [];
-else; plot_functions = repmat({@dsPlot2},1,length(plot_options));
+else; plot_functions = repmat({@dsPlot2_PPStim},1,length(plot_options));
 end
 plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
 % plot_args = 
@@ -774,9 +774,9 @@ if plot_on && save_figures
     
     p = gcp('nocreate');
     if ~isempty(p)
-        parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+        parfor i = 1:length(xp_img.data{1}); dsPlot2_PPStim(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     else
-        for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+        for i = 1:length(xp_img.data{1}); dsPlot2_PPStim(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     end
    
     %NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
@@ -784,13 +784,13 @@ if plot_on && save_figures
     
     if include_IB && include_NG && include_FS
         i=i+1;
-        dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.35],'force_last','variable','LineWidth',2,...
+        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.35],'force_last','variable','LineWidth',2,...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
     end
     
     if include_RS && include_LTS
         i=i+1;
-        dsPlot2(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
+        dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
     end
     
@@ -798,7 +798,7 @@ if plot_on && save_figures
     % Compare different IB->IB currents (NMDA, AMPA, total)
     if include_IB
 %         i=i+1;
-%         dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
+%         dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
 %             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
     end
 
