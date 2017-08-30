@@ -452,7 +452,7 @@ if no_varied >= 0
         
         subplot(4, 1, 4)
         
-        plot(vary_params{1}, zeros(size(spc_for_plot, 1), 1), 'k:')
+        plot(vary_params{1}, zeros(size(spc_for_plot)), 'k:')
         
         hold on, plot(vary_params{1}, spc_for_plot(:, :, f) - 1)
         

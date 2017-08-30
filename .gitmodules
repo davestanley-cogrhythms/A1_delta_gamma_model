@@ -1,0 +1,3 @@
+[submodule "DynaSim"]
+	path = DynaSim
+	url = git@github.com:DynaSim/DynaSim.git
