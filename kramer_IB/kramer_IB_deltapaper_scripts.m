@@ -117,17 +117,17 @@ f = 0;
 f = f + 1;
 s{f} = struct;
 s{f}.save_figures_move_to_Figs_repo = true;
-s{f}.repo_studyname = ['Batch5' num2str(f)];
+s{f}.repo_studyname = ['Batch5p1' num2str(f)];
 
 % Default sim with PP
 f = f + 1;
 s{f} = struct;
 s{f}.save_figures_move_to_Figs_repo = true;
-s{f}.repo_studyname = ['Batch5' num2str(f)];
+s{f}.repo_studyname = ['Batch5p2' num2str(f)];
 s{f}.ap_pulse_num = 0;
 
 clear data;
-parfor f = 1:length(s)
+for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f},f);
 end
 data = datac{1};

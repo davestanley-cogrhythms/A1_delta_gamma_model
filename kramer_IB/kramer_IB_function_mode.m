@@ -1,6 +1,6 @@
-function [data, name] = kramer_IB_function_mode(sim_struct,i)
+function [data, name] = kramer_IB_function_mode(sim_struct,sim_num)
 
-if nargin < 2; i = 0; end
+if nargin < 2; sim_num = 0; end
 if nargin < 1; sim_struct = []; end
 if isempty(sim_struct); sim_struct = struct; end
 
@@ -8,7 +8,10 @@ if isempty(sim_struct); sim_struct = struct; end
 % savepath = fullfile('Figs_Ben',Today);
 % mkdir(savepath);
 
-pause(2*i);
+% Stagger each starting simulation by 4 seconds
+% pauseval = max(0,4*(sim_num-1));
+% fprintf('Pausing for %d.\n',pauseval);
+pause(sim_num*4);             
 
 function_mode = 1;
 
@@ -29,5 +32,4 @@ kramer_IB
 
 
 % dsPlot2(data,'plot_type','imagesc')
-
 end

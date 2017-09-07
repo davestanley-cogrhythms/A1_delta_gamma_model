@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
+tspan=[0 1500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -188,9 +188,9 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=20;   % Default number of cells
+N=2;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=80; % Number of RS cells
+Nrs=2; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -773,10 +773,10 @@ if plot_on && save_figures
     save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
     
     p = gcp('nocreate');
-    if ~isempty(p)
-        parfor i = 1:length(xp_img.data{1}); dsPlot2_PPStim(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+    if ~isempty(p) && parallel_flag
+        parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     else
-        for i = 1:length(xp_img.data{1}); dsPlot2_PPStim(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+        for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     end
    
     %NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
