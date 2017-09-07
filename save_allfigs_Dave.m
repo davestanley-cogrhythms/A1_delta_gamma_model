@@ -51,7 +51,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
             end
             set(i,'PaperPositionMode','auto');
             %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-            tic; print(i,'-dpng','-r75','-opengl',fullfile(basepath,sp,savenames{i}));toc
+            tic; print(i,'-dpng','-r75',fullfile(basepath,sp,savenames{i}));toc
             %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
             %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
     %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
