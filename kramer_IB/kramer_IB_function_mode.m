@@ -1,11 +1,14 @@
-function [data, name] = kramer_IB_function_mode(sim_struct)
+function [data, name] = kramer_IB_function_mode(sim_struct,i)
 
+if nargin < 2; i = 0; end
 if nargin < 1; sim_struct = []; end
 if isempty(sim_struct); sim_struct = struct; end
 
 % Today = datestr(datenum(date),'yy-mm-dd');
 % savepath = fullfile('Figs_Ben',Today);
 % mkdir(savepath);
+
+pause(2*i);
 
 function_mode = 1;
 
