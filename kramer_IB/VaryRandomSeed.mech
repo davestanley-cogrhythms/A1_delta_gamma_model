@@ -1,0 +1,5 @@
+% Dummy mechanism allowing random seed to be varied.
+
+randParam = 1;
+
+@current += 0
