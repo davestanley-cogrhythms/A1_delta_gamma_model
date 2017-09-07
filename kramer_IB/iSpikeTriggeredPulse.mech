@@ -1,0 +1,37 @@
+%%
+% Poisson mechanism based on Jason's email implementation. For some
+% reason this produces huge PSPs
+
+% Pulse train properties
+STPstim = -.1;
+STPshift = 0; % in ms
+STPwidth = 100; % in ms
+STPcenter = 0;
+STPnorm = 1;
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+STPonset = 500;    % ms, onset time
+STPoffset = Inf;   % ms, offset time
+
+STPkernelType = 7;
+STPwidth2rise = 0.25;
+
+s2 = getPulseFast(STPwidth,STPshift,Tend+STPonset,dt,0,STPoffset,Npop,STPkernelType,STPwidth2rise,STPcenter,STPnorm,0);
+
+% Functions
+spikeIndicator(t) = abs(t-tspike(1,:)-dt)<=dt | abs(t-tspike(2,:)-dt)<=dt
+pulse_index(t) = int64(max((t-triggeringSpikeTime+1),1)./dt)
+input(t) = (triggeringSpikeTime>0).*(t>triggeringSpikeTime).*s2(pulse_index(t),:)
+Iext(t) = STPstim*input(t)
+
+% ODEs & ICs
+spikeNumber' = int64((t>=STPonset)&spikeIndicator(t)).*1./(dt); 
+% (t>=STPonset)&((t>=(tspike(1,:)+dt)&t<=(tspike(1,:)+dt))|(t>=(tspike(2,:)+dt)&t<=(tspike(2,:)+dt)))./(dt);
+spikeNumber(0) = zeros(1,Npop);
+triggeringSpikeTime' = ((spikeNumber>0)&(spikeNumber<=.5))&spikeIndicator(t).*tspike(1,:)./(dt);
+triggeringSpikeTime(0) = zeros(1,Npop);
+
+@current += -Iext(t)
+
