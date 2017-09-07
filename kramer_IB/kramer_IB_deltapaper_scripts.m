@@ -127,7 +127,7 @@ s{f}.repo_studyname = ['Batch5p2' num2str(f)];
 s{f}.ap_pulse_num = 0;
 
 clear data;
-for f = 1:length(s)
+parfor f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f},f);
 end
 data = datac{1};

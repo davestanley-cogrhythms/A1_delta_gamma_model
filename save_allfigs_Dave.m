@@ -100,8 +100,10 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     fclose(fileID);
     
     % Play Hallelujah
-    load handel.mat;
-    sound(y, 1*Fs);
+    if ismac
+        load handel.mat;
+        sound(y, 1*Fs);
+    end
     
     if do_commit
         %% Commit
