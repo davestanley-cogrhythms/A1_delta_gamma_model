@@ -1000,7 +1000,7 @@ end
         dsPlot2_PPStim(data,'plot_type','raster','xlims',[1150 1325],'plot_handle',@xp_PlotData_with_AP)
         
         % Play Hallelujah
-        if ismac
+        if ismac && ~function_mode
             load handel.mat;
             sound(y, 1*Fs);
         end
