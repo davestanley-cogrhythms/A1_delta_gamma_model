@@ -765,6 +765,8 @@ include_kramer_IB_simulate;
 % Load figures from save if necessary
 if plot_on && save_figures
     % mysaves
+    
+    % Plotting composite figures
     data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
     xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
     if exist('data_old','var')
@@ -779,27 +781,33 @@ if plot_on && save_figures
         for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
     end
    
-    %NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
+    %Names of state variables: NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
     
+    % Control height of figures
+    chosen_height = max(length(data),4) / 4;        % If lenght(data) >= 4, height is 1; otherwise, use fixed height.
     
+    % Plot summary statistics
     if include_IB && include_NG && include_FS
         i=i+1;
         dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.35],'force_last','variable','LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
     end
     
     if include_RS && include_LTS
         i=i+1;
         dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
     end
     
     
     % Compare different IB->IB currents (NMDA, AMPA, total)
     if include_IB
-%         i=i+1;
-%         dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
-%             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false)
+        i=i+1;
+        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
     end
 
 end
