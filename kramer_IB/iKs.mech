@@ -10,12 +10,12 @@ tau_mult = 1
 Ks_offset = 0
 
 % Functions
-ninf(X)=1./(1+exp(-(X-(halfKs+Ks_offset))/10))
-tauKs(X)=tau_mult*1000./(3.3*tau_div*(exp((X-(halfKs+Ks_offset))/40)+exp(-(X-(halfKs+Ks_offset))/20)))
+ninf(X)=1./(1+exp(-(X-(halfKs+Ks_offset))./10))
+tauKs(X)=tau_mult.*1000./(3.3.*tau_div.*(exp((X-(halfKs+Ks_offset))./40)+exp(-(X-(halfKs+Ks_offset))./20)))
 IKs(X,n)=gKs.*n.*(X-E_Ks)
 
 % ODEs
-n'=(ninf(X)-n)/tauKs(X)
+n'=(ninf(X)-n)./tauKs(X)
 n(0)=IC+IC_noise.*rand(Npop,1)
 
 % Interface
