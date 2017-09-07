@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
+tspan=[0 1500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -26,7 +26,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -83,9 +83,9 @@ do_jason_sPING = 0;
 do_jason_sPING_syn = 0;
 
 % % % % % Display options
-plot_on = 1;
+plot_on = 0;
 visible_flag = 'on';
-compile_flag = 1;
+compile_flag = 0;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -116,12 +116,12 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS =1;
-include_NG = 1;
-include_dFS5 = 1;
+include_LTS =0;
+include_NG = 0;
+include_dFS5 = 0;
 include_supRS = 0;
 include_supFS = 0;
 include_deepRS = 0;
@@ -188,9 +188,9 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=20;   % Default number of cells
+N=5;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=80; % Number of RS cells
+Nrs=5; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
