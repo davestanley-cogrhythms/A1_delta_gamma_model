@@ -6,7 +6,7 @@ function varargout = dsPlot2_PPStim (varargin)
     
     % Isolates the PPStim pulse train information
     xp = dsAll2mdd(data);
-    xpp = xp.axisSubset('variables','iPeriodicPulsesiSYN_s');
+    xpp = xp.axisSubset('variables','iPeriodicPulsesiSYNNested_s');
     xpp = xpp.squeezeRegexp('variables');
 
     % Call dsPlot2 supplying this custom function handle.
