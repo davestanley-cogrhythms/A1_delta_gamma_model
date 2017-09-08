@@ -43,6 +43,9 @@ PP_g_SYN_hetero = 0
 PPgsyn0=unifrnd(PP_gSYN*(1-PP_g_SYN_hetero),PP_gSYN*(1+PP_g_SYN_hetero),[Npop 1])'
 PPgsyn=PPgsyn0.* double(PPgsyn0 > 0)
 
+% Build pulse train
+s0 = getDeltaTrainPresets2(PPfreq,PPshift,Tend,dt,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
+
 % Build masking pulse train
 s0_mask = getDeltaTrainPresets2(PPmaskfreq,0,Tend,dt,0,0,0);
 s0_maskb = convolveDeltaTrainwithKernel(s0_mask,dt,PPmaskduration,1,3,-dt);
