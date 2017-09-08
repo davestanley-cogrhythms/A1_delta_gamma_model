@@ -611,8 +611,7 @@ switch sim_mode
 end
 
 %% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
-% #myppstim
-IB_PP_gNMDA = 0;               
+% #myppstim             
 IB_PP_gSYN = 0;
 RS_PP_gSYN = 0;
 NG_PP_gSYN = 0;
@@ -620,7 +619,6 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
 IB_PP_gSYN = 0.25;
-% IB_PP_gNMDA = 0.5;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
@@ -632,6 +630,9 @@ PPtauDx_LTS = tauAMPAd_LTS + jitter_fall;
 PPtauRx_LTS = tauAMPAr_LTS + jitter_rise;
 PP_width = 0.25;
 PPwidth2_rise = 0.25;
+PPmaskfreq = 2;
+PPmaskduration = 100;
+do_nested_mask = 0;
 
 switch pulse_mode
     case 0                  % No stimulation
@@ -650,15 +651,13 @@ switch pulse_mode
         PPFacFactor = 1.0;
         IBPPFacFactor = 1.0;
         RSPPFacFactor = 1.0;
-        RSPPFacTau = 100;
-        IB_PP_gNMDA = 0;               
+        RSPPFacTau = 100;              
         IB_PP_gSYN = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
         deepRSPPstim = 0;
-        IB_PP_gNMDA = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
@@ -709,7 +708,6 @@ switch pulse_mode
         %         deepRSPPstim = -7;
             % Turn off IB stim; leave RS stim on
         IB_PP_gSYN = 0;
-        IB_PP_gNMDA = 0;
         RS_PP_gSYN = 0.15;
         
         PP_width = 100;
@@ -738,7 +736,6 @@ switch pulse_mode
         %         deepRSPPstim = -7;
             % Turn off IB stim; leave RS stim on
         IB_PP_gSYN = 0;
-        IB_PP_gNMDA = 0;
         RS_PP_gSYN = 0.20;
         
         PP_width = 100*stretchfactor;
@@ -1001,8 +998,8 @@ end
         
         % Play Hallelujah
         if ismac && ~function_mode
-            load handel.mat;
-            sound(y, 1*Fs);
+            %load handel.mat;
+            %sound(y, 1*Fs);
         end
     end
 
