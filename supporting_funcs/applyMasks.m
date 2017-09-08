@@ -17,6 +17,8 @@ function s1 = applyMasks(s0,onset,offset,Tend,dt,do_nested_mask,s0_mask)
     % Apply mask
     if do_nested_mask
         s1 = s0 .* s0_mask;
+    else
+        s1 = s0;
     end
 
     % Apply onset offset masks
