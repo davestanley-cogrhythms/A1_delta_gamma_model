@@ -99,7 +99,4 @@ data2 = dsCalcAverages(data);
 
 toc(tv2);
 
-% Play Hallelujah
-load handel.mat;
-sound(y, 1*Fs);
     

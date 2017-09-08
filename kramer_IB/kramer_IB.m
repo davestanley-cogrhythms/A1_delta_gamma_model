@@ -85,7 +85,7 @@ do_jason_sPING_syn = 0;
 % % % % % Display options
 plot_on = 0;
 visible_flag = 'on';
-compile_flag = 0;
+compile_flag = 1;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -116,11 +116,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 0;
+include_IB = 1;
 include_RS = 1;
 include_FS = 1;
-include_LTS =0;
-include_NG = 0;
+include_LTS =1;
+include_NG = 1;
 include_dFS5 = 0;
 include_supRS = 0;
 include_supFS = 0;

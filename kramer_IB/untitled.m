@@ -9,9 +9,19 @@ PPshift = 0; % in ms
 
 % Time series properties
 Tend=T(end); 	    % ms, max simulation duration
-dt=0.01;        % ms, time step duration
-PPonset = 300;    % ms, onset time
-PPoffset = Inf;   % ms, offset time
+dt=0.01;        % ms, t ime step duration
+
+
+% Parameters onset and offset of delta pulse trian
+PPonset = 550;    % ms, onset time
+PPoffset = 1500;   % ms, offset time
+
+% Parameters for controlling square wave mask, applied over top of the pulse train
+PPmaskfreq = 2
+PPmaskduration = 100
+do_nested_mask = 1
+% Note: duty cycle of square wave = PPmaskfreq * PPmaskduration / [1000 (msec/sec)]
+
 
 % Aperiodic pulse specification
 ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -37,23 +47,17 @@ PPgsyn=PPgsyn0.* double(PPgsyn0 > 0)
 
 % Build pulse train
 s0 = getDeltaTrainPresets2(PPfreq,PPshift,Tend,dt,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
-%%
+
 % Build masking pulse train
-PPmaskfreq = 2
-PPmaskduration = 100
-do_nested_mask = 1
-
-
 s0_mask = getDeltaTrainPresets2(PPmaskfreq,0,Tend,dt,0,0,0);
 s0_maskb = convolveDeltaTrainwithKernel(s0_mask,dt,PPmaskduration,1,3,-dt);
 
 s1 = applyMasks(s0,PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
-
-
 s2 = convolveDeltaTrainwithKernel(s1,dt,PPwidth,Npop,kernel_type,width2_rise);
 
 
-
+figure ; plot(T,s2)
+whos T s2
 %%
 % Convert train to pseudo Vm (action potentials)
 X_pseudo = 100*s2(k,:) - 60;           % Membrane voltage of simulated pre-synaptic cell action potentials goes from -60 to +40 mV 
