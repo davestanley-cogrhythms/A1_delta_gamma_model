@@ -1,10 +1,12 @@
 
 function s3 = convolveDeltaTrainwithKernel(s,dt,width,Npop,kernel_type,width2_rise)
 % dt - timestep
-% width - kernel width in units of dt
+% width - kernel with parameter 1, in units of dt; generally describes some
+%         measure of decay time
 % Npop - number of cells in population
-% kernel_type - code for which type of kernel to use
-% width2_rise - second parameter for shapping kernel. Only used for kernel mode 2.
+% kernel_type - code for which type of kernel to use. see below.
+% width2_rise - second parameter for shapping kernel width. Generally
+%               describes some measure of rise time.
 
 
 plot_demo_on = 0;  % Plot if desired
@@ -35,6 +37,16 @@ elseif kernel_type < 2.5                         % Kernel mode 2 - Dual exponent
         % Build kernel
         kernel = (exp(-t2/width) - exp(-t2/width2_rise)) * (width*width2_rise)/(width-width2_rise);     % This normalization constant is wrong
         kernel = kernel / max(kernel);          % Do normalization manually for now.
+elseif kernel_type < 3.5                        % Square wave
+        % Build kernel time series
+        kernel_length=4*width;                      % Length of kernel time series
+        t2a = [0:-dt:-kernel_length];
+        t2b = [0:dt:kernel_length-dt];
+        t2 = [fliplr(t2a(2:end)), 0, t2b(2:end)];   % This affords us a bit more control over the time values, ensuring it is centered at zero.
+        %t2 = -kernel_length:dt:kernel_length-dt;    % Generate time vector
+        
+        % Build kernel
+        kernel = 1 * [t2 <= width & t2 > -abs(width2_rise)];      % Build kernel. Peaks at 1.0.
 else
         % For debugging; should not reach this!!
         error ('Should not reach');
