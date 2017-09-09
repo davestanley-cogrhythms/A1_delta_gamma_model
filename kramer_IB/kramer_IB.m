@@ -21,7 +21,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 5;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -85,7 +85,7 @@ do_jason_sPING_syn = 0;
 % % % % % Display options
 plot_on = 0;
 visible_flag = 'on';
-compile_flag = 0;
+compile_flag = 1;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -116,11 +116,11 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 0;
-include_RS = 1;
-include_FS = 1;
+include_IB = 1;
+include_RS = 0;
+include_FS = 0;
 include_LTS =0;
-include_NG = 0;
+include_NG = 1;
 include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
@@ -606,6 +606,16 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
         
+    case 15     % Lakatos 2005 - 100ms pulses separated by varying amounts of dead time
+        vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[1,1.25,1.5,1.75];...
+            };
+        
+    case 16     % Inverse PAC with new nested PPStim method
+        inter_train_interval=1000;
+        PPmaskdurations = [500:500:2000];
+        PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
+        vary = { '(RS,FS,LTS,IB,NG)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
+            };
 end
 
 %% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
@@ -630,7 +640,6 @@ PP_width = 0.25;
 PPwidth2_rise = 0.25;
 PPmaskfreq = 2;
 PPmaskduration = 100;
-do_nested_mask = 0;
 
 switch pulse_mode
     case 0                  % No stimulation
@@ -651,6 +660,7 @@ switch pulse_mode
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
         deepRSPPstim = 0;
+        do_nested_mask = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
@@ -666,10 +676,9 @@ switch pulse_mode
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
-        deepRSPPstim = 0;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
-        %         deepRSPPstim = -7;
+        do_nested_mask = 0;
         
     case 2                  % Median nerve stimulation
         % Disabled for now...
@@ -685,7 +694,6 @@ switch pulse_mode
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
-        deepRSPPstim = 0;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
         %         deepRSPPstim = -7;
@@ -694,6 +702,7 @@ switch pulse_mode
         RS_PP_gSYN = 0.15;
         
         PP_width = 100;
+        do_nested_mask = 0;
         
     case 4                  % Amplitude --> Phase modulation LONG
         stretchfactor = 1;
@@ -708,7 +717,6 @@ switch pulse_mode
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
-        deepRSPPstim = 0;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
         %         deepRSPPstim = -7;
@@ -717,6 +725,23 @@ switch pulse_mode
         RS_PP_gSYN = 0.20;
         
         PP_width = 100*stretchfactor;
+        do_nested_mask = 0;
+        
+    case 5
+        PPfreq = 40; % in Hz
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        PPshift = 0; % in ms
+        PPonset = 0;    % ms, onset time
+        PPoffset = tspan(end);   % ms, offset time
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        kernel_type = 1;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        %         deepRSPPstim = -7;
+        do_nested_mask = 1;
 end
 
 % if function_mode, return, end
