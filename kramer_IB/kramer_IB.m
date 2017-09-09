@@ -121,9 +121,7 @@ include_RS = 1;
 include_FS = 1;
 include_LTS =1;
 include_NG = 1;
-include_dFS5 = 0;
-include_supRS = 0;
-include_supFS = 0;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
