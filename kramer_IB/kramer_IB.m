@@ -37,7 +37,7 @@ if function_mode
 end
 
 % % % % % % Parameter modifier flags
-high_IB_IB_connectivity = true;
+high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help delta oscillator reset.
 
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
@@ -85,7 +85,7 @@ do_jason_sPING_syn = 0;
 % % % % % Display options
 plot_on = 0;
 visible_flag = 'on';
-compile_flag = 1;
+compile_flag = 0;
 parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -116,12 +116,12 @@ no_synapses = 0;
 NMDA_block = 0;
 
 % % % % % Cells to include in model
-include_IB = 1;
+include_IB = 0;
 include_RS = 1;
 include_FS = 1;
-include_LTS =1;
-include_NG = 1;
-include_dFS5 = 1;
+include_LTS =0;
+include_NG = 0;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -644,12 +644,7 @@ switch pulse_mode
         ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
-        kernel_type = 1;
-        PPFacTau = 100;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 100;              
+        kernel_type = 1;         
         IB_PP_gSYN = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
@@ -671,11 +666,6 @@ switch pulse_mode
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
-        PPFacTau = 100;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 100;
         deepRSPPstim = 0;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
@@ -695,11 +685,6 @@ switch pulse_mode
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
-        PPFacTau = 100;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 100;
         deepRSPPstim = 0;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
@@ -723,11 +708,6 @@ switch pulse_mode
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
-        PPFacTau = 100;
-        PPFacFactor = 1.0;
-        IBPPFacFactor = 1.0;
-        RSPPFacFactor = 1.0;
-        RSPPFacTau = 100;
         deepRSPPstim = 0;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
