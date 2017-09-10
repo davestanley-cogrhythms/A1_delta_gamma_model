@@ -21,23 +21,25 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 5;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
+
+
+% % % % % % Parameter modifier flags
+high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help delta oscillator reset.
 
 
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
 end
 
-% % % % % % Parameter modifier flags
-high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help delta oscillator reset.
 
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
@@ -86,13 +88,13 @@ do_jason_sPING_syn = 0;
 plot_on = 0;
 visible_flag = 'on';
 compile_flag = 1;
-parallel_flag = double(any(sim_mode == [8:14]));            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
+parallel_flag = double(sim_mode >= 8);            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-% random_seed = 2;
+random_seed = 2;
 study_dir = ['study_' sp];
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -117,11 +119,11 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
 include_NG = 1;
-include_dFS5 = 0;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -152,7 +154,8 @@ IC_V = -65;         % Starting membrane potential
 NaF_offset = 10;
 KDR_offset = 20;
 
-
+% % % % % Default sodium values
+deep_gNaF = 100;
 
 
 % % % % % Parameters for deep RS cells.
@@ -186,9 +189,9 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=5;   % Default number of cells
+N=20;   % Default number of cells
 Nib=N;   % Number of excitatory cells
-Nrs=5; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -548,7 +551,7 @@ switch sim_mode
             %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
             };
         
-    case 10     % Inverse phase amplitude coupling tests
+    case 10     % Previous inverse PAC code
         stretchfactor = [1:.5:2.5];
         freq_temp = [2,2,2,2];
         width_temp = [100,100,100,100];
@@ -606,13 +609,19 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
         
-    case 15     % Lakatos 2005 - 100ms pulses separated by varying amounts of dead time
-        vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[1,1.25,1.5,1.75];...
+    case 15
+        vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[15,20,25,28,30,33,35,37]; ...
+            };
+    case 16
+        vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[50,65,85,105]; ...
+            };
+    case 17     % Lakatos 2005 - 100ms pulses separated by varying amounts of dead time
+        vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1,1.25,1.5,1.75,2])];...
             };
         
-    case 16     % Inverse PAC with new nested PPStim method
-        inter_train_interval=1000;
-        PPmaskdurations = [500:500:2000];
+    case 18     % Inverse PAC with new nested PPStim method
+        inter_train_interval=250;
+        PPmaskdurations = [250:250:2000];
         PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
         vary = { '(RS,FS,LTS,IB,NG)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
             };
@@ -643,7 +652,7 @@ PPmaskduration = 100;
 
 switch pulse_mode
     case 0                  % No stimulation
-        PPfreq = 4; % in Hz
+        PPfreq = 0.01; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
@@ -763,7 +772,7 @@ include_kramer_IB_simulate;
 %% ##5.0 Plotting
 
 % Load figures from save if necessary
-if plot_on && save_figures
+if save_figures
     % mysaves
     
     % Plotting composite figures
@@ -789,7 +798,48 @@ if plot_on && save_figures
     % Plot summary statistics
     if include_IB && include_NG && include_FS
         i=i+1;
-        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.35],'force_last','variable','LineWidth',2,...
+        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
+    end
+    
+    if include_IB && include_NG && ~include_FS
+        i=i+1;
+        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
+    end
+    
+    
+    % Plot summary statistics
+    if include_IB && include_NG && length(data) > 1
+        i=i+1;
+        dsPlot2(data,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
+    end
+    
+    if include_IB && length(data) > 1
+        i=i+1;
+        dsPlot2(data,'population','IB','variable','/V/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
+    end
+    
+    if include_LTS && length(data) > 1
+        dsPlot2(data,'population','LTS','variable','/V/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
+    end
+    
+    if include_LTS && length(data) > 1
+        dsPlot2(data,'population','LTS','variable','Mich','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height);
+    end
+    
+    if include_LTS && include_RS && length(data) > 1
+        dsPlot2(data,'population','RS','variable','/LTS_IBaIBdbiSYNseed_s/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figheight',chosen_height);
     end
@@ -813,7 +863,7 @@ if plot_on && save_figures
 end
 
 
-if plot_on && ~save_figures
+if plot_on
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
         case {1,11}            

@@ -174,6 +174,7 @@ if include_dFS5
     
     params_list1 = spec.populations(ind).parameters;
     myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
+    myoptions.gNaF = deep_gNaF;
     params_list2 = dsOptions2Keyval(myoptions); 
     
     spec.populations(i).parameters = params_list2;

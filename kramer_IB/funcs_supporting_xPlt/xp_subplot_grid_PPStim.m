@@ -22,7 +22,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
         op = struct;
     end
     
-    if isempty(op); op = struct; end;
+    if isempty(op); op = struct; end
     
     op = struct_addDef(op,'transpose_on',0);
     op = struct_addDef(op,'display_mode',0);
@@ -34,7 +34,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     op = struct_addDef(op,'zlims',[]);
     op = struct_addDef(op,'autosuppress_interior_tics',false);
     op = struct_addDef(op,'show_PP_ticks',true);
-    op = struct_addDef(op,'suppress_PP_ticks_columns',true);
+    op = struct_addDef(op,'suppress_PP_ticks_columns',false);
             % Display_mode: 0-Just plot directly
                           % 1-Plot as an image (cdata)
                           % 2-Save to a figure file 
@@ -127,7 +127,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     ind = blocks < thresh;
                     blocks(ind) = NaN;
                     yl = ylim;
-                    blocks(~ind) = yl(2);
+                    blocks(~ind) = yl(2) - (yl(2) - yl(1))*0.01;    % Shift down 1% from top of plot
                     
                     % This clause just looks at the subplot on the grid directly above
                     % the above the current one and sees if the ticks are
@@ -141,7 +141,8 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                         
                     % Finally, plot the ticks.
                     if plot_ppstim && show_PP_ticks
-                        hold on; plot(time, blocks,'r','LineWidth',20);
+                        %hold on; plot(time, blocks,'r--.','LineWidth',20);
+                        hold on; plot(time, blocks,'r.','MarkerSize',5);
                     end
                     
                     % Stores the current ticks for comparison in the next
