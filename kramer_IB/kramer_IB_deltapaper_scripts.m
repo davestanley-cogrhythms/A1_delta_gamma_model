@@ -19,7 +19,7 @@ i=i+1; s{f}.vary{i} = {'(IB,RS,FS)','PP_gSYN',[0.25, 0.2, 0.2]};     % Rows are 
 i=i+1; s{f}.vary{i} = {'(IB,RS,FS)','PP_gSYN',[0.00, 0.2, 0.1]};
 i=i+1; s{f}.vary{i} = {'(IB,RS,FS)','PP_gSYN',[0.25, 0.0, 0.0]};
 
-clear data;
+clear datac;
 for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f});
 end
@@ -40,7 +40,7 @@ s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
 s{f}.parallel_flag = 1;
 s{f}.vary = {'(IB,RS,FS)','PPfreq',[10,30,50,70]};     % Rows are applied to populations
 
-clear data;
+clear datac;
 for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f});
 end
@@ -59,7 +59,7 @@ s{f} = struct;
 s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
 s{f}.repo_studyname = ['Batch2p' num2str(f)];
 
-clear data;
+clear datac;
 for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f});
 end
@@ -80,7 +80,7 @@ s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
 s{f}.RS_PP_gSYN = 0;     % Set RS PPStim to zero
 s{f}.repo_studyname = ['Batch3p' num2str(f)];
 
-clear data;
+clear datac;
 for f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f});
 end
@@ -99,6 +99,7 @@ f = 0;
 f = f + 1;
 s{f} = struct;
 s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+s{f}.sim_mode = 1;
 s{f}.repo_studyname = ['DeltaFig1p' num2str(f)];
 s{f}.ap_pulse_num = 0;
 
@@ -106,16 +107,18 @@ s{f}.ap_pulse_num = 0;
 f = f + 1;
 s{f} = struct;
 s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+s{f}.sim_mode = 1;
 s{f}.repo_studyname = ['DeltaFig1p' num2str(f)];
 
 % Spontaneous
 f = f + 1;
 s{f} = struct;
 s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+s{f}.sim_mode = 1;
 s{f}.repo_studyname = ['DeltaFig1p' num2str(f)];
 s{f}.pulse_mode = 0;     % Turn off pulsemode
 
-clear data;
+clear datac;
 parfor f = 1:length(s)
     datac{f} = kramer_IB_function_mode(s{f},f);
 end
@@ -172,6 +175,8 @@ s{f}.tspan=[0 2500];
 
 datapf3c = kramer_IB_function_mode(s{f},f);
 
+%% Clear
+clear all
 
 %% Paper Fig 4 - Lakatos 2005 - Entrainment
 
@@ -189,6 +194,8 @@ s{f}.tspan=[0 5500];
 datapf4 = kramer_IB_function_mode(s{f},f);
 
 
+%% Clear
+clear all
 
 %% Paper Fig 5a - Inverse PAC
 
@@ -207,6 +214,8 @@ datapf5a = kramer_IB_function_mode(s{f},f);
 
 
 
+%% Clear
+clear all
 
 %% Paper Fig 5b - Inverse PAC part 2 - block IB PPStim
 
@@ -225,6 +234,8 @@ s{f}.IB_PP_gSYN=0;
 datapf5b = kramer_IB_function_mode(s{f},f);
 
 
+%% Clear
+clear all
 
 %% Paper Fig 5c - Inverse PAC part 3 - block DeepFS
 
