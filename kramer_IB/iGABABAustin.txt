@@ -16,9 +16,9 @@
 %     method from the GABA-A current.
 %
 % References:
-% - Destexhe, A., Bal, T., McCormick, D. A., & Sejnowski, T. J. (1996). Ionic mechanisms underlying synchronized oscillations and propagating waves in a model of ferret thalamic slices. Journal of Neurophysiology, 76(3), 2049–2070.
-% - Olufsen, M. S., Whittington, M. A., Camperi, M., & Kopell, N. (2003). New roles for the gamma rhythm: population tuning and preprocessing for the beta rhythm. Journal of Computational Neuroscience, 14(1), 33–54.
-% - Vijayan, S., & Kopell, N. J. (2012). Thalamic model of awake alpha oscillations and implications for stimulus processing. Proceedings of the National Academy of Sciences, 109(45), 18553–18558. doi:10.1073/pnas.1215385109
+% - Destexhe, A., Bal, T., McCormick, D. A., & Sejnowski, T. J. (1996). Ionic mechanisms underlying synchronized oscillations and propagating waves in a model of ferret thalamic slices. Journal of Neurophysiology, 76(3), 2049???2070.
+% - Olufsen, M. S., Whittington, M. A., Camperi, M., & Kopell, N. (2003). New roles for the gamma rhythm: population tuning and preprocessing for the beta rhythm. Journal of Computational Neuroscience, 14(1), 33???54.
+% - Vijayan, S., & Kopell, N. J. (2012). Thalamic model of awake alpha oscillations and implications for stimulus processing. Proceedings of the National Academy of Sciences, 109(45), 18553???18558. doi:10.1073/pnas.1215385109
 %
 % From (Destxhe 1996),
 % K1 = 0.5      mM^{-1} ms^{-1}
@@ -42,6 +42,8 @@ K2GABAB=0.0012;         % Destexhe default
 K3GABAB=0.18;         % Destexhe default
 K4GABAB=0.034;         % Destexhe default
 
+g_GABAB_hetero = 0;
+
 % Connectivity
 width = inf   % fanout (connection distance)
 Nmax = max(Npre,Npost)
@@ -49,9 +51,13 @@ srcpos = linspace(1,Nmax,Npre)'*ones(1,Npost)      % linear position (sources)
 dstpos = (linspace(1,Nmax,Npost)'*ones(1,Npre))'   % linear position (targets)
 netcon = (abs(srcpos-dstpos)<=width)              % adjacency matrix (connect elements closer than width)
 
+% synaptic hetero
+gGABAB0=unifrnd(gGABAB*(1-g_GABAB_hetero),gGABAB*(1+g_GABAB_hetero),[Npost 1])'
+gGABAB1=gGABAB0.* double(gGABAB0 > 0)
+
 % Functions
 T(Vpre) = TmaxGABAB*1/2*(1 + tanh(Vpre./4))
-IGABAB(Vpost,g) = gGABAB.*((g.^4./(g.^4 + 100))*netcon).*(Vpost-EGABAB)
+IGABAB(Vpost,g) = gGABAB1.*((g.^4./(g.^4 + 100))*netcon).*(Vpost-EGABAB)
 
 % ODEs
 r' = K1GABAB.*T(Vpre).*(1-r) - K2GABAB.*r;

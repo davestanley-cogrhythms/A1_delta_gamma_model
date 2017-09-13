@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 3500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -87,7 +87,7 @@ do_jason_sPING_syn = 0;
 % % % % % Display options
 plot_on = 0;
 visible_flag = 'on';
-compile_flag = 1;
+compile_flag = 0;
 parallel_flag = double(sim_mode >= 8);            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 cluster_flag = 0;
 save_data_flag = 0;
@@ -119,11 +119,11 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_LTS =1;
+include_RS = 0;
+include_FS = 0;
+include_LTS =0;
 include_NG = 1;
-include_dFS5 = 1;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 

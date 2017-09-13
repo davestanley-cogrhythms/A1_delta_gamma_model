@@ -10,16 +10,21 @@ Vpp = [2] % mV       % page 5: Vpp = 2        % mV, transmitter half activation
 Kp = [5]             % page 5: Kp = 5        % transmitter steepness
 IC = [0]
 IC_noise = [0]
+g_NMDA_hetero = 0
 
 % fixed variables
 netcon = ones(N_pre,N_post) % default connectivity matrix (all-to-all)
+
+% synaptic hetero
+gNMDA0=unifrnd(gNMDA*(1-g_NMDA_hetero),gNMDA*(1+g_NMDA_hetero),[Npost 1])'
+gNMDA1=gNMDA0.* double(gNMDA0 > 0)
 
 % functions
 BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods in Neuronal Modeling, page 9]
 %BMg(X) = (1.50265./(1+0.33*exp(X./(-16)))) 	% sigmoidal magnesium block from [DS00], increases gradually to 1.50265 with postsynaptic voltage above -50mV (i.e., any Vpost EPSPs)
 NT(X) = Tmax./(1+exp(-(X-Vpp)/Kp)) 		% sigmoidal neurotransmitter concentration [T] increasing rapidly to Tmax with presynaptic voltage above 0mV (i.e., Vpre spike)
-INMDA(X,s) = gNMDA.*BMg(X).*(s*netcon).*(X-ENMDA) % post-synaptic NMDA current
-NMDAgbar(s) = gNMDA.*(s*netcon)         % Record NMDA conductance without Mg block.
+INMDA(X,s) = gNMDA1.*BMg(X).*(s*netcon).*(X-ENMDA) % post-synaptic NMDA current
+NMDAgbar(s) = gNMDA1.*(s*netcon)         % Record NMDA conductance without Mg block.
 
 % ODEs and ICs
 s' = NT(X_pre).*(1-s)/tauNMDAr-s/tauNMDA 	% first-order kinetics for two-state (open/closed) scheme. [s]=fraction of receptors in open state
