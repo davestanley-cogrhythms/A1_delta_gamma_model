@@ -11,7 +11,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     if nargin < 1; error('study_dir must be specified'); end
     if nargin < 2; spec_all = []; end
     if nargin < 3; handles_arr = []; end
-    if nargin < 4; do_commit = true; end
+    if nargin < 4; do_commit = false; end
     if nargin < 5; currfigname = 'unnamed'; end
 
 
@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = [];
+        handles_arr = 1:2;
         do_commit = 0;
-        currfigname = '162h_vary_PPonset_only';
+        currfigname = '163a_add_hetero';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -92,7 +92,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Doing long 40 Hz trains with varying PPonset. Testing resilience of transient delta response.'];
+    mycomment = ['Added code for IB/NG cells to have heterogeneous synapses. Also added option for Eleak channels noisy (e.g. variable resting potential). However, we will disable this for now.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
