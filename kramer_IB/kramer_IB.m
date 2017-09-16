@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
+tspan=[0 1500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -611,15 +611,6 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
         
-    case 15
-        vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[15,20,25,28,30,33,35,37]; ...
-            };
-    case 16
-        vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[50,65,85,105]; ...
-            };
-    case 17     % Lakatos 2005 - 100ms pulses separated by varying amounts of dead time
-        vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1,1.25,1.5,1.75,2])];...
-            };
         
     case 18     % Inverse PAC with new nested PPStim method
         inter_train_interval=250;
