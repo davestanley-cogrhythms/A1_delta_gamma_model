@@ -4,6 +4,23 @@ if nargin < 2; sim_num = 0; end
 if nargin < 1; sim_struct = []; end
 if isempty(sim_struct); sim_struct = struct; end
 
+
+% Set up parallel pool
+
+if isfield(sim_struct,'vary') && isfield(sim_struct,'parallel_flag')
+    Nvary = length(sim_struct.vary{3});
+    if Nvary > 1 && sim_struct.parallel_flag
+        try
+            % Try opening new parallel pool if not already opened.
+            p = gcp('nocreate');
+            if ~isempty(p); pool = parpool(Nvary); end
+        catch
+            warning('Could not start parpool');
+        end
+    end
+end
+
+
 % Today = datestr(datenum(date),'yy-mm-dd');
 % savepath = fullfile('Figs_Ben',Today);
 % mkdir(savepath);
