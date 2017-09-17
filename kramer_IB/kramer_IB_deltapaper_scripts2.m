@@ -9,41 +9,42 @@
 function kramer_IB_deltapaper_scripts2(chosen_cell)
 
 switch chosen_cell
-    case '1'
-        %% Paper Figs 1 - Pulse train & spontaneous
+    case '1a'
+        %% Paper Figs 1a - Pulse train no AP
         
-        % Setup
         clear s
-        f = 0;
-        
-        % Default sim with PP
-        f = f + 1;
+        f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1p' num2str(f)];
+        s{f}.repo_studyname = ['DeltaFig1a' num2str(f)];
         s{f}.ap_pulse_num = 0;
         
-        % Default sim with AP
-        f = f + 1;
-        s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1p' num2str(f)];
+        datapf1a = kramer_IB_function_mode(s{f},f);
         
-        % Spontaneous
-        f = f + 1;
+    case '1b'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1p' num2str(f)];
+        s{f}.repo_studyname = ['DeltaFig1b' num2str(f)];
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1c'
+        
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1c' num2str(f)];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         
-        clear datac;
-        parfor f = 1:length(s)
-            datac{f} = kramer_IB_function_mode(s{f},f);
-        end
-        data = datac{1};
+        datapf1c = kramer_IB_function_mode(s{f},f);
         
         
         
@@ -107,8 +108,8 @@ switch chosen_cell
         
         datapf3c = kramer_IB_function_mode(s{f},f);
         
-    case '4'
-        %% Paper Fig 4 - Lakatos 2005 - Entrainment
+    case '4a'
+        %% Paper Fig 4a - Lakatos 2005 - Entrainment
         
         % Setup
         clear s
@@ -118,13 +119,13 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig4_lakatos' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1,1.25,1.5,1.75,2])];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1, 1.25, 1.5, 1.75, 2])];...
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
         
-        datapf4 = kramer_IB_function_mode(s{f},f);
+        datapf4a = kramer_IB_function_mode(s{f},f);
         
     case '5a'
         %% Paper Fig 5a - Inverse PAC
@@ -136,9 +137,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig5a_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
-        s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
-            };
+        s{f}.sim_mode = 18;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
@@ -157,9 +156,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig5b_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
-        s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
-            };
+        s{f}.sim_mode = 18;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
@@ -178,9 +175,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig5c_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
-        s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
-            };
+        s{f}.sim_mode = 18;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];

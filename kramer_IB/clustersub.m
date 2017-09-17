@@ -32,8 +32,10 @@ if nargin < 4
 %% Submit job to cluster
 
 mycommand= ['qsub -l h_rt=' num2str(myhours) ':30:00 ' ...      % Sim runtime
-    '-pe omp ' Ncores ' -l cpu_arch=broadwell ' ...             % Number of cores
-    'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',' cellID ')" localOutput'];
+    '-pe omp ' num2str(Ncores) ' -l cpu_arch=broadwell ' ...             % Number of cores
+    'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',''' cellID ''')" localOutput'];
+
+system([mycommand]);
 %'mem_total=95G'
 
 % %% Delete all temp name files

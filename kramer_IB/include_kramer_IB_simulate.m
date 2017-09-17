@@ -1,10 +1,29 @@
 
 % % % % % % % % % % ##4.1 Run simulation % % % % % % % % % %
+
+
+% Set up parallel pool if needed
+if length(vary) >= 3
+    Nvary = length(vary{3});
+    if Nvary > 1 && parallel_flag
+        try
+            % Try opening new parallel pool if not already opened.
+            p = gcp('nocreate');
+            if isempty(p); pool = parpool(Nvary); end
+        catch
+            warning('Could not start parpool');
+        end
+    end
+end
+
+
 tv2 = tic;
 if cluster_flag
-    data=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
-        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'cluster_flag',1,'overwrite_flag',1,...
-        'save_data_flag',1,'study_dir','kramer_IB_sim_mode_2');
+    mexpath = fullfile(pwd,'mexes');
+    [data,studyinfo]=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
+        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',study_dir,...
+        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mex_dir',mexpath,...
+        plot_args{:});
     
     return
 

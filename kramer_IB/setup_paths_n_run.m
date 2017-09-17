@@ -18,7 +18,7 @@ function setup_paths_n_run(varargin)
     
     func = varargin{1};
     myargs = varargin(2:end);
-    
+
     func(myargs{:});
     
 end

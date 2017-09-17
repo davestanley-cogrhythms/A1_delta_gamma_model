@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from other parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -54,9 +54,11 @@ if save_figures
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,[400 600]);
 
     plot_options = {...
-                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...       
-                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','max_num_overlaid',2}, ...    
+                    {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...        
                     };
+                
+                
+%                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','max_num_overlaid',2}, ...   
                   
 %                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 %                 {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...
@@ -189,7 +191,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=20;   % Default number of cells
+N=5;   % Default number of cells
 Nib=N;   % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -768,19 +770,24 @@ include_kramer_IB_simulate;
 if save_figures
     % mysaves
     
-    % Plotting composite figures
-    data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
-    xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
-    if exist('data_old','var')
-        data_img = dsMergeData(data_img,data_old);
-    end
+    save_composite_figures = 0;
     save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
     
-    p = gcp('nocreate');
-    if ~isempty(p) && parallel_flag
-        parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
-    else
-        for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+    % Plotting composite figures
+    if save_composite_figures
+        data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
+        xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
+        if exist('data_old','var')
+            data_img = dsMergeData(data_img,data_old);
+        end
+
+
+        p = gcp('nocreate');
+        if ~isempty(p) && parallel_flag
+            parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+        else
+            for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+        end
     end
    
     %Names of state variables: NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
