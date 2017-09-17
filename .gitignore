@@ -29,3 +29,8 @@ params.mat
 
 # Study folders
 study_*
+
+
+# Cluster files
+localOutput
+matlab_multi_node_batch.sh.*
