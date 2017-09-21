@@ -47,6 +47,9 @@ elseif kernel_type < 3.5                        % Square wave
         
         % Build kernel
         kernel = 1 * [t2 <= width & t2 > -abs(width2_rise)];      % Build kernel. Peaks at 1.0.
+elseif kernel_type < 4.5                        % Constant output independent of input
+        s3 = ones(size(s));
+        return;
 else
         % For debugging; should not reach this!!
         error ('Should not reach');

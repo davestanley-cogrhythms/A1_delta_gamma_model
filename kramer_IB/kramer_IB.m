@@ -9,10 +9,10 @@ addpath(genpath(fullfile(pwd,'funcs_supporting_xPlt')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
 %% % % % % % % % % % % % %  ##0.0 Simulation master parameters % % % % % % % % % % % % %
-% There are some partameters that are derived from other parameters. Put
+% There are some partameters that are derived from master parameters. Put
 % these master parameters first!
 
-tspan=[0 500];
+tspan=[0 1500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,7 +21,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 5;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -36,6 +36,25 @@ Cm_factor = Cm_Ben/.25;
 high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help delta oscillator reset.
 
 
+% % % % % Simulation switches
+no_noise = 0;
+no_synapses = 0;
+NMDA_block = 0;
+
+
+
+% % % % % Cells to include in model
+include_IB = 1;
+include_RS = 0;
+include_FS = 0;
+include_LTS =0;
+include_NG = 1;
+include_dFS5 = 0;
+include_deepRS = 0;
+include_deepFS = 0;
+
+
+% Overwrite master parameters as needed, before deriving the rest.
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
 end
@@ -114,21 +133,6 @@ Now = clock;
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
-% % % % % Simulation switches
-no_noise = 0;
-no_synapses = 0;
-NMDA_block = 0;
-
-% % % % % Cells to include in model
-include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
-include_NG = 1;
-include_dFS5 = 0;
-include_deepRS = 0;
-include_deepFS = 0;
-
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
 % for deep RS cells.
@@ -191,8 +195,8 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=5;   % Default number of cells
-Nib=N;   % Number of excitatory cells
+N=20;    % Default number of cells
+Nib=N;  % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
@@ -525,7 +529,8 @@ switch sim_mode
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
             %'RS','stim2',-1*[1.6:.2:2.2]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            'IB','PP_gSYN',[.1:.05:0.25]; ...
+            %'IB','PP_gSYN',[0:.5:3.5]/10; ...
+            'IB','poissScaling',[100,200,300,500,700,1000]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -630,7 +635,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.25;
+IB_PP_gSYN = 0.1;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
@@ -644,6 +649,12 @@ PP_width = 0.25;
 PPwidth2_rise = 0.25;
 PPmaskfreq = 2;
 PPmaskduration = 100;
+
+% IB Poisson Noise
+poissScaling = 2000;
+poissTau = 2;
+kerneltype_IB = 2;
+IB_PP_width = 2;
 
 switch pulse_mode
     case 0                  % No stimulation

@@ -22,6 +22,6 @@ function s1 = applyMasks(s0,onset,offset,Tend,dt,do_nested_mask,s0_mask)
     end
 
     % Apply onset offset masks
-    s1(t<onset | t>offset) = 0;
+    s1(t<onset | t>offset,:) = 0;
 
 end

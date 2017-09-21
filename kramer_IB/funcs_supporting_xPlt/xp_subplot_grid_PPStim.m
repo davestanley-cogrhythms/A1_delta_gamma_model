@@ -115,7 +115,8 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     % will be generally zero where there are no pulses, and
                     % 1 where there are pulses.
                     time= xpp.meta.datainfo(1).values;
-                    blocks = xpp.data{i,j,1,1,1,1,1,1}(:,1);      % These are the ticks that correspond to our current subplot. Add a bunch of extra 1's just incase it's very high dimensional. This type of indexing bad form but is OK
+                    blocks = xpp.data{i,j,1,1,1,1,1,1};      % These are the ticks that correspond to our current subplot. Add a bunch of extra 1's just incase it's very high dimensional. This type of indexing bad form but is OK
+                    blocks = mean(blocks,2);
                     
                     % Now we will set all values to NaN where we're below
                     % threshold, and values above threshold to be at the
@@ -123,7 +124,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     % when plotting. I call them blocks because the ticks
                     % could in principle be longer than a few milliseconds
                     % if we give them a  long decay time
-                    thresh = 0.5;
+                    thresh = 0.1;
                     ind = blocks < thresh;
                     blocks(ind) = NaN;
                     yl = ylim;

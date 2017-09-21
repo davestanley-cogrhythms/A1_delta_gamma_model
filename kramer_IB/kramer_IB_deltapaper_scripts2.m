@@ -121,6 +121,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1, 1.25, 1.5, 1.75, 2])];...
             };
+        s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
