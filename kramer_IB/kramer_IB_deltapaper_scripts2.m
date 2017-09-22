@@ -34,8 +34,8 @@ switch chosen_cell
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
-    case '1c'
-        
+    case '1c' 
+        %% Paper Figs 1c - Spontaneous
         clear s
         f=1;
         s{f} = struct;
@@ -87,27 +87,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         
         datapf3b = kramer_IB_function_mode(s{f},f);
-        
-    case '3c'
-        %% Paper Fig 3c - Vary onset
-        
-        % Setup
-        clear s
-        f=1;
-        s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig3c_onset' num2str(f)];
-        s{f}.ap_pulse_num = 0;
-        s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
-            };
-        s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_num = 0;
-        s{f}.tspan=[0 2500];
-        
-        datapf3c = kramer_IB_function_mode(s{f},f);
-        
+
     case '4a'
         %% Paper Fig 4a - Lakatos 2005 - Entrainment
         
@@ -139,6 +119,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig5a_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
+        s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
@@ -158,6 +139,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig5b_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
+        s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
@@ -177,6 +159,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig5c_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
+        s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
@@ -184,6 +167,27 @@ switch chosen_cell
         
         datapf5c = kramer_IB_function_mode(s{f},f);
         
+        
+    case '6a'
+        %% Paper Fig 6a - Vary onset
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig6a_onset' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
+            };
+        s{f}.kerneltype_IB = 4;
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_num = 0;
+        s{f}.tspan=[0 2500];
+        
+        datapf3c = kramer_IB_function_mode(s{f},f);
         
 end
 
