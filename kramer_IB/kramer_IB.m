@@ -13,7 +13,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % these master parameters first!
 
 tspan=[0 2500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -45,9 +45,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB = 1;
-include_RS = 0;
-include_FS = 0;
-include_LTS =0;
+include_RS = 1;
+include_FS = 1;
+include_LTS =1;
 include_NG = 1;
 include_dFS5 = 0;
 include_deepRS = 0;
@@ -530,7 +530,7 @@ switch sim_mode
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
             %'RS','stim2',-1*[1.6:.2:2.2]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            'IB','PP_gSYN',[0:.5:3.5]/10; ...
+            'IB','PP_gSYN',[0:.25:1.75]/10; ...
             %'IB','poissScaling',[100,200,300,500,700,1000]; ...
             };
     case 9  % Vary RS cells in RS-FS network
@@ -652,7 +652,7 @@ PPmaskfreq = 2;
 PPmaskduration = 100;
 
 % IB Poisson Noise
-poissScaling = 2000;
+poissScaling = 1000;
 poissTau = 2;
 kerneltype_IB = 2;
 IB_PP_width = 2;
