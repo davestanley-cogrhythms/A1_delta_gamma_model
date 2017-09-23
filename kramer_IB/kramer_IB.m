@@ -12,7 +12,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from master parameters. Put
 % these master parameters first!
 
-tspan=[0 1500];
+tspan=[0 2500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -21,12 +21,12 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 5;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -73,11 +73,12 @@ if save_figures
     plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,[400 600]);
 
     plot_options = {...
+                    {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','max_num_overlaid',2}, ...   
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...        
                     };
                 
                 
-%                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'population','all','max_num_overlaid',2}, ...   
+
                   
 %                 {universal_options{:},'plot_type','waveform','crop_range',ind_range,'plot_handle',@xp1D_matrix_plot_with_AP}, ...
 %                 {universal_options{:},'plot_type','waveform','crop_range',ind_range}, ...
@@ -529,8 +530,8 @@ switch sim_mode
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
             %'RS','stim2',-1*[1.6:.2:2.2]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            %'IB','PP_gSYN',[0:.5:3.5]/10; ...
-            'IB','poissScaling',[100,200,300,500,700,1000]; ...
+            'IB','PP_gSYN',[0:.5:3.5]/10; ...
+            %'IB','poissScaling',[100,200,300,500,700,1000]; ...
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
@@ -680,7 +681,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 550;    % ms, onset time
+        PPonset = 1000;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-300;   % ms, offset time
         %PPoffset=270;   % ms, offset time
@@ -895,6 +896,15 @@ if save_figures
     if include_LTS && length(data) > 1
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height};
+    end
+    
+    
+    % Waveform plots
+    if include_IB && length(data) > 1
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figheight',chosen_height};
     end
