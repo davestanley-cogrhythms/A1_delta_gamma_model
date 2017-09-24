@@ -31,9 +31,20 @@ if nargin < 4
 
 %% Submit job to cluster
 
+% % % % % Get currrent date time string
+mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
+sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
+
+% mycommand= ['qsub -l h_rt=' num2str(myhours) ':30:00 ' ...      % Sim runtime
+%     '-pe omp ' num2str(Ncores) ' -l cpu_arch=broadwell ' ...             % Number of cores
+%     'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',''' cellID ''')" localOutput'];
+
 mycommand= ['qsub -l h_rt=' num2str(myhours) ':30:00 ' ...      % Sim runtime
     '-pe omp ' num2str(Ncores) ' -l cpu_arch=broadwell ' ...             % Number of cores
-    'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',''' cellID ''')" localOutput'];
+    '-o cluster_' filename '_' cellID '.o.' sp ' '...                   % Output file
+    '-e cluster_' filename '_' cellID '.e.' sp ' '...                   % Error file
+    '-N job' cellID ' ' ...                                             % Job name
+    'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',''' cellID ''')"'];
 
 system([mycommand]);
 %'mem_total=95G'

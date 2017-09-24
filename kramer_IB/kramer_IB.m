@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !module list
 
 tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -59,6 +59,8 @@ include_deepFS = 0;
 % % % % % Set default kernel type
 kerneltype_IB = 2;
 
+% % % % % Default repo study name
+repo_studyname = 'batch01';
 
 % Overwrite master parameters as needed, before deriving the rest.
 if function_mode
@@ -70,7 +72,6 @@ end
 
 % % % % % Options for saving figures to png for offline viewing
 save_figures_move_to_Figs_repo = false;
-    repo_studyname = 'batch01';
 ind_range = [tspan(1) tspan(2)];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
@@ -123,7 +124,7 @@ save_results_flag = double(~isempty(plot_options));         % If plot_options is
 verbose_flag = 1;
 random_seed = 'shuffle';
 random_seed = 2;
-study_dir = ['study_' sp];
+study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
 
@@ -536,7 +537,7 @@ switch sim_mode
             %'IB','stim2',-1*[-0.5:0.5:1]; ...
             %'RS','stim2',-1*[1.6:.2:2.2]; ...
             %'RS->LTS','g_SYN',[0.2:0.2:0.8]/Nrs;...
-            'IB','PP_gSYN',[0:.25:1.75]/10; ...
+            'IB','PP_gSYN',[0:.125:.875]/10; ...
             %'IB','poissScaling',[100,200,300,500,700,1000]; ...
             };
     case 9  % Vary RS cells in RS-FS network
@@ -564,7 +565,6 @@ switch sim_mode
 %             'RS','stim2',-1*[1.9:.2:2.5]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
             %'IB','PP_gSYN',[.15:.05:.3]; ...
-            %'NG->RS','gGABAB',[0.4:0.2:1.0]/Nng;...
             };
         
     case 10     % Previous inverse PAC code
@@ -598,8 +598,9 @@ switch sim_mode
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
-            %'IB','PP_gSYN',[0:.25:0.75]/10; ...
-            'dFS5->IB','g_SYN',[0,0.2:0.05:0.4,0.6]/Nfs;...
+            'IB','PP_gSYN',[0:.25:1]/10; ...
+            %'dFS5->IB','g_SYN',[0:0.05:0.3]/Nfs;...
+            'NG->RS','gGABAB',[0.4:0.1:.9]/Nng;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
             %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
 %             'RS->NG','gNMDA',[1:1:6]/Nib;...
@@ -792,7 +793,7 @@ include_kramer_IB_simulate;
 if save_figures
     % mysaves
     
-    save_composite_figures = 0;
+    save_composite_figures = 1;
     save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
     
     % Plotting composite figures
@@ -806,9 +807,9 @@ if save_figures
 
         p = gcp('nocreate');
         if ~isempty(p) && parallel_flag
-            parfor i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+            for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['FigC ' num2str(i)],'prepend_date_time',false); end
         else
-            for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false); end
+            for i = 1:length(xp_img.data{1}); dsPlot2(xp_img,'saved_fignum',i,'supersize_me',true,'save_figname_path',save_path,'save_figname_prefix',['FigC ' num2str(i)],'prepend_date_time',false); end
         end
     end
    
@@ -908,10 +909,10 @@ if save_figures
     end
     
     if include_LTS && length(data) > 1
-%         i=i+1;
-%         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
-%             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%             'figheight',chosen_height};
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',chosen_height};
     end
     
     
@@ -935,14 +936,18 @@ if save_figures
     tv2 = tic;
     p = gcp('nocreate');
     if ~isempty(p) && parallel_flag
-        parfor i = 1:length(parallel_plot_entries)
-            feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end});
+        try
+            parfor i = 1:length(parallel_plot_entries)
+                feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end});
+            end
+            fprintf('Elapsed time for parallel saving plots is: %g\n',toc(tv2));
+        catch
+            warning('Error, parallel pool failed. Saving figs serially');
+            for i = 1:length(parallel_plot_entries); feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end}); end
+            fprintf('Elapsed time for serial saving plots is: %g\n',toc(tv2));
         end
-        fprintf('Elapsed time for parallel saving plots is: %g\n',toc(tv2));
     else
-        for i = 1:length(parallel_plot_entries)
-            feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end});
-        end
+        for i = 1:length(parallel_plot_entries); feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end}); end
         fprintf('Elapsed time for serial saving plots is: %g\n',toc(tv2));
     end
     

@@ -71,17 +71,24 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     if ~isempty(study_dir)
         % Copy study info file
         if exist(fullfile(study_dir,'studyinfo.mat'),'file')
-            copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
+            fprintf(['Copying ' fullfile(study_dir,'studyinfo.mat') ' to ' fullfile(basepath,sp) '\n']);
+            [~, message] = copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
+            fprintf(['Copymessage: ' message '\n']);
         end
 
         % Copy raw plots if not empty
         if exist(fullfile(study_dir,'plots'),'dir')
-            copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
+            fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' fullfile(basepath,sp,'plots') '\n']);
+            [~, message] = copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
+            fprintf(['Copymessage: ' message '\n']);
+            
         end
 
         % Copy saved composite plots if not empty
         if exist(fullfile(study_dir,'Figs_Composite'),'dir')
-            copyfile(fullfile(study_dir,'Figs_Composite'),fullfile(basepath,sp));
+            fprintf(['Copying ' fullfile(study_dir,'Figs_Composite') ' to ' fullfile(basepath,sp) '\n']);
+            [~, message] = copyfile(fullfile(study_dir,'Figs_Composite'),fullfile(basepath,sp));
+            fprintf(['Copymessage: ' message '\n']);
         end
     end
     

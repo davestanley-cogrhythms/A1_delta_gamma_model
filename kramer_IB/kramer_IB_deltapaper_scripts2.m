@@ -58,7 +58,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig3a_lowfreq' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[15,20,25,28,30,33,35,37]; ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[15,20,25,28,30,33,35,37]; ...
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
@@ -79,7 +79,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig3b_highfreq' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[50,65,85,105]; ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[50,65,85,105]; ...
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
@@ -178,7 +178,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig6a_onset' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
@@ -237,7 +237,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig7b_2Hz_FSIB40Hz' num2str(f)];
+        s{f}.repo_studyname = ['DeltaFig7c_2Hz_FSIB40Hz' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
         s{f}.kerneltype_IB = 4;
@@ -273,7 +273,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '8b'
-        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        %% Paper 8b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
         % Setup
         clear s
         f=1;
@@ -294,7 +294,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '8c'
-        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        %% Paper 8c - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
         % Setup
         clear s
         f=1;
@@ -303,7 +303,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig8c_Onset_FSIB40Hz' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.kerneltype_IB = 4;
+        s{f}.kerneltype_IB = 2;
         Nfs = 20;
         s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
             };

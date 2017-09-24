@@ -8,7 +8,6 @@
 
 function kramer_IB_deltapaper_tune1(chosen_cell)
 
-suffixname = '';
 
 switch chosen_cell
     case '1a'
@@ -18,8 +17,10 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1a' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['tune1Fig1a' num2str(f)];
         s{f}.ap_pulse_num = 0;
+        s{f}.tspan=[0 3500];
+        s{f}.PPonset=1200;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -30,8 +31,9 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b' num2str(f) '_' suffixname];
-
+        s{f}.repo_studyname = ['tune1Fig1b' num2str(f)];
+        s{f}.tspan=[0 3500];
+        s{f}.PPonset=1200;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
 
@@ -41,8 +43,10 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1c' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['tune1Fig1c' num2str(f)];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
+        s{f}.tspan=[0 3500];
+        s{f}.PPonset=1200;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -53,9 +57,11 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig2a' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['tune1Fig2a' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
+        s{f}.tspan=[0 3500];
+        s{f}.PPonset=1200;
         
         datapf2a = kramer_IB_function_mode(s{f},f);
 

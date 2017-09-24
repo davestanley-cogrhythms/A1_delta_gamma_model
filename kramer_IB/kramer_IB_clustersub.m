@@ -30,23 +30,26 @@ clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
 
 %% Delta training figures
 
-myhours = 0;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
+myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
 
-clustersub('kramer_IB_deltapaper_tune1','1a',1,myhours);
-clustersub('kramer_IB_deltapaper_tune1','1b',1,myhours);
-clustersub('kramer_IB_deltapaper_tune1','1c',1,myhours);
-clustersub('kramer_IB_deltapaper_tune1','2a',1,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1a',12,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b',12,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1c',12,myhours);
+clustersub('kramer_IB_deltapaper_tune1','2a',12,myhours);
 
 %% Job progress
 !qstat -u stanleyd
 clc; !cat localOutput
 clc; !cat matlab_multi_node_batch.sh.*
-
+clc; !cat cluster_*.o.*
+clc; !cat cluster_*.e.*
 
 %% List temp output files progress
 clc
 !ls -la localOutput
 !ls -la matlab_multi_node_batch.sh.*
+!ls -la cluster_*
+
 
 
 
@@ -61,5 +64,6 @@ clc
 %% Remove temp output files
 !rm localOutput 
 !rm matlab_multi_node_batch.sh.*
-
+!rm cluster_*.o.*
+!rm cluster_*.e.*
 
