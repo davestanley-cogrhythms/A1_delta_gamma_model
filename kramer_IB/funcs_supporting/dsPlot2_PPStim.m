@@ -4,8 +4,12 @@ function varargout = dsPlot2_PPStim (data,varargin)
 
     % get rid of any "all" inputs
     v2 = varargin;
-    inds = cellfun(@ischar,v2);
-    v2(inds) = cellfun(@(s) strrep(s,'all',':'),v2(inds),'UniformOutput',0);
+    inds = find(strcmp(v2,'all'));
+    for i = inds
+        v2{i} = ':';
+    end
+    
+    
 
     options=dsCheckOptions(v2,{...
       'population',[],[],...          % [beg,end] (units must be consistent with dt and equations)  
