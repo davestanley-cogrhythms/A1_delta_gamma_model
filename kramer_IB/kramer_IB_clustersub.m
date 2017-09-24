@@ -2,7 +2,7 @@
 
 %% Delta paper figures
 
-myhours = 0;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
+myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
 
 
 clustersub('kramer_IB_deltapaper_scripts2','1a',1,myhours);
@@ -14,13 +14,19 @@ clustersub('kramer_IB_deltapaper_scripts2','3b',4,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','4a',6,myhours);
 
-
-
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','6a',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);
+
+clustersub('kramer_IB_deltapaper_scripts2','7a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','7b',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','7c',8,myhours);
+
+clustersub('kramer_IB_deltapaper_scripts2','8a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','8b',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
 
 %% Delta training figures
 

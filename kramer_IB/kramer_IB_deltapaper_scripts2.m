@@ -230,6 +230,90 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
+    case '7c'
+        %% Paper 7c - Characterize delta rhythm - block Poisson input; allow FS gamma
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig7b_2Hz_FSIB40Hz' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.kerneltype_IB = 4;
+        Nfs = 20;
+        s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.tspan=[0 5500];
+        s{f}.IB_PP_gSYN=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8a'
+        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep Poisson
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8a_OnsetPoisson' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 1200;
+        s{f}.deep_gNaF=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8b'
+        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8b_OnsetPoiss40Hz' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.kerneltype_IB = 2;
+        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 1200;
+        s{f}.deep_gNaF=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8c'
+        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8c_Onset_FSIB40Hz' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.kerneltype_IB = 4;
+        Nfs = 20;
+        s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 1200;
+        s{f}.IB_PP_gSYN=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
 end
 
 end
