@@ -12,12 +12,19 @@ function startup_DynaSimDave
 %     'DefaultTextFontSize', get_fontlevel(4)*scaling_factor, ...
 %     'DefaultAxesFontSize', get_fontlevel(2)*scaling_factor);
     
+    % Add DynaSim
     addpath(genpath(fullfile(pwd,'DynaSim')));
     
     % Add libdave path
     addpath(genpath(fullfile('~','src','ds_kb3','funcs_general','lib_dav')));
     
+    % Add supporting functions
     addpath(genpath(fullfile(pwd,'supporting_funcs')));
     addpath(pwd);
+    
+    % Add kramerIB supporting functions
+    addpath(genpath(fullfile(pwd,'kramer_IB','funcs_supporting')));
+    addpath(genpath(fullfile(pwd,'kramer_IB','funcs_supporting_xPlt')));
+    addpath(genpath(fullfile(pwd,'kramer_IB','funcs_Ben')));
     
 end

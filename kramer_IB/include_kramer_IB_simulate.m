@@ -3,7 +3,7 @@
 
 
 % Set up parallel pool if needed
-if length(vary) >= 3
+if length(vary) >= 3 && ~cluster_flag
     Nvary = length(vary{3});
     if Nvary > 1 && parallel_flag
         try
@@ -18,21 +18,19 @@ end
 
 
 tv2 = tic;
+
 if cluster_flag
+    parallel_flag = 0;
+end
+
     mexpath = fullfile(pwd,'mexes');
     [data,studyinfo]=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
         'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',study_dir,...
         'compile_flag',compile_flag,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mex_dir',mexpath,...
         plot_args{:});
     
+if cluster_flag
     return
-
-else
-    mexpath = fullfile(pwd,'mexes');
-    [data,studyinfo]=dsSimulate(spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
-        'random_seed',random_seed,'vary',vary,'verbose_flag',1,'parallel_flag',parallel_flag,'cluster_flag',cluster_flag,'study_dir',study_dir,...
-        'compile_flag',compile_flag,'save_data_flag',save_data_flag,'save_results_flag',save_results_flag,'mex_dir',mexpath,...
-        plot_args{:});
 end
 
 % % % % % % % % % % ##4.2 Post process simulation data % % % % % % % % % %
@@ -48,7 +46,7 @@ pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
-pop_struct.NdFS5 = Nfs;
+pop_struct.Ndfs5 = Nfs;
 xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = dsMdd2ds(xp);

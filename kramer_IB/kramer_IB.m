@@ -12,8 +12,11 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from master parameters. Put
 % these master parameters first!
 
-tspan=[0 2500];
-sim_mode = 8;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+% List loaded modules
+!module list
+
+tspan=[0 1500];
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -44,12 +47,12 @@ NMDA_block = 0;
 
 
 % % % % % Cells to include in model
-include_IB = 1;
-include_RS = 1;
-include_FS = 1;
-include_LTS =1;
-include_NG = 1;
-include_dFS5 = 0;
+include_IB =   1;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
+include_NG =   1;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -592,14 +595,15 @@ switch sim_mode
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
-            %'dFS5->IB','g_SYN',[0, 0.1:0.025:0.2]/Nfs;...
+            %'IB','PP_gSYN',[0:.25:0.75]/10; ...
+            'dFS5->IB','g_SYN',[0,0.2:0.05:0.4,0.6]/Nfs;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
             %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
 %             'RS->NG','gNMDA',[1:1:6]/Nib;...
             %'RS->NG','gNMDA',[0:1:5]/Nib*0.00001;...
             %'FS->IB','g_SYN',[.5:.1:.7]/Nfs;...
             %'IB->RS','g_SYN',[0.01:0.003:0.03]/Nib;...
-            'IB->RS','gNMDA',[3:8]/Nib;...
+            %'IB->RS','gNMDA',[3:8]/Nib;...
             %'IB->NG','gNMDA',[5,7,9,11]/Nib;...
             % For NMDA block conditions
             %'IB->NG','gNMDA',[0.005,0.007,0.009,0.011]/Nib;...
@@ -681,7 +685,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 1000;    % ms, onset time
+        PPonset = 500;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-300;   % ms, offset time
         %PPoffset=270;   % ms, offset time
