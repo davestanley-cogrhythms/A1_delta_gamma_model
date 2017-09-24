@@ -23,9 +23,11 @@ function xp = calc_synaptic_totals(xp,pop_struct);
             Npre = pop_struct.(['N' lower(name_pre)]);
             if isnumeric(vals_curr)
                 vals_curr = vals_curr * Npre;
-            end
+            else
+                fprintf('Note: Scaling value of g_SYN in vary statement by Npre=%d failed for population %s \n',Npre,ax_curr);
+            end  
         else
-            fprintf('Note: Scaling value of g_SYN in vary statement by Npre=%d failed for population %s \n',Npre,ax_curr);
+                fprintf('Note: Scaling value of population %s failed \n',ax_curr);
         end
         ax_vals{i} = vals_curr;
     end
