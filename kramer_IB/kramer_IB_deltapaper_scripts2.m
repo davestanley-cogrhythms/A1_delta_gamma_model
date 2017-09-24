@@ -8,8 +8,6 @@
 
 function kramer_IB_deltapaper_scripts2(chosen_cell)
 
-suffixname = '';
-
 switch chosen_cell
     case '1a'
         %% Paper Figs 1a - Pulse train no AP
@@ -19,7 +17,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1a' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig1a' num2str(f)];
         s{f}.ap_pulse_num = 0;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
@@ -32,7 +30,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1b' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig1b' num2str(f)];
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -43,7 +41,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1c' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig1c' num2str(f)];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         
         datapf1c = kramer_IB_function_mode(s{f},f);
@@ -57,7 +55,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig3a_lowfreq' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig3a_lowfreq' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
         s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[15,20,25,28,30,33,35,37]; ...
@@ -78,7 +76,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig3b_highfreq' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig3b_highfreq' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
         s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPfreq',[50,65,85,105]; ...
@@ -98,7 +96,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig4_lakatos' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig4_lakatos' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
         s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1, 1.25, 1.5, 1.75, 2])];...
@@ -118,7 +116,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig5a_iPAC' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig5a_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
         s{f}.kerneltype_IB = 4;
@@ -138,7 +136,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig5b_iPAC' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig5b_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
         s{f}.kerneltype_IB = 4;
@@ -158,7 +156,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig5c_iPAC' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig5c_iPAC' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
         s{f}.kerneltype_IB = 4;
@@ -168,8 +166,7 @@ switch chosen_cell
         s{f}.deep_gNaF=0;
         
         datapf5c = kramer_IB_function_mode(s{f},f);
-        
-        
+   
     case '6a'
         %% Paper Fig 6a - Vary onset
         
@@ -178,7 +175,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig6a_onset' num2str(f) '_' suffixname];
+        s{f}.repo_studyname = ['DeltaFig6a_onset' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
         s{f}.vary = { '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
@@ -190,6 +187,48 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         
         datapf3c = kramer_IB_function_mode(s{f},f);
+        
+        
+             
+    case '7a'
+        %% Paper 7a - Characterize delta rhythm - block gamma input; sweep Poisson
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig7a_2HzPoisson' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.tspan=[0 5500];
+        s{f}.deep_gNaF=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '7b'
+        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig7b_2HzPoiss40Hz' num2str(f)];
+        s{f}.ap_pulse_num = 0;
+        s{f}.sim_mode = 1;
+        s{f}.kerneltype_IB = 2;
+        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.tspan=[0 5500];
+        s{f}.deep_gNaF=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
         
 end
 

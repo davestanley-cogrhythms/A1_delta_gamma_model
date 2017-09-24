@@ -1,8 +1,17 @@
 
 
-function varargout = dsPlot2_PPStim (varargin)
+function varargout = dsPlot2_PPStim (data,varargin)
 
-    data = varargin{1};
+    % get rid of any "all" inputs
+    v2 = varargin;
+    inds = cellfun(@ischar,v2);
+    v2(inds) = cellfun(@(s) strrep(s,'all',':'),v2(inds),'UniformOutput',0);
+
+    options=dsCheckOptions(v2,{...
+      'population',[],[],...          % [beg,end] (units must be consistent with dt and equations)  
+      'variable',[],[],...          % [beg,end] (units must be consistent with dt and equations)  
+      },false);
+
     
     % Isolates the PPStim pulse train information
     xp = dsAll2mdd(data);
@@ -35,9 +44,13 @@ function varargout = dsPlot2_PPStim (varargin)
     end
     
     xpp = xpp.squeezeRegexp('variables');
+    
+    if ~isempty(options.population)
+        xpp = xpp.axisSubset('population',options.population);
+    end
 
     % Call dsPlot2 supplying this custom function handle.
     varargout = cell(1,nargout);
-    [varargout{1:nargout}] = dsPlot2(data,varargin{2:end},'subplot_handle',@(xp,op) xp_subplot_grid_PPStim(xp,op,xpp));
+    [varargout{1:nargout}] = dsPlot2(data,varargin{:},'subplot_handle',@(xp,op) xp_subplot_grid_PPStim(xp,op,xpp));
 
 end

@@ -56,7 +56,6 @@ switch chosen_cell
         s{f}.repo_studyname = ['tune1Fig2a' num2str(f) '_' suffixname];
         s{f}.ap_pulse_num = 0;
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
-        s{f}.poissScaling = 200;
         
         datapf2a = kramer_IB_function_mode(s{f},f);
 
