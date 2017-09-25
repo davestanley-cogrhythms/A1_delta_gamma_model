@@ -43,6 +43,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c' num2str(f)];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
+        s{f}.tspan=[0 2500];
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         

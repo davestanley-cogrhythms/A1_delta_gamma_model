@@ -78,9 +78,20 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 
         % Copy raw plots if not empty
         if exist(fullfile(study_dir,'plots'),'dir')
-            fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' fullfile(basepath,sp,'plots') '\n']);
-            [~, message] = copyfile(fullfile(study_dir,'plots'),fullfile(basepath,sp,'plots'));
-            fprintf(['Copymessage: ' message '\n']);
+            try       % % % % % Delete this later once know code works % % % % % 
+                plots_folder = fullfile(study_dir,'plots');
+                D = dir(plots_folder);
+                plots_thresh = 17;
+                if length(D) < plots_thresh
+                    fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' fullfile(basepath,sp,'plots') '\n']);
+                    [~, message] = copyfile(plots_folder,fullfile(basepath,sp,'plots'));
+                    fprintf(['Copymessage: ' message '\n']);
+                else
+                    fprintf(['Skipping saving plots folder due to number of files in ' plots_folder ' being ' num2str(length(D)) ', which is over threshold of ' num2str(plots_thresh) '\n']);
+                end
+            catch
+                warning('Error, backing up plots folder failed. Carrying on.');
+            end
             
         end
 

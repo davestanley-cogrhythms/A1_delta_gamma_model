@@ -417,7 +417,7 @@ if ~no_synapses
         end
     end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.8/Nng;
+    gGABAb_ngrs = 0.7/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
@@ -644,7 +644,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.1;
+IB_PP_gSYN = 0.075;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
