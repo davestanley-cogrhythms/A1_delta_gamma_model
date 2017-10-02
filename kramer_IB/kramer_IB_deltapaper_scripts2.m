@@ -100,7 +100,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig4_lakatos' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG)','PPmaskfreq',[0.01,fliplr([1, 1.25, 1.5, 1.75, 2])];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([1, 1.25, 1.5, 1.75, 2])];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
