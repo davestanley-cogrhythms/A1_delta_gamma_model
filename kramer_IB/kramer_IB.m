@@ -656,8 +656,10 @@ PPtauDx_LTS = tauAMPAd_LTS + jitter_fall;
 PPtauRx_LTS = tauAMPAr_LTS + jitter_rise;
 PP_width = 0.25;
 PPwidth2_rise = 0.25;
-PPmaskfreq = 2;
-PPmaskduration = 100;
+% PPmaskfreq = 2;
+% PPmaskduration = 100;
+PPmaskfreq = 0.8;
+PPmaskduration = 750;
 
 % IB Poisson Noise
 poissScaling = 1000;
