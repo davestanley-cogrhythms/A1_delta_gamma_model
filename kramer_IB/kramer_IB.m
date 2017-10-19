@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !module list
 
 tspan=[0 1500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -692,7 +692,7 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
-        PPonset = 500;    % ms, onset time
+        PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-300;   % ms, offset time
         %PPoffset=270;   % ms, offset time
