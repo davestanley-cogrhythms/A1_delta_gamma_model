@@ -192,7 +192,7 @@ switch chosen_cell
         
              
     case '7a'
-        %% Paper 7a - Characterize delta rhythm - block gamma input; sweep Poisson
+        %% Paper 7a - Characterize delta rhythm - block gamma input; sweep Poisson (use this one for paper, since pure tone)
         % Setup
         clear s
         f=1;
@@ -253,7 +253,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '8a'
-        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep Poisson
+        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep Poisson (use this one for paper, since pure tone)
         % Setup
         clear s
         f=1;
@@ -295,7 +295,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '8c'
-        %% Paper 8c - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        %% Paper 8c - Characterize delta rhythm - Poisson input, sweep gamma dFS->IB
         % Setup
         clear s
         f=1;
