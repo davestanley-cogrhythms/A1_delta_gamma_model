@@ -43,7 +43,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c' num2str(f)];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 3000];
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -100,7 +100,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig4_lakatos' num2str(f)];
         s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([1, 1.25, 1.5, 1.75, 2])];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([1, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4])];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
@@ -185,7 +185,7 @@ switch chosen_cell
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
         s{f}.ap_pulse_num = 0;
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 3000];
         
         datapf3c = kramer_IB_function_mode(s{f},f);
         
@@ -267,11 +267,13 @@ switch chosen_cell
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 3500];
         s{f}.PPonset = 1200;
+        s{f}.PPoffset = 2500;
         s{f}.deep_gNaF=0;
         
         data = kramer_IB_function_mode(s{f},f);
+        
         
     case '8b'
         %% Paper 8b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
@@ -288,8 +290,9 @@ switch chosen_cell
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 3500];
         s{f}.PPonset = 1200;
+        s{f}.PPoffset = 2500;
         s{f}.deep_gNaF=0;
         
         data = kramer_IB_function_mode(s{f},f);
@@ -310,8 +313,9 @@ switch chosen_cell
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 3500];
         s{f}.PPonset = 1200;
+        s{f}.PPoffset = 2500;
         s{f}.IB_PP_gSYN=0;
         
         data = kramer_IB_function_mode(s{f},f);

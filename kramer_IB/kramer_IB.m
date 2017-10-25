@@ -656,7 +656,7 @@ PPtauDx_LTS = tauAMPAd_LTS + jitter_fall;
 PPtauRx_LTS = tauAMPAr_LTS + jitter_rise;
 PP_width = 0.25;
 PPwidth2_rise = 0.25;
-PPmaskfreq = 2;
+PPmaskfreq = 1.75;
 PPmaskduration = 100;
 
 % IB Poisson Noise
@@ -694,10 +694,9 @@ switch pulse_mode
         PPshift = 0; % in ms
         PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
-        %PPoffset = tspan(end)-300;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
+        %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = round((tspan(end)-300)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
