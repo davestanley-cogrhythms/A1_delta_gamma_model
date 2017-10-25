@@ -171,6 +171,10 @@ KDR_offset = 20;
 % % % % % Default sodium values
 deep_gNaF = 100;
 
+% % % % % h-current conductances
+gAR_d=155; % 155, IBda - max conductance of h-channel
+gAR_d=3; % 155, IBda - max conductance of h-channel
+gAR_d=0; % 155, IBda - max conductance of h-channel
 
 % % % % % Parameters for deep RS cells.
 gKs = Cm_factor*0.124;
