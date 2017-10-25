@@ -228,17 +228,21 @@ end
 %% L5 FS Cells
 % % dFS5->dFS5 Synaptic connections
 if include_dFS5
-    ind = find(strcmp({spec.connections.direction},'FS->FS'));  % Find equivalent FS mechanism
+    %ind = find(strcmp({spec.connections.direction},'FS->FS'));  % Find equivalent FS mechanism
     i=i+1;
     spec.connections(i).direction = 'dFS5->dFS5';                  
-    
-    % Import all other values from equivalent FS mechanism
-    spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
-    params_list1 = spec.connections(ind).parameters;
-    myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
-    % ...Insert manipulations here... %
-    params_list2 = dsOptions2Keyval(myoptions); 
-    spec.connections(i).parameters = params_list2;
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_fsfs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'g_GAP',ggjFS,...
+        };
+        
+%     % Import all other values from equivalent FS mechanism
+%     spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
+%     params_list1 = spec.connections(ind).parameters;
+%     myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
+%     % ...Insert manipulations here... %
+%     params_list2 = dsOptions2Keyval(myoptions); 
+%     spec.connections(i).parameters = params_list2;
 end
 
 

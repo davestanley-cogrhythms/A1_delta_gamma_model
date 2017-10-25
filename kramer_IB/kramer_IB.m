@@ -15,7 +15,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 
-tspan=[0 1500];
+tspan=[0 800];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -48,9 +48,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   1;
-include_FS =   1;
-include_LTS =  1;
+include_RS =   0;
+include_FS =   0;
+include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -168,13 +168,13 @@ IC_V = -65;         % Starting membrane potential
 NaF_offset = 10;
 KDR_offset = 20;
 
-% % % % % Default sodium values
+% % % % % Default ionic current values
 deep_gNaF = 100;
-
-% % % % % h-current conductances
+FS_gM = 0;
 gAR_d=155; % 155, IBda - max conductance of h-channel
 gAR_d=3; % 155, IBda - max conductance of h-channel
 gAR_d=0; % 155, IBda - max conductance of h-channel
+
 
 % % % % % Parameters for deep RS cells.
 gKs = Cm_factor*0.124;
@@ -647,12 +647,14 @@ RS_PP_gSYN = 0;
 NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
+dFS_PP_gSYN = 0;
 
 IB_PP_gSYN = 0.075;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
+% dFS_PP_gSYN = 0.15;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
 jitter_rise = 0.0;

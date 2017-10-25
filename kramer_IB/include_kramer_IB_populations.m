@@ -85,7 +85,6 @@ if include_FS
         pulse_train_preset = 2;
     end
 
-    FS_gM = 0;
     i=i+1;
     spec.populations(i).name = 'FS';
     spec.populations(i).size = Nfs;
@@ -165,21 +164,38 @@ if include_RS
 end
 
 %% L5 FS cells
-if include_dFS5
+if include_dFS5    
     ind = find(strcmp({spec.populations.name},'FS'));
     i=i+1;
-    % Inherit properties from default FS cells
     spec.populations(i).name = 'dFS5';           % RS cells layer 5
-    spec.populations(i).size = spec.populations(ind).size;
-    spec.populations(i).equations = spec.populations(ind).equations;
-    spec.populations(i).mechanism_list = spec.populations(ind).mechanism_list;
+    spec.populations(i).size = Nfs;
+    spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
+    spec.populations(i).mechanism_list = {'iPeriodicPulsesiSYNNested','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
+    spec.populations(i).parameters = {...
+      'V_IC',-65,'IC_noise',IC_noise,'Cm',Cm,'E_l',-67,'E_l_std',FS_Eleak_std,'g_l',0.1,...
+      'PPfreq', PPfreq,'PPwidth', PP_width,'PPshift',PPshift,'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', PPwidth2_rise,...
+        'PP_gSYN',dFS_PP_gSYN,'E_SYN',EAMPA,'tauRx',PPtauRx,'tauDx',PPtauDx,'PP_g_SYN_hetero',gsyn_hetero,...
+        'PPmaskfreq',PPmaskfreq,'PPmaskduration',PPmaskduration,'do_nested_mask',do_nested_mask,...
+      'stim',Jfs,'onset',0,'offset',Inf,...
+      'V_noise',FS_Vnoise,...
+      'gNaF',deep_gNaF,'E_NaF',ENa,...
+      'gKDR',80,'E_KDR',E_EKDR,...
+      'gM',FS_gM,'E_M',E_EKDR,...
+      };
     
-    params_list1 = spec.populations(ind).parameters;
-    myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
-    myoptions.gNaF = deep_gNaF;
-    params_list2 = dsOptions2Keyval(myoptions); 
     
-    spec.populations(i).parameters = params_list2;
+%     % % Old codde for inhereting dFS population from superficial population
+%     % (now I'm just hard coding it manually)
+%     spec.populations(i).size = spec.populations(ind).size;
+%     spec.populations(i).equations = spec.populations(ind).equations;
+%     spec.populations(i).mechanism_list = spec.populations(ind).mechanism_list;
+%     
+%     params_list1 = spec.populations(ind).parameters;
+%     myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
+%     myoptions.gNaF = deep_gNaF;
+%     params_list2 = dsOptions2Keyval(myoptions); 
+%     
+%     spec.populations(i).parameters = params_list2;
     
     % Rearrange cells so this one comes after IB cells.
     ind = find(strcmp({spec.populations.name},'IB'));
