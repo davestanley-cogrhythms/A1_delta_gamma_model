@@ -674,6 +674,10 @@ jitter_fall = 0.0;
 jitter_rise = 0.0;
 PPtauDx_LTS = tauAMPAd_LTS + jitter_fall;
 PPtauRx_LTS = tauAMPAr_LTS + jitter_rise;
+PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+ap_pulse_num = 0;                           % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 PP_width = 0.25;
 PPwidth2_rise = 0.25;
 PPmaskfreq = 1.75;
@@ -691,15 +695,12 @@ IB_PP_width = 2;
 switch pulse_mode
     case 0                  % No stimulation
         PPfreq = 0.01; % in Hz
-        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         PPoffset = tspan(end)-0;   % ms, offset time
         %PPoffset=270;   % ms, offset time
-        ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;         
         IB_PP_gSYN = 0;
         RS_PP_gSYN = 0;
@@ -710,7 +711,6 @@ switch pulse_mode
         do_nested_mask = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
-        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
@@ -720,7 +720,6 @@ switch pulse_mode
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
         kernel_type = 1;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
@@ -728,61 +727,13 @@ switch pulse_mode
         
     case 2                  % Median nerve stimulation
         % Disabled for now...
-    case 3                  % Amplitude --> Phase modulation
-        PPfreq = 2; % in Hz
-        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
-        PPshift = 750; % in ms
-        PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
-        kernel_type = 1;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
-        %         deepRSPPstim = -7;
-            % Turn off IB stim; leave RS stim on
-        IB_PP_gSYN = 0;
-        RS_PP_gSYN = 0.15;
-        
-        PP_width = 100;
-        do_nested_mask = 0;
-        
-    case 4                  % Amplitude --> Phase modulation LONG
-        stretchfactor = 1;
-        PPfreq = 2/stretchfactor; % in Hz
-        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
-        PPshift = 500; % in ms
-        PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
-        %PPoffset=270;   % ms, offset time
-        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
-        kernel_type = 1;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
-        %         deepRSPPstim = -7;
-            % Turn off IB stim; leave RS stim on
-        IB_PP_gSYN = 0;
-        RS_PP_gSYN = 0.20;
-        
-        PP_width = 100*stretchfactor;
-        do_nested_mask = 0;
         
     case 5
         PPfreq = 40; % in Hz
-        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
-        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         kernel_type = 1;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
@@ -799,17 +750,11 @@ switch pulse_mode
         LTS_PP_gSYN = 0;
         
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
-        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-500;   % ms, offset time
-        ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         kernel_type = 1;
         deepRSPPstim = -.5;
         deepRSgSpike = 0;
