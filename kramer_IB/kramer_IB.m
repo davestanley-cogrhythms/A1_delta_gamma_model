@@ -15,8 +15,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 
-tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1000];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -24,12 +24,12 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;           % 1 - Don't produce any figures; instead save for offline viewing
+save_figures = 0;           % 1 - Don't produce any figures; instead save for offline viewing
                             % 0 - Display figures normally
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -40,8 +40,8 @@ high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help d
 
 
 % % % % % Simulation switches
-no_noise = 0;
-no_synapses = 0;
+no_noise = 1;
+no_synapses = 1;
 NMDA_block = 0;
 
 
@@ -51,8 +51,8 @@ include_IB =   1;
 include_RS =   0;
 include_FS =   0;
 include_LTS =  0;
-include_NG =   1;
-include_dFS5 = 1;
+include_NG =   0;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -152,15 +152,6 @@ E_EKDR=-95;  % potassium reversal potential for excitatory cells
 IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
 ECa=125;     % calcium reversal potential
 IC_noise=.25;% fractional noise in initial conditions
-if no_noise
-    IC_noise = 0;
-    IBda_Vnoise = 0;
-    IBs_Vnoise = 0;
-    IBdb_Vnoise = 0;
-    IBa_Vnoise = 0;
-    gRAN=0;
-    FSgRAN=0;
-end
 
 IC_V = -65;         % Starting membrane potential
 
@@ -207,7 +198,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=20;    % Default number of cells
+N=2;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -229,7 +220,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=5;    % IB cells
+Jd1=2;    % IB cells
 Jd2=0;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
@@ -251,8 +242,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=50;
-IB_onset2=50;
+IB_offset1=200;
+IB_onset2=200;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
@@ -287,6 +278,25 @@ deepFS_Vnoise = 3;
 %     that stops the IB cells from bursting again. It's okay to put in too
 %     much so that it interrupts the first IB burst.
 %
+
+
+if no_noise
+    IC_noise = 0;
+    
+    % Intrinsic noise
+%     IBda_Vnoise = 0;
+    NG_Vnoise = 0;
+    FS_Vnoise = 0;
+    LTS_Vnoise = 0;
+    RSda_Vnoise = 0;
+    deepRSda_Vnoise = 0;
+    deepFS_Vnoise = 0;
+    
+    % SYnapse noise
+    gRAN=0;      % synaptic noise conductance IB cells
+    RSgRAN=0;   % synaptic noise conductance to RS cells
+    deepRSgRAN = 0; % synaptic noise conductance to deepRS cells
+end
 
 %% % % % % % % % % % % % %  ##2.3 Synaptic connectivity parameters % % % % % % % % % % % % %
 % % Gap junction connections.
@@ -546,11 +556,12 @@ switch sim_mode
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
-            %'LTS','stim',[.75:.25:1.5]; ...
+            %'IB','stim2',[-1:0.25:.75]; ...
+            'IB','stim2',[-1.5:0.5:2]; ...
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
-            'dFS5','PP_gSYN',[.15,.25,.35]; ...
+            %'dFS5','PP_gSYN',[.15,.25,.35]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...

@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:2;
+        handles_arr = 1:6;
         do_commit = 0;
-        currfigname = '163a_add_hetero';
+        currfigname = '164a_IBonly_test_Vresting';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Added code for IB/NG cells to have heterogeneous synapses. Also added option for Eleak channels noisy (e.g. variable resting potential). However, we will disable this for now.'];
+    mycomment = ['Ran several experiments with just IB cells at different stim values. Trying to see if can suppress m-current and h-current.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
