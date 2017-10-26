@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:4;
+        handles_arr = 3:6;
         do_commit = 1;
-        currfigname = '164c_IB_dFS5only_test_GABA_pulse';
+        currfigname = '164d_asbefore_unblock_gAR';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Made deep FS cells fire a single volley with varying strength. Evaluated ability of this to activate IB cells.'];
+    mycomment = ['Unblocked gAR, setting its value to 4. As before, made deep FS cells fire a single volley with varying strength.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
