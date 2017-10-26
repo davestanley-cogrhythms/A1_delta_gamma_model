@@ -40,7 +40,7 @@ high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help d
 
 
 % % % % % Simulation switches
-no_noise = 1;
+no_noise = 0;
 no_synapses = 1;
 NMDA_block = 0;
 
@@ -198,7 +198,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=2;    % Default number of cells
+N=5;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -220,8 +220,8 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=2;    % IB cells
-Jd2=0;    %         
+Jd1=0;    % IB cells
+Jd2=4;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -242,8 +242,9 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=200;
-IB_onset2=200;
+IB_offset1=400;
+IB_onset2=400;
+IB_offset2 = 425;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
@@ -284,7 +285,7 @@ if no_noise
     IC_noise = 0;
     
     % Intrinsic noise
-%     IBda_Vnoise = 0;
+    IBda_Vnoise = 0;
     NG_Vnoise = 0;
     FS_Vnoise = 0;
     LTS_Vnoise = 0;
@@ -557,7 +558,7 @@ switch sim_mode
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'IB','stim2',[-1:0.25:.75]; ...
-            'IB','stim2',[-1.5:0.5:2]; ...
+            'IB','stim',[1:.25:1.75]; ...
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
