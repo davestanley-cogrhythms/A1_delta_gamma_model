@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:8;
+        handles_arr = 1:4;
         do_commit = 1;
-        currfigname = '164b_IBonly_test_inhib_pulse';
+        currfigname = '164c_IB_dFS5only_test_GABA_pulse';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Figs1-4 ran several experiments with increasing hyperpolarizing pulse from 400-425 ms. Figs 7-8 Ran experiments with hyperpolarizing to 4 for 25 ms and stim=2.'];
+    mycomment = ['Made deep FS cells fire a single volley with varying strength. Evaluated ability of this to activate IB cells.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

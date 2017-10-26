@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !module list
 
 tspan=[0 1000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -24,7 +24,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -52,7 +52,7 @@ include_RS =   0;
 include_FS =   0;
 include_LTS =  0;
 include_NG =   0;
-include_dFS5 = 0;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -198,7 +198,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
-N=5;    % Default number of cells
+N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nrs=80; % Number of RS cells
 Nng=N;  % Number of FSNG cells
@@ -220,8 +220,8 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=0;    % IB cells
-Jd2=4;    %         
+Jd1=3;    % IB cells
+Jd2=0;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -242,9 +242,9 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=400;
-IB_onset2=400;
-IB_offset2 = 425;
+IB_offset1=50;
+IB_onset2=50;
+IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
@@ -614,9 +614,9 @@ switch sim_mode
             %'IB','stim2',[-2]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
-            'IB','PP_gSYN',[0:.25:1]/10; ...
-            %'dFS5->IB','g_SYN',[0:0.05:0.3]/Nfs;...
-            'NG->RS','gGABAB',[0.4:0.1:.9]/Nng;...
+            %'IB','PP_gSYN',[0:.25:1]/10; ...
+            'dFS5->IB','g_SYN',[.3:.2:.9]/Nfs;...
+            %'NG->RS','gGABAB',[0.4:0.1:.9]/Nng;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
             %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
 %             'RS->NG','gNMDA',[1:1:6]/Nib;...
@@ -661,12 +661,12 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.075;
+% IB_PP_gSYN = 0.075;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
-% dFS_PP_gSYN = 0.15;
+dFS_PP_gSYN = 0.35;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
 jitter_rise = 0.0;
@@ -713,6 +713,7 @@ switch pulse_mode
         PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-500;   % ms, offset time
+        PPoffset = 424;   % ms, offset time
         ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
