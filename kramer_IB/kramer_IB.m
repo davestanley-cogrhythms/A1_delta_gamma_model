@@ -15,7 +15,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 
-tspan=[0 1000];
+tspan=[0 1500];
 sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -24,7 +24,7 @@ sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 6;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -41,7 +41,7 @@ high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help d
 
 % % % % % Simulation switches
 no_noise = 0;
-no_synapses = 1;
+no_synapses = 0;
 NMDA_block = 0;
 
 
@@ -51,7 +51,7 @@ include_IB =   1;
 include_RS =   0;
 include_FS =   0;
 include_LTS =  0;
-include_NG =   0;
+include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
@@ -163,8 +163,8 @@ KDR_offset = 20;
 deep_gNaF = 100;
 FS_gM = 0;
 gAR_d=155; % 155, IBda - max conductance of h-channel
-gAR_d=3; % 155, IBda - max conductance of h-channel
-gAR_d=0; % 155, IBda - max conductance of h-channel
+gAR_d=4; % 155, IBda - max conductance of h-channel
+% gAR_d=0; % 155, IBda - max conductance of h-channel
 
 
 % % % % % Parameters for deep RS cells.
@@ -221,7 +221,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % depolarizing.
 % #mystim
 Jd1=3;    % IB cells
-Jd2=0;    %         
+Jd2=2;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -476,7 +476,7 @@ if ~no_synapses
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
-        gGABAa_fsib=0.5/Nfs;                        % FS -> IB
+        gGABAa_fsib=0.9*3/Nfs;                        % FS -> IB
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -612,12 +612,12 @@ switch sim_mode
     case 12     % Vary IB cells
         vary = { %'IB','PPstim',[-1:-1:-5]; ...
             %'NG','PPstim',[-7:1:-1]; ...
-            'IB','stim2',[1:4]; ...
+            'IB','stim2',[1:2:7]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
-            'dFS5->IB','g_SYN',[0.9]/Nfs;...
-            'IB','gAR',[4]; ...
+            %'dFS5->IB','g_SYN',[0.5, 0.9,1.8,2.7]/Nfs;...
+            %'IB','gAR',[0,2]; ...
             %'NG->RS','gGABAB',[0.4:0.1:.9]/Nng;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
             %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
@@ -663,12 +663,12 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-% IB_PP_gSYN = 0.075;
+IB_PP_gSYN = 0.075;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
-dFS_PP_gSYN = 0.35;
+% dFS_PP_gSYN = 0.35;
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
 jitter_rise = 0.0;
@@ -715,7 +715,6 @@ switch pulse_mode
         PPonset = 400;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-500;   % ms, offset time
-        PPoffset = 424;   % ms, offset time
         ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
@@ -789,6 +788,36 @@ switch pulse_mode
         deepRSgSpike = 0;
         %         deepRSPPstim = -7;
         do_nested_mask = 1;
+        
+    case 6                                  % Polley stim
+        % Stimulate deep FS cells, everything else set to zero.
+        dFS_PP_gSYN = 0.65;
+        IB_PP_gSYN = 0;
+        RS_PP_gSYN = 0;
+        NG_PP_gSYN = 0;
+        FS_PP_gSYN = 0;
+        LTS_PP_gSYN = 0;
+        
+        PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
+        PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
+        PPshift = 0; % in ms
+        PPonset = 400;    % ms, onset time
+        PPoffset = tspan(end);   % ms, offset time
+        %PPoffset = tspan(end)-500;   % ms, offset time
+        ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
+        kernel_type = 1;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        do_nested_mask = 1;
+        
+        PPmaskfreq = 2.0;
+        PPmaskduration = 50;
+
 end
 
 % if function_mode, return, end

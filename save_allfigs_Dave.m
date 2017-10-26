@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 3:6;
+        handles_arr = 1:4;
         do_commit = 1;
-        currfigname = '164d_asbefore_unblock_gAR';
+        currfigname = '165a_switched_to_110Hz_dFSr';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Unblocked gAR, setting its value to 4. As before, made deep FS cells fire a single volley with varying strength.'];
+    mycomment = ['Unblocked gAR, setting its value to 4. Added pulse mode 6, which causes deep FS cells to fire in bursts of 5 APs at 110 Hz. This activates IB cells quite well!'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
