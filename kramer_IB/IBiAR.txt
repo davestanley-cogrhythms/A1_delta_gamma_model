@@ -1,3 +1,19 @@
+% Kinetics taken from Kramer et al 2008. 
+% Original Kinetics in Huguenard et al., 1992 (page 8).
+% 
+% Original values from Huguenard et al are:
+% AR_V12 = -75.0
+% c_ARaM = 1
+% c_ARbM = 1
+% Original kinetics from Kramer et al are:
+% c_ARaM = 1.75
+% c_ARbM = 0.5
+%
+% References:
+% Kramer, M. a., Roopun, A. K., Carracedo, L. M., Traub, R. D., Whittington, M. a., & Kopell, N. J. (2008). Rhythm generation through period concatenation in rat somatosensory cortex. PLoS Computational Biology, 4(9). http://doi.org/10.1371/journal.pcbi.1000169
+% Huguenard, J. R., & McCormick, D. A. (1992). Simulation of the currents involved in rhythmic oscillations in thalamic relay neurons. Journal of Neurophysiology, 68(4), 1373?1383. Retrieved from http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=1279135&retmode=ref&cmd=prlinks%5Cnfile:///Journal of neurophysiology%5CSimulation of the currents involved in rhythmic oscillations in thalamic relay neurons. - 1992.pdf
+
+
 AR_V12 = [-87.5]
 AR_k = [-5.5]
 gAR = [115]
