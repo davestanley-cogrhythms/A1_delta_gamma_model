@@ -11,26 +11,32 @@ STPnorm = 1;
 
 % Time series properties
 Tend=T(end); 	    % ms, max simulation duration
-dt = 0.01;        % ms, time step duration
+% dt = 0.01;        % ms, time step duration
 STPonset = 500;    % ms, onset time
 STPoffset = Inf;   % ms, offset time
 
 STPkernelType = 7;
-STPwidth2rise = 0.25;
+STP_width2rise = 0.25;
+dsfact = 10;
 
-s2 = getPulseFast(STPwidth,STPshift,Tend+STPonset,dt,0,STPoffset,Npop,STPkernelType,STPwidth2rise,STPcenter,STPnorm,0);
+s2 = getPulseFast(STPwidth,STPshift,Tend+STPonset,dt,0,STPoffset,Npop,STPkernelType,STP_width2rise,STPcenter,STPnorm,0);
 
 % Functions
-spikeIndicator(t) = abs(t-tspike(1,:)-dt)<=dt | abs(t-tspike(2,:)-dt)<=dt
-pulse_index(t) = int64(max((t-triggeringSpikeTime+1),1)./dt)
-input(t) = (triggeringSpikeTime>0).*(t>triggeringSpikeTime).*s2(pulse_index(t),:)
+spikeIndicator(t) = abs(t-tspike(1,:)-dt)<=.5*dt | abs(t-tspike(2,:)-dt)<=.5*dt
+dsNdt(t) = double((t>=STPonset)&spikeIndicator(t))./(dt)
+firstSpikeIndicator(t) = spikeNumber == 0
+% (spikeNumber>0)&(spikeNumber<=.5)
+dtSTdt(t) = double((t>=STPonset)&firstSpikeIndicator(t)&spikeIndicator(t)).*max(tspike)./(dt)
+pulseIndex(t) = int64(max((t-triggeringSpikeTime+1),1)./dt)
+input(t) = double((triggeringSpikeTime>0)&(t>triggeringSpikeTime)).*s2(pulseIndex(t),:)
 Iext(t) = STPstim*input(t)
 
 % ODEs & ICs
-spikeNumber' = int64((t>=STPonset)&spikeIndicator(t)).*1./(dt); 
+spikeNumber' = dsNdt(t); 
 % (t>=STPonset)&((t>=(tspike(1,:)+dt)&t<=(tspike(1,:)+dt))|(t>=(tspike(2,:)+dt)&t<=(tspike(2,:)+dt)))./(dt);
+triggeringSpikeTime' = dtSTdt(t);
+% double(firstSpikeIndicator(t)&spikeIndicator(t)).*max(tspike)./(dt);
 spikeNumber(0) = zeros(1,Npop);
-triggeringSpikeTime' = ((spikeNumber>0)&(spikeNumber<=.5))&spikeIndicator(t).*tspike(1,:)./(dt);
 triggeringSpikeTime(0) = zeros(1,Npop);
 
 @current += -Iext(t)
