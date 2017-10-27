@@ -476,7 +476,7 @@ if ~no_synapses
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
-        gGABAa_fsib=0.9*3/Nfs;                        % FS -> IB
+        gGABAa_fsib=0.3/Nfs;                        % FS -> IB
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -760,7 +760,7 @@ switch pulse_mode
         deepRSgSpike = 0;
         do_nested_mask = 1;
         
-        PPmaskfreq = 2.0;
+        PPmaskfreq = 2.5;
         PPmaskduration = 50;
 
 end
