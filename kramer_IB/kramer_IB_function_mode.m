@@ -28,6 +28,8 @@ include_kramer_IB_synapses;
 
 save(fullfile(savepath, [name, '_sim_spec.mat']), 'sim_spec', 'sim_struct', 'vary', 'name');
 
+solver
+
 if cluster_flag
     
     data = dsSimulate(sim_spec,'tspan',tspan,'dt',dt,'downsample_factor',dsfact,'solver',solver,'coder',0,...
