@@ -128,7 +128,7 @@ switch chosen_cell
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
-        dsPlot2_PPStim(datapf9b(end),'plot_type','waveform')
+        %dsPlot2_PPStim(datapf9b(end),'plot_type','waveform')
 
 
 end
