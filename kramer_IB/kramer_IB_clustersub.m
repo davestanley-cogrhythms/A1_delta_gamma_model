@@ -37,6 +37,8 @@ clustersub('kramer_IB_deltapaper_tune1','1b',12,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1c',12,myhours);
 clustersub('kramer_IB_deltapaper_tune1','2a',12,myhours);
 
+clustersub('kramer_IB_deltapaper_tune1','9b',8,myhours);
+
 %% Job progress
 !qstat -u stanleyd
 clc; !cat localOutput

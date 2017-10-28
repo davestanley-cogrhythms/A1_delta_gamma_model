@@ -117,14 +117,14 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9a_polleytune' num2str(f)];
+        s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f)];
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 5500];
+        s{f}.tspan=[0 6500];
         IB_offset1 = 0;
         IB_onset2 = 0;
 
         % Adjust timing of stimuli to coincide with pulse at 450 ms
-        s{f}.PPonset = 1500;    % ms, onset time
+        s{f}.PPonset = 2000;    % ms, onset time
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         

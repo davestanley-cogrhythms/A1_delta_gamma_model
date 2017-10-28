@@ -81,7 +81,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
             try       % % % % % Delete this later once know code works % % % % % 
                 plots_folder = fullfile(study_dir,'plots');
                 D = dir(plots_folder);
-                plots_thresh = 17;
+                plots_thresh = 50;
                 if length(D) < plots_thresh
                     fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' fullfile(basepath,sp,'plots') '\n']);
                     [~, message] = copyfile(plots_folder,fullfile(basepath,sp,'plots'));
