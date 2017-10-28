@@ -15,8 +15,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 
-tspan=[0 1500];
-sim_mode = 12;              % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1000];
+sim_mode = 1;              % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -24,7 +24,7 @@ sim_mode = 12;              % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 6;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -51,8 +51,8 @@ include_IB =   1;
 include_RS =   0;
 include_FS =   0;
 include_LTS =  0;
-include_NG =   1;
-include_dFS5 = 1;
+include_NG =   0;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
