@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !module list
 
 tspan=[0 3500];
-sim_mode = 12;              % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -228,8 +228,8 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=3;    % IB cells
-Jd2=2;    %         
+Jd1=5;    % IB cells
+Jd2=0;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -620,7 +620,7 @@ switch sim_mode
     case 12     % Vary IB cells
         vary = { %'IB','PPstim',[-1:-1:-5]; ...
             %'NG','PPstim',[-7:1:-1]; ...
-            'IB','stim2',[1:8]; ...
+            'IB','stim2',[0:0.5:1.5, 2:5]; ...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
