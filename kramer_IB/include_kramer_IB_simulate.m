@@ -114,6 +114,6 @@ if include_IB; data = dsThevEquiv(data,{'IB_IB_IBaIBdbiSYNseed_ISYN'},'IB_V',[0]
 % % Calculate averages across cells (e.g. mean field)
 data2 = dsCalcAverages(data);
 
-toc(tv2);
+fprintf('Elapsed time for running simulations is %g\n', toc(tv2));
 
     
