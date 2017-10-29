@@ -24,7 +24,7 @@ sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 6;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -53,7 +53,7 @@ include_RS =   0;
 include_FS =   0;
 include_LTS =  0;
 include_NG =   1;
-include_dFS5 = 0;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -66,7 +66,7 @@ kerneltype_IB = 2;
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
-% gAR_d=1; % 155, IBda - max conductance of h-channel
+gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
@@ -172,7 +172,7 @@ FS_gM = 0;
 %#gar
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
-gAR_d=0; % 155, IBda - max conductance of h-channel
+% gAR_d=0; % 155, IBda - max conductance of h-channel
 
 
 % % % % % Parameters for deep RS cells.
@@ -229,7 +229,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=0;    %         
+Jd2=0.5;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -425,7 +425,7 @@ if ~no_synapses
     gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.4/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
 %     gAMPA_ibLTS=0.02/Nib;
@@ -584,7 +584,7 @@ switch sim_mode
             %'LTS','shuffle',[1:4];...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
-            %'NG->IB','gGABAB',[.9:.1:1.2]/Nng;...
+            'NG->IB','gGABAB',[.4:.1:1.1]/Nng;...
             %'NG->NG','g_SYN',[.1:.1:.4]/Nng;...
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'RS','stim2',-1*[1.9:.2:2.5]; ...
@@ -769,7 +769,7 @@ switch pulse_mode
         do_nested_mask = 1;
         
         PPmaskfreq = 2.5;
-        PPmaskduration = 50;
+        PPmaskduration = 100;
 
 end
 

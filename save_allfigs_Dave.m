@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:10;
+        handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '166a_IBNG_testing_AHP';
+        currfigname = '167a_IBNGFS_lowGABAB';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Blocked gAR, and testing levels of hyperpolarization for 2 cells vs 20 cells.'];
+    mycomment = ['Reduced GABA B feedback to IB cells. This reduced the AHP after IB bursts and means less h-current activation. Allows us to implement rebound.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
