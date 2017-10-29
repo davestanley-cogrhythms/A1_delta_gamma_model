@@ -24,12 +24,12 @@ sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 6;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;               % Master switch for saving any figures in the simulation. Controls saving figures within dsSimulate.
+save_figures = 0;               % Master switch for saving any figures in the simulation. Controls saving figures within dsSimulate.
     save_combined_figures = 1;      % Flag for saving dsPlot2 across all simulations in data.
     save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
 Cm_Ben = 2.7;
@@ -53,7 +53,7 @@ include_RS =   0;
 include_FS =   0;
 include_LTS =  0;
 include_NG =   1;
-include_dFS5 = 1;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -172,7 +172,7 @@ FS_gM = 0;
 %#gar
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
-% gAR_d=0; % 155, IBda - max conductance of h-channel
+gAR_d=0; % 155, IBda - max conductance of h-channel
 
 
 % % % % % Parameters for deep RS cells.
