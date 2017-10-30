@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:6;
+        handles_arr = 1:5;
         do_commit = 1;
-        currfigname = '167a_IBNGFS_lowGABAB';
+        currfigname = '167b_IBNGFS_GABAB_0.6';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Reduced GABA B feedback to IB cells. This reduced the AHP after IB bursts and means less h-current activation. Allows us to implement rebound.'];
+    mycomment = ['Raised GABA B feedback slightly to 0.6. Might reduce this again later.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

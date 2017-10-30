@@ -229,7 +229,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=0.5;    %         
+Jd2=1;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -238,7 +238,8 @@ if include_NG
     JRS1 = -2.1; % RS cells
     JRS2 = -2.1; %
 end
-Jfs=2;    % FS cells
+Jfs=1;    % FS cells
+Jdfs5=2;    % FS cells
 Jlts1=-2.5; % LTS cells
 Jlts2=-2.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -425,7 +426,7 @@ if ~no_synapses
     gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.4/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.6/Nng;                       % NG -> IB GABA B
     
     % % IB -> LTS
 %     gAMPA_ibLTS=0.02/Nib;
@@ -484,7 +485,7 @@ if ~no_synapses
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
-        gGABAa_fsib=0.3/Nfs;                        % FS -> IB
+        gGABAa_fsib=0.5/Nfs;                        % FS -> IB
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -621,6 +622,7 @@ switch sim_mode
         vary = { %'IB','PPstim',[-1:-1:-5]; ...
             %'NG','PPstim',[-7:1:-1]; ...
             'IB','stim2',[0:0.5:1.5, 2:5]; ...
+            %'(IB,NG,dFS5)','PPmaskshift',[1100:100:1800];...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
@@ -690,6 +692,7 @@ PP_width = 0.25;
 PPwidth2_rise = 0.25;
 PPmaskfreq = 1.75;
 PPmaskduration = 100;
+PPmaskshift = 0;
 
 % IB Poisson Noise
 poissScaling = 1000;
@@ -759,8 +762,9 @@ switch pulse_mode
         
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
-        PPonset = 1500;    % ms, onset time
+        PPonset = 0;    % ms, onset time
         PPoffset = tspan(end);   % ms, offset time
+        PPmaskshift = 1500;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         kernel_type = 1;
