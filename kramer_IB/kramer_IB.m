@@ -229,7 +229,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=1;    %         
+Jd2=1.5;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -420,10 +420,10 @@ if ~no_synapses
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
-    if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
+    if ~NMDA_block; gNMDA_ibng=5/Nib; end        % IB -> NG NMDA
     
-    gGABAa_ngng=0.4/Nng;                       % NG -> NG
-    gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
+    gGABAa_ngng=0.6/Nng;                       % NG -> NG
+    gGABAb_ngng=0.2/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
     gGABAb_ngib=0.6/Nng;                       % NG -> IB GABA B

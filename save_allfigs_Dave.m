@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:5;
+        handles_arr = 1:7;
         do_commit = 1;
-        currfigname = '167b_IBNGFS_GABAB_0.6';
+        currfigname = '167c_adjusted_delta_perfect';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Raised GABA B feedback slightly to 0.6. Might reduce this again later.'];
+    mycomment = ['Made numerous simultaneous tweaks to the delta oscillator. This seems to have fixed everything!'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
