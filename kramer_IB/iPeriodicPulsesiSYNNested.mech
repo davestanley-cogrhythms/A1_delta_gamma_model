@@ -16,6 +16,7 @@ PPoffset = Inf;   % ms, offset time
 
 % Parameters for controlling square wave mask, applied over top of the pulse train
 PPmaskfreq = 2
+PPmaskshift = 0
 PPmaskduration = 100
 do_nested_mask = 1
 % Note: duty cycle of square wave = PPmaskfreq * PPmaskduration / [1000 (msec/sec)]
@@ -47,7 +48,7 @@ PPgsyn=PPgsyn0.* double(PPgsyn0 > 0)
 s0 = getDeltaTrainPresets2(PPfreq,PPshift,Tend,dt,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
 
 % Build masking pulse train
-s0_mask = getDeltaTrainPresets2(PPmaskfreq,0,Tend,dt,0,0,0);
+s0_mask = getDeltaTrainPresets2(PPmaskfreq,PPmaskshift,Tend,dt,0,0,0);
 s0_maskb = convolveDeltaTrainwithKernel(s0_mask,dt,PPmaskduration,1,3,dt);
 
 s1 = applyMasks(s0,PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
