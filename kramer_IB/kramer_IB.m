@@ -15,8 +15,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 
-tspan=[0 3500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1500];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -24,7 +24,7 @@ sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 6;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -49,9 +49,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   0;
-include_FS =   0;
-include_LTS =  0;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -372,6 +372,9 @@ gNMDA_rsfs=0;
 gGABAa_fsfs=0;
 gGABAa_fsrs=0;
 
+gAMPA_rsfs5=0;
+gGABAa_fs5fs5 = 0;
+
 gAMPA_rsLTS = 0;
 gNMDA_rsLTS = 0;
 gGABAa_LTSrs = 0;
@@ -401,6 +404,7 @@ gAMPA_deepRSIB = 0;
 
 % % Gamma -> Delta connections
 gGABAa_fsib = 0;
+gGABAa_fs5ib = 0;
 gAMPA_rsib= 0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
@@ -428,6 +432,7 @@ if ~no_synapses
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
     gGABAb_ngib=0.6/Nng;                       % NG -> IB GABA B
     
+    
     % % IB -> LTS
 %     gAMPA_ibLTS=0.02/Nib;
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
@@ -451,6 +456,7 @@ if ~no_synapses
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
+    
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
@@ -461,6 +467,9 @@ if ~no_synapses
     
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
+    
+    gAMPA_rsfs5=1.5/Nrs;
+    gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -483,9 +492,11 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
     gGABAa_fsib=0.1/Nfs;                        % FS -> IB
+    gGABAa_fs5ib=0.1/Nfs;                        % FS -> IB
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
         gGABAa_fsib=0.5/Nfs;                        % FS -> IB
+        gGABAa_fs5ib=0.5/Nfs;
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -571,7 +582,7 @@ switch sim_mode
             %'IB','stim',[1:.25:1.75]; ...
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
-            %'RS->FS','g_SYN',[0.2:0.2:.8]/Nrs;...
+            'RS->dFS5','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'dFS5','PP_gSYN',[.15,.25,.35]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
@@ -585,7 +596,7 @@ switch sim_mode
             %'LTS','shuffle',[1:4];...
             %'IB->NG','g_SYN',[.4:0.2:1]/Nib;...
             %'IB->NG','gNMDA',[7:10]/Nib;...
-            'NG->IB','gGABAB',[.4:.1:1.1]/Nng;...
+            %'NG->IB','gGABAB',[.4:.1:1.1]/Nng;...
             %'NG->NG','g_SYN',[.1:.1:.4]/Nng;...
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'RS','stim2',-1*[1.9:.2:2.5]; ...
@@ -909,7 +920,7 @@ if save_figures
         end
 
         % Rastergram plots
-        if include_IB && length(data) > 1 && pulse_mode ~= 6
+        if include_IB && length(data) > 1
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...

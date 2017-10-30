@@ -123,12 +123,7 @@ if include_RS && include_FS
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
     
-    if do_jason_sPING_syn
-        js_conn_E_I.direction='RS->FS';
-        js_conn_E_I.mechanism_list={'iAMPA'};
-        js_conn_E_I.parameters={'tauD',2,'gSYN',.1*80/Nrs,'netcon','ones(N_pre,N_post)'};
-        spec.connections(i) = js_conn_E_I;
-    end
+
 
 end
 
@@ -162,17 +157,24 @@ end
 
 % % RS->dFS5 synaptic connection
 if include_RS && include_dFS5
-    ind = find(strcmp({spec.connections.direction},'RS->FS'));  % Find equivalent FS mechanism
-    i=i+1;
-    spec.connections(i).direction = 'RS->dFS5';                  
+%     ind = find(strcmp({spec.connections.direction},'RS->FS'));  % Find equivalent FS mechanism
+%     i=i+1;
+%     spec.connections(i).direction = 'RS->dFS5';                  
+%     
+%     % Import all other values from equivalent FS mechanism
+%     spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
+%     params_list1 = spec.connections(ind).parameters;
+%     myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
+%     % ...Insert manipulations here... %
+%     params_list2 = dsOptions2Keyval(myoptions); 
+%     spec.connections(i).parameters = params_list2;
     
-    % Import all other values from equivalent FS mechanism
-    spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
-    params_list1 = spec.connections(ind).parameters;
-    myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
-    % ...Insert manipulations here... %
-    params_list2 = dsOptions2Keyval(myoptions); 
-    spec.connections(i).parameters = params_list2;
+    
+    i=i+1;
+    spec.connections(i).direction = 'RS->dFS5';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rsfs5,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
 end
 
 %% FS Cells
@@ -232,7 +234,7 @@ if include_dFS5
     i=i+1;
     spec.connections(i).direction = 'dFS5->dFS5';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_fsfs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_fs5fs5,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         'g_GAP',ggjFS,...
         };
         
@@ -251,7 +253,7 @@ if include_dFS5 && include_IB
     i=i+1;
     spec.connections(i).direction = 'dFS5->IB';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
-    spec.connections(i).parameters = {'g_SYN',gGABAa_fsib,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+    spec.connections(i).parameters = {'g_SYN',gGABAa_fs5ib,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 

@@ -31,13 +31,13 @@ clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
 %% Delta training figures
 
 myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
-
-clustersub('kramer_IB_deltapaper_tune1','1a',12,myhours);
-clustersub('kramer_IB_deltapaper_tune1','1b',12,myhours);
-clustersub('kramer_IB_deltapaper_tune1','1c',12,myhours);
-clustersub('kramer_IB_deltapaper_tune1','2a',12,myhours);
-
-clustersub('kramer_IB_deltapaper_tune1','9b',8,myhours);
+numcores = 8;
+clustersub('kramer_IB_deltapaper_tune1','1a',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1c',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','2a',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','4a',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','9b',numcores,myhours);
 
 %% Job progress
 !qstat -u stanleyd
