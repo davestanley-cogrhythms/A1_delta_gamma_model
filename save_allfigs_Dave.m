@@ -22,9 +22,9 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:7;
+        handles_arr = 1:8;
         do_commit = 1;
-        currfigname = '167c_adjusted_delta_perfect';
+        currfigname = '168a_onlydelta_sweep_gNGIB';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Insert comment here'];
+    mycomment = ['Sweep through gNGIB GABA B. Delta oscillator only; spontaneous activity.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
