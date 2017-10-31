@@ -110,7 +110,7 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
 %         end
 %     end
 %     %
-    mycomment = ['Made numerous simultaneous tweaks to the delta oscillator. This seems to have fixed everything!'];
+    mycomment = ['Insert comment here'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

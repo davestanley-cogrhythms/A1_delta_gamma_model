@@ -500,10 +500,10 @@ if ~no_synapses
         gGABAa_fsib=0.3/Nfs;                        % FS -> IB
         gGABAa_fs5ib=0.3/Nfs;
     end
-    gAMPA_rsib=0.1/Nrs;                         % RS -> IB
+%     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-    gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
+%     gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
     
     
 end
@@ -641,7 +641,7 @@ switch sim_mode
             %'IB','PP_gSYN',[0:.25:1]/10; ...
             %'dFS5->IB','g_SYN',[0.5, 0.9,1.8,2.7]/Nfs;...
             %'IB','gAR',[0,2]; ...
-            'NG->RS','gGABAB',[0.4:0.1:.9]/Nng;...
+            'NG->RS','gGABAB',[0, 0.2:0.1:.8]/Nng;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
             %'LTS->IB','g_SYN',[0:0.05:0.15]/Nlts;...
 %             'RS->NG','gNMDA',[1:1:6]/Nib;...
@@ -864,10 +864,10 @@ if save_figures
 
         % IB V imagesc plot
         if include_IB && length(data) > 1
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                'figheight',chosen_height};
+%             i=i+1;
+%             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+%                 'figheight',chosen_height};
         end
 
         % LTS cell imagesc plot
@@ -918,10 +918,16 @@ if save_figures
 
         % Rastergram plots
         if include_IB && length(data) > 1
+%             % Default rastergram
 %             i=i+1;
 %             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
 %                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
 %                 'figheight',chosen_height};
+            % Imagesc fast & cheap version
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',chosen_height};
         end
 
         if include_RS && length(data) > 1
