@@ -21,7 +21,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.ap_pulse_delay = 0;
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=800;
+        s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
@@ -37,7 +37,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.ap_pulse_delay = 11;
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=800;
+        s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
@@ -51,13 +51,13 @@ switch chosen_cell
         s{f}.repo_studyname = ['tune1Fig1c' num2str(f)];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=800;
+        s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
     case '1d'
-        %% Paper Figs 2a - Tones - like 1a, except tones instead of 40 Hz
+        %% Paper Figs 1d - Tones - like 1a, except tones instead of 40 Hz
         
         clear s
         f = 1;
@@ -68,7 +68,7 @@ switch chosen_cell
         s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=800;
+        s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         
         datapf1d = kramer_IB_function_mode(s{f},f);
