@@ -7,7 +7,7 @@ dsPlot2_PPStim(data,'do_mean',1,'variable','/Mich|AR/','population','IB','force_
 
 dsPlot2_PPStim(data,'population','IB','plot_type','imagesc')
 
-dsPlot2_PPStim(data,'do_mean',1,'variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','population','IB','force_last','variable')
+dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2)
 
 %%
 dsPlot2_PPStim(data,'plot_type','raster')
