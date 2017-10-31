@@ -18,7 +18,8 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a' num2str(f)];
-        s{f}.ap_pulse_num = 0;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -31,6 +32,8 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 11;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -42,8 +45,8 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c' num2str(f)];
-        s{f}.pulse_mode = 0;     % Turn off pulsemode
         s{f}.tspan=[0 3000];
+        s{f}.pulse_mode = 0;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -57,13 +60,14 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig3a_lowfreq' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[15,20,25,28,30,33,35,37]; ...
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_num = 0;
+        s{f}.ap_pulse_delay = 0;
         s{f}.PPonset = 0;
         
         datapf3a = kramer_IB_function_mode(s{f},f);
@@ -78,13 +82,14 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig3b_highfreq' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[50,65,85,105]; ...
             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_num = 0;
+        s{f}.ap_pulse_delay = 0;
         s{f}.PPonset = 0;
         
         datapf3b = kramer_IB_function_mode(s{f},f);
@@ -98,13 +103,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig4_lakatos' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([1, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4])];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
         
         datapf4a = kramer_IB_function_mode(s{f},f);
@@ -118,11 +123,12 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig5a_iPAC' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
+        
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
         
         datapf5a = kramer_IB_function_mode(s{f},f);
@@ -138,11 +144,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig5b_iPAC' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
+        
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
+        
         s{f}.tspan=[0 5500];
         s{f}.IB_PP_gSYN=0;
         
@@ -158,11 +166,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig5c_iPAC' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 18;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
+        
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
+        
         s{f}.tspan=[0 5500];
         s{f}.deep_gNaF=0;
         
@@ -177,14 +187,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig6a_onset' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_num = 0;
         s{f}.tspan=[0 3000];
         
         datapf3c = kramer_IB_function_mode(s{f},f);
@@ -199,13 +208,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig7a_2HzPoisson' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 4;
         s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
             };
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
         s{f}.deep_gNaF=0;
         
@@ -219,13 +228,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig7b_2HzPoiss40Hz' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 2;
         s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
             };
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
         s{f}.deep_gNaF=0;
         
@@ -239,14 +248,14 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig7c_2Hz_FSIB40Hz' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 4;
         Nfs = 20;
         s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
             };
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
         s{f}.IB_PP_gSYN=0;
         
@@ -260,13 +269,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig8a_OnsetPoisson' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 4;
         s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
             };
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 1;
         s{f}.tspan=[0 3500];
         s{f}.PPonset = 1200;
         s{f}.PPoffset = 2500;
@@ -283,13 +292,13 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig8b_OnsetPoiss40Hz' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 2;
         s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
             };
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 1;
         s{f}.tspan=[0 3500];
         s{f}.PPonset = 1200;
         s{f}.PPoffset = 2500;
@@ -305,14 +314,14 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig8c_Onset_FSIB40Hz' num2str(f)];
-        s{f}.ap_pulse_num = 0;
         s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 2;
         Nfs = 20;
         s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
             };
         s{f}.parallel_flag = 1;
-        s{f}.pulse_mode = 1;
         s{f}.tspan=[0 3500];
         s{f}.PPonset = 1200;
         s{f}.PPoffset = 2500;
@@ -330,7 +339,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f)];
         s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_num = 0;
+        s{f}.ap_pulse_delay = 0;
         s{f}.tspan=[0 1000];
         
         % Turn off stimulus to RS and IB cells; turn on to FS cells

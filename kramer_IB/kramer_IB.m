@@ -24,7 +24,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -57,7 +57,8 @@ include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
-% % % % % Set default kernel type
+% % % % % PPStim parameters
+PPoffset = tspan(end)-0;   % ms, offset time
 kerneltype_IB = 2;
 
 % % % % % Default repo study name
@@ -495,8 +496,8 @@ if ~no_synapses
     gGABAa_fs5ib=0.1/Nfs;                        % FS -> IB
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
-        gGABAa_fsib=0.5/Nfs;                        % FS -> IB
-        gGABAa_fs5ib=0.5/Nfs;
+        gGABAa_fsib=0.3/Nfs;                        % FS -> IB
+        gGABAa_fs5ib=0.3/Nfs;
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -720,8 +721,6 @@ switch pulse_mode
         
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
-        PPoffset = tspan(end)-0;   % ms, offset time
-        %PPoffset=270;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         kernel_type = 1;         
         IB_PP_gSYN = 0;
@@ -735,12 +734,11 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
         PPonset = 400;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
         %PPoffset = tspan(end)-500;   % ms, offset time
-        ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-        %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        %ap_pulse_delay = 0;                         % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         kernel_type = 1;
         deepRSPPstim = -.5;
@@ -754,7 +752,6 @@ switch pulse_mode
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         kernel_type = 1;
         deepRSPPstim = -.5;
@@ -774,7 +771,6 @@ switch pulse_mode
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPoffset = tspan(end);   % ms, offset time
         PPmaskshift = 1500;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)

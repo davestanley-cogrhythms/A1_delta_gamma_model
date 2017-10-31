@@ -35,6 +35,7 @@ numcores = 8;
 clustersub('kramer_IB_deltapaper_tune1','1a',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1b',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1c',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1d',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','2a',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','4a',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','9b',numcores,myhours);
