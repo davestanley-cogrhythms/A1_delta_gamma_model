@@ -63,7 +63,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig2a' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1d' num2str(f)];
         s{f}.pulse_mode = 1;
         s{f}.ap_pulse_delay = 0;
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones

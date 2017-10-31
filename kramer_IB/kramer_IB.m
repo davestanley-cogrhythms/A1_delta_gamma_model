@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !module list
 
 tspan=[0 1500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -49,9 +49,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   1;
-include_FS =   1;
-include_LTS =  1;
+include_RS =   0;
+include_FS =   0;
+include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -471,7 +471,7 @@ if ~no_synapses
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=0.5/Nrs;
-    gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
+    gGABAa_fs5fs5 = 0.5/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -500,10 +500,10 @@ if ~no_synapses
         gGABAa_fsib=0.3/Nfs;                        % FS -> IB
         gGABAa_fs5ib=0.3/Nfs;
     end
-%     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
+    gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-%     gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
+    gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
     
     
 end
@@ -585,7 +585,7 @@ switch sim_mode
             %'RS','PP_gSYN',[.0:0.05:.3]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'RS->dFS5','g_SYN',[0, .3:.2:1.5]/Nrs;...
-            %'dFS5','PP_gSYN',[.15,.25,.35]; ...
+            'dFS5','PP_gSYN',[0, 0.15, 0.2, 0.25]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
             %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
@@ -692,6 +692,10 @@ RS_PP_gSYN = 0.2;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 % dFS_PP_gSYN = 0.35;
+if ~include_RS; dFS_PP_gSYN = 0.2;  % If not including RS, then add pseudo stimulation to deep FS cells
+else dFS_PP_gSYN = 0;
+end
+
 do_FS_reset_pulse = 0;
 jitter_fall = 0.0;
 jitter_rise = 0.0;
@@ -729,6 +733,7 @@ switch pulse_mode
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
+        dFS_PP_gSYN = 0;
         deepRSPPstim = 0;
         do_nested_mask = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
