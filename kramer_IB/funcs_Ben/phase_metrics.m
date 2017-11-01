@@ -80,7 +80,7 @@ if strcmp(input_transform, 'wavelet')
     
     freq_labels{1} = num2str(data.(f_field), '%.2g');
 
-    v_bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, data.(f_field), no_cycles(1), 0, '');
+    v_bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, data.(f_field)/3, no_cycles(1), 0, '');
     
 elseif strcmp(input_transform, 'hilbert')
     
@@ -90,7 +90,7 @@ elseif strcmp(input_transform, 'hilbert')
     
 end
 
-v_bandpassed(:, 2:3) = wavelet_spectrogram(v, sampling_freq, freqs(2:3), no_cycles(2:3), 0, '');
+v_bandpassed(:, 2:3) = wavelet_spectrogram(v, sampling_freq, freqs(2:3)/3, no_cycles(2:3), 0, '');
 
 v_phase = angle(v_bandpassed);
 
