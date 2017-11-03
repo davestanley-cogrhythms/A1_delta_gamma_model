@@ -112,7 +112,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f)];
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 6500];
+        s{f}.tspan=[0 5500];
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
