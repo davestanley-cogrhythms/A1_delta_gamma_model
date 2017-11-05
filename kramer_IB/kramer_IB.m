@@ -49,9 +49,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   0;
-include_FS =   0;
-include_LTS =  0;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -241,7 +241,7 @@ if include_NG
     JRS2 = -2.1; %
 end
 Jfs=1;    % FS cells
-Jdfs5=2;    % FS cells
+Jdfs5=1;    % FS cells
 Jlts1=-2.5; % LTS cells
 Jlts2=-2.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -470,8 +470,8 @@ if ~no_synapses
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=0.5/Nrs;
-    gGABAa_fs5fs5 = 0.5/Nfs;                    % dFS5 -> dFS5
+    gAMPA_rsfs5=1.5/Nrs;
+    gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -498,7 +498,7 @@ if ~no_synapses
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
         gGABAa_fsib=0.3/Nfs;                        % FS -> IB
-        gGABAa_fs5ib=0.3/Nfs;
+        gGABAa_fs5ib=0.2/Nfs;
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
