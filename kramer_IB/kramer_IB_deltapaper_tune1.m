@@ -19,7 +19,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['tune1Fig1a' num2str(f)];
         s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_delay = 0;
+        s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
@@ -35,7 +35,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['tune1Fig1b' num2str(f)];
         s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_delay = 11;
+        s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
@@ -65,7 +65,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['tune1Fig1d' num2str(f)];
         s{f}.pulse_mode = 1;
-        s{f}.ap_pulse_delay = 0;
+        s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
@@ -84,7 +84,6 @@ switch chosen_cell
         s{f}.repo_studyname = ['tune1Fig4_lakatos' num2str(f)];
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
         s{f}.pulse_mode = 5;
-        s{f}.ap_pulse_delay = 0;
         s{f}.tspan=[0 5500];
         
         datapf4a = kramer_IB_function_mode(s{f},f);
