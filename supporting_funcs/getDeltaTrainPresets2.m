@@ -47,11 +47,11 @@ if pulse_num > 0
         case 0                  % Pure pulse train
             % (do nothing)
         case 1                  % Aperiodic pulse
-            s = add_pulse (s,pulse_period,shift,dt,pulse_num,ap_pulse_delay);
             s = delete_pulse (s,pulse_period,shift,dt,pulse_num);
+            s = add_pulse (s,pulse_period,shift,dt,pulse_num,ap_pulse_delay);
         case 2                  % AP pulse + reset
-            s = add_pulse (s,pulse_period,shift,dt,pulse_num,ap_pulse_delay);
             s = delete_pulse (s,pulse_period,shift,dt,pulse_num);
+            s = add_pulse (s,pulse_period,shift,dt,pulse_num,ap_pulse_delay);
             shift_amount = ap_pulse_delay;
             s = delay_pulsetrain(s,pulse_period,shift,dt,pulse_num+.9,shift_amount);
                 % Note: Shifting 0.9 pulses AFTER the AP pulse, so that the
