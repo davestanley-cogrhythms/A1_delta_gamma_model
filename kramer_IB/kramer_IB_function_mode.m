@@ -7,7 +7,11 @@ Today = datestr(datenum(date),'yy-mm-dd');
 % mkdir(Today);
 
 start_dir = pwd;
-cd ('/projectnb/crc-nak/brpp/model-dnsim-kramer_IB/kramer_IB')
+if exist('project_folder', 'var')
+    cd (project_folder)
+elseif exist('research_folder', 'var')
+    cd (research_folder)
+end
 
 savepath = fullfile('Figs_Ben', Today);
 mkdir(savepath);
