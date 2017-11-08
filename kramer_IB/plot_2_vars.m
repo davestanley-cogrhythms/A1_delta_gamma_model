@@ -8,7 +8,8 @@ if isempty(sub_indices), sub_indices = [1 inf]; end
 
 if nargin < 6, subplot_dims = []; end
 
-if nargin < 7, subplot_direction = 'row'; end
+if nargin < 7, subplot_direction = []; end
+if isempty(subplot_direction), subplot_direction = 'row'; end
 
 if nargin < 8, titles = []; end
 
@@ -70,6 +71,16 @@ for s = 1:no_sims
         set(h1, 'LineWidth', 1)
     
         set(h2, 'LineWidth', 1)
+        
+        if ~isempty(titles)
+            
+            if length(titles) >= s
+            
+                title(titles{s})
+            
+            end
+            
+        end
     
     elseif strcmp(mode, 'against')
         
@@ -97,7 +108,11 @@ for s = 1:no_sims
         
         if ~isempty(titles)
             
-            title(titles{s})
+            if length(titles) >= s
+            
+                title(titles{s})
+            
+            end
             
         end
         
