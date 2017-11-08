@@ -8,9 +8,9 @@ figure
 
 subplot_index = 0; % length(freqs) - 2;
 
-hts = tight_subplot(length(freqs) - 3, 1);
+hts = tight_subplot(length(freqs) - 3 - (9 - 1), 1);
 
-for i = fliplr([1:22 24])
+for i = fliplr([9:22 24])
     
     subplot_index = subplot_index + 1; % - 1;
     
