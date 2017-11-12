@@ -15,7 +15,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 
-tspan=[0 2000];
+tspan=[0 1500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -123,7 +123,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-% random_seed = 2;
+random_seed = 2;
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -697,10 +697,10 @@ switch pulse_mode
         PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to presynaptic jitter
         PPshift = 0; % in ms
         PPonset = 400;    % ms, onset time
-%         PPoffset = tspan(end);   % ms, offset time
-        PPoffset = tspan(end)-500;   % ms, offset time
-%         ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
-        ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        PPoffset = tspan(end);   % ms, offset time
+        %PPoffset = tspan(end)-500;   % ms, offset time
+        ap_pulse_num = round((tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
+        %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = 0;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
