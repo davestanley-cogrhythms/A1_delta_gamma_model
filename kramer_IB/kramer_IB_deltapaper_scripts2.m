@@ -314,33 +314,27 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
-    case '9'
-        %% Paper 9 - Polley figure
+    case '9b'
+        %% Paper 9b - Polley figure
         % Setup
         clear s
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9b_polley' num2str(f)];
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f)];
-        s{f}.pulse_mode = 1;
-        s{f}.pulse_train_preset = 0;
-        s{f}.tspan=[0 1000];
+        s{f}.pulse_mode = 6;
         
-        % Turn off stimulus to RS and IB cells; turn on to FS cells
-        s{f}.IB_PP_gSYN = 0;    
-        s{f}.RS_PP_gSYN = 0;
-        s{f}.dFS_PP_gSYN = 0.35;
-        
-        % Adjust timing of stimuli to coincide with pulse at 450 ms
-%         s{f}.PPonset = 440;    % ms, onset time
-%         s{f}.PPoffset = 465;   % ms, offset time
-        s{f}.PPonset = 300;    % ms, onset time
-        s{f}.PPoffset = 1000;   % ms, offset time
+        temp = [400:50:800,10000]; temp = 1000./(100+temp);
+        s{f}.vary = { %'IB','PPstim',[-1:-1:-5]; ...
+            '(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 6;
+        s{f}.tspan=[0 5500];
 
-        datapf9a = kramer_IB_function_mode(s{f},f);
+        datapf9b = kramer_IB_function_mode(s{f},f);
         
-        dsPlot2_PPStim(datapf9a,'plot_type','waveform')
         
 end
 
