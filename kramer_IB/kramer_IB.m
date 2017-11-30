@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !module list
 
 tspan=[0 1500];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -132,7 +132,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-random_seed = 2;
+% random_seed = 2;
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -920,15 +920,15 @@ if save_figures
         % % % % % % % % Rastergram plots % % % % % % % %
         if include_IB && length(data) > 1
 %             % Default rastergram (slow)
-%             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figheight',chosen_height};
-            % Imagesc fast & cheap version
             i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',chosen_height};
+            % Imagesc fast & cheap version
+%             i=i+1;
+%             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+%                 'figheight',chosen_height};
         end
 
         if include_RS && length(data) > 1
