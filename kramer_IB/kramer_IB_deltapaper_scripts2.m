@@ -43,7 +43,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c' num2str(f)];
-        s{f}.tspan=[0 3000];
+        s{f}.tspan=[0 5000];
         s{f}.pulse_mode = 0;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
