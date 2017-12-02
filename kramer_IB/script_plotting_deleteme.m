@@ -43,7 +43,14 @@ dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|G
 
 dsPlot2(data,'plot_type','power','xlims',[0 80],'population','RS','variable','IB_IBaIBdbiSYNseed_ISYN','do_mean',1)
 
+% Plot power all oscillators
 dsPlot2(data,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH|LFPdelta_gTH|LFPgamma_gTH/','do_mean',1,'LineWidth',2);
+
+% Plot power gamma oscillator only
+dsPlot2(data,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,'figheight',1/2,'figwidth',1/2);
+dsPlot2(data,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,'figheight',1/2,'figwidth',1/2);
+dsPlot2(data,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,'figheight',1/2,'figwidth',1/2);
+
 
 dsPlot2(data,'plot_type','waveform','population','RS','variable','/LFPall_gTH|LFPdelta_gTH|LFPgamma_gTH/','do_mean',1,'LineWidth',2);
 

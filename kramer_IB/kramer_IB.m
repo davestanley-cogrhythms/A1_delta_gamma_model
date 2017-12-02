@@ -892,6 +892,30 @@ if save_figures
                 'figheight',chosen_height};
         end
         
+        
+        % % % % % % % % CONDUCTANCES Power plots % % % % % % % %
+        if include_IB && include_NG && include_RS && include_FS && include_LTS && include_dFS5
+            % All currents
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data(1),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',1/2,'figwidth',1/2};
+        
+            % Just delta currents
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data(1),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',1/2,'figwidth',1/2};
+        end
+       
+        if include_RS && include_FS && include_LTS && include_dFS5
+            % Just gammma oscillator
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data(1),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',1/2,'figwidth',1/2};
+        end
+            
         % % % % % % % % VOLTAGE Line plots % % % % % % % %
         % Waveform plots
         if include_IB && length(data) > 1
