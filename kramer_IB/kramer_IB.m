@@ -713,7 +713,7 @@ ap_pulse_delay = 11;                        % ms, the amount the spike should be
 ap_pulse_num = 0;                           % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 PP_width = 0.25;
 PPwidth2_rise = 0.25;
-PPmaskfreq = 1.75;
+PPmaskfreq = 1.5;
 PPmaskduration = 100;
 PPmaskshift = 0;
 
