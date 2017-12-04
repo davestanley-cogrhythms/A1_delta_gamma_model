@@ -72,6 +72,9 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
+% M current
+gM_d = 2;
+
 % Overwrite master parameters as needed, before deriving the rest.
 if function_mode
     unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
@@ -209,6 +212,7 @@ fast_offset = 0;
 % them for something else.
 
 % % % % % % Number of cells per population
+% #mynumcells
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nrs=80; % Number of RS cells

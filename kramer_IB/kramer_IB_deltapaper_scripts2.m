@@ -314,8 +314,36 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
+    case '9a'
+        %% Paper 9a - Polley figure - as in Guo, Polley 2017
+            % Same simulation and sweep across random seeds; averaging
+            % plots together.
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f)];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 6;
+        
+        
+        s{f}.PPmaskfreq = 1;    % Do a pulse every 1 second
+        s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
+        s{f}.PPoffset = 4500;
+        
+        % Shuffle through a bunch of values
+        s{f}.vary = { ...
+            'RS','myshuffle',1:8;...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 6;
+        s{f}.tspan=[0 5500];
+
+        datapf9a = kramer_IB_function_mode(s{f},f);
+        
     case '9b'
-        %% Paper 9b - Polley figure
+        %% Paper 9b - Polley figure - Lakatos version (vary frequency)
         % Setup
         clear s
         f=1;
@@ -335,7 +363,60 @@ switch chosen_cell
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
+    case '9c'
+        %% Paper 9c - As 9a but block m current
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9c_mblk' num2str(f)];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 6;
         
+        
+        s{f}.PPmaskfreq = 1;    % Do a pulse every 1 second
+        s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
+        s{f}.PPoffset = 4500;
+        
+        % Shuffle through a bunch of values
+        s{f}.vary = { ...
+            'RS','myshuffle',1:8;...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 6;
+        s{f}.tspan=[0 5500];
+        
+        s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
+
+        datapf9c = kramer_IB_function_mode(s{f},f);
+    case '9d'
+        %% Paper 9d - As 9a but block h current
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9d_hblk' num2str(f)];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 6;
+        
+        
+        s{f}.PPmaskfreq = 1;    % Do a pulse every 1 second
+        s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
+        s{f}.PPoffset = 4500;
+        
+        % Shuffle through a bunch of values
+        s{f}.vary = { ...
+            'RS','myshuffle',1:8;...
+            };
+        s{f}.parallel_flag = 1;
+        s{f}.pulse_mode = 6;
+        s{f}.tspan=[0 5500];
+        
+        s{f}.gAR_d = 0;
+
+        datapf9c = kramer_IB_function_mode(s{f},f);
 end
 
 end
