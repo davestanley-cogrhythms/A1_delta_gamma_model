@@ -9,7 +9,11 @@ if length(vary) >= 3 && ~cluster_flag
         try
             % Try opening new parallel pool if not already opened.
             p = gcp('nocreate');
-            if isempty(p); pool = parpool(Nvary,'IdleTimeout', 240); end
+            if isempty(p);
+                foo = min(maxNcores,Nvary);
+                fprintf('Starting parallel pool with %d cores.\n',foo);
+                pool = parpool(foo,'IdleTimeout', 240);
+            end
         catch
             warning('Could not start parpool');
         end

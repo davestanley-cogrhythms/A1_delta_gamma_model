@@ -6,7 +6,11 @@
 % kramer_IB_deltapaper_scripts1 - Initial testing of network
 % kramer_IB_deltapaper_scripts2 - Figures used in actual paper.
 
-function kramer_IB_deltapaper_scripts2(chosen_cell)
+function kramer_IB_deltapaper_scripts2(chosen_cell,maxNcores)
+
+if nargin < 2
+    maxNcores = Inf;
+end
 
 switch chosen_cell
     case '1a'
@@ -63,7 +67,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 0;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[15,20,25,28,30,33,35,37]; ...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.PPonset = 0;
         
@@ -84,7 +88,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 0;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[50,65,85,105]; ...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.PPonset = 0;
         
@@ -104,7 +108,7 @@ switch chosen_cell
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([1, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4])];...
             };
         s{f}.kerneltype_IB = 4;
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 5500];
         
         datapf4a = kramer_IB_function_mode(s{f},f);
@@ -122,7 +126,7 @@ switch chosen_cell
         s{f}.pulse_mode = 5;
         
         s{f}.kerneltype_IB = 4;
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 5500];
         
         datapf5a = kramer_IB_function_mode(s{f},f);
@@ -142,7 +146,7 @@ switch chosen_cell
         s{f}.pulse_mode = 5;
         
         s{f}.kerneltype_IB = 4;
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         
         s{f}.tspan=[0 5500];
         s{f}.IB_PP_gSYN=0;
@@ -163,7 +167,7 @@ switch chosen_cell
         s{f}.pulse_mode = 5;
         
         s{f}.kerneltype_IB = 4;
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         
         s{f}.tspan=[0 5500];
         s{f}.deep_gNaF=0;
@@ -184,7 +188,7 @@ switch chosen_cell
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
             };
         s{f}.kerneltype_IB = 4;
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 3000];
         
         datapf6a = kramer_IB_function_mode(s{f},f);
@@ -204,7 +208,7 @@ switch chosen_cell
         s{f}.kerneltype_IB = 4;
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 5500];
         s{f}.deep_gNaF=0;
         
@@ -223,7 +227,7 @@ switch chosen_cell
         s{f}.kerneltype_IB = 2;
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 5500];
         s{f}.deep_gNaF=0;
         
@@ -243,7 +247,7 @@ switch chosen_cell
         Nfs = 20;
         s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 5500];
         s{f}.IB_PP_gSYN=0;
         
@@ -262,7 +266,7 @@ switch chosen_cell
         s{f}.kerneltype_IB = 4;
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 2500];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
@@ -284,7 +288,7 @@ switch chosen_cell
         s{f}.kerneltype_IB = 2;
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 2500];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
@@ -306,7 +310,7 @@ switch chosen_cell
         Nfs = 20;
         s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/Nfs;...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.tspan=[0 2500];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
@@ -339,7 +343,7 @@ switch chosen_cell
 %         s{f}.vary = { ...
 %             'IB','stim2',[0:0.5:1.5, 2:5];...
 %             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
 
@@ -360,7 +364,7 @@ switch chosen_cell
         s{f}.vary = { %'IB','PPstim',[-1:-1:-5]; ...
             '(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
 
@@ -386,7 +390,7 @@ switch chosen_cell
         s{f}.vary = { ...
             'RS','myshuffle',1:8;...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
         
@@ -413,7 +417,7 @@ switch chosen_cell
         s{f}.vary = { ...
             'RS','myshuffle',1:8;...
             };
-        s{f}.parallel_flag = 1;
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
         

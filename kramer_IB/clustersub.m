@@ -44,7 +44,7 @@ mycommand= ['qsub -l h_rt=' num2str(myhours) ':30:00 ' ...      % Sim runtime
     '-o cluster_' filename '_' cellID '.o.' sp ' '...                   % Output file
     '-e cluster_' filename '_' cellID '.e.' sp ' '...                   % Error file
     '-N job' cellID ' ' ...                                             % Job name
-    'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',''' cellID ''')"'];
+    'matlab_multi_node_batch.sh "setup_paths_n_run(@' filename ',''' cellID ''',' num2str(Ncores) ')"'];
 
 
 %     ' -l cpu_arch=broadwell ' ...             

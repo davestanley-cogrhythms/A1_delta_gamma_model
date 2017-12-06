@@ -131,6 +131,7 @@ plot_on = 0;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(sim_mode >= 8);            % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
+maxNcores = 1;
 cluster_flag = 0;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
