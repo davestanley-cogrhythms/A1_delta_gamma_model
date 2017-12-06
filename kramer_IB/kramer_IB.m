@@ -68,8 +68,8 @@ kerneltype_IB = 2;
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
-gAR_d=0.5; % 155, IBda - max conductance of h-channel
-% gAR_d=0; % 155, IBda - max conductance of h-channel
+gAR_d=0.25; % 155, IBda - max conductance of h-channel
+gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
 % M current
@@ -135,8 +135,8 @@ cluster_flag = 0;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
-random_seed = 'shuffle';
-% random_seed = 2;
+% random_seed = 'shuffle';
+random_seed = 2;
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -858,13 +858,13 @@ if save_figures
         parallel_plot_entries = {};
 
         % % % % % % % % CURRENTS Line plots % % % % % % % %
+        % AMPA, GABA A, GABA B
         if include_IB && include_NG && (include_FS || include_dFS5)
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',chosen_height};
         end
-
         if include_IB && include_NG && ~(include_FS || include_dFS5)
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
@@ -921,7 +921,7 @@ if save_figures
         end
             
         % % % % % % % % VOLTAGE Line plots % % % % % % % %
-        % Waveform plots
+        % Waveform plots 2 IB cells
         if include_IB && length(data) > 1
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,...
@@ -931,6 +931,7 @@ if save_figures
         
         % Mean plots
         if 1
+            % Waveform plots mean all cells
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','waveform','do_mean',1,...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
@@ -975,10 +976,10 @@ if save_figures
         end
 
         if include_LTS && length(data) > 1
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                'figheight',chosen_height};
+%             i=i+1;
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
+%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+%                 'figheight',chosen_height};
         end
 
 
@@ -993,19 +994,19 @@ if save_figures
         % % % % % % % % VOLTAGE Firing rate plots % % % % % % % %
         % Firing rate heatmap
         if length(data) > 1
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','heatmap_sortedFR','population','IB',...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                'figwidth',chosen_height};
+%             i=i+1;
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','heatmap_sortedFR','population','IB',...
+%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+%                 'figwidth',chosen_height};
         end
         
         % Firing rate means
         if length(data) > 1
-            i=i+1;
-            so.autosuppress_interior_tics = true;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','meanFR','population','IB','subplot_options',so,...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                'figwidth',chosen_height};
+%             i=i+1;
+%             so.autosuppress_interior_tics = true;
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','meanFR','population','IB','subplot_options',so,...
+%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+%                 'figwidth',chosen_height};
         end
 
         tv2 = tic;

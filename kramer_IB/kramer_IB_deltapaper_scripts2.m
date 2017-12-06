@@ -192,7 +192,7 @@ switch chosen_cell
         
              
     case '7a'
-        %% Paper 7a - Characterize delta rhythm - block gamma input; sweep Poisson (use this one for paper, since pure tone)
+        %% Paper 7a - Characterize delta rhythm - block gamma input; sweep IB Poisson (use this one for paper, since pure tone)
         % Setup
         clear s
         f=1;
@@ -202,7 +202,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.kerneltype_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.parallel_flag = 1;
         s{f}.tspan=[0 5500];
@@ -211,7 +211,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '7b'
-        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        %% Paper 7b - Characterize delta rhythm - block gamma input; sweep IB Poisson 40 Hz
         % Setup
         clear s
         f=1;
@@ -221,7 +221,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.kerneltype_IB = 2;
-        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.parallel_flag = 1;
         s{f}.tspan=[0 5500];
@@ -250,7 +250,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '8a'
-        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep Poisson (use this one for paper, since pure tone)
+        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep IB Poisson (use this one for paper, since pure tone)
         % Setup
         clear s
         f=1;
@@ -260,19 +260,19 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.parallel_flag = 1;
-        s{f}.tspan=[0 3500];
-        s{f}.PPonset = 1200;
-        s{f}.PPoffset = 2500;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
         s{f}.deep_gNaF=0;
         
         data = kramer_IB_function_mode(s{f},f);
         
         
     case '8b'
-        %% Paper 8b - Characterize delta rhythm - block gamma input; sweep Poisson 40 Hz
+        %% Paper 8b - Characterize delta rhythm - block gamma input; sweep IB Poisson 40 Hz
         % Setup
         clear s
         f=1;
@@ -282,12 +282,12 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_IB = 2;
-        s{f}.vary = {'IB','PP_gSYN',[0:.25:1.75]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.parallel_flag = 1;
-        s{f}.tspan=[0 3500];
-        s{f}.PPonset = 1200;
-        s{f}.PPoffset = 2500;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
         s{f}.deep_gNaF=0;
         
         data = kramer_IB_function_mode(s{f},f);
@@ -304,12 +304,12 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_IB = 2;
         Nfs = 20;
-        s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
+        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/Nfs;...
             };
         s{f}.parallel_flag = 1;
-        s{f}.tspan=[0 3500];
-        s{f}.PPonset = 1200;
-        s{f}.PPoffset = 2500;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
         s{f}.IB_PP_gSYN=0;
         
         data = kramer_IB_function_mode(s{f},f);
@@ -332,10 +332,13 @@ switch chosen_cell
         s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
         s{f}.PPoffset = 4500;
         
-        % Shuffle through a bunch of values
+%         % Shuffle through a bunch of values        
         s{f}.vary = { ...
             'RS','myshuffle',1:8;...
             };
+%         s{f}.vary = { ...
+%             'IB','stim2',[0:0.5:1.5, 2:5];...
+%             };
         s{f}.parallel_flag = 1;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
