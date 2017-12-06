@@ -69,7 +69,7 @@ kerneltype_IB = 2;
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
 gAR_d=0.25; % 155, IBda - max conductance of h-channel
-gAR_d=0; % 155, IBda - max conductance of h-channel
+% gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
 % M current
@@ -951,15 +951,15 @@ if save_figures
         % % % % % % % % Rastergram plots % % % % % % % %
         if include_IB && length(data) > 1
 %             % Default rastergram (slow)
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                'figheight',chosen_height};
-            % Imagesc fast & cheap version
 %             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
 %                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
 %                 'figheight',chosen_height};
+            % Imagesc fast & cheap version
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',chosen_height};
         end
 
         if include_RS && length(data) > 1
@@ -1013,16 +1013,16 @@ if save_figures
         tv2 = tic;
         p = gcp('nocreate');
         if ~isempty(p) && parallel_flag
-            try
-                parfor i = 1:length(parallel_plot_entries)
-                    feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end});
-                end
-                fprintf('Elapsed time for parallel saving plots is: %g\n',toc(tv2));
-            catch
-                warning('Error, parallel pool failed. Saving figs serially');
+%             try
+%                 parfor i = 1:length(parallel_plot_entries)
+%                     feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end});
+%                 end
+%                 fprintf('Elapsed time for parallel saving plots is: %g\n',toc(tv2));
+%             catch
+%                 warning('Error, parallel pool failed. Saving figs serially');
                 for i = 1:length(parallel_plot_entries); feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end}); end
                 fprintf('Elapsed time for serial saving plots is: %g\n',toc(tv2));
-            end
+%             end
         else
             for i = 1:length(parallel_plot_entries); feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end}); end
             fprintf('Elapsed time for serial saving plots is: %g\n',toc(tv2));

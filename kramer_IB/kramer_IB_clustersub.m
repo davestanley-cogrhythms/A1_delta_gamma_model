@@ -47,8 +47,6 @@ clustersub('kramer_IB_deltapaper_tune1','9b',numcores,myhours);
 
 %% Job progress
 !qstat -u stanleyd
-clc; !cat localOutput
-clc; !cat matlab_multi_node_batch.sh.*
 clc; !cat cluster_*.o.*
 clc; !cat cluster_*.e.*
 
