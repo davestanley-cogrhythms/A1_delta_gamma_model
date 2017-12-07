@@ -17,7 +17,8 @@ Tend = T(end); % T=tspan(2); % 4000; 	% ms, duration
 tauRAN=4; 	% ms, exponential decay time constant
 % T2=(0:0.01:T)';
 
-s=getPoissonGating(baseline,lambda,ac,freq,phase,onsetRAN,Tend,tauRAN,Tend,Npop);
+%s=getPoissonGating(baseline,lambda,ac,freq,phase,onsetRAN,Tend,tauRAN,Tend,Npop);  % Old version works with pre-Novmeber 2 version of DynaSim
+s=getPoissonGating(baseline,lambda,ac,freq,phase,onsetRAN,T(end),tauRAN,T,Npop);
 Iext(X)=gRAN*s(k,:).*(X-ERAN)
 @current += -Iext(X)
 
