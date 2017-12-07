@@ -25,6 +25,7 @@ tv2 = tic;
 
 if cluster_flag
     parallel_flag = 0;
+    save_data_flag = 1;
 end
 
     mexpath = fullfile(pwd,'mexes');
@@ -34,6 +35,10 @@ end
         plot_args{:});
     
 if cluster_flag
+    
+    clear data*
+    save(fullfile('.',study_dir,'sim_vars.mat'));
+    
     return
 end
 
