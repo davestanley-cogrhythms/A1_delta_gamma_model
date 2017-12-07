@@ -41,6 +41,8 @@ sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2st
 
 mycommand= ['qsub -l h_rt=' num2str(myhours) ':30:00 ' ...      % Sim runtime
     '-pe omp ' num2str(Ncores) ' '...                                   % Number of cores
+    '-V -hard ' ...
+    '-l mem_total=32G ' ...
     '-o cluster_' filename '_' cellID '.o.' sp ' '...                   % Output file
     '-e cluster_' filename '_' cellID '.e.' sp ' '...                   % Error file
     '-N job' cellID ' ' ...                                             % Job name

@@ -4,6 +4,7 @@ tv1 = tic;
 
 if ~exist('function_mode','var'); function_mode = 0; end
 
+% addpath(fullfile(pwd,'.'));
 addpath(genpath(fullfile(pwd,'funcs_supporting')));
 addpath(genpath(fullfile(pwd,'funcs_supporting_xPlt')));
 addpath(genpath(fullfile(pwd,'funcs_Ben')));
@@ -14,9 +15,11 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 
 % List loaded modules
 !module list
+!pwd
+path
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                             % 10 - Inverse PAC
@@ -29,7 +32,7 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
-save_figures = 1;               % Master switch for saving any figures in the simulation. Controls saving figures within dsSimulate.
+save_figures = 0;               % Master switch for saving any figures in the simulation. Controls saving figures within dsSimulate.
     save_combined_figures = 1;      % Flag for saving dsPlot2 across all simulations in data.
     save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
 Cm_Ben = 2.7;
@@ -49,9 +52,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   1;
-include_FS =   1;
-include_LTS =  1;
+include_RS =   0;
+include_FS =   0;
+include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -76,7 +79,7 @@ repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 gM_d = 2;
 
 % Cluster info
-cluster_flag = 1;
+cluster_flag = 0;
 
 % Overwrite master parameters as needed, before deriving the rest.
 if function_mode
@@ -133,7 +136,7 @@ do_jason_sPING_syn = 0;
 plot_on = 0;
 visible_flag = 'on';
 compile_flag = 1;
-parallel_flag = double(sim_mode >= 8) && ~cluster_flag;     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
+parallel_flag = double(sim_mode >= 8 && ~cluster_flag);     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 maxNcores = 1;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
@@ -216,9 +219,9 @@ fast_offset = 0;
 
 % % % % % % Number of cells per population
 % #mynumcells
-N=3;    % Default number of cells
+N=10;    % Default number of cells
 Nib=N;  % Number of excitatory cells
-Nrs=3; % Number of RS cells
+Nrs=10; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -612,8 +615,7 @@ switch sim_mode
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'RS','stim2',-1*[1.9:.2:2.5]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
-%             'IB','PP_gSYN',[0, 0.025:0.01:0.085]; ...
-            'IB','PP_gSYN',[0, 0.025:0.01:0.035]; ...
+            'IB','PP_gSYN',[0, 0.025:0.01:0.085]; ...
             };
         
     case 10     % Previous inverse PAC code
