@@ -52,9 +52,9 @@ NMDA_block = 0;
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   0;
-include_FS =   0;
-include_LTS =  0;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -219,9 +219,9 @@ fast_offset = 0;
 
 % % % % % % Number of cells per population
 % #mynumcells
-N=10;    % Default number of cells
+N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
-Nrs=10; % Number of RS cells
+Nrs=20; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
