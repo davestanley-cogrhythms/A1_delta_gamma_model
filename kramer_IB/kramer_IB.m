@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 path
 
 tspan=[0 5000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -27,7 +27,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -142,7 +142,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-% random_seed = 2;
+random_seed = 2;
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -171,6 +171,7 @@ E_EKDR=-95;  % potassium reversal potential for excitatory cells
 IB_Eh=-25;   % h-current reversal potential for deep layer IB cells
 ECa=125;     % calcium reversal potential
 IC_noise=.25;% fractional noise in initial conditions
+syn_ngib_IC_noise = 0; % noise in initial conditions of GABAB synapse from NG to IB cells
 
 IC_V = -65;         % Starting membrane potential
 
@@ -244,7 +245,6 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=-7;   % NG cells
-Jng1=1;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %

@@ -356,6 +356,12 @@ switch chosen_cell
           s{f}.PPonset = 2950;    % Just let the pulse at 4000 through
           s{f}.PPoffset = 3500;
         end
+        
+        % Modifications to each sim have random IC's and independent noise
+        s{f}.Jng1=1;   % NG cells
+        %s{f}.IC_noise = 0.5;
+        s{f}.syn_ngib_IC_noise = 0.5;
+        s{f}.random_seed = 'shuffle';
 
         datapf9a = kramer_IB_function_mode(s{f},f);
         
