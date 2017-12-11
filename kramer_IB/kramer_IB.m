@@ -18,16 +18,16 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 path
 
-tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 5000];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
-                            % 10 - Inverse PAC
+                             % 10 - Inverse PAC
                             % 11 - Vary iPeriodicPulses in all cells
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -141,8 +141,8 @@ maxNcores = 1;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
-% random_seed = 'shuffle';
-random_seed = 2;
+random_seed = 'shuffle';
+% random_seed = 2;
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -219,9 +219,9 @@ fast_offset = 0;
 
 % % % % % % Number of cells per population
 % #mynumcells
-N=20;    % Default number of cells
+N=5;    % Default number of cells
 Nib=N;  % Number of excitatory cells
-Nrs=20; % Number of RS cells
+Nrs=5; % Number of RS cells
 Nng=N;  % Number of FSNG cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
@@ -244,6 +244,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 Jd1=5;    % IB cells
 Jd2=0;    %         
 Jng1=-7;   % NG cells
+Jng1=1;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -615,7 +616,8 @@ switch sim_mode
             %'NG->NG','gGABAB',[.15:.05:.3]/Nng;...
 %             'RS','stim2',-1*[1.9:.2:2.5]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
-            'IB','PP_gSYN',[0, 0.025:0.01:0.085]; ...
+            %'IB','PP_gSYN',[0, 0.025:0.01:0.085]; ...
+            'IB','myshuffle',[1:3];...
             };
         
     case 10     % Previous inverse PAC code

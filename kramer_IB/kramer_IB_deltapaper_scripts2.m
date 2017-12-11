@@ -326,6 +326,7 @@ switch chosen_cell
             % Same simulation and sweep across random seeds; averaging
             % plots together.
         % Setup
+        short_mode = false;  % If true, do a shorter sim
         clear s
         f=1;
         s{f} = struct;
@@ -350,6 +351,11 @@ switch chosen_cell
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
+        if short_mode
+          s{f}.tspan=[0 3500];
+          s{f}.PPonset = 2950;    % Just let the pulse at 4000 through
+          s{f}.PPoffset = 3500;
+        end
 
         datapf9a = kramer_IB_function_mode(s{f},f);
         

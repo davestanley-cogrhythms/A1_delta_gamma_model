@@ -405,8 +405,8 @@ end
         
         % Play Hallelujah
         if ismac && ~function_mode
-            %load handel.mat;
-            %sound(y, 1*Fs);
+            load handel.mat;
+            sound(y, 1*Fs);
         end
     end
 
