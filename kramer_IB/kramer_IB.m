@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 path
 
-tspan=[0 5000];
+tspan=[0 1500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -59,6 +59,19 @@ include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
+
+% % % % % % Number of cells per population
+% #mynumcells
+N=20;    % Default number of cells
+Nib=N;  % Number of excitatory cells
+Nng=N;  % Number of FSNG cells
+Nrs=80; % Number of RS cells
+Nfs=N;  % Number of FS cells
+Nlts=N; % Number of LTS cells
+% NdeepRS = 30;
+NdeepFS = N;
+NdeepRS = 1;    % Number of deep theta-resonant RS cells
+
 
 % % % % % PPStim parameters
 %PPoffset = tspan(end)-0;   % ms, offset time
@@ -217,18 +230,6 @@ fast_offset = 0;
 % deep cells. So these ones now are disabled. I'm leaving the code
 % in the network, however, incase we want to re-enable them later or use
 % them for something else.
-
-% % % % % % Number of cells per population
-% #mynumcells
-N=20;    % Default number of cells
-Nib=N;  % Number of excitatory cells
-Nng=N;  % Number of FSNG cells
-Nrs=80; % Number of RS cells
-Nfs=N;  % Number of FS cells
-Nlts=N; % Number of LTS cells
-% NdeepRS = 30;
-NdeepFS = N;
-NdeepRS = 1;    % Number of deep theta-resonant RS cells
 
 
 %% % % % % % % % % % % % % ##2.2 Injected currents % % % % % % % % % % % % %
