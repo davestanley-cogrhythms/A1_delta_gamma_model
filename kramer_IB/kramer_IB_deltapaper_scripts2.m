@@ -16,6 +16,10 @@ namesuffix = '_gar0.25';
 % namesuffix = '';
 
 switch chosen_cell
+    case '0a'
+        
+        
+        
     case '1a'
         %% Paper Figs 1a - Pulse train no AP
         
@@ -342,19 +346,26 @@ switch chosen_cell
         
 %         % Shuffle through a bunch of values        
         s{f}.vary = { ...
-            'RS','myshuffle',1:8;...
+            'RS','myshuffle',1:16;...
             };
 %         s{f}.vary = { ...
 %             'IB','stim2',[0:0.5:1.5, 2:5];...
 %             };
+
+        % Reduce Ncells
+        s{f}.Nrs = 20;
+
         s{f}.random_seed = 'shuffle';
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
+        
+        % Shorten some sim parameters for short mode
         if short_mode
-          s{f}.tspan=[0 3500];
-          s{f}.PPonset = 2950;    % Just let the pulse at 4000 through
-          s{f}.PPoffset = 3500;
+          s{f}.tspan=[0 2500];
+          s{f}.PPonset = 950;
+          s{f}.PPoffset = 1500;
+          s{f}.vary = {'RS','myshuffle',1:8};
         end
         
         % Modifications to each sim have random IC's and independent noise
@@ -362,6 +373,10 @@ switch chosen_cell
         %s{f}.IC_noise = 0.5;
         s{f}.syn_ngib_IC_noise = 0.5;
         s{f}.random_seed = 'shuffle';
+        
+        % Add a plot
+        s{f}.plot_func = @dsPlot2;
+        s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH|V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false};
 
         datapf9a = kramer_IB_function_mode(s{f},f);
         

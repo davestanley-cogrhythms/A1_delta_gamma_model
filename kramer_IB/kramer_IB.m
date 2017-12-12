@@ -220,10 +220,10 @@ fast_offset = 0;
 
 % % % % % % Number of cells per population
 % #mynumcells
-N=5;    % Default number of cells
+N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
-Nrs=5; % Number of RS cells
 Nng=N;  % Number of FSNG cells
+Nrs=80; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;

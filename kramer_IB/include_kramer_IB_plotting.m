@@ -132,16 +132,16 @@ if save_figures
 
         % % % % % % % % Rastergram plots % % % % % % % %
         if include_IB && length(data) > 1
-%             % Default rastergram (slow)
-%             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figheight',chosen_height};
-            % Imagesc fast & cheap version
+            % Default rastergram (slow)
             i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',chosen_height};
+%             % Imagesc fast & cheap version
+%             i=i+1;
+%             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+%                 'figheight',chosen_height};
         end
 
         if include_RS && length(data) > 1
@@ -190,6 +190,29 @@ if save_figures
 %             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','meanFR','population','IB','subplot_options',so,...
 %                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
 %                 'figwidth',chosen_height};
+        end
+        
+        % Import any extra plots provided in sim_struct, specific to this
+        % simulation
+        if function_mode
+            if isfield(sim_struct,'parallel_plot_entries_additional')
+                if ~isempty(sim_struct.parallel_plot_entries_additional)
+                    if ~isfield(sim_struct,'plot_func')
+                        sim_struct.plot_func = @dsPlot2;
+                    end
+                    
+                    N_temp = length(sim_struct.parallel_plot_entries_additional);
+                    default_opts = {};
+                    for j = 1:N_temp
+                        i=i+1;
+                        parallel_plot_entries{i} = {sim_struct.plot_func, data, sim_struct.parallel_plot_entries_additional{j}{:}, ...
+                            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                            'figheight',chosen_height,...
+                            };                        
+                    end
+                    
+                end
+            end
         end
 
         tv2 = tic;
