@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_gar0.25';
+namesuffix = '_gar0.5';
 % namesuffix = '';
 
 switch chosen_cell
@@ -109,6 +109,9 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.tspan=[0 2000];
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 'shuffle';
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -122,6 +125,9 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
+        s{f}.tspan=[0 2000];
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 'shuffle';
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -353,7 +359,7 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
-        s{f}.tspan=[0 1500];
+        s{f}.tspan=[0 2000];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         s{f}.deep_gNaF=0;
@@ -375,7 +381,7 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
-        s{f}.tspan=[0 1500];
+        s{f}.tspan=[0 2000];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         s{f}.deep_gNaF=0;
@@ -393,14 +399,36 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_IB = 2;
-        Nfs = 20;
-        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/Nfs;...
+        s{f}.Nfs = 20;
+        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
-        s{f}.tspan=[0 1500];
+        s{f}.tspan=[0 2000];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         s{f}.IB_PP_gSYN=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8d'
+        %% Paper 8d - Sweep both IB Poisson and gamma input strength
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8d_2D'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.Nfs = 20;
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+                     'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
+            };
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 400;
+        s{f}.PPoffset = 1500;
         
         data = kramer_IB_function_mode(s{f},f);
         
