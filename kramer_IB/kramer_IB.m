@@ -84,7 +84,7 @@ kerneltype_IB = 2;
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
-gAR_d=0.5; % 155, IBda - max conductance of h-channel
+gAR_d=0.25; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
