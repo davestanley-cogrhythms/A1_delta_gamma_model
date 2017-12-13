@@ -432,7 +432,7 @@ switch chosen_cell
 %             };
 
         % Reduce Ncells
-        s{f}.Nrs = 20;
+%         s{f}.Nrs = 20;
 
         s{f}.random_seed = 'shuffle';
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
@@ -456,6 +456,9 @@ switch chosen_cell
         % Add a plot
         s{f}.plot_func = @dsPlot2;
         s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH|V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false};
+        
+        % Adjust AR
+        % s{f}.gAR_d=0.5;
 
         datapf9a = kramer_IB_function_mode(s{f},f);
         
