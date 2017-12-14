@@ -141,6 +141,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1c'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 5000];
         s{f}.pulse_mode = 0;
+        s{f}.random_seed = 'shuffle';
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
