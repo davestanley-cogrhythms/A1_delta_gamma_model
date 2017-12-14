@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_gar0.5';
+namesuffix = '_lowIB_PPStim';
 % namesuffix = '';
 
 switch chosen_cell
