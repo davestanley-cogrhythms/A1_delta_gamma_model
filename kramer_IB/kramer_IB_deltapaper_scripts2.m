@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_gar0.25';
+namesuffix = '_gar0.25_shortpulse2_50ms';
 % namesuffix = '';
 
 switch chosen_cell
@@ -486,10 +486,17 @@ switch chosen_cell
         plot_options.linecolor = 'k';
         chosen_height = 1/3;
         s{f}.plot_func = @dsPlot2;
+        % Full range
         s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
             'figheight',chosen_height};
         s{f}.parallel_plot_entries_additional{2} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
             'figheight',chosen_height};
+        
+        % 1000 ms
+        s{f}.parallel_plot_entries_additional{3} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
+            'xlims',[4000,5500],'figheight',chosen_height};
+        s{f}.parallel_plot_entries_additional{4} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'xlims',[4000,5500],'figheight',chosen_height};
         
         % Adjust AR
         % s{f}.gAR_d=0.5;

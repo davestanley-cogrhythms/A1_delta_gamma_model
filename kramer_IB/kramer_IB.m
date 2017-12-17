@@ -805,7 +805,7 @@ switch pulse_mode
         do_nested_mask = 1;
         
         PPmaskfreq = 2;
-        PPmaskduration = 100;
+        PPmaskduration = 50;
 
 end
 
