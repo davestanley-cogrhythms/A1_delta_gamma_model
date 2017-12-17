@@ -105,9 +105,9 @@ if save_figures
             
         % % % % % % % % VOLTAGE Line plots % % % % % % % %
         % Waveform plots 2 IB cells
-        if include_IB && length(data) > 1
+        if include_IB
             i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,...
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,'ylims',[-85 45],...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',chosen_height};
         end
