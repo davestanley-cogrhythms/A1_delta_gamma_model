@@ -460,6 +460,8 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 6;
         
+        % PPStim stuff
+        s{f}.pulse_train_preset = 0;
         
         s{f}.PPmaskfreq = 1;    % Do a pulse every 1 second
         s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
@@ -538,8 +540,6 @@ switch chosen_cell
         
     case '9c'
         %% Paper 9c - Sweep timing of dFS stimulation
-            % Same simulation and sweep across random seeds; averaging
-            % plots together.
         % Setup
         blk_h_current = false;        
         blk_m_current = false;
@@ -558,7 +558,7 @@ switch chosen_cell
         end
         
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9a_polley'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig9c_polley'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 6;
         
@@ -566,10 +566,11 @@ switch chosen_cell
 %         s{f}.IB_offset1 = 100;
 %         s{f}.IB_onset2=100;
         
-
+        % PPStim stuff
+        s{f}.pulse_train_preset = 0;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         s{f}.vary = { ...
-            '(RS,FS,LTS,IB,NG,dFS5)','PPmaskshift',[200:100:900];...
+            '(RS,FS,LTS,IB,NG,dFS5)','PPmaskshift',[300:50:650];...
             };
 
         % Reduce Ncells
