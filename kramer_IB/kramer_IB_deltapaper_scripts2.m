@@ -476,7 +476,6 @@ switch chosen_cell
         % Reduce Ncells
 %         s{f}.Nrs = 20;
 
-        s{f}.random_seed = 'shuffle';
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
@@ -537,7 +536,55 @@ switch chosen_cell
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
+    case '9c'
+        %% Paper 9c - Sweep timing of dFS stimulation
+            % Same simulation and sweep across random seeds; averaging
+            % plots together.
+        % Setup
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        f=1;
+        s{f} = struct;
+        
+        if blk_h_current
+            namesuffix = [namesuffix '_blkgAR'];
+            s{f}.gAR_d = 0;
+        end
+        
+        if blk_m_current
+            namesuffix = [namesuffix '_blkgM'];
+            s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
+        end
+        
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9a_polley'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 6;
+        
+        % Make NG stim longer
+%         s{f}.IB_offset1 = 100;
+%         s{f}.IB_onset2=100;
+        
 
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
+        s{f}.vary = { ...
+            '(RS,FS,LTS,IB,NG,dFS5)','PPmaskshift',[200:100:900];...
+            };
+
+        % Reduce Ncells
+%         s{f}.Nrs = 20;
+
+        s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
+        s{f}.pulse_mode = 6;
+        s{f}.tspan=[0 1500];
+        
+        
+        % Same seed on every sim
+        s{f}.random_seed = 2;       
+        
+
+        datapf9c = kramer_IB_function_mode(s{f},f);
 end
 
 end
