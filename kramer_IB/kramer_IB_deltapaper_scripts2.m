@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_gar0.25_shortpulse2_50ms';
+namesuffix = '_gar0.25_pulse_100ms';
 % namesuffix = '';
 
 switch chosen_cell
@@ -570,7 +570,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 0;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         s{f}.vary = { ...
-            '(RS,FS,LTS,IB,NG,dFS5)','PPmaskshift',[300:50:650];...
+            '(RS,FS,LTS,IB,NG,dFS5)','PPmaskshift',[150:50:450,3000];...
             };
 
         % Reduce Ncells
@@ -578,11 +578,11 @@ switch chosen_cell
 
         s{f}.parallel_flag = 1; s{f}.maxNcores = maxNcores;
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 1500];
+        s{f}.tspan=[0 1000];
         
         
         % Same seed on every sim
-        s{f}.random_seed = 2;       
+        s{f}.random_seed = 3;       
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
