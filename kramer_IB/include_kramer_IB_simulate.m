@@ -63,13 +63,14 @@ data = dsMdd2ds(xp);
 % % If we're doing pulse_mode = 6 (polley stim), copy over traces from dFS
 % cells to other cell types for plotting purposes
 if pulse_mode == 6
-for i = 1:length(data)
-    if isfield(data(i),'dFS5_iPeriodicPulsesiSYNNested_s')
-        if isfield(data(i),'IB_iPoissonNested_S3'); data(i).IB_iPoissonNested_S3 = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-        if isfield(data(i),'NG_iPeriodicPulsesiSYNNested_s'); data(i).NG_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-        if isfield(data(i),'RS_iPeriodicPulsesiSYNNested_s'); data(i).RS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-        if isfield(data(i),'FS_iPeriodicPulsesiSYNNested_s'); data(i).FS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-        if isfield(data(i),'LTS_iPeriodicPulsesiSYNNested_s'); data(i).LTS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
+    for i = 1:length(data)
+        if isfield(data(i),'dFS5_iPeriodicPulsesiSYNNested_s')
+            if isfield(data(i),'IB_iPoissonNested_S3'); data(i).IB_iPoissonNested_S3 = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
+            if isfield(data(i),'NG_iPeriodicPulsesiSYNNested_s'); data(i).NG_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
+            if isfield(data(i),'RS_iPeriodicPulsesiSYNNested_s'); data(i).RS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
+            if isfield(data(i),'FS_iPeriodicPulsesiSYNNested_s'); data(i).FS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
+            if isfield(data(i),'LTS_iPeriodicPulsesiSYNNested_s'); data(i).LTS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
+        end
     end
 end
 

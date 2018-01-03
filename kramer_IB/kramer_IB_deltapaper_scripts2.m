@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_gar0.25_pulse_100ms';
+namesuffix = '_gar0.25';
 % namesuffix = '';
 
 switch chosen_cell
@@ -445,18 +445,23 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         
+        s{f}.PPmaskduration = 50;
+        namesuffix1 = namesuffix;
+        
+        namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
+        
         if blk_h_current
-            namesuffix = [namesuffix '_blkgAR'];
+            namesuffix1 = [namesuffix1 '_blkgAR'];
             s{f}.gAR_d = 0;
         end
         
         if blk_m_current
-            namesuffix = [namesuffix '_blkgM'];
+            namesuffix1 = [namesuffix1 '_blkgM'];
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9a_polley'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig9a_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 6;
         
@@ -508,9 +513,9 @@ switch chosen_cell
         
         % 1000 ms
         s{f}.parallel_plot_entries_additional{3} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
-            'xlims',[4000,5500],'figheight',chosen_height};
+            'xlims',[4000,5000],'figheight',chosen_height};
         s{f}.parallel_plot_entries_additional{4} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
-            'xlims',[4000,5500],'figheight',chosen_height};
+            'xlims',[4000,5000],'figheight',chosen_height};
         
         % Adjust AR
         % s{f}.gAR_d=0.5;
@@ -547,18 +552,23 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         
+        s{f}.PPmaskduration = 50;
+        namesuffix1 = namesuffix;
+        
+        namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
+        
         if blk_h_current
-            namesuffix = [namesuffix '_blkgAR'];
+            namesuffix1 = [namesuffix1 '_blkgAR'];
             s{f}.gAR_d = 0;
         end
         
         if blk_m_current
-            namesuffix = [namesuffix '_blkgM'];
+            namesuffix1 = [namesuffix1 '_blkgM'];
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9c_polley'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig9c_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 6;
         
@@ -582,7 +592,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 3;       
+        s{f}.random_seed = 3;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
