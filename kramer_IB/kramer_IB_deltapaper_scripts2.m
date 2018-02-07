@@ -13,6 +13,7 @@ if nargin < 2
 end
 
 namesuffix = '_gar0.25';
+namesuffix = '_gar0.0';
 % namesuffix = '';
 
 switch chosen_cell
@@ -111,7 +112,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 'shuffle';
+        s{f}.random_seed = 3;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -127,7 +128,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 'shuffle';
+        s{f}.random_seed = 3;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -141,7 +142,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1c'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 5000];
         s{f}.pulse_mode = 0;
-        s{f}.random_seed = 'shuffle';
+        s{f}.random_seed = 3;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -283,6 +284,7 @@ switch chosen_cell
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 3000];
+        s{f}.random_seed = 3;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
         
