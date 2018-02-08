@@ -13,7 +13,7 @@ if nargin < 2
 end
 
 namesuffix = '_gar0.25';
-namesuffix = '_gar0.0';
+% namesuffix = '_gar0.0';
 % namesuffix = '';
 
 switch chosen_cell
