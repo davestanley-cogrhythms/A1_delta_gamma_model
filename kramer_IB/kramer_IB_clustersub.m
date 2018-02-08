@@ -30,9 +30,9 @@ clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
 % clustersub('kramer_IB_deltapaper_scripts2','8d',16,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','9a',16,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9c',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9d',8,myhours);
 
 
 %% Delta training figures

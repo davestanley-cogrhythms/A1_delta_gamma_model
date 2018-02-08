@@ -112,7 +112,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 3;
+        s{f}.random_seed = 4;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -128,7 +128,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 3;
+        s{f}.random_seed = 4;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -140,9 +140,9 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c'  num2str(f) '' namesuffix];
-        s{f}.tspan=[0 5000];
+        s{f}.tspan=[0 3000];
         s{f}.pulse_mode = 0;
-        s{f}.random_seed = 3;
+        s{f}.random_seed = 4;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -279,11 +279,11 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig6a_onset'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1999];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 3000];
+        s{f}.tspan=[0 2000];
         s{f}.random_seed = 3;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
@@ -362,7 +362,7 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2000];
+        s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         s{f}.deep_gNaF=0;
@@ -384,7 +384,7 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2000];
+        s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         s{f}.deep_gNaF=0;
@@ -406,7 +406,7 @@ switch chosen_cell
         s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2000];
+        s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         s{f}.IB_PP_gSYN=0;
@@ -429,7 +429,7 @@ switch chosen_cell
                      'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2000];
+        s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
         
@@ -581,9 +581,17 @@ switch chosen_cell
         % PPStim stuff
         s{f}.pulse_train_preset = 0;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
-        s{f}.vary = { ...
-            '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[150:50:450,3000];...
+        if strcmp(namesuffix,'_gar0.0')
+            % Do this one if AR current is off
+            s{f}.vary = { ...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[250:50:550,3000];...
             };
+        else
+            % Do this one otherwise
+            s{f}.vary = { ...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[150:50:450,3000];...
+            };
+        end
 
         % Reduce Ncells
 %         s{f}.Nrs = 20;
