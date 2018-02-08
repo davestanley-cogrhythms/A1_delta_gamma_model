@@ -1,17 +1,19 @@
-lowfreqs = fliplr([1 .5 .25 .1 .05]);
-highfreqs = fliplr([9 10 12.5 15 20]);
+lowfreqs = fliplr([1 .5 .25 .1]); % .05]);
+highfreqs = fliplr([9 10 15 20]); % 12.5 15 20]);
 
 axesObjs = get(gcf, 'Children');
 
 dataObjs = get(axesObjs, 'Children');
 
-figure
+dataObjs = dataObjs(~cellfun(@isempty, dataObjs));
 
 subplot_index = 0; % length(freqs) - 2;
 
+figure
+
 hts = tight_subplot(length(highfreqs), 1);
 
-for i = fliplr(1:5)
+for i = fliplr(1:length(highfreqs))
     
     subplot_index = subplot_index + 1; % - 1;
     
@@ -34,7 +36,7 @@ for i = fliplr(1:5)
     
     ylim([0 2])
     
-    xlim([2 10])
+    % xlim([2 10])
     
     hold on
     
@@ -48,7 +50,7 @@ for i = fliplr(1:5)
     
     axis tight, box off
     
-    xlim([2 10])
+    % xlim([2 10])
     
     ylabel({sprintf('%g - %g', lowfreqs(i), highfreqs(i)); 'Hz Input'}) % , 'Rotation', 45)
     

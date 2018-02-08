@@ -35,7 +35,9 @@ for i = fliplr([9:22 24])
     
     hold on
     
-    set(gca, 'XTickLabel', '', 'FontSize', 16, 'YColor', 'k', 'YTick', [])
+    % set(gca, 'XTickLabel', '', 'FontSize', 16, 'YColor', 'k', 'YTick', [])
+    
+    set(gca, 'Visible', 'off')
     
     yyaxis left
     
@@ -47,11 +49,23 @@ for i = fliplr([9:22 24])
     
     ylabel(sprintf('%g Hz', freqs(i)), 'Rotation', 0)
     
-    set(gca, 'XTickLabel', '', 'FontSize', 16, 'YColor', 'k', 'YTick', [])
+    % set(gca, 'XTickLabel', '', 'FontSize', 16, 'YColor', 'k', 'YTick', [])
+    
+    set(gca, 'Visible', 'off')
     
 end
 
 colormap('hsv')
+
+set(gcf, 'PaperOrientation', 'landscape', 'Units', 'inches', 'Position', [0 0 5 2.5], 'PaperUnits', 'normalized', 'PaperPosition', [0 0 5 2.5])
+
+figure
+
+surface([x;x],[y;y],[z;z],'facecol','no','edgecol','interp','linew',2.5)
+
+colormap('hsv')
+
+colorbar
 
 % cmap = colormap('winter');
 % 
