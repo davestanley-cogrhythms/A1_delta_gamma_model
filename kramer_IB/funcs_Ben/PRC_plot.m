@@ -1,5 +1,8 @@
 function results = PRC_plot(data, results, name)
 
+% Sample call (if results haven't been computed):
+%   results = PRC_plot(data, [], name);
+
 if isempty(results)
     
    results = dsAnalyze(data, @PRC_metrics);
