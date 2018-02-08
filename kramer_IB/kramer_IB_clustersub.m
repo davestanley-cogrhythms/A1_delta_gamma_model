@@ -33,6 +33,12 @@ clustersub('kramer_IB_deltapaper_scripts2','9a',16,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9c',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9d',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9e',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9f',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9g',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9h',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9i',8,myhours);
 
 
 %% Delta training figures

@@ -453,85 +453,11 @@ switch chosen_cell
         blk_h_current = false;        
         blk_m_current = false;
         clear s
-        f=1;
-        s{f} = struct;
         
-        s{f}.PPmaskduration = 50;
-        namesuffix1 = namesuffix;
-        
-        namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
-        
-        if blk_h_current
-            namesuffix1 = [namesuffix1 '_blkgAR'];
-            s{f}.gAR_d = 0;
-        end
-        
-        if blk_m_current
-            namesuffix1 = [namesuffix1 '_blkgM'];
-            s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
-        end
-        
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9a_polley'  num2str(f) '' namesuffix1];
-        s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
-        
-        % PPStim stuff
-        s{f}.pulse_train_preset = 0;
-        
-        s{f}.PPmaskfreq = 1;    % Do a pulse every 1 second
-        s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
-        s{f}.PPoffset = 4500;
-        
-%         % Shuffle through a bunch of values        
-        s{f}.vary = { ...
-            'RS','myshuffle',1:16;...
-            };
-%         s{f}.vary = { ...
-%             'IB','stim2',[0:0.5:1.5, 2:5];...
-%             };
+        PPmaskduration = 50;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
-        % Reduce Ncells
-%         s{f}.Nrs = 20;
-
-        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 5500];
-        
-        % Shorten some sim parameters for short mode
-        if short_mode
-          s{f}.tspan=[0 2500];
-          s{f}.PPonset = 950;
-          s{f}.PPoffset = 1500;
-          s{f}.vary = {'RS','myshuffle',1:8};
-        end
-        
-        % Modifications to each sim have random IC's and independent noise
-        s{f}.Jng1=1;   % NG cells
-        %s{f}.IC_noise = 0.5;
-        s{f}.syn_ngib_IC_noise = 0.5;
-        s{f}.random_seed = 'shuffle';
-        
-        % Add a plot
-        plot_options.linecolor = 'k';
-        chosen_height = 1/3;
-        s{f}.plot_func = @dsPlot2;
-        % Full range
-        s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
-            'figheight',chosen_height};
-        s{f}.parallel_plot_entries_additional{2} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
-            'figheight',chosen_height};
-        
-        % 1000 ms
-        s{f}.parallel_plot_entries_additional{3} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
-            'xlims',[4000,5000],'figheight',chosen_height};
-        s{f}.parallel_plot_entries_additional{4} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
-            'xlims',[4000,5000],'figheight',chosen_height};
-        
-        % Adjust AR
-        % s{f}.gAR_d=0.5;
-
-        datapf9a = kramer_IB_function_mode(s{f},f);
+        data = kramer_IB_function_mode(s{f},f);
         
     case '9b'
         %% Paper 9b - Polley figure - Lakatos version (vary frequency)
@@ -615,6 +541,82 @@ switch chosen_cell
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '9d'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 10;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9e'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 20;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9f'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 100;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9g'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 200;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9h'
+        %% Paper 9d - As Fig 9a, but block h current
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = true;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 50;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '9i'
+        %% Paper 9d - As Fig 9a, but block m current
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = true;
+        clear s
+        
+        PPmaskduration = 50;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
 end
 
 end
+
