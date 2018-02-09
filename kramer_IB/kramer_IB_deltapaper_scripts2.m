@@ -737,7 +737,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
-        s{f}.IB_PP_gSYN=0.5;
+        s{f}.IB_PP_gSYN=0.05;
         s{f}.random_seed = 2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
