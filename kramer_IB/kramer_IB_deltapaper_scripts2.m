@@ -371,7 +371,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
-        s{f}.deep_gNaF=0;
+        s{f}.gGABAa_fs5ib = 0;
         s{f}.random_seed = 2;
         
         data = kramer_IB_function_mode(s{f},f);
@@ -394,7 +394,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset = 400;
         s{f}.PPoffset = 1500;
-        s{f}.deep_gNaF=0;
+        s{f}.gGABAa_fs5ib = 0;
         s{f}.random_seed = 2;
         
         data = kramer_IB_function_mode(s{f},f);
@@ -615,6 +615,104 @@ switch chosen_cell
         PPmaskduration = 50;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
+        data = kramer_IB_function_mode(s{f},f);
+        
+%% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
+    case '8e'
+        %% As paper 8a, except different gFS5 -> IB conductance
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8e_OnsetPoisson'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 400;
+        s{f}.PPoffset = 1500;
+        
+        s{f}.Nfs = 20;
+        s{f}.gGABAa_fs5ib = 0.05/s{f}.Nfs;
+        s{f}.random_seed = 2;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8f'
+        %% As paper 8a, except different gFS5 -> IB conductance
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8f_OnsetPoisson'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 400;
+        s{f}.PPoffset = 1500;
+        
+        s{f}.Nfs = 20;
+        s{f}.gGABAa_fs5ib = 0.1/s{f}.Nfs;
+        s{f}.random_seed = 2;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8g'
+        %% As paper 8a, except different gFS5 -> IB conductance
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8g_OnsetPoisson'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 400;
+        s{f}.PPoffset = 1500;
+        
+        s{f}.Nfs = 20;
+        s{f}.gGABAa_fs5ib = 0.15/s{f}.Nfs;
+        s{f}.random_seed = 2;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '8h'
+        %% As paper 8a, except different gFS5 -> IB conductance
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig8h_OnsetPoisson'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 400;
+        s{f}.PPoffset = 1500;
+        
+        s{f}.Nfs = 20;
+        s{f}.gGABAa_fs5ib = 0.2/s{f}.Nfs;
+        s{f}.random_seed = 2;
+        
         data = kramer_IB_function_mode(s{f},f);
 end
 
