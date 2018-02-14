@@ -76,7 +76,7 @@ for s = 1:no_sims
             
             if length(titles) >= s
             
-                title(titles{s})
+                ylabel(titles{s}, 'rotation', 0) % title(titles{s})
             
             end
             
@@ -120,7 +120,9 @@ for s = 1:no_sims
     
 end
 
-sync_axes(ha, 'x'), sync_axes(ha, 'y')
+% sync_axes(ha, 'x')
+
+sync_axes(ha, 'y')
 
 end
 
