@@ -322,6 +322,8 @@ for f = 1:no_figures
     
 end
 
+save([name, '_PLV_data.mat'], 'results', 'peak_freqs', 'v_mean_spike_mrvs', 'no_spikes', 'mean_spikes_per_cycle')
+
 % linkaxes(reshape(ax(:, :, f), no_rows*no_cols, 1))
 
 for f = 1:no_figures
