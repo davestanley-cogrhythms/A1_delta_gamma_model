@@ -516,15 +516,15 @@ switch chosen_cell
         % PPStim stuff
         s{f}.pulse_train_preset = 0;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
-        if strcmp(namesuffix,'_gar0.0')
+        if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[250:50:550,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[150:50:450,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
             };
         end
 
@@ -533,7 +533,7 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 1000];
+        s{f}.tspan=[0 2000];
         
         
         % Same seed on every sim
@@ -541,7 +541,6 @@ switch chosen_cell
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
-        
         
     case '9d'
         %% Paper 9d - As Fig 9a, but different PPmaskduration
