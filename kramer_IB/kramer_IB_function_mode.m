@@ -1,4 +1,4 @@
-function [data, name] = kramer_IB_function_mode(sim_struct,sim_num)
+function [data, outpath] = kramer_IB_function_mode(sim_struct,sim_num)
 
 if nargin < 2; sim_num = 0; end
 if nargin < 1; sim_struct = []; end

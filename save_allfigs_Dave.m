@@ -1,6 +1,6 @@
 
 
-function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
+function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     %% save_allfigs
     % % For loop for saving figs
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
@@ -117,6 +117,8 @@ function save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
     fprintf(fileID,[currfigname ' ' mycomment]);
     fclose(fileID);
+    
+    outpath = fullfile(basepath,sp);
     
     % Play Hallelujah
     if ismac

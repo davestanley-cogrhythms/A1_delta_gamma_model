@@ -436,8 +436,9 @@ end
 spec_all.spec = spec;
 spec_all.pop_struct = pop_struct;
 %% ##6.0 Move composite figures and individual figs to Figs repo.
+outpath = [];
 if save_figures_move_to_Figs_repo && save_figures
-    save_allfigs_Dave(study_dir,spec_all,[],false,repo_studyname)
+    outpath = save_allfigs_Dave(study_dir,spec_all,[],false,repo_studyname);
 end
 
 fprintf('Elapsed time for full sim is: %g\n',toc(tv1));
