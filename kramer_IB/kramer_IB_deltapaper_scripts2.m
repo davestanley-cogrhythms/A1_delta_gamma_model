@@ -1038,8 +1038,8 @@ switch chosen_cell
         s{f}.include_dFS5 = 0;
         
         % Block certain synapses
-        s{f}.gAMPA_ibng = 0;
-        s{f}.gNMDA_ibng = 0;
+        %s{f}.gAMPA_ibng = 0;
+        %s{f}.gNMDA_ibng = 0;
         
         
         data = kramer_IB_function_mode(s{f},f);
