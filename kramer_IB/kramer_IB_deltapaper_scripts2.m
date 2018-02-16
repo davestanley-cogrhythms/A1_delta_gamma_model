@@ -1044,6 +1044,80 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
+    case '12b'
+        %% Paper 12b - Same as 12a, but high gM gCa levels
+        % Setup
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig12b'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+
+        s{f}.vary = {'NG','stim2',[linspace(-1,.5,8)]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 1000];
+        s{f}.PPonset = 200;
+        s{f}.random_seed = 4;
+        
+        
+        % Only include delta oscillator
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 0;
+        
+        % Block certain synapses
+        s{f}.gAMPA_ibng = 0;
+        s{f}.gNMDA_ibng = 0;
+        
+        % Alter gM and gCaH
+        s{f}.gM_d = 3;
+        s{f}.gCaH_d = 3;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '12c'
+        %% Paper 12c - Same as 12a, but LOW gM gCa levels
+        % Setup
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig12c'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+
+        s{f}.vary = {'NG','stim2',[linspace(-1,.5,8)]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 1000];
+        s{f}.PPonset = 200;
+        s{f}.random_seed = 4;
+        
+        
+        % Only include delta oscillator
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 0;
+        
+        % Block certain synapses
+        s{f}.gAMPA_ibng = 0;
+        s{f}.gNMDA_ibng = 0;
+        
+        % Alter gM and gCaH
+        s{f}.gM_d = 1;
+        s{f}.gCaH_d = 1;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
 
 end
 

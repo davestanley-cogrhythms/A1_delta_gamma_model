@@ -88,8 +88,10 @@ gAR_d=0.25; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
-% M current
+% IB Ca and M current
 gM_d = 2;
+gCaH_d = 2;
+
 
 % Cluster info
 cluster_flag = 0;

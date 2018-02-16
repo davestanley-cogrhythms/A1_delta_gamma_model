@@ -64,6 +64,8 @@ clustersub('kramer_IB_deltapaper_scripts2','11c',1,myhours);    % Only IB and NG
 
 % Characterize IB burstiness vs gM and gCa. Delta oscillator only
 clustersub('kramer_IB_deltapaper_scripts2','12a',8,myhours);    % Default gM and gCa
+clustersub('kramer_IB_deltapaper_scripts2','12b',8,myhours);    % High gM and gCa
+clustersub('kramer_IB_deltapaper_scripts2','12c',8,myhours);    % Low gM and gCa
 
 %% Delta training figures
 
