@@ -1021,7 +1021,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig12a'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
 
-        s{f}.vary = {'NG','stim2',[-7:1]; ...
+        s{f}.vary = {'NG','stim2',[linspace(-1.0,1,8)]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 1000];
