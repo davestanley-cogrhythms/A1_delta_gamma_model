@@ -928,6 +928,80 @@ switch chosen_cell
         
         datapf1c3 = kramer_IB_function_mode(s{f},f);
         
+    case '11a' 
+        %% Supplementary Fig 11 - Isolated IB cells, synapses blocked
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig11a'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 1000];
+        s{f}.pulse_mode = 0;
+        s{f}.random_seed = 4;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        
+        % Block all synapses
+        s{f}.gAMPA_ibib = 0;
+        s{f}.gNMDA_ibib = 0;
+        s{f}.ggja = 0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '11b' 
+        %% Supplementary Fig 11 - Isolated IB cells, synapses intact
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig11b'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 1000];
+        s{f}.pulse_mode = 0;
+        s{f}.random_seed = 4;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        
+
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '11c' 
+        %% Supplementary Fig 11 - Isolated IB cells, synapses intact
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig11c'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 1000];
+        s{f}.pulse_mode = 0;
+        s{f}.random_seed = 4;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 0;
+        
+
+        
+        data = kramer_IB_function_mode(s{f},f);
 
 end
 

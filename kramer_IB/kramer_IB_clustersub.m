@@ -57,6 +57,12 @@ clustersub('kramer_IB_deltapaper_scripts2','1a2',1,myhours);
 % Block L5 -> L2/3 connections
 clustersub('kramer_IB_deltapaper_scripts2','1c3',1,myhours);
 
+% Figures for detailing operation of delta oscillator
+clustersub('kramer_IB_deltapaper_scripts2','11a',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','11b',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','11c',1,myhours);
+
+
 %% Delta training figures
 
 myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
