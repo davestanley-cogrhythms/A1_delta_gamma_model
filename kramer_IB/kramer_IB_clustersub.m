@@ -62,6 +62,11 @@ clustersub('kramer_IB_deltapaper_scripts2','11a',1,myhours);    % Only IB cells,
 clustersub('kramer_IB_deltapaper_scripts2','11b',1,myhours);    % Only IB cells, connected
 clustersub('kramer_IB_deltapaper_scripts2','11c',1,myhours);    % Only IB and NG cells, connected
 
+% Sweep M-current in delta oscillator
+clustersub('kramer_IB_deltapaper_scripts2','11d',8,myhours);    % Only IB cells, connected
+clustersub('kramer_IB_deltapaper_scripts2','11e',8,myhours);    % Only IB and NG cells, connected
+
+
 % Characterize IB burstiness vs gM and gCa. Delta oscillator only
 clustersub('kramer_IB_deltapaper_scripts2','12a',8,myhours);    % Default gM and gCa
 clustersub('kramer_IB_deltapaper_scripts2','12b',8,myhours);    % High gM and gCa

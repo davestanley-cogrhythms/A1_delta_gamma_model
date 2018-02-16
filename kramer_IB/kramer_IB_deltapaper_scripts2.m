@@ -1005,6 +1005,63 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
+    case '11d' 
+        %% As Fig 11b, but sweep gM
+        % Only IB cells, recurrent AMPA / NMDA
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig11d'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 1500];
+        s{f}.pulse_mode = 0;
+        
+        s{f}.vary = {'IB','gM',[linspace(0.5,3,8)]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.random_seed = 4;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        
+        
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '11e' 
+        %% As Fig 11c, but sweep gM
+        % Only IB cells and NG cells
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig11e'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 1500];
+        s{f}.pulse_mode = 0;
+        
+        s{f}.vary = {'IB','gM',[linspace(0.5,3,8)]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.random_seed = 4;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
         
     case '12a'
         %% Paper 12a - Characterize IB burstiness. Default gM gCa levels
