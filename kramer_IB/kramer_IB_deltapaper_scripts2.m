@@ -480,7 +480,7 @@ switch chosen_cell
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
-    case '9c'
+    case '9c1'
         %% Paper 9c - Sweep timing of dFS stimulation
         % Setup
         blk_h_current = false;        
@@ -505,7 +505,7 @@ switch chosen_cell
         end
         
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9c_polley'  num2str(f) '' namesuffix1];
+        s{f}.repo_studyname = ['DeltaFig9c1_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 6;
         
@@ -537,7 +537,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 3;    
+        s{f}.random_seed = 4;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -615,6 +615,69 @@ switch chosen_cell
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '9c2'
+        %% Paper 9c2 - Same as Fig9c1 but block AR current
+        % Setup
+        blk_h_current = true;        
+        blk_m_current = false;
+        clear s
+        f=1;
+        s{f} = struct;
+        
+        s{f}.PPmaskduration = 50;
+        namesuffix1 = namesuffix;
+        
+        namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
+        
+        if blk_h_current
+            namesuffix1 = [namesuffix1 '_blkgAR'];
+            s{f}.gAR_d = 0;
+        end
+        
+        if blk_m_current
+            namesuffix1 = [namesuffix1 '_blkgM'];
+            s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
+        end
+        
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9c2_polley'  num2str(f) '' namesuffix1];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 6;
+        
+        % Make NG stim longer
+%         s{f}.IB_offset1 = 100;
+%         s{f}.IB_onset2=100;
+        
+        % PPStim stuff
+        s{f}.pulse_train_preset = 0;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
+        if strcmp(namesuffix,'blkgAR')
+            % Do this one if AR current is off
+            s{f}.vary = { ...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
+            };
+        else
+            % Do this one otherwise
+            s{f}.vary = { ...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
+            };
+        end
+
+        % Reduce Ncells
+%         s{f}.Nrs = 20;
+
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.pulse_mode = 6;
+        s{f}.tspan=[0 2000];
+        
+        
+        % Same seed on every sim
+        s{f}.random_seed = 4;    
+        
+
+        datapf9c = kramer_IB_function_mode(s{f},f);
         
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
     case '8e'
