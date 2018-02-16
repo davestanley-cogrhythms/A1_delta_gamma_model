@@ -132,14 +132,14 @@ switch chosen_cell
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
-    case '1c' 
-        %% Paper Figs 1c - Spontaneous
+    case '1c1' 
+        %% Paper Figs 1c1 - Spontaneous
         clear s
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1c'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig1c1'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 3000];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
@@ -741,6 +741,27 @@ switch chosen_cell
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
+        
+    case '1c2' 
+        %% Paper Figs 1c2 - Fig 1c1 with NMDA blocked vs opened
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1c2'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 3000];
+        s{f}.pulse_mode = 0;
+        s{f}.random_seed = 4;
+        
+        datapf1c1 = kramer_IB_function_mode(s{f},f);
+        
+        
+        s{f}.NMDA_block = 1;
+        datapf1c2 = kramer_IB_function_mode(s{f},f);
+        
+        data(1) = datapf1c1;        
+        data(1) = datapf1c1;
 
 end
 

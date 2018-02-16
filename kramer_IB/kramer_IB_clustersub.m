@@ -7,7 +7,7 @@ myhours = 2;        % By default codes adds 30 minutes wall time. Definitely sho
 
 clustersub('kramer_IB_deltapaper_scripts2','1a',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1b',1,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','1c',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','3b',4,myhours);
@@ -46,6 +46,9 @@ clustersub('kramer_IB_deltapaper_scripts2','8f',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8g',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8h',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8i',8,myhours);
+
+% Block NMDA
+clustersub('kramer_IB_deltapaper_scripts2','1c2',1,myhours);
 
 %% Delta training figures
 
