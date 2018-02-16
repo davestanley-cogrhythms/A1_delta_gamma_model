@@ -1002,6 +1002,46 @@ switch chosen_cell
 
         
         data = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '12a'
+        %% Paper 12a - Characterize IB burstiness. Default gM gCa levels
+        % Delta oscillator only.
+            % IB->NG connection blocked.
+            % Poisson input present.
+            % Sweep through varying levels of NG activity.
+        % Setup
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig12a'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+
+        s{f}.vary = {'NG','stim2',[-7:1]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 1000];
+        s{f}.PPonset = 200;
+        s{f}.random_seed = 4;
+        
+        
+        % Only include delta oscillator
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 0;
+        
+        % Block certain synapses
+        s{f}.gAMPA_ibng = 0;
+        s{f}.gNMDA_ibng = 0;
+        
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
 
 end
 
