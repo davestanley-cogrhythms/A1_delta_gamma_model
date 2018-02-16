@@ -93,7 +93,7 @@ if include_NG && include_FS
 end
 
 % % NG->LTS Synaptic connections
-if include_NG && include_FS
+if include_NG && include_LTS
     i=i+1;
     spec.connections(i).direction = 'NG->LTS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
