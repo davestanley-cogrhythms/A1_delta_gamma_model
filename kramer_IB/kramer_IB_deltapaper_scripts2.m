@@ -818,7 +818,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 4;
+        s{f}.random_seed = 5;
         
         % % Gamma -> Delta connections (some of these are already
         % zeroed-out)
@@ -828,6 +828,8 @@ switch chosen_cell
         s{f}.gAMPA_rsng = 0;
         s{f}.gNMDA_rsng = 0;
         s{f}.gGABAa_LTSib = 0;
+        s{f}.gAMPA_rsfs = 0;
+        s{f}.gAMPA_rsfs5 = 0;
         
         datapf1a2 = kramer_IB_function_mode(s{f},f);
     
@@ -936,7 +938,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11a'  num2str(f) '' namesuffix];
-        s{f}.tspan=[0 1000];
+        s{f}.tspan=[0 1500];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
         
@@ -963,7 +965,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11b'  num2str(f) '' namesuffix];
-        s{f}.tspan=[0 1000];
+        s{f}.tspan=[0 1500];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
         
@@ -987,7 +989,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11c'  num2str(f) '' namesuffix];
-        s{f}.tspan=[0 1000];
+        s{f}.tspan=[0 1500];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
         
