@@ -100,7 +100,7 @@ switch chosen_cell
         datapf0a = kramer_IB_function_mode(s{f},f);        
         
         
-    case '1a'
+    case '1a1'
         %% Paper Figs 1a - Pulse train no AP
         
         clear s
@@ -108,7 +108,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1a'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
@@ -804,7 +804,33 @@ switch chosen_cell
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
+    
         
+    case '1a2'
+        %% Like Fig 1a1, except block top-down inputs from gamma oscillator
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a2'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.tspan=[0 2000];
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 4;
+        
+        % % Gamma -> Delta connections (some of these are already
+        % zeroed-out)
+        s{f}.gGABAa_fsib = 0;
+        s{f}.gGABAa_fs5ib = 0;
+        s{f}.gAMPA_rsib= 0;
+        s{f}.gAMPA_rsng = 0;
+        s{f}.gNMDA_rsng = 0;
+        s{f}.gGABAa_LTSib = 0;
+        
+        datapf1a2 = kramer_IB_function_mode(s{f},f);
+    
     case '1c2' 
         %% Paper Figs 1c2 - Fig 1c1 with NMDA blocked vs opened
         clear s
@@ -869,6 +895,39 @@ switch chosen_cell
         
         % Move 
         movefile(outpath1,outpath2);
+        
+    
+    case '1c3' 
+        %% Paper Figs 1c3 - Spontaneous block bottom-up connections
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1c3'  num2str(f) '' namesuffix];
+        s{f}.tspan=[0 3000];
+        s{f}.pulse_mode = 0;
+        s{f}.random_seed = 4;
+        
+        % Block connecitons from IB cells and NG cells to RS cells
+        s{f}.gAMPA_ibrs = 0;
+        s{f}.gNMDA_ibrs = 0;
+        s{f}.gGABAb_ngrs = 0;
+        
+        % IB to LTS cells. These ones are normally set to zero anyways..
+        s{f}.gAMPA_ibLTS=0;
+        s{f}.gNMDA_ibLTS=0;
+        
+        % NG to FS cells. These ones are normally set to zero anyways..
+        s{f}.gGABAa_ngfs = 0;
+        s{f}.gGABAb_ngfs = 0;
+        
+        % NG to LTS cells. These ones are normally set to zero anyways..
+        s{f}.gGABAa_nglts = 0;
+        s{f}.gGABAb_nglts = 0;
+        
+        datapf1c3 = kramer_IB_function_mode(s{f},f);
+        
 
 end
 
