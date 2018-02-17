@@ -6,8 +6,16 @@
 % kramer_IB_deltapaper_scripts1 - Initial testing of network
 % kramer_IB_deltapaper_scripts2 - Figures used in actual paper.
 
-function kramer_IB_deltapaper_tune1(chosen_cell)
+function kramer_IB_deltapaper_tune1(chosen_cell,maxNcores)
 
+
+if nargin < 2
+    maxNcores = Inf;
+end
+
+namesuffix = '_IBPPStim0.05';
+% namesuffix = '_gar0.0';
+% namesuffix = '';
 
 switch chosen_cell
     case '1a'
@@ -23,6 +31,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -39,6 +48,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         datapf1b = kramer_IB_function_mode(s{f},f);
 
@@ -53,6 +63,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -70,6 +81,7 @@ switch chosen_cell
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         datapf1d = kramer_IB_function_mode(s{f},f);
 
@@ -85,6 +97,7 @@ switch chosen_cell
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         datapf4a = kramer_IB_function_mode(s{f},f);
 
@@ -98,6 +111,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f)];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 3500];
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         datapf9a = kramer_IB_function_mode(s{f},f);
         
@@ -112,6 +126,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f)];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
