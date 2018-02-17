@@ -1017,7 +1017,7 @@ switch chosen_cell
         s{f}.tspan=[0 1500];
         s{f}.pulse_mode = 0;
         
-        s{f}.vary = {'IB','gM',[linspace(0.5,3,8)]; ...
+        s{f}.vary = {'IB','gM',[linspace(1.8,3,8)]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.random_seed = 4;
