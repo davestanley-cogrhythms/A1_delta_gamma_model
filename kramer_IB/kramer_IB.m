@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 path
 
 tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -256,7 +256,7 @@ if include_NG
     JRS2 = -2.1; %
 end
 Jfs=1;    % FS cells
-Jdfs5=1;    % FS cells
+Jdfs5=1.2;    % FS cells
 Jlts1=-2.5; % LTS cells
 Jlts2=-2.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -447,7 +447,7 @@ if ~no_synapses
     gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.9/Nng;                       % NG -> IB GABA B
     
     
     % % IB -> LTS
@@ -602,7 +602,7 @@ switch sim_mode
             %'RS->dFS5','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'dFS5','PP_gSYN',[0, 0.15, 0.2, 0.25]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
-            'RS->dFS5','g_SYN',[linspace(0.1,1.5,8)]/Nrs;...
+            'RS->dFS5','g_SYN',[linspace(0.1,1.2,8)]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
