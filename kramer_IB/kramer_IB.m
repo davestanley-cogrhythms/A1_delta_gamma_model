@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 path
 
 tspan=[0 1500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -485,7 +485,7 @@ if ~no_synapses
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.5/Nrs;
+    gAMPA_rsfs5=0.7/Nrs;
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
@@ -513,7 +513,7 @@ if ~no_synapses
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
         gGABAa_fsib=0.3/Nfs;                        % FS -> IB
-        gGABAa_fs5ib=0.2/Nfs;
+        gGABAa_fs5ib=0.3/Nfs;
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -602,7 +602,7 @@ switch sim_mode
             %'RS->dFS5','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'dFS5','PP_gSYN',[0, 0.15, 0.2, 0.25]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
-            %'RS->FS','g_SYN',[1:.5:3 4]/Nrs;...
+            'RS->dFS5','g_SYN',[linspace(0.1,1.5,8)]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
@@ -620,7 +620,7 @@ switch sim_mode
 %             'RS','stim2',-1*[1.9:.2:2.5]; ...
             %'RS->NG','g_SYN',[0.1:0.1:0.4]/Nrs;...
             %'IB','PP_gSYN',[0, 0.025:0.01:0.085]; ...
-            'IB','myshuffle',[1:3];...
+            %'IB','myshuffle',[1:3];...
             };
         
     case 10     % Previous inverse PAC code
@@ -660,7 +660,7 @@ switch sim_mode
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
             %'dFS5->IB','g_SYN',[.3,.5,1,1.2,1.5,1.8,2.1,3]/Nfs;...
-            '(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
+            %'(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
             %'IB','gAR',[0,2]; ...
             %'NG->RS','gGABAB',[0, 0.2:0.1:.8]/Nng;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
@@ -707,7 +707,7 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.05;
+IB_PP_gSYN = 0.06;
 RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
@@ -728,7 +728,7 @@ ap_pulse_delay = 11;                        % ms, the amount the spike should be
 ap_pulse_num = 0;                           % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 PP_width = 0.25;
 PPwidth2_rise = 0.25;
-PPmaskfreq = 1.5;
+PPmaskfreq = 2.0;
 PPmaskduration = 100;
 PPmaskshift = 0;
 

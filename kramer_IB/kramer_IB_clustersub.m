@@ -29,7 +29,7 @@ clustersub('kramer_IB_deltapaper_scripts2','8b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
 % clustersub('kramer_IB_deltapaper_scripts2','8d',16,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','9a',16,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','9c1',12,myhours);
@@ -75,7 +75,7 @@ clustersub('kramer_IB_deltapaper_scripts2','12c',8,myhours);    % Low gM and gCa
 %% Delta training figures
 
 myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
-numcores = 6;
+numcores = 8;
 clustersub('kramer_IB_deltapaper_tune1','1a',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1b',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1c',numcores,myhours);
