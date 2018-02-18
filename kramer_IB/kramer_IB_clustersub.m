@@ -18,7 +18,8 @@ clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','6a',12,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','6b',8,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','7a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','7b',8,myhours);

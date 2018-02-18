@@ -280,16 +280,41 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig6a_onset'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[750,800,850,900,950,1000,1050,1100,1150,1200,1250]-200, 1999];...
+%         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[750,800,850,900,950,1000,1050,1100,1150,1200,1250]-200, 1999];...
+%             };
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[350:50:650], 1999];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 2000];
-        s{f}.random_seed = 6;
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 7;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
+
+    case '6b'
+        %% Paper Fig 6b - As Fig 6a except 40 Hz Thalamic input instead of poisson
         
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig6b_onset'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+%         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[750,800,850,900,950,1000,1050,1100,1150,1200,1250]-200, 1999];...
+%             };
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[350:50:650], 1999];...
+            };
+        s{f}.kerneltype_IB = 2;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2000];
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 7;
         
+        datapf6b = kramer_IB_function_mode(s{f},f);
+
              
     case '7a'
         %% Paper 7a - Characterize delta rhythm - block gamma input; sweep IB Poisson (use this one for paper, since pure tone)
@@ -828,7 +853,6 @@ switch chosen_cell
         s{f}.gAMPA_rsng = 0;
         s{f}.gNMDA_rsng = 0;
         s{f}.gGABAa_LTSib = 0;
-        s{f}.gAMPA_rsfs = 0;
         s{f}.gAMPA_rsfs5 = 0;
         
         datapf1a2 = kramer_IB_function_mode(s{f},f);
