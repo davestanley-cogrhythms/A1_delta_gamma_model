@@ -165,7 +165,7 @@ end
 
 %% L5 FS cells
 if include_dFS5    
-    ind = find(strcmp({spec.populations.name},'FS'));
+    %ind = find(strcmp({spec.populations.name},'FS'));
     i=i+1;
     spec.populations(i).name = 'dFS5';           % RS cells layer 5
     spec.populations(i).size = Nfs;
