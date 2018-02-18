@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 path
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -455,15 +455,15 @@ if ~no_synapses
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.08/Nib;
+    gAMPA_ibrs = 0.05/Nib;
     if ~NMDA_block
         gNMDA_ibrs = 8/Nib;
         if high_IB_IB_connectivity
-            gNMDA_ibrs = 5/Nib;
+            gNMDA_ibrs = 7/Nib;
         end
     end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.7/Nng;
+    gGABAb_ngrs = 0.6/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
@@ -485,7 +485,7 @@ if ~no_synapses
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=0.7/Nrs;
+    gAMPA_rsfs5=0.5/Nrs;
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
@@ -513,7 +513,7 @@ if ~no_synapses
     if high_IB_IB_connectivity
         gGABAa_fsib=0.2/Nfs;                        % FS -> IB
         gGABAa_fsib=0.3/Nfs;                        % FS -> IB
-        gGABAa_fs5ib=0.3/Nfs;
+        gGABAa_fs5ib=0.5/Nfs;
     end
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
@@ -602,7 +602,7 @@ switch sim_mode
             %'RS->dFS5','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'dFS5','PP_gSYN',[0, 0.15, 0.2, 0.25]; ...
             %'FS->FS','g_SYN',[1,1.5]/Nfs;...
-            'RS->dFS5','g_SYN',[linspace(0.1,1.2,8)]/Nrs;...
+            %'RS->dFS5','g_SYN',[linspace(0.1,1.2,8)]/Nrs;...
             %'FS->RS','g_SYN',[1:.5:3 4]/Nfs;...
             %'LTS','PP_gSYN',[.0:.03:.2]; ...
             %'RS->LTS','g_SYN',[0:0.1:0.3]/Nrs;...
@@ -659,7 +659,7 @@ switch sim_mode
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
             %'IB->IB','g_SYN',[0:0.01:0.05]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
-            %'dFS5->IB','g_SYN',[.3,.5,1,1.2,1.5,1.8,2.1,3]/Nfs;...
+            'dFS5->IB','g_SYN',[linspace(0.2,0.8,8)]/Nfs;...
             %'(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
             %'IB','gAR',[0,2]; ...
             %'NG->RS','gGABAB',[0, 0.2:0.1:.8]/Nng;...
@@ -707,8 +707,8 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.06;
-RS_PP_gSYN = 0.2;
+IB_PP_gSYN = 0.075;
+RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
