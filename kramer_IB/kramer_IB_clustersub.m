@@ -49,8 +49,11 @@ clustersub('kramer_IB_deltapaper_scripts2','8g',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8h',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8i',8,myhours);
 
-% Block NMDA
+% Block NMDA (for spontaneous activity)
 clustersub('kramer_IB_deltapaper_scripts2','1c2',1,myhours);
+
+% Block NMDA (for click train, no AP)
+clustersub('kramer_IB_deltapaper_scripts2','1a3',1,myhours);
 
 % Block L2/3 -> L5 connections
 clustersub('kramer_IB_deltapaper_scripts2','1a2',1,myhours);

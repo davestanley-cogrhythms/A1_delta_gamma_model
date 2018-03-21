@@ -856,6 +856,73 @@ switch chosen_cell
         s{f}.gAMPA_rsfs5 = 0;
         
         datapf1a2 = kramer_IB_function_mode(s{f},f);
+        
+    case '1a3' 
+        %% Paper Figs 1a3 - Like fig 1a1 (click train no AP) but with NMDA blocked vs opened
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a3'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.tspan=[0 2000];
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 4;
+        
+        [datapf1c1,outpath1] = kramer_IB_function_mode(s{f},f);
+        
+        
+        s{f}.NMDA_block = 1;
+        [datapf1c2,outpath2] = kramer_IB_function_mode(s{f},f);
+        
+        clear data
+        data(1) = datapf1c1;        
+        data(1).Varied1 = 1;
+        data(2) = datapf1c2;
+        data(2).Varied1 = 2;
+        
+        data = rmfield(data,'Varied1');
+        for i = 1:length(data)
+            data(i).NMDAblk = [];
+            data(i).varied={'NMDAblk'};
+        end
+        data(1).NMDAblk = 'Unblocked';
+        data(2).NMDAblk = 'Blocked';
+        
+        % Plot combined power spectra for blocked vs unblocked all LFP gTH,
+        % delta LFP, and gamma LFP gTH
+        i=20;
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        % Plot individual synaptic state variables
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/_s/','do_mean',1,'LineWidth',2,'force_last','variable',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        % Plot individual membrane voltages
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','all','variable','/V/','do_mean',1,'LineWidth',2,'force_last','population',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        % Move 
+        movefile(outpath1,outpath2);
+        
     
     case '1c2' 
         %% Paper Figs 1c2 - Fig 1c1 with NMDA blocked vs opened
