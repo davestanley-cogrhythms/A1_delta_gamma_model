@@ -12,7 +12,8 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_IBPPStim0.05';
+namesuffix = '_hcurrent6';
+% namesuffix = '_IBPPStim0.05';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
 
@@ -868,7 +869,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         myoffset = 1200;
         s{f}.tspan=[0 myoffset];
-        s{f}.PPonset = 500;         % Onset at 500 
+        s{f}.PPonset = 400;         % Onset at 400 
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 4;
         
