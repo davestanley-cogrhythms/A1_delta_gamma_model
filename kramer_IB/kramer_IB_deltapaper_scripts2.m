@@ -872,16 +872,16 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 4;
         
-        [datapf1c1,outpath1] = kramer_IB_function_mode(s{f},f);
+        [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
         
         s{f}.NMDA_block = 1;
-        [datapf1c2,outpath2] = kramer_IB_function_mode(s{f},f);
+        [data2,outpath2] = kramer_IB_function_mode(s{f},f);
         
         clear data
-        data(1) = datapf1c1;        
+        data(1) = data1;        
         data(1).Varied1 = 1;
-        data(2) = datapf1c2;
+        data(2) = data2;
         data(2).Varied1 = 2;
         
         data = rmfield(data,'Varied1');
@@ -945,16 +945,16 @@ switch chosen_cell
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
         
-        [datapf1c1,outpath1] = kramer_IB_function_mode(s{f},f);
+        [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
         
         s{f}.NMDA_block = 1;
-        [datapf1c2,outpath2] = kramer_IB_function_mode(s{f},f);
+        [data2,outpath2] = kramer_IB_function_mode(s{f},f);
         
         clear data
-        data(1) = datapf1c1;        
+        data(1) = data1;        
         data(1).Varied1 = 1;
-        data(2) = datapf1c2;
+        data(2) = data2;
         data(2).Varied1 = 2;
         
         data = rmfield(data,'Varied1');
