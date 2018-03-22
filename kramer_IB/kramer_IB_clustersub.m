@@ -30,17 +30,16 @@ clustersub('kramer_IB_deltapaper_scripts2','8b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
 % clustersub('kramer_IB_deltapaper_scripts2','8d',16,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9c1',12,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9c2',12,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9d',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9e',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9f',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9g',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9h',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','9i',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);     % Polley figure defualt
+% clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);   % Lakatos version
+clustersub('kramer_IB_deltapaper_scripts2','9c1',12,myhours);   % Sweep timing
+clustersub('kramer_IB_deltapaper_scripts2','9c2',12,myhours);   % Sweep timing with AR block
+clustersub('kramer_IB_deltapaper_scripts2','9d',8,myhours);     % Polley fig 10 ms
+clustersub('kramer_IB_deltapaper_scripts2','9e',8,myhours);     % Polley fig 20 ms
+clustersub('kramer_IB_deltapaper_scripts2','9f',8,myhours);     % Polley fig 100 ms
+clustersub('kramer_IB_deltapaper_scripts2','9g',8,myhours);     % Polley fig 200 ms
+clustersub('kramer_IB_deltapaper_scripts2','9h',8,myhours);     % Polley defualt block h-current
+clustersub('kramer_IB_deltapaper_scripts2','9i',8,myhours);     % Polley default block m-current
 
 %% Supplemental figures
 clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);
