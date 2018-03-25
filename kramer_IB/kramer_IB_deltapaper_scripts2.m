@@ -1219,7 +1219,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig12b'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
 
-        s{f}.vary = {'NG','stim2',[linspace(-1,.5,8)]; ...
+        s{f}.vary = {'NG','stim2',[linspace(-3,.5,8)]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 1000];
@@ -1240,8 +1240,8 @@ switch chosen_cell
         s{f}.gNMDA_ibng = 0;
         
         % Alter gM and gCaH
-        s{f}.gM_d = 3;
-        s{f}.gCaH_d = 3;
+%         s{f}.gM_d = 3;
+        s{f}.gCaH_d = 4;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -1277,7 +1277,7 @@ switch chosen_cell
         s{f}.gNMDA_ibng = 0;
         
         % Alter gM and gCaH
-        s{f}.gM_d = 1;
+%         s{f}.gM_d = 1;
         s{f}.gCaH_d = 1;
         
         data = kramer_IB_function_mode(s{f},f);
