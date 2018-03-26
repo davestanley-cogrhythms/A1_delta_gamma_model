@@ -8,6 +8,7 @@ myhours = 2;        % By default codes adds 30 minutes wall time. Definitely sho
 clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1b',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','3b',4,myhours);
@@ -57,8 +58,9 @@ clustersub('kramer_IB_deltapaper_scripts2','1a3',1,myhours);
 % Block L2/3 -> L5 connections
 clustersub('kramer_IB_deltapaper_scripts2','1a2',1,myhours);
 
-% Block L5 -> L2/3 connections
+% Block L5 <-> L2/3 connections spontaneous
 clustersub('kramer_IB_deltapaper_scripts2','1c3',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1c4',1,myhours);
 
 % Figures for detailing operation of delta oscillator
 clustersub('kramer_IB_deltapaper_scripts2','11a',1,myhours);    % Only IB cells, unconnected
