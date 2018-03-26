@@ -112,8 +112,9 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 5;
+        s{f}.random_seed = 6;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -141,9 +142,9 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c1'  num2str(f) '' namesuffix];
-        s{f}.tspan=[0 3000];
+        s{f}.tspan=[0 2000];
         s{f}.pulse_mode = 0;
-        s{f}.random_seed = 5;
+        s{f}.random_seed = 6;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
