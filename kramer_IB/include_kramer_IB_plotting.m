@@ -121,6 +121,15 @@ if save_figures
                 'figheight',chosen_height};
         end
         
+        % Mean plots
+        if length(data) == 1
+            % Waveform plots mean all cells
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',1/2};
+        end
+        
         % % % % % % % % Imagesc plots with do_mean = true (no subplotting!) % % % % % % % %
         % IB GABA B 
         if include_IB && include_NG && length(data) > 1

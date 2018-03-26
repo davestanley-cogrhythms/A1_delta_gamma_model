@@ -1168,7 +1168,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '11b' 
-        %% Supplementary Fig 11 - Isolated IB cells, synapses intact
+        %% Supplementary Fig 11 - Connected IB cells, synapses intact
         clear s
         f=1;
         s{f} = struct;
@@ -1192,7 +1192,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '11c' 
-        %% Supplementary Fig 11 - Isolated IB cells, synapses intact
+        %% Supplementary Fig 11 - Connected IB and NG cells
         clear s
         f=1;
         s{f} = struct;
