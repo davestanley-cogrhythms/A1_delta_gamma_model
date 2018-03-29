@@ -624,12 +624,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
             };
         end
 
@@ -642,7 +642,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 4;    
+        s{f}.random_seed = 9;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -761,12 +761,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[750:50:1250,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
             };
         end
 
@@ -779,7 +779,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 4;    
+        s{f}.random_seed = 9;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
