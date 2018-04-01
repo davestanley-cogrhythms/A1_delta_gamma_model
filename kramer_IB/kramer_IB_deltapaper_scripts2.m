@@ -188,7 +188,7 @@ switch chosen_cell
         
         myonset = 1000;  % Avoid transient response
         
-        % Plot combined power spectra for blocked vs unblocked all LFP gTH,
+        % Plot combined power spectra for spontaneous vs stim40Hz all LFP gTH,
         % delta LFP, and gamma LFP gTH
         i=20;
         i=i+1;
@@ -362,13 +362,13 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
 %         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[750,800,850,900,950,1000,1050,1100,1150,1200,1250]-200, 1999];...
 %             };
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[350:50:650], 1999];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[200:50:900], 1999];...
             };
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 7;
+        s{f}.random_seed = 1;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
 
@@ -385,13 +385,13 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
 %         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[750,800,850,900,950,1000,1050,1100,1150,1200,1250]-200, 1999];...
 %             };
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[350:50:650], 1999];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','(PPonset)',[[200:50:900], 1999];...
             };
         s{f}.kerneltype_IB = 2;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 7;
+        s{f}.random_seed = 1;
         
         datapf6b = kramer_IB_function_mode(s{f},f);
 
@@ -624,12 +624,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
             };
         end
 
@@ -642,7 +642,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 12;    
+        s{f}.random_seed = 0;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -761,12 +761,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1250,3000,3001];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
             };
         end
 
@@ -779,7 +779,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 12;    
+        s{f}.random_seed = 0;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -969,10 +969,10 @@ switch chosen_cell
             data(i).NMDAblk = [];
             data(i).varied={'NMDAblk'};
         end
-        data(1).NMDAblk = 'Unblocked';
+        data(1).NMDAblk = 'Control';
         data(2).NMDAblk = 'Blocked';
         
-        % Plot combined power spectra for blocked vs unblocked all LFP gTH,
+        % Plot combined power spectra for blocked vs control all LFP gTH,
         % delta LFP, and gamma LFP gTH
         i=20;
         i=i+1;
@@ -1042,10 +1042,10 @@ switch chosen_cell
             data(i).NMDAblk = [];
             data(i).varied={'NMDAblk'};
         end
-        data(1).NMDAblk = 'Unblocked';
+        data(1).NMDAblk = 'Control';
         data(2).NMDAblk = 'Blocked';
         
-        % Plot combined power spectra for blocked vs unblocked all LFP gTH,
+        % Plot combined power spectra for blocked vs control all LFP gTH,
         % delta LFP, and gamma LFP gTH
         i=20;
         i=i+1;
