@@ -642,7 +642,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 9;    
+        s{f}.random_seed = 11;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -779,7 +779,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 9;    
+        s{f}.random_seed = 11;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
