@@ -391,7 +391,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 2000];
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 1;
+        s{f}.random_seed = 3;
         
         datapf6b = kramer_IB_function_mode(s{f},f);
 
