@@ -642,7 +642,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 1;    
+        s{f}.random_seed = 100;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -779,7 +779,7 @@ switch chosen_cell
         
         
         % Same seed on every sim
-        s{f}.random_seed = 1;    
+        s{f}.random_seed = 100;    
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
@@ -950,7 +950,7 @@ switch chosen_cell
         s{f}.tspan=[0 myoffset];
         s{f}.PPonset = 400;         % Onset at 400 
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 4;
+        s{f}.random_seed = 5;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
@@ -972,33 +972,35 @@ switch chosen_cell
         data(1).NMDAblk = 'Control';
         data(2).NMDAblk = 'Blocked';
         
+        PSD_onset = 400;
+        
         % Plot combined power spectra for blocked vs control all LFP gTH,
         % delta LFP, and gamma LFP gTH
         i=20;
         i=i+1;
-        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[500,myoffset],...
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[PSD_onset,myoffset],...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figwidth',1/2,'figheight',1/2);
         
         i=i+1;
-        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[500,myoffset],...
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[PSD_onset,myoffset],...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figwidth',1/2,'figheight',1/2);
         
         i=i+1;
-        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[500,myoffset],...
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[PSD_onset,myoffset],...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figwidth',1/2,'figheight',1/2);
         
         % Plot individual synaptic state variables
         i=i+1;
-        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/_s/','do_mean',1,'LineWidth',2,'force_last','variable','crop_range',[500,myoffset],...
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/_s/','do_mean',1,'LineWidth',2,'force_last','variable','crop_range',[PSD_onset,myoffset],...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figwidth',1/2,'figheight',1/2);
         
         % Plot individual membrane voltages
         i=i+1;
-        dsPlot2(data,'plot_type','power','xlims',[],'population','all','variable','/V/','do_mean',1,'LineWidth',2,'force_last','population','crop_range',[500,myoffset],...
+        dsPlot2(data,'plot_type','power','xlims',[],'population','all','variable','/V/','do_mean',1,'LineWidth',2,'force_last','population','crop_range',[PSD_onset,myoffset],...
             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
             'figwidth',1/2,'figheight',1/2);
         
