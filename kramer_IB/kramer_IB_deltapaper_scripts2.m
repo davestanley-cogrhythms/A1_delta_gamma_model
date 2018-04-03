@@ -595,8 +595,8 @@ switch chosen_cell
         s{f} = struct;
         
         s{f}.PPmaskduration = 100;
-%         s{f}.IB_offset1=100;
-%         s{f}.IB_onset2=100;
+        s{f}.IB_offset1=100;
+        s{f}.IB_onset2=100;
         
         namesuffix1 = namesuffix;
         namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
@@ -626,12 +626,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         end
 
@@ -640,7 +640,7 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 2000];
+        s{f}.tspan=[0 1300];
         
         
         % Same seed on every sim
@@ -734,8 +734,8 @@ switch chosen_cell
         s{f} = struct;
         
         s{f}.PPmaskduration = 100;
-%         s{f}.IB_offset1=100;
-%         s{f}.IB_onset2=100;
+        s{f}.IB_offset1=100;
+        s{f}.IB_onset2=100;
         
         namesuffix1 = namesuffix;
         namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
@@ -765,12 +765,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1500,3000];...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         end
 
@@ -779,7 +779,7 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 2000];
+        s{f}.tspan=[0 1300];
         
         
         % Same seed on every sim
