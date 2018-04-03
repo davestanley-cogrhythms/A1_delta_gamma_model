@@ -594,9 +594,11 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         
-        s{f}.PPmaskduration = 50;
-        namesuffix1 = namesuffix;
+        s{f}.PPmaskduration = 100;
+%         s{f}.IB_offset1=100;
+%         s{f}.IB_onset2=100;
         
+        namesuffix1 = namesuffix;
         namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
         
         if blk_h_current
@@ -679,7 +681,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        PPmaskduration = 100;
+        PPmaskduration = 50;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
@@ -703,7 +705,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        PPmaskduration = 50;
+        PPmaskduration = 100;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
@@ -716,7 +718,7 @@ switch chosen_cell
         blk_m_current = true;
         clear s
         
-        PPmaskduration = 50;
+        PPmaskduration = 100;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
@@ -731,9 +733,11 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         
-        s{f}.PPmaskduration = 50;
-        namesuffix1 = namesuffix;
+        s{f}.PPmaskduration = 100;
+%         s{f}.IB_offset1=100;
+%         s{f}.IB_onset2=100;
         
+        namesuffix1 = namesuffix;
         namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
         
         if blk_h_current
@@ -783,6 +787,55 @@ switch chosen_cell
         
 
         datapf9c = kramer_IB_function_mode(s{f},f);
+        
+    case '9j'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = true;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 10;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9k'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = true;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 20;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9l'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = true;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 50;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+
+        data = kramer_IB_function_mode(s{f},f);
+    case '9m'
+        %% Paper 9d - As Fig 9a, but different PPmaskduration
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = true;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 200;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+        
+        data = kramer_IB_function_mode(s{f},f);
         
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
     case '8e'

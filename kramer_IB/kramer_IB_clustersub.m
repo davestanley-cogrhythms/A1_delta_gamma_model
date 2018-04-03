@@ -41,6 +41,10 @@ clustersub('kramer_IB_deltapaper_scripts2','9f',8,myhours);     % Polley fig 100
 clustersub('kramer_IB_deltapaper_scripts2','9g',8,myhours);     % Polley fig 200 ms
 clustersub('kramer_IB_deltapaper_scripts2','9h',8,myhours);     % Polley defualt block h-current
 clustersub('kramer_IB_deltapaper_scripts2','9i',8,myhours);     % Polley default block m-current
+clustersub('kramer_IB_deltapaper_scripts2','9j',8,myhours);     % Polley fig 10 ms block h-current
+clustersub('kramer_IB_deltapaper_scripts2','9k',8,myhours);     % Polley fig 20 ms block h-current
+clustersub('kramer_IB_deltapaper_scripts2','9l',8,myhours);     % Polley fig 100 ms block h-current
+clustersub('kramer_IB_deltapaper_scripts2','9m',8,myhours);     % Polley fig 200 ms block h-current
 
 %% Supplemental figures
 clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);
