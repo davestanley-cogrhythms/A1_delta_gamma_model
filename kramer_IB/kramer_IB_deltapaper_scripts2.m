@@ -640,7 +640,7 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 1300];
+        s{f}.tspan=[0 2000];
         
         
         % Same seed on every sim
@@ -779,7 +779,7 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
-        s{f}.tspan=[0 1300];
+        s{f}.tspan=[0 2000];
         
         
         % Same seed on every sim
