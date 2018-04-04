@@ -613,10 +613,14 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        
-        s{f}.PPmaskduration = 100;
+              
+        % Make NG stim longer
         s{f}.IB_offset1=100;
         s{f}.IB_onset2=100;
+        
+        % Setup mask
+        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         namesuffix1 = namesuffix;
         namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
@@ -642,7 +646,6 @@ switch chosen_cell
         
         % PPStim stuff
         s{f}.pulse_train_preset = 0;
-        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
@@ -753,9 +756,13 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         
-        s{f}.PPmaskduration = 100;
+        % Make NG stim longer
         s{f}.IB_offset1=100;
         s{f}.IB_onset2=100;
+        
+        % Setup mask
+        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         namesuffix1 = namesuffix;
         namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
@@ -781,7 +788,6 @@ switch chosen_cell
         
         % PPStim stuff
         s{f}.pulse_train_preset = 0;
-        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
