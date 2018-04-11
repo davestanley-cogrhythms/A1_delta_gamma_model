@@ -8,7 +8,9 @@ myhours = 2;        % By default codes adds 30 minutes wall time. Definitely sho
 clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1b',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1d',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','3b',4,myhours);

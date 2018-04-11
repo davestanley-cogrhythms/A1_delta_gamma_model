@@ -129,8 +129,9 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1b'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 5;
+        s{f}.random_seed = 8;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -142,15 +143,33 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c1'  num2str(f) '' namesuffix];
-        s{f}.tspan=[0 3000];
+        s{f}.tspan=[0 2000];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 8;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
+    case '1d'
+        %% Paper Figs 1d - Poisson train no AP (not 40 Hz)
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1d1'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
+        
+        datapf1d = kramer_IB_function_mode(s{f},f);
+       
         
     case '1ac'
-        %% Do both Figs 1a and 1c together to do spectrogram comparison
+        %% Do both Figs 1a and 1c together to do spectrogram comparison (Gamma input)
         
         myonset = 400;
         myoffset = 3000;
@@ -163,6 +182,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1ac'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 3000];
+        s{f}.kerneltype_IB = 2;
         s{f}.PPonset = myonset;
         s{f}.PPoffset = myoffset;
         s{f}.random_seed = 8;
@@ -185,6 +205,86 @@ switch chosen_cell
         end
         data(1).stim40hz = 'Spontaneous';
         data(2).stim40hz = 'Stim40Hz';
+        
+        myonset = 1000;  % Avoid transient response
+        
+        % Plot combined power spectra for spontaneous vs stim40Hz all LFP gTH,
+        % delta LFP, and gamma LFP gTH
+        i=20;
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[myonset,myoffset],...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[myonset,myoffset],...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,'force_last','varied1','crop_range',[myonset,myoffset],...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        % Plot individual synaptic state variables
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','RS','variable','/_s/','do_mean',1,'LineWidth',2,'force_last','variable','crop_range',[myonset,myoffset],...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        % Plot individual membrane voltages
+        i=i+1;
+        dsPlot2(data,'plot_type','power','xlims',[],'population','all','variable','/V/','do_mean',1,'LineWidth',2,'force_last','population','crop_range',[myonset,myoffset],...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figwidth',1/2,'figheight',1/2);
+        
+        % Side-by-side raster plots
+        i=i+1;
+        dsPlot2(data,'plot_type','raster','population','IB',...
+            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',outpath2,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+            'figheight',1/2);
+        % 
+        
+        % Move 
+        movefile(outpath1,outpath2);
+        
+    case '1dc'
+        %% Do both Figs 1d and 1c together to do spectrogram comparison (Poisson input)
+        
+        myonset = 400;
+        myoffset = 3000;
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1dc'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 0; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_IB = 4;
+        s{f}.tspan=[0 3000];
+        s{f}.PPonset = myonset;
+        s{f}.PPoffset = myoffset;
+        s{f}.random_seed = 8;
+        
+        [data1,outpath1] = kramer_IB_function_mode(s{f},f);
+        
+        s{f}.pulse_mode = 1;
+        [data2,outpath2] = kramer_IB_function_mode(s{f},f);
+        
+        clear data
+        data(1) = data1;        
+        data(1).Varied1 = 1;
+        data(2) = data2;
+        data(2).Varied1 = 2;
+        
+        data = rmfield(data,'Varied1');
+        for i = 1:length(data)
+            data(i).stim40hz = [];
+            data(i).varied={'stim40hz'};
+        end
+        data(1).stim40hz = 'Spontaneous';
+        data(2).stim40hz = 'StimTone';
         
         myonset = 1000;  % Avoid transient response
         
