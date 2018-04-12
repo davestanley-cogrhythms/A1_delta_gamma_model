@@ -15,7 +15,7 @@ clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','3b',4,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','4a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','4a',8,myhours);         % Lakatos 2005 figure
 
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);
