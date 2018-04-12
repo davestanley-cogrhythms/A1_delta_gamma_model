@@ -529,7 +529,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.kerneltype_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:.1:0.75]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 5500];
@@ -549,7 +549,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.kerneltype_IB = 2;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:.1:0.75]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 5500];
@@ -595,11 +595,11 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
         s{f}.gGABAa_fs5ib = 0;
-        s{f}.random_seed = 2;
+        s{f}.random_seed = 8;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -618,11 +618,11 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
         s{f}.gGABAa_fs5ib = 0;
-        s{f}.random_seed = 2;
+        s{f}.random_seed = 8;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -641,11 +641,11 @@ switch chosen_cell
         s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
         s{f}.IB_PP_gSYN=0;
-        s{f}.random_seed = 2;
+        s{f}.random_seed = 8;
         
         data = kramer_IB_function_mode(s{f},f);
         
