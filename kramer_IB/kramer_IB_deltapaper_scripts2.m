@@ -533,7 +533,7 @@ switch chosen_cell
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 5500];
-        s{f}.deep_gNaF=0;
+        s{f}.gGABAa_fs5ib = 0;
         s{f}.random_seed = 4;
         
         data = kramer_IB_function_mode(s{f},f);
@@ -553,7 +553,7 @@ switch chosen_cell
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 5500];
-        s{f}.deep_gNaF=0;
+        s{f}.gGABAa_fs5ib = 0;
         s{f}.random_seed = 4;
         
         data = kramer_IB_function_mode(s{f},f);
