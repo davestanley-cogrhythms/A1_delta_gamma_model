@@ -33,6 +33,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     op = struct_addDef(op,'force_rowvect',false);
     op = struct_addDef(op,'zlims',[]);
     op = struct_addDef(op,'autosuppress_interior_tics',false);
+    op = struct_addDef(op,'subplot_grid_handle',[]);
     op = struct_addDef(op,'show_PP_ticks',true);
     op = struct_addDef(op,'suppress_PP_ticks_columns',false);
             % Display_mode: 0-Just plot directly
@@ -48,6 +49,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     autosuppress_interior_tics = op.autosuppress_interior_tics;
     show_PP_ticks = op.show_PP_ticks;
     suppress_PP_ticks_columns = op.suppress_PP_ticks_columns;
+    subplot_grid_handle = op.subplot_grid_handle;
     
     if verLessThan('matlab','8.4') && display_mode == 1; warning('Display_mode==1 might not work with earlier versions of MATLAB.'); end
     if transpose_on && ismatrix(xp)
@@ -92,12 +94,17 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
             else
                 %figure;
             end
-            
-            if subplotzoom_enabled
-                hxp.hcurr = subplot_grid(N1,N2,subplot_grid_options{:});
+
+            if isempty(subplot_grid_handle)
+                if subplotzoom_enabled
+                    hxp.hcurr = subplot_grid(N1,N2,subplot_grid_options{:});
+                else
+                    hxp.hcurr = subplot_grid(N1,N2,'no_zoom',subplot_grid_options{:});
+                end
             else
-                hxp.hcurr = subplot_grid(N1,N2,'no_zoom',subplot_grid_options{:});
+                hxp.hcurr = subplot_grid_handle;
             end
+            
             c=0;
             
             blocks_j = cell(1,N2);
@@ -108,6 +115,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     % Plots the actual graph
                     c=c+1;
                     hxp.hcurr.set_gca(c);
+                    if ~isempty(subplot_grid_handle); hold on; end
                     hxp.hsub{i,j} = xp.data{i,j}();
                     
                     % % Now add the ticks. 
