@@ -152,6 +152,32 @@ if save_figures
 %                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
 %                 'figheight',chosen_height};
         end
+        
+        if include_IB && include_NG && (include_FS || include_dFS5) && length(data) > 1
+            % Default rastergram (slow) with shaded background & line plot
+            i=i+1;
+            clear myplot_options
+            %myplot_options.imagesc_zlims = [0 0.3];
+            myplot_options.imagesc_zlims = [];
+            myplot_options.show_lineplot = true;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',chosen_height};
+            clear myplot_options
+        end
+        
+        if include_IB && include_NG && length(data) > 1
+            % Default rastergram (slow) with shaded background; no line plot
+            i=i+1;
+            clear myplot_options
+            %myplot_options.imagesc_zlims = [0 0.3];
+            myplot_options.imagesc_zlims = [];
+            myplot_options.show_lineplot = false;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',chosen_height};
+            clear myplot_options
+        end
 
         if include_RS && length(data) > 1
     %         i=i+1;
