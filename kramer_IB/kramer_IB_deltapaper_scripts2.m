@@ -360,7 +360,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[50,65,85,105]; ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[40,50,60,75,90,110]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
