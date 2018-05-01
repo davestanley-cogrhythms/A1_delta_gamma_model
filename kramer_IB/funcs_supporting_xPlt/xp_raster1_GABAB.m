@@ -13,12 +13,16 @@ function hxp = xp_raster1_GABAB (xp, op)
     
     op = struct_addDef(op,'args',{});
     op = struct_addDef(op,'imagesc_zlims',[]);
-    op = struct_addDef(op,'show_lineplot',true);
+    op = struct_addDef(op,'show_imagesc',true);             % Imagesc background showing GABA B conductance as shading
+    op = struct_addDef(op,'show_lineplot',false);            % Line plot with just GABA A conductance
+    op = struct_addDef(op,'show_lineplot_GABAB',true);      % Line plot with both GABA A and B conductances
     
     xlims = op.xlims;
     ylims = op.ylims;
     imagesc_zlims = op.imagesc_zlims;
+    show_imagesc = op.show_imagesc;
     show_lineplot = op.show_lineplot;
+    show_lineplot_GABAB = op.show_lineplot_GABAB;
 
     % Squeeze out any 1D placeholder axes ("Dim X"). These can be created
     % by the unpacking operation above. 
@@ -76,7 +80,7 @@ function hxp = xp_raster1_GABAB (xp, op)
     
     % Mean and repmat background color data.
     d = data.IB_NG_GABAall_gTH;
-    if max(d(:)) - min(d(:)) > 0            % Only do color plot if the data is not all zeros
+    if max(d(:)) - min(d(:)) > 0 && show_imagesc   % Only do color plot if the data is not all zeros
         d = mean(d,2);
         d = repmat(d,[1,Ncells]);
         data.IB_NG_GABAall_gTH = d;
@@ -88,11 +92,11 @@ function hxp = xp_raster1_GABAB (xp, op)
         
     end
     
-    mylims = ylim;
-
-
+    
     hold on;
     hxp.hcurr = dsPlot(data,'plot_type','raster','lock_gca',true,'suppress_textstring',1);
+    
+    mylims = ylim;
 
     % Plot GABA A    
     % Mean and scale GABA A trace data
@@ -107,6 +111,32 @@ function hxp = xp_raster1_GABAB (xp, op)
 
             subplot_options.suppress_legend = true;
             dsPlot2(data,'plot_type','waveform','variable','GABAA_gTH','population','IB','LineWidth',2,'ylims',mylims,'lock_gca',true,'subplot_options',subplot_options);
+
+        end
+    end
+    
+    % Plot GABA A, GABA B, and sum
+    % /AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/
+    if show_lineplot_GABAB
+        x_total = data.IB_THALL_GABA_gTH;
+        x_NG_GABA = data.IB_NG_GABAall_gTH;
+
+        x_total = mean(x_total,2);
+        x_NG_GABA = mean(x_NG_GABA,2);
+        maxx = max(x_total(:));
+        minx = min(x_total(:));
+        if (maxx - minx) > 0
+            % Scale x_total
+            x_total = (x_total - minx) ./ (maxx - minx) * Ncells/2 + mylims(1);
+            data.IB_THALL_GABA_gTH = x_total;
+            
+            % Scale x_NG_GABA
+            x_NG_GABA = (x_NG_GABA - minx) ./ (maxx - minx) * Ncells/2 + mylims(1);
+            data.IB_NG_GABAall_gTH = x_NG_GABA;
+
+
+            subplot_options.suppress_legend = true;
+            dsPlot2(data,'plot_type','waveform','variable','/THALL_GABA_gTH|GABAall_gTH/','population','IB','LineWidth',2,'ylims',mylims,'lock_gca',true,'subplot_options',subplot_options);
 
         end
     end

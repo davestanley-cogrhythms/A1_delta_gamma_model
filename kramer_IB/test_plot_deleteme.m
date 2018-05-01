@@ -69,11 +69,12 @@ clear plot_options subplot_options
 myplot_options.imagesc_zlims = [0 0.3];
 % dsPlot2(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',plot_options);
 
+clear myplot_options
+%myplot_options.imagesc_zlims = [0 0.3];
+myplot_options.imagesc_zlims = [];
+myplot_options.show_imagesc = true;
+myplot_options.show_lineplot = false;
+myplot_options.show_lineplot_GABAB = true;
 
-% dsPlot2_PPStim(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options);
-dsPlot2_PPStim(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2);
-
-% dsPlot2(data,'plot_type','waveform','variable','GABAA_gTH','population','IB','LineWidth',2,'ylim',mylims,'lock_gca',false,'subplot_options',subplot_options);
-
-% dsPlot2(data,'plot_type','waveform','variable','GABAA_gTH','population','IB','LineWidth',2,'ylim',mylims);
+dsPlot2_PPStim(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options)
 

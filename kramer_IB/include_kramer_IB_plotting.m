@@ -159,11 +159,28 @@ if save_figures
             clear myplot_options
             %myplot_options.imagesc_zlims = [0 0.3];
             myplot_options.imagesc_zlims = [];
+            myplot_options.show_imagesc = true;
             myplot_options.show_lineplot = true;
+            myplot_options.show_lineplot_GABAB = false;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',chosen_height};
             clear myplot_options
+            
+            
+            % Default rastergram (slow) with GABA A and B lineplots. No background shading
+            i=i+1;
+            clear myplot_options
+            %myplot_options.imagesc_zlims = [0 0.3];
+            myplot_options.imagesc_zlims = [];
+            myplot_options.show_imagesc = false;
+            myplot_options.show_lineplot = false;
+            myplot_options.show_lineplot_GABAB = true;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',chosen_height};
+            clear myplot_options
+            
         end
         
         if include_IB && include_NG && length(data) > 1
@@ -172,7 +189,9 @@ if save_figures
             clear myplot_options
             %myplot_options.imagesc_zlims = [0 0.3];
             myplot_options.imagesc_zlims = [];
+            myplot_options.show_imagesc = true;
             myplot_options.show_lineplot = false;
+            myplot_options.show_lineplot_GABAB = false;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',chosen_height};
