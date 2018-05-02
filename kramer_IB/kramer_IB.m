@@ -75,8 +75,8 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 
 % % % % % PPStim parameters
 %PPoffset = tspan(end)-0;   % ms, offset time
-%PPoffset = Inf;
-PPoffset = 1500;
+PPoffset = Inf;
+%PPoffset = 1500;
 kerneltype_IB = 2;
 
 % % % % % Default repo study name

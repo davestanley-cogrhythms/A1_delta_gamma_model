@@ -343,7 +343,11 @@ switch chosen_cell
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
         
         datapf3a = kramer_IB_function_mode(s{f},f);
         
@@ -364,7 +368,11 @@ switch chosen_cell
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
         
         datapf3b = kramer_IB_function_mode(s{f},f);
 
@@ -384,6 +392,8 @@ switch chosen_cell
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
         
         datapf4a = kramer_IB_function_mode(s{f},f);
@@ -402,7 +412,11 @@ switch chosen_cell
         
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
         
         datapf5a = kramer_IB_function_mode(s{f},f);
         
@@ -424,6 +438,10 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        
         s{f}.IB_PP_gSYN=0;
         
         datapf5b = kramer_IB_function_mode(s{f},f);
@@ -445,6 +463,10 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        
         s{f}.deep_gNaF=0;
         
         datapf5c = kramer_IB_function_mode(s{f},f);
@@ -478,8 +500,14 @@ switch chosen_cell
          
         s{f}.kerneltype_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 2000];
-        s{f}.random_seed = 100;
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
+        
+%         s{f}.tspan=[0 2000];
+%         s{f}.random_seed = 100;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
 
@@ -512,8 +540,14 @@ switch chosen_cell
          
         s{f}.kerneltype_IB = 2;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 2000];
-        s{f}.random_seed = 100;
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
+        
+%         s{f}.tspan=[0 2000];
+%         s{f}.random_seed = 100;
         
         datapf6b = kramer_IB_function_mode(s{f},f);
 
@@ -532,9 +566,13 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0:0.15:1.1]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
+        
         s{f}.gGABAa_fs5ib = 0;
-        s{f}.random_seed = 4;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -552,9 +590,13 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0:.1:0.75]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
+        
         s{f}.gGABAa_fs5ib = 0;
-        s{f}.random_seed = 4;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -573,11 +615,13 @@ switch chosen_cell
         s{f}.vary = {'dFS5->IB','g_SYN',[0,0.1:0.05:0.35,0.5]/Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
+        
         s{f}.IB_PP_gSYN=0;
-        s{f}.random_seed = 4;
-        %s{f}.PPmaskfreq = 1.5;
-        %s{f}.PPmaskduration = 100;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -595,11 +639,13 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.gGABAa_fs5ib = 0;
         s{f}.random_seed = 8;
+        
+        s{f}.gGABAa_fs5ib = 0;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -618,11 +664,13 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.gGABAa_fs5ib = 0;
         s{f}.random_seed = 8;
+        
+        s{f}.gGABAa_fs5ib = 0;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -641,11 +689,13 @@ switch chosen_cell
         s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.IB_PP_gSYN=0;
         s{f}.random_seed = 8;
+        
+        s{f}.IB_PP_gSYN=0;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -665,9 +715,11 @@ switch chosen_cell
                      'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -704,6 +756,9 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
@@ -765,13 +820,12 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
+        
         s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
         
-        
-        % Same seed on every sim
-        s{f}.random_seed = 100;    
-        
-
         datapf9c = kramer_IB_function_mode(s{f},f);
         
     case '9d'
@@ -907,13 +961,12 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
+        
         s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
         
-        
-        % Same seed on every sim
-        s{f}.random_seed = 100;    
-        
-
         datapf9c = kramer_IB_function_mode(s{f},f);
         
     case '9c3'
@@ -974,13 +1027,12 @@ switch chosen_cell
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
+        
         s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
         
-        
-        % Same seed on every sim
-        s{f}.random_seed = 100;    
-        
-
         datapf9c = kramer_IB_function_mode(s{f},f);
         
     case '9j'
@@ -1047,13 +1099,14 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.05/s{f}.Nfs;
-        s{f}.random_seed = 2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_gfs5ib' num2str(s{f}.gGABAa_fs5ib * s{f}.Nfs)];
         
         data = kramer_IB_function_mode(s{f},f);
@@ -1072,13 +1125,14 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.1/s{f}.Nfs;
-        s{f}.random_seed = 2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_gfs5ib' num2str(s{f}.gGABAa_fs5ib * s{f}.Nfs)];
         
         data = kramer_IB_function_mode(s{f},f);
@@ -1097,13 +1151,14 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.15/s{f}.Nfs;
-        s{f}.random_seed = 2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_gfs5ib' num2str(s{f}.gGABAa_fs5ib * s{f}.Nfs)];
         
         data = kramer_IB_function_mode(s{f},f);
@@ -1123,13 +1178,14 @@ switch chosen_cell
         s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.2/s{f}.Nfs;
-        s{f}.random_seed = 2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_gfs5ib' num2str(s{f}.gGABAa_fs5ib * s{f}.Nfs)];
         
         data = kramer_IB_function_mode(s{f},f);
@@ -1149,11 +1205,13 @@ switch chosen_cell
         s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.25]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
-        s{f}.PPonset = 400;
+
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
+        
         s{f}.IB_PP_gSYN=0.05;
-        s{f}.random_seed = 2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
@@ -1169,9 +1227,11 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a2'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
         s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 5;
+        s{f}.random_seed = 8;
         
         % % Gamma -> Delta connections (some of these are already
         % zeroed-out)
