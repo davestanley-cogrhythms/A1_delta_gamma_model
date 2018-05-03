@@ -66,15 +66,26 @@ dsPlot2(data,'plot_type','raster','population','IB','ylim',mylims,...
 
 %% Do it using single xp file
 clear plot_options subplot_options
-myplot_options.imagesc_zlims = [0 0.3];
 % dsPlot2(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',plot_options);
 
+% Get normalization range
+myxp = dsAll2mdd(data);
+myxp = myxp.axisSubset('variables','/THALL_GABA_gTH/');
+d = myxp.data;
+d = cellfun(@(x) (mean(x,2)),d,'UniformOutput',0);
+d = vertcat(d{:});
+maxx = max(d(:));
+minx = min(d(:));
+clear d
+
 clear myplot_options
-%myplot_options.imagesc_zlims = [0 0.3];
 myplot_options.imagesc_zlims = [];
-myplot_options.show_imagesc = true;
+myplot_options.lineplot_ylims = [minx, maxx];
+myplot_options.show_imagesc = false;
 myplot_options.show_lineplot = false;
-myplot_options.show_lineplot_GABAB = true;
+myplot_options.show_lineplot_NGFS_GABA = true;
 
 dsPlot2_PPStim(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options)
+
+
 
