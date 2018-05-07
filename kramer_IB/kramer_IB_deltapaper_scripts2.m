@@ -504,7 +504,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
 %         s{f}.tspan=[0 2000];
 %         s{f}.random_seed = 100;
@@ -544,7 +544,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
 %         s{f}.tspan=[0 2000];
 %         s{f}.random_seed = 100;
@@ -643,7 +643,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -668,7 +668,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -693,7 +693,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.IB_PP_gSYN=0;
         
@@ -719,7 +719,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -824,7 +824,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -965,7 +965,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -1031,7 +1031,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -1103,7 +1103,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.05/s{f}.Nfs;
@@ -1129,7 +1129,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.1/s{f}.Nfs;
@@ -1155,7 +1155,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.15/s{f}.Nfs;
@@ -1182,7 +1182,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.2/s{f}.Nfs;
@@ -1209,7 +1209,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 100;
         
         s{f}.IB_PP_gSYN=0.05;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
