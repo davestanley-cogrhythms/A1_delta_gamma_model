@@ -122,16 +122,30 @@ function hxp = xp_IBphaselock_errbar (xp, op)
             
     end
     
+    
     % Calculate phase locking ratio for all sims
+    mu_n = zeros(1,Nsims);
+    mu_af = zeros(1,Nsims);
+    std_af = zeros(1,Nsims);
+    ste_af = zeros(1,Nsims);
+    for i = 1:Nsims
+        mu_n(i) = mean(total_spks_pulse_on{i} + total_spks_pulse_off{i});
+    end
+    
     for i = 1:Nsims
         for j = 1:Ncycles
-            aligned_fraction{i}(j) = total_spks_pulse_on{i}(j) ./ (total_spks_pulse_on{i}(j) + total_spks_pulse_off{i}(j));
+            af{i}(j) = total_spks_pulse_on{i}(j) / mu_n(i);     % Aligned fraction
+
         end
     end
-    %aligned_fraction = zeros(1,Nsims);
-    aligned_fraction = total_spks_pulse_on ./ (total_spks_pulse_on + total_spks_pulse_off);
     
-    hxp.hcurr = bar(aligned_fraction);
+    for i = 1:Nsims
+        mu_af(i) = mean(af{i});
+        std_af(i) = std(af{i});
+        ste_af(i) = std(af{i}) / sqrt(Nsims);
+    end
+    
+    hxp.hcurr = barwitherr(ste_af,mu_af);
     
 end
 
