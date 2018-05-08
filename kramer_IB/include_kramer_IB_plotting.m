@@ -286,6 +286,16 @@ if save_figures
 %                 'figwidth',chosen_height};
         end
         
+        
+        % % % % % % % % PHASE locking figures % % % % % % % %
+        if length(data) > 1 && include_IB && && tspan(2) > 5000
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3,...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',1/3};
+
+        end
+        
         % Import any extra plots provided in sim_struct, specific to this
         % simulation
         if function_mode

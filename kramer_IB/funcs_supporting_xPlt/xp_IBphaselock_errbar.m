@@ -145,7 +145,8 @@ function hxp = xp_IBphaselock_errbar (xp, op)
         ste_af(i) = std(af{i}) / sqrt(Nsims);
     end
     
-    hxp.hcurr = barwitherr(ste_af,mu_af);
+    hxp.hcurr = barwitherr(ste_af,mu_af,'k');
+    ylim([0,1.2]);
     
 end
 
