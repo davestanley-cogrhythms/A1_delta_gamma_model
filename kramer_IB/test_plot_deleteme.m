@@ -90,8 +90,9 @@ dsPlot2_PPStim(data,'plot_type','raster','population','IB','plot_handle',@xp_ras
 
 %% Test xp_IBphaselock
 
-dsPlot2(data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock,'force_last','varied1','Ndims_per_subplot',3);
+% dsPlot2(data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock,'force_last','varied1','Ndims_per_subplot',3);
 
+dsPlot2(data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3);
 
 
 % 
