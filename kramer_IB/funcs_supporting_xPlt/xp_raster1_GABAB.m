@@ -147,9 +147,9 @@ function hxp = xp_raster1_GABAB (xp, op)
         end
         if (maxx - minx) > 0
             % Scale x_NG_GABA
-            max_y_axis_range2 = 1.0;             % Max fractional range of axis to which the data is scaled
+            max_y_axis_range = 1.0;             % Max fractional range of axis to which the data is scaled
             x_NG_GABA = (x_NG_GABA - minx) ./ (maxx - minx);
-            x_NG_GABA = x_NG_GABA * Ncells * max_y_axis_range2 + mylims(1);
+            x_NG_GABA = x_NG_GABA * Ncells * max_y_axis_range + mylims(1);
             data.IB_NG_GABAall_gTH = x_NG_GABA;
 
             subplot_options.suppress_legend = true;
@@ -174,14 +174,16 @@ function hxp = xp_raster1_GABAB (xp, op)
             maxx = lineplot_ylims(2);
         end
         if (maxx - minx) > 0
+            
             % Scale x_total
+            max_y_axis_range = 1.0;             % Max fractional range of axis to which the data is scaled
             x_total = (x_total - minx) ./ (maxx - minx);
-            x_total = x_total * Ncells/2 + mylims(1);
+            x_total = x_total * Ncells * max_y_axis_range + mylims(1);
             data.IB_THALL_GABA_gTH = x_total;
             
             % Scale x_NG_GABA
             x_NG_GABA = (x_NG_GABA - minx) ./ (maxx - minx);
-            x_NG_GABA = x_NG_GABA * Ncells/2 + mylims(1);
+            x_NG_GABA = x_NG_GABA * Ncells * max_y_axis_range + mylims(1);
             data.IB_NG_GABAall_gTH = x_NG_GABA;
 
             subplot_options.suppress_legend = true;
