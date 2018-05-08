@@ -67,7 +67,7 @@ function hxp = xp_IBphaselock (xp, op)
     % locking
     Nsims = length(data);
     total_spks_pulse_on = zeros(1,Nsims);
-    total_spks_pulse_offs = zeros(1,Nsims);
+    total_spks_pulse_off = zeros(1,Nsims);
     
     for i = 1:Nsims
         
@@ -107,7 +107,7 @@ function hxp = xp_IBphaselock (xp, op)
             end
             
             total_spikes = count_spikes(spikes,mystart,mystop);
-            total_spks_pulse_on = total_spks_pulse_on + total_spikes;
+            total_spks_pulse_on(i) = total_spks_pulse_on(i) + total_spikes;
         end
         
         % Loop through each inter-pulse interval in the pulse train
@@ -123,7 +123,7 @@ function hxp = xp_IBphaselock (xp, op)
             end
             
             total_spikes = count_spikes(spikes,mystart,mystop);
-            total_spks_pulse_off = total_spks_pulse_off + total_spikes;
+            total_spks_pulse_off(i) = total_spks_pulse_off(i) + total_spikes;
         end           
     end
     
