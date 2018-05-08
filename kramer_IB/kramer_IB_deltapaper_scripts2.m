@@ -563,8 +563,8 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.kerneltype_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0:0.15:1.1]/10; ...
-            };
+        s{f}.vary = {'IB','PP_gSYN',[0, [[0:6]-5]*0.13+0.75]/10; ...
+            };              % Zero plus values centered around 0.075, the default value
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 5500];
