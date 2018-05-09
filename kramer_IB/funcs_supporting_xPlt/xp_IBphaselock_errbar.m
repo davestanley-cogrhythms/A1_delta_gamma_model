@@ -67,6 +67,7 @@ function hxp = xp_IBphaselock_errbar (xp, op)
     total_spks_pulse_on = cell(1,Nsims);
     total_spks_pulse_off = cell(1,Nsims);
     
+    Ncycles = zeros(1,Nsims);
     for i = 1:Nsims
         % Get basic parameters of dataset
         downsample_factor = data(i).simulator_options.downsample_factor;
@@ -91,10 +92,10 @@ function hxp = xp_IBphaselock_errbar (xp, op)
         
         % Loop through each cycle in the pulse train. Drop the last "on"
         % since this cycle is guaranteed to be incomplete.
-        Ncycles = length(ons)-1;
-        total_spks_pulse_on{i} = zeros(1, Ncycles);
-        total_spks_pulse_off{i} = zeros(1, Ncycles);
-        for j = 1:Ncycles
+        Ncycles(i) = length(ons)-1;
+        total_spks_pulse_on{i} = zeros(1, Ncycles(i));
+        total_spks_pulse_off{i} = zeros(1, Ncycles(i));
+        for j = 1:Ncycles(i)
             % Start of current pulse
             mystart = ons(j);
             
@@ -133,7 +134,7 @@ function hxp = xp_IBphaselock_errbar (xp, op)
     end
     
     for i = 1:Nsims
-        for j = 1:Ncycles
+        for j = 1:Ncycles(i)
             af{i}(j) = total_spks_pulse_on{i}(j) / mu_n(i);     % Aligned fraction
 
         end
