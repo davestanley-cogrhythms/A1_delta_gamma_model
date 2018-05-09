@@ -114,7 +114,7 @@ clc
 
 
 %% Delete study dirs
-! rm -rf study_d17*
+! rm -rf study_d18*
 
 
 %% Remove temp output files
