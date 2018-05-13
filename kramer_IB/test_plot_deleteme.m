@@ -65,7 +65,7 @@ dsPlot2(data,'plot_type','raster','population','IB','ylim',mylims,...
 
 
 %% Do it using single xp file
-clear plot_options subplot_options
+clear myplot_options subplot_options
 % dsPlot2(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',plot_options);
 
 % Get normalization range
@@ -79,21 +79,22 @@ minx = min(d(:));
 clear d
 
 clear myplot_options
+myplot_options.lineplot_ylims = [minx,maxx];
 myplot_options.imagesc_zlims = [];
-myplot_options.lineplot_ylims = [minx, maxx];
 myplot_options.show_imagesc = false;
-myplot_options.show_lineplot = false;
+myplot_options.show_lineplot_FS_GABA = false;
+myplot_options.show_lineplot_NG_GABA = false;
 myplot_options.show_lineplot_NGFS_GABA = true;
 
-dsPlot2_PPStim(data,'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options)
+dsPlot2_PPStim(data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options)
 
 
-%% Test xp_IBphaselock
+
+%% Test xp_IBphaselock_errbar code (or xp_IBphaselock)
 
 % dsPlot2(data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock,'force_last','varied1','Ndims_per_subplot',3);
 
 dsPlot2(data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3);
-
 
 % 
 % parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
@@ -101,6 +102,10 @@ dsPlot2(data,'plot_type','waveform','population','IB','variable','/V|iPoissonNes
 %     'figheight',chosen_height};
 % 
 
+
+%% Test xp_IBphaselock_corrcoef_errbar code
+
+dsPlot2(data,'plot_type','waveform','population','IB','variable','/iPoissonNested_S2|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_corrcoef_errbar,'force_last','varied1','Ndims_per_subplot',3);
 
 
 
