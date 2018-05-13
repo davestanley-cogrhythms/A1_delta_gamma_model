@@ -27,4 +27,7 @@ function startup_DynaSimDave
     addpath(genpath(fullfile(pwd,'kramer_IB','funcs_supporting_xPlt')));
     addpath(genpath(fullfile(pwd,'kramer_IB','funcs_Ben')));
     
+    % Add chronux
+    %addpath(genpath(fullfile(pwd,'kramer_IB','chronux')),'-END');
+    
 end
