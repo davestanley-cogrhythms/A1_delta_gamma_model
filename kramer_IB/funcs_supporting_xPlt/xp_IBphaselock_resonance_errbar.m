@@ -185,7 +185,9 @@ function hxp = xp_IBphaselock_resonance_errbar (xp, op)
         NFFT = [];
         synaptic_potential{i}=detrend(synaptic_potential{i}); % detrend the data
 %         [tmpPxx,f] = pmtm(synaptic_potential, params.tapers(1), NFFT, Fs); % calculate power
-        [Pxx{i},f{i},pxxc{i}] = pmtm(synaptic_potential{i},5, NFFT, Fs,'unity','ConfidenceLevel',0.95); % calculate power
+        tmax = double(max(t));
+        TW = max(round(5*tmax/11000),4);        % TW is at least 5. When tmax is 5500 use 4 tapers; when tmax is 11000 use 5. When it's 22000, use 10. 
+        [Pxx{i},f{i},pxxc{i}] = pmtm(synaptic_potential{i},TW, NFFT, Fs,'unity','ConfidenceLevel',0.95); % calculate power
 %         [tmpPxx, f] = pmtm(synaptic_potential,[],[],Fs);
 %         figure; plot(f,tmpPxx); xlim([0 20]); ylim([0, .7]);
 
