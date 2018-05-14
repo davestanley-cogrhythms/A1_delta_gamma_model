@@ -398,6 +398,29 @@ switch chosen_cell
         
         datapf4a = kramer_IB_function_mode(s{f},f);
         
+    case '4a2'
+        %% Paper 4a2 - As in 4a above, but longer simulation and higher downsampling for getting better error bars in phase locking figure
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig4a2_lakatos'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
+            };
+        s{f}.kerneltype_IB = 4;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 5500*2];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.dsfact = 100;
+        
+        datapf4a = kramer_IB_function_mode(s{f},f);
+        
     case '5a'
         %% Paper Fig 5a - Inverse PAC
         
@@ -571,6 +594,31 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        
+        s{f}.gGABAa_fs5ib = 0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '7a2'
+        %% Paper 7a2 - As in 7a above, but longer simulation and higher downsampling for getting better error bars in phase locking figure
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig7a2_2HzPoisson'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.kerneltype_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0, [[0:6]-5]*0.13+0.75]/10; ...
+            };              % Zero plus values centered around 0.075, the default value
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
+        s{f}.tspan=[0 5500*2];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 8;
+        s{f}.dsfact = 100;
         
         s{f}.gGABAa_fs5ib = 0;
         

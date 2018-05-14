@@ -109,3 +109,19 @@ dsPlot2(data,'plot_type','waveform','population','IB','variable','/iPoissonNeste
 
 
 
+%% Test xp_IBphaselock_coherence_errbar code
+
+% dsPlot2(data,'plot_type','waveform','population','IB','variable','/iPoissonNested_S2|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_coherence_errbar,'force_last','varied1','Ndims_per_subplot',3);
+
+dsPlot2(data,'plot_type','waveform','population','IB','variable','/iPoissonNested_S2|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_coherence_errbar,'force_last','variable','Ndims_per_subplot',3,'do_mean',true);
+
+
+
+%% Test xp_IBphaselock_resonance_errbar code
+
+% dsPlot2(data,'plot_type','waveform','population','IB','variable','/iPoissonNested_S2|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_coherence_errbar,'force_last','varied1','Ndims_per_subplot',3);
+
+dsPlot2(data,'plot_type','waveform','population','IB','variable','/iPoissonNested_S2|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_resonance_errbar,'force_last','variable','Ndims_per_subplot',3,'do_mean',true);
+
+
+

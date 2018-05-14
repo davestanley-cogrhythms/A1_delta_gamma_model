@@ -2,7 +2,7 @@
 
 %% Delta paper figures
 
-myhours = 2;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
+myhours = 4;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
 
 
 clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);
@@ -16,6 +16,7 @@ clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','3b',6,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','4a',8,myhours);         % Lakatos 2005 figure
+clustersub('kramer_IB_deltapaper_scripts2','4a2',8,myhours);        % Lakatos 2005 figure with longer run time, higher downsampling
 
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);
@@ -25,6 +26,7 @@ clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','6b',8,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','7a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','7a2',8,myhours);        % As 7a,  but with longer run time, higher downsampling
 clustersub('kramer_IB_deltapaper_scripts2','7b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','7c',8,myhours);
 

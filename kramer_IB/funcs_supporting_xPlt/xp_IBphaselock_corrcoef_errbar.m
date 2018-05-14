@@ -88,7 +88,7 @@ function hxp = xp_IBphaselock_corrcoef_errbar (xp, op)
     
     errY = cat(3,rlo_all,rup_all);
     
-    hxp.hcurr = barwitherr(errY,r_all,'k');
+    hxp.hcurr = barwitherr(errY,r_all,'FaceColor',[0.5,0.5,0.5]);
 %     ylim([0,1.2]);
     
 end
