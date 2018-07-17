@@ -1370,6 +1370,50 @@ switch chosen_cell
         % Move 
         movefile(outpath1,outpath2);
         
+        
+    case '1a4'
+        %% Like Fig 1a1, except only have thalamus core input to L4 (evoked); block thalamus input to L5
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a4'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
+        
+        % % Gamma -> Delta connections (some of these are already
+        % zeroed-out)
+        s{f}.IB_PP_gSYN=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '1a5'
+        %% Like Fig 1a1, except only have thalamus core input to L5 (modulatory); block core input to L4
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a5'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
+        
+        % % Gamma -> Delta connections (some of these are already
+        % zeroed-out)
+        s{f}.RS_PP_gSYN=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
     
     case '1c2' 
         %% Paper Figs 1c2 - Fig 1c1 with NMDA blocked vs opened
