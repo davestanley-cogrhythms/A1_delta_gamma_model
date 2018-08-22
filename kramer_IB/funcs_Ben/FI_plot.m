@@ -1,5 +1,11 @@
 function FI_plot(data, results, name)
 
+if isempty(results)
+    
+    results = dsAnalyze(data, @spike_metrics);
+    
+end
+
 time = data.time;
 F = [results.no_spikes]/(time(end)/1000 - 1);
 I = [data.deepRS_I_app];
