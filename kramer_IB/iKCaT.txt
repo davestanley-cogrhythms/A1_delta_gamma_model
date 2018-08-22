@@ -11,7 +11,7 @@ aKCa_factor = .1
 aKCa(@cai) = min(aKCa_factor.*@cai,1); % .01); % min((2*10^(-5)).*@cai,.01)
 infKCa(@cai) = aKCa(@cai)./(aKCa(@cai)+bKCa)
 tauKCa(@cai) = 1./(aKCa(@cai)+bKCa); % 500; % max(min(400, 1./(aKCa(@cai)+bKCa)), 600);
-IKCa(X,q) = gKCa*q*(X-EK)
+IKCa(X,q) = gKCa*q.*(X-EK)
 
 % ODEs
 q' = (infKCa(@cai)-q)./tauKCa(@cai)
