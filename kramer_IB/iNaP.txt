@@ -5,7 +5,6 @@ ENa=50
 tauNaP=5
 halfNaP=-40
 IC_noise=0; m_IC=0
-gNaP = .025
 NaP_offset=0
 
 % functions
