@@ -80,19 +80,19 @@ if strcmp(input_transform, 'wavelet')
     
     freq_labels{1} = num2str(data.(f_field), '%.2g');
 
-    v_bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, data.(f_field)/3, no_cycles(1), 0, '');
+    bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, data.(f_field), no_cycles(1), 0, '');
     
 elseif strcmp(input_transform, 'hilbert')
     
     freq_labels{1} = i_field;
     
-    v_bandpassed(:, 1) = hilbert(i);
+    bandpassed(:, 1) = hilbert(i);
     
 end
 
-v_bandpassed(:, 2:3) = wavelet_spectrogram(v, sampling_freq, freqs(2:3)/3, no_cycles(2:3), 0, '');
+bandpassed(:, 2:3) = wavelet_spectrogram(v, sampling_freq, freqs(2:3), no_cycles(2:3), 0, '');
 
-v_phase = angle(v_bandpassed);
+phase = angle(bandpassed);
 
 if figure_flag
 
@@ -110,7 +110,7 @@ if figure_flag
 
         subplot(4, 2, 2 + 2*(frequency - 1) + 1)
 
-        ax = plotyy(t_end, real(v_bandpassed(t <= 6000, frequency)), t_end, v(t <= 6000));
+        ax = plotyy(t_end, real(bandpassed(t <= 6000, frequency)), t_end, v(t <= 6000));
 
         ylabel([num2str(freqs(frequency), '%.2g'), ' Oscillation'], 'FontSize', 12)
 
@@ -118,7 +118,7 @@ if figure_flag
 
         subplot(4, 2, 2 + 2*(frequency - 1) + 2)
 
-        ax = plotyy(t_end, angle(v_bandpassed(t <= 6000, frequency)), t_end, v(t <= 6000));
+        ax = plotyy(t_end, angle(bandpassed(t <= 6000, frequency)), t_end, v(t <= 6000));
 
         ylabel([num2str(freqs(frequency), '%.2g'), ' Phase'], 'FontSize', 12)
 
@@ -162,7 +162,7 @@ for f = 1:no_freqs
 
         % subplot(no_periods + 1, no_freqs, p*no_freqs + f)
 
-        v_spike_phases(1:no_spikes(p), p, f) = v_phase(logical(v_spikes & t_pd(:, p)), f);
+        v_spike_phases(1:no_spikes(p), p, f) = phase(logical(v_spikes & t_pd(:, p)), f);
 
         % h = rose(gca, v_spike_phases(:, p, f));
         %
@@ -184,7 +184,7 @@ spikes_per_cycle = cell(no_freqs, 1);
 
 for f = 1:no_freqs
     
-    v_cycle_times = t(find(abs(diff(v_phase(:, f))) > pi));
+    v_cycle_times = t(find(abs(diff(phase(:, f))) > pi));
     
     no_cycles = length(v_cycle_times) - 1;
     
