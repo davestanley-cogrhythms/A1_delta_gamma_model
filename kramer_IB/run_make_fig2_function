@@ -1,0 +1,16 @@
+#!/bin/sh -l
+
+#$ -pe omp 16
+
+echo "Executing cd '"$1"', make_fig2_function('"$1"', "$2", "$3", "$4")"
+
+module unload matlab/2014a
+
+module load matlab/2016a
+
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', make_fig2_function('$2', $3, $4, $5), exit"
+
+# for i in Figs_Ben/18-02-16/*sim_spec.mat;
+# do j=$(basename $i);
+# echo run_make_fig2_function 18-02-16 ${j%'_sim'*} 1 1 1;
+# done
