@@ -39,7 +39,8 @@ clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);     % Polley figure 
 % clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);   % Lakatos version
 clustersub('kramer_IB_deltapaper_scripts2','9c1',8,myhours);   % Sweep timing
 clustersub('kramer_IB_deltapaper_scripts2','9c2',8,myhours);   % Sweep timing with AR block
-clustersub('kramer_IB_deltapaper_scripts2','9c3',8,myhours);   % Sweep timing with AR block
+clustersub('kramer_IB_deltapaper_scripts2','9c3',8,myhours);   % Sweep timing with M block
+clustersub('kramer_IB_deltapaper_scripts2','9c4',8,myhours);   % Sweep timing with NMDA block
 clustersub('kramer_IB_deltapaper_scripts2','9d',8,myhours);     % Polley fig 10 ms
 clustersub('kramer_IB_deltapaper_scripts2','9e',8,myhours);     % Polley fig 20 ms
 clustersub('kramer_IB_deltapaper_scripts2','9f',8,myhours);     % Polley fig 100 ms

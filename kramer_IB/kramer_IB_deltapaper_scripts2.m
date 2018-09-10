@@ -1083,6 +1083,78 @@ switch chosen_cell
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
+    case '9c4'
+        %% Paper 9c4 - Same as Fig9c1 but block NMDA current
+        % Setup
+        blk_h_current = false;        
+        blk_m_current = false;
+        blk_NMDA = true;
+        clear s
+        f=1;
+        s{f} = struct;
+        
+        % Make NG stim longer
+        s{f}.IB_offset1=100;
+        s{f}.IB_onset2=100;
+        
+        % Setup mask
+        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
+        
+        namesuffix1 = namesuffix;
+        namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
+        
+        if blk_h_current
+            namesuffix1 = [namesuffix1 '_blkgAR'];
+            s{f}.gAR_d = 0;
+        end
+        
+        if blk_m_current
+            namesuffix1 = [namesuffix1 '_blkgM'];
+            s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
+        end
+        
+        if blk_NMDA
+            namesuffix1 = [namesuffix1 '_blkgNMDA'];
+            s{f}.NMDA_block = 1;
+        end
+        
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig9c3_polley'  num2str(f) '' namesuffix1];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 6;
+        
+        % Make NG stim longer
+%         s{f}.IB_offset1 = 100;
+%         s{f}.IB_onset2=100;
+        
+        % PPStim stuff
+        s{f}.pulse_train_preset = 0;
+        if strcmp(namesuffix,'blkgAR')
+            % Do this one if AR current is off
+            s{f}.vary = { ...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+            };
+        else
+            % Do this one otherwise
+            s{f}.vary = { ...
+                '(RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+            };
+        end
+
+        % Reduce Ncells
+%         s{f}.Nrs = 20;
+
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.pulse_mode = 6;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 100;
+        
+        datapf9c = kramer_IB_function_mode(s{f},f);
+        
     case '9j'
         %% Paper 9d - As Fig 9a, but different PPmaskduration
         % Setup
