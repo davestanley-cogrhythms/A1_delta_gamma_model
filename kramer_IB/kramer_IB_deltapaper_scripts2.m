@@ -781,7 +781,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        PPmaskduration = 50;
+        PPmaskduration = 100;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
