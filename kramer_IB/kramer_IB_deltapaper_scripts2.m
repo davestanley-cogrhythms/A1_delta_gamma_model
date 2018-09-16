@@ -1120,7 +1120,7 @@ switch chosen_cell
         end
         
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9c3_polley'  num2str(f) '' namesuffix1];
+        s{f}.repo_studyname = ['DeltaFig9c4_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 6;
         
