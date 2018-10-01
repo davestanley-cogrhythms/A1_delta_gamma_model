@@ -1,0 +1,6 @@
+#!/bin/sh -l
+
+for i in Figs_Ben/$1/*sim_spec.mat;
+do j=$(basename $i);
+qsub run_FI_plots "$1" "${j%'_sim'*}";
+done

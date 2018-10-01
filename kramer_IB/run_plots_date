@@ -1,0 +1,7 @@
+#!/bin/sh -l
+# First argument is date folder; second is what type of plots (e.g., FI, PLV).
+
+for i in Figs_Ben/$1/*sim_spec.mat;
+do j=$(basename $i);
+qsub "run_"$2"_plots" "$1" "${j%'_sim'*}";
+done
