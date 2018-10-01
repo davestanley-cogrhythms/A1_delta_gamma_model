@@ -1,0 +1,12 @@
+%% Apply EPSPs from Carracedo et al. 2013.
+
+% Pulse train properties
+gCar = -500;
+
+epsps=load('CarracedoEPSPs.txt');
+
+monitor functions % always record the current
+
+Iext(X)=gCar*epsps(k,:)
+@current += -Iext(X)
+
