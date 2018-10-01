@@ -13,7 +13,7 @@ vary = {'deepRS', 'PPfreq', [.25 .5:.5:23];... 1:10;...
     'deepRS', 'FMPstim', 0;...
     % 'deepRS', 'STPstim', 0;...
     'deepRS', 'Inoise', .25;...
-    'deepRS', 'gKCa', 0;...
+    % 'deepRS', 'gKCa', 0;...
     };
 
 sim_struct = init_sim_struct('include_deepRS', 1, 'vary', vary, 'tspan', [0 30000], 'cluster_flag', 1);
@@ -39,17 +39,19 @@ results = spike_locking_to_input_plot(data, [], name);
 %%  Plotting traces (exploratory).
 
 for i = 1:length(freqs), titles{i} = num2str(freqs(i), '%g'); end
-    
+        
+window = min(1, floor(max(data(1).time)/6000) - 1);
+
 for s = 1:length(stims)
     
-    plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], [6 12]*10^4, [24, 2], [], titles)
+    plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], (window + [0 1])*6*10^4 + [1 0], [length(data)/(2*length(stims)), 2], [], titles)
     
-    saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), '_6to12s.fig'])
+    saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), sprintf('_%gto%g.fig', window + [0 1])])
     
-    plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], [], [24, 2], [], titles)
+    plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], [], [length(data)/(2*length(stims)), 2], [], titles)
     
     saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), '.fig'])
-
+    
 end
 
 %% Plotting PLV.
@@ -124,7 +126,7 @@ saveas(gcf, [fig_name, '.fig'])
 
 fig_for_plot = figure;
 
-selected_PPstim = -.45; % [-.5 -.5 -.5 -.5];
+selected_PPstim = -.4; % -.45; % [-.5 -.5 -.5 -.5];
 
 selected_PPfreq = [0.25 3 7.5 9 12];
 
@@ -226,9 +228,9 @@ set(fig_for_plot, 'Units', 'inches', 'Position', [0 0 6 6], 'PaperUnits', 'inche
 
 fig_name = sprintf('fig2b_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz_%gHz', I_app, selected_PPstim, selected_PPfreq);
 
-print(fig_for_plot, '-painters', '-deps', '-r600', [fig_name, '.eps'])
+%print(fig_for_plot, '-painters', '-deps', '-r600', [fig_name, '.eps'])
 
-saveas(fig_for_plot, [fig_name, '.fig'])
+%saveas(fig_for_plot, [fig_name, '.fig'])
 
 %% Plotting selected rose plots.
 
