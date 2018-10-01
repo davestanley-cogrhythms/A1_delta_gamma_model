@@ -2,11 +2,11 @@ function make_fig2_function(name, plot_flag, plv_flag, trace_flag)
 
 load([name, '_sim_spec.mat'])
 
-freqs = vary{1, 3}';
+freqs = vary{strcmp(vary(:,2), 'PPfreq'), 3}';
 
-stims = vary{2, 3}';
+stims = vary{strcmp(vary(:,2), 'PPstim'), 3}';
 
-I_app = vary{3, 3};
+I_app = vary{strcmp(vary(:,2), 'I_app'), 3};
 
 %% Calculating PLV.
 
@@ -16,27 +16,29 @@ if plot_flag
     
     % Plotting traces (exploratory).
     
-%     PPfreq = [data.deepRS_PPfreq];
-%     
-%     freqs = unique(PPfreq);
-%     
-%     for i = 1:length(freqs), titles{i} = num2str(freqs(i), '%g'); end
-%     
-%     PPstim = [data.deepRS_PPstim];
-%     
-%     stims = unique(PPstim);
-%     
-%     for s = 1:length(stims)
-%         
-%         plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], [6 12]*10^4, [24, 2], [], titles)
-%         
-%         saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), '_6to12s.fig'])
-%         
-%         plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], [], [24, 2], [], titles)
-%         
-%         saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), '.fig'])
-%         
-%     end
+    PPfreq = [data.deepRS_PPfreq];
+    
+    freqs = unique(PPfreq);
+    
+    for i = 1:length(freqs), titles{i} = num2str(freqs(i), '%g'); end
+    
+    PPstim = [data.deepRS_PPstim];
+    
+    stims = unique(PPstim);
+        
+    window = min(1, floor(max(data(1).time)/6000) - 1);
+    
+    for s = 1:length(stims)
+        
+        plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], (window + [0 1])*6*10^4 + [1 0], [length(data)/(2*length(stims)), 2], [], titles)
+        
+        saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), sprintf('_%gto%g.fig', window + [1 2])])
+        
+        plot_2_vars(data(PPstim == stims(s)), 'deepRS_V', 'deepRS_iPeriodicPulsesBen_input', [], [], [length(data)/(2*length(stims)), 2], [], titles)
+        
+        saveas(gcf, [name, '_PPstim', num2str(stims(s), '%g'), '.fig'])
+        
+    end
     
     results = spike_locking_to_input_plot(data, [], name);
     
@@ -96,7 +98,7 @@ if plv_flag
     
     set(gcf, 'Units', 'inches', 'Position', [0 0 3 6], 'PaperUnits', 'inches', 'PaperPosition', [0 0 3 6])
     
-    fig_name = sprintf('fig2a_Iapp%g', I_app);
+    fig_name = sprintf('%s_fig2a_Iapp%g', name, I_app);
     
     print(gcf, '-painters', '-dpdf', '-r600', [fig_name, '.pdf'])
     
@@ -162,7 +164,9 @@ if trace_flag
             
         end
         
-        time_index = time >= 6000 & time <= 12000;
+        window = min(1, floor(max(time)/6000) - 1);
+        
+        time_index = time >= window*6000 & time <= (window + 1)*12000;
         
         sampling_freq = round(1000*length(time)/time(end));
         I_wav = wavelet_spectrogram(I - mean(I), sampling_freq, selected_PPfreq(c)/3, 7, 0, '');
@@ -202,7 +206,7 @@ if trace_flag
     
     set(fig_for_plot, 'Units', 'inches', 'Position', [0 0 3 6], 'PaperUnits', 'inches', 'PaperPosition', [0 0 3 6])
     
-    fig_name = sprintf('fig2b_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz', I_app, selected_PPstim, selected_PPfreq);
+    fig_name = sprintf('%s_fig2b_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz', name, I_app, selected_PPstim, selected_PPfreq);
     
     print(fig_for_plot, '-painters', '-deps', '-r600', [fig_name, '.eps'])
     
