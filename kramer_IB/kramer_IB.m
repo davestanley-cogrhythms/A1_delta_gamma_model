@@ -49,7 +49,7 @@ random_seed = 2;
 Now = clock;
 
 % % % % % Simulation controls
-dt=.01; solver='euler'; % euler, rk2, rk4
+dt=.01; solver='rk4'; 'euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 
 % % % % % Simulation switches
@@ -413,7 +413,11 @@ Rr = 6.8*10^-3 + Rd_delta;
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
-    case 1 % Tonic currents of varying strengths, applied to deepRS cells.
+    case 1 % FI curve for deepRS cells.
+        [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
+        include_deepRS = 1;
+
+        tspan = [0 6000];
         vary = {'deepRS', 'I_app', 0:-.1:-20;... -7:-1:-11;... -7:-.2:-11;... 
             'deepRS', 'Inoise', 0;... .25;... 0:.05:.25;...
             'deepRS', 'PPstim', 0;...
@@ -422,9 +426,13 @@ switch sim_mode
             };
     
     case 2  % Periodic pulses to deepRS cells, ranging over frequency.
-        vary = {'deepRS', 'PPfreq', [.25 .5 1 1.5 2:23];... 1:10;... 
-            'deepRS', 'PPstim', 0:-.1:-.5;... 0:-.2:-1;... 0:-.5:-2;... 0:-2:-10;... % -Cm_factor*(0:.05:.15);... % Cm_Ben*(-.025:-.025:-.1)/.25;...
-            'deepRS', 'I_app',  -7.5:-.5:-9.5;... -5.5:-.5:-7;... -6.5:-.5:-8.5;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
+        [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
+        include_deepRS = 1;
+
+        tspan = [0 30000];
+        vary = {'deepRS', 'PPfreq', [.25 .5 1 1.5 2:23];... [.25 .5:.5:23];... [.25 .5 1 1.5 2:23];... 1:10;... 
+            'deepRS', 'PPstim', 0:-.05:-1;... 0:-.2:-1;... 0:-.5:-2;... 0:-2:-10;... % -Cm_factor*(0:.05:.15);... % Cm_Ben*(-.025:-.025:-.1)/.25;...
+            'deepRS', 'I_app',  -8.5;... -7.5:-.5:-9.5;... -5.5:-.5:-7;... -6.5:-.5:-8.5;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... % 
             'deepRS', 'PPduty', .25;...
             'deepRS', 'kernel_type', 25;... % 7;... % 
             'deepRS', 'PPnorm', 0;... % 1;...
@@ -441,10 +449,9 @@ switch sim_mode
 
     case 3 % Frequency-modulated input to deepRS cells.
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
-        % [include_deepRS, include_deepFS] = deal(1);
         include_deepRS = 1;
 
-        tspan = [0 24000];
+        tspan = [0 30000];
         vary = {
             'deepRS', 'I_app', -9:-.5:-11;... % [-9.1 -10 -10.2];... % -10;... % 
             'deepRS', 'FMPstim', 0:-.2:-1;... % 0;... % -1;... % 
@@ -457,7 +464,6 @@ switch sim_mode
 
     case 4 % Inhibition-based theta, FI curve.
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
-        % [include_deepRS, include_deepFS] = deal(1);
         [include_deepRS, include_deepFS] = deal(1);
 
         tspan = [0 6000];
@@ -466,12 +472,12 @@ switch sim_mode
             'deepFS->deepRS', 'g_SYN', .075;... 0:.01:.1;... .01:.005:.05;... [.01 .05];... [.05 .1 .2 .3];... % THIS IS REALLY RS->FS 7/14/17
             'deepFS->deepRS', 'tauRx', .25;... % THIS IS REALLY RS->FS
             'deepFS->deepRS', 'tauDx', 2.5;... % THIS IS REALLY RS->FS
-            'deepRS->deepFS', 'tauDx', 50;... 45;... % THIS IS REALLY FS->RS
+            'deepRS->deepFS', 'tauDx', 50;... 45;... % 20;... THIS IS REALLY FS->RS
             'deepRS->deepFS', 'tauRx', .25;... % THIS IS REALLY FS->RS
-            'deepRS', 'I_app', -11:-.2:-13;... -6:-.2:-11;... 0:-.1:-20;... 
+            'deepRS', 'I_app', 0:-.1:-20;... -6:-.25:-15;... -6:-.2:-11;... -11:-.2:-13;... 
             'deepFS', 'stim', .95;... .825:.05:.975;... .6:.1:1;...
             'deepRS', 'gl', .78;... 
-            'deepRS', 'gKs', 0;... 'mechanism_list', '-iKs';...
+            'deepRS', 'gNaP', 0;... 'deepRS', 'gKs', 0;... 'mechanism_list', '-iKs';...
             % 'deepRS', 'gKCa', 0;... 'mechanism_list', '-iKCaT';...
             'deepRS', 'FMPstim', 0;... % 0:-.2:-1;... % -1;... % 
             % 'deepRS', 'Inoise', .25;... 0;... 
@@ -479,22 +485,22 @@ switch sim_mode
             % 'deepRS', 'STPstim', 0;...
             };
 
-    case 5 % Inhibition-based theta, pure tones.
+    case 5 % Inhibition-based theta, periodic pulse inputs.
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
-        % [include_deepRS, include_deepFS] = deal(1);
         [include_deepRS, include_deepFS] = deal(1);
 
-        tspan = [0 6000];
+        tspan = [0 30000];
         vary = {
             'deepRS->deepFS', 'g_SYN', .2;... .3;... [.01 .1 1];... [.6 .9 1.2];... .1:.1:.5;... % THIS IS REALLY FS->RS 7/14/17
             'deepFS->deepRS', 'g_SYN', .075;... 0:.01:.1;... .01:.005:.05;... [.01 .05];... [.05 .1 .2 .3];... % THIS IS REALLY RS->FS 7/14/17
             'deepFS->deepRS', 'tauRx', .25;... % THIS IS REALLY RS->FS
             'deepFS->deepRS', 'tauDx', 2.5;... % THIS IS REALLY RS->FS
-            'deepRS->deepFS', 'tauDx', 50;... 65;... 45;... % THIS IS REALLY FS->RS
+            'deepRS->deepFS', 'tauDx', 30;... 65;... 45;... % THIS IS REALLY FS->RS
             'deepRS->deepFS', 'tauRx', .25;... % THIS IS REALLY FS->RS
             'deepFS', 'stim', .95;... .825:.05:.975;... .6:.1:1;...
             'deepRS', 'gl', .78;... .8;... 
-            'deepRS', 'gKs', 0;... 'mechanism_list', '-iKs';...
+            'deepRS', 'gNaP', 0;...
+            % 'deepRS', 'gKs', 0;... 'mechanism_list', '-iKs';...
             % 'deepRS', 'gKCa', 0;... 'mechanism_list', '-iKCaT';...
             'deepRS', 'FMPstim', 0;... % 0:-.2:-1;... % -1;... % 
             'deepRS', 'Inoise', .25;... 0;... 
@@ -511,7 +517,7 @@ switch sim_mode
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
         [include_deepRS, include_deepFS] = deal(1);
 
-        tspan = [0 6000];
+        tspan = [0 30000];
         vary = {
             'deepRS->deepFS', 'g_SYN', .2;... .3;... [.01 .1 1];... [.6 .9 1.2];... .1:.1:.5;... % THIS IS REALLY FS->RS 7/14/17
             'deepFS->deepRS', 'g_SYN', .075;... 0:.01:.1;... .01:.005:.05;... [.01 .05];... [.05 .1 .2 .3];... % THIS IS REALLY RS->FS 7/14/17
@@ -565,22 +571,22 @@ switch sim_mode
 
         tspan = [0 1500];
         vary = {
-            'deepRS', 'I_app', -12;... :-.25:-8.5;... % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... %
-            'deepRS', 'STPshift', 0:3.5:140;...
+            'deepRS', 'I_app', -8.5;...-12;... :-.25: % -Cm_factor*(.6:.05:.7);... % Cm_factor*(0:-.015:-.15);... % -7:-.1:-11;... % -7.5;... % 3.5*Cm_Ben*(-.15:-.015:-.3)/.25;... %
+            'deepRS', 'STPshift', 0:3.75:150;...
             'deepRS', 'STPstim', 0:-10:-50;... % [0 -10];...
             'deepRS', 'STPonset', 750;...
             'deepRS', 'STPwidth', 50;...
             'deepRS', 'STPkernelType', 25;... % 7;... %
-            'deepRS->deepFS', 'g_SYN', .2;... .3;... [.01 .1 1];... [.6 .9 1.2];... .1:.1:.5;... % THIS IS REALLY FS->RS 7/14/17
+            'deepRS->deepFS', 'g_SYN', .3;... .2;... [.01 .1 1];... [.6 .9 1.2];... .1:.1:.5;... % THIS IS REALLY FS->RS 7/14/17
             'deepFS->deepRS', 'g_SYN', .075;... 0:.01:.1;... .01:.005:.05;... [.01 .05];... [.05 .1 .2 .3];... % THIS IS REALLY RS->FS 7/14/17
             'deepFS->deepRS', 'tauRx', .25;... % THIS IS REALLY RS->FS
             'deepFS->deepRS', 'tauDx', 2.5;... % THIS IS REALLY RS->FS
-            'deepRS->deepFS', 'tauDx', 50;... 65;... 45;... % THIS IS REALLY FS->RS
+            'deepRS->deepFS', 'tauDx', 65;... 50;... 45;... % THIS IS REALLY FS->RS
             'deepRS->deepFS', 'tauRx', .25;... % THIS IS REALLY FS->RS
             'deepFS', 'stim', .95;... .825:.05:.975;... .6:.1:1;...
             'deepRS', 'gl', .78;... .8;...
             'deepRS', 'gKs', 0;... 'mechanism_list', '-iKs';...
-            % 'deepRS', 'gKCa', 0;... 'mechanism_list', '-iKCaT';...
+            'deepRS', 'gKCa', 0;... 'mechanism_list', '-iKCaT';...
             'deepRS', 'Inoise', 0;...
             'deepRS', 'FMPstim', 0;...
             'deepRS', 'PPstim', 0;...
