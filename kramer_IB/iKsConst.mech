@@ -1,0 +1,19 @@
+% iKs: slow, noninactivating potassium current (also called M-current) after Yamada et al. 1989, from Gutfreund et al. 1995.
+% Tags: M-current, potassium, channel, intrinsic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters
+gKCs=.084; E_Ks=-80;
+halfKs = -35; temp = 34;
+IC=0; IC_noise=0
+tau_Ks = 5 %15
+
+% Functions
+ninf(X)=1./(1+exp(-(X-halfKs)/10)) % tauKs(X)=tau_mult*1000./(3.3*tau_div*(exp((X-halfKs)/40)+exp(-(X-halfKs)/20)))
+IKs(X,n)=gKCs.*n.*(X-E_Ks)
+
+% ODEs
+n'=(ninf(X)-n)/tau_Ks
+n(0)=IC+IC_noise.*rand(Npop,1)
+
+% Interface
+@current += -IKs(X,n)
