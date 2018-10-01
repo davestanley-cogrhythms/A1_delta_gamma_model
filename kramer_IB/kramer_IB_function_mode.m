@@ -7,13 +7,14 @@ Today = datestr(datenum(date),'yy-mm-dd');
 % mkdir(Today);
 
 start_dir = pwd;
-if exist('project_folder', 'var')
-    cd (project_folder)
-elseif exist('research_folder', 'var')
-    cd (research_folder)
-end
+kramer_IB_dir
+% if exist('project_folder', 'var')
+%     cd (project_folder)
+% elseif exist('research_folder', 'var')
+%     cd (research_folder)
+% end
 
-savepath = fullfile('Figs_Ben', Today);
+savepath = fullfile(pwd, 'Figs_Ben', Today);
 mkdir(savepath);
 
 Now = clock;
