@@ -20,11 +20,17 @@ max_ISI = max([ISIs(:); ref_ISIs(:)]);
 
 edges = 0:(max_ISI/100):max_ISI;
 
-current_dist = hist(ISIs, edges);
-current_norm = current_dist(:)/sum(current_dist(:));
-ref_dist = hist(ISIs, edges);
-ref_norm = ref_dist(:)/sum(ref_dist(:));
+current_distribution = hist(ISIs, edges);
+ref_distribution = hist(ref_ISIs, edges);
 
-distance = sqrt(sum((current_norm - ref_norm).^2));
+current_unit = current_distribution(:)/sqrt(sum(current_distribution(:).^2));
+ref_unit = ref_distribution(:)/sqrt(sum(ref_distribution(:).^2));
+angle = acos(sum(current_unit.*ref_unit));
 
-results = struct('ISIs', ISIs, 'ISI_dist', ISI_dist, 'ISI_bins', ISI_bins, 'distance', distance);
+current_pdf = current_distribution(:)/sum(current_distribution(:));
+current_cumulative = cumsum(current_pdf);
+ref_pdf = ref_distribution(:)/sum(ref_distribution(:));
+ref_cumulative = cumsum(ref_pdf);
+distance = max(abs(current_cumulative - ref_cumulative));
+
+results = struct('ISIs', ISIs, 'ISI_dist', ISI_dist, 'ISI_bins', ISI_bins, 'angle', angle, 'distance', distance);
