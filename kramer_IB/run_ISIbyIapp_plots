@@ -1,0 +1,16 @@
+#!/bin/sh -l
+
+#$ -pe omp 16
+
+echo "Executing cd '"$1"', load(['"$2"', '_sim_spec.mat']), [~,~] = plot_ISI_dist_by_Iapp(name);"
+
+module unload matlab/2014a
+
+module load matlab/2016a
+
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']), [~,~] = plot_ISI_dist_by_Iapp(name); exit"
+
+# for i in Figs_Ben/18-02-16/*sim_spec.mat;
+# do j=$(basename $i);
+# echo run_make_fig2_function 18-02-16 ${j%'_sim'*} 1 1 1;
+# done
