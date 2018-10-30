@@ -16,7 +16,7 @@ function startup_DynaSimDave
     addpath(genpath(fullfile(pwd,'DynaSim')));
     
     % Add libdave path
-    addpath(genpath(fullfile('~','src','ds_kb3','funcs_general','lib_dav')));
+    addpath(genpath(fullfile('~','src','lib_dav')));
     
     % Add supporting functions
     addpath(genpath(fullfile(pwd,'supporting_funcs')));
