@@ -20,6 +20,9 @@ function startup_DynaSim
     % Add libdave path
     addpath(genpath(fullfile('~','src','lib_dav')));
     
+    % Add SigProc-Plott
+    addpath(genpath(fullfile('~','src','SigProc-Plott')));
+    
     addpath(genpath(fullfile(pwd,'supporting_funcs')));
     addpath(pwd);
     
