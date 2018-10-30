@@ -12,16 +12,21 @@ kramer_IB
 
 ### Clone main repo
 
-	git clone git@github.com:davestanley-cogrhythms/model-dnsim-kramer_IB.git
+	git clone --recursive git@github.com:davestanley-cogrhythms/model-dnsim-kramer_IB.git
+	
+OR
+
+	git clone --recursive https://github.com/davestanley-cogrhythms/model-dnsim-kramer_IB.git
 
 
 ### Update submodules under master and dev
-	git pull --recurse-submodules
-	git checkout dev
-	git pull --recurse-submodules
+	cd model-dnsim-kramer_IB
 	git checkout master
+	git submodule update --init --recursive
+	git checkout dev_dave_hcurrent6
+	git submodule update --init --recursive
 
-### Clone necessary repos into src library
+### Clone necessary repos into src folder
 
 	mkdir ~/src
 	cd ~/src
@@ -30,6 +35,12 @@ kramer_IB
 	cd SigProc-Plott
 	git checkout dev
 	git pull
+	
+### When pulling, be sure to run (on master or dev)
+	git checkout master
+	git pull --recurse-submodules
+	git checkout dev_dave_hcurrent6
+	git pull --recurse-submodules
 
 Setup instructions are the same for Windows, but using Windows syntax
 
