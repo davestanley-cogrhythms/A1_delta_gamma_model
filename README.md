@@ -12,7 +12,7 @@ kramer_IB
 
 ### Clone main repo
 
-	git@github.com:davestanley-cogrhythms/model-dnsim-kramer_IB.git
+	git clone git@github.com:davestanley-cogrhythms/model-dnsim-kramer_IB.git
 
 
 ### Update submodules under master and dev
