@@ -45,6 +45,7 @@ OR
 Setup instructions are the same for Windows, but using Windows syntax
 
 Branches
+
 	140416_Kramer_IB_singlecomp - Single compartment version of kramerIB.
 	140416_Kramer_IB_singlecomp_axon - Single compartment modeling just the Axon instead of just the soma.
 	jungIB - Kramer IB model converted over to Jung's parameters (based on master_dynasim)
