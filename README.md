@@ -7,8 +7,8 @@ kramer_IB
 	kramer_IB cell. Just for playing around.
 
 
-### Getting started (Mac / Linux)
-=====
+# Getting started (Mac / Linux)
+
 
 ### Clone main repo
 
@@ -36,9 +36,9 @@ OR
 	git checkout dev
 	git pull
 	
-### When pulling, be sure to run (on master or dev)
+### When pulling, be sure to also update submodules:
 	git checkout master
-	git pull --recurse-submodules
+	git pull --recurse-submodules	
 	git checkout dev_dave_hcurrent6
 	git pull --recurse-submodules
 
