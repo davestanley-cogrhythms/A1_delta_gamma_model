@@ -41,10 +41,15 @@ OR
 	git pull --recurse-submodules	
 	git checkout dev_dave_hcurrent6
 	git pull --recurse-submodules
+	
+### Turn on recursive push for submodules (optional)
+Enter the following to avoid having to `git pull --recurse-submodules` every time
 
-Setup instructions are the same for Windows, but using Windows syntax
+	git config push.recurseSubmodules
 
-Branches
+### Setup instructions are the same for Windows, but using Windows syntax
+
+### Branches
 
 	140416_Kramer_IB_singlecomp - Single compartment version of kramerIB.
 	140416_Kramer_IB_singlecomp_axon - Single compartment modeling just the Axon instead of just the soma.
