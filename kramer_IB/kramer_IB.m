@@ -330,6 +330,7 @@ end
 % % Gap junction connections.
 % % Deep cells
 % #mygap
+warning('RS gap junction normalization is wrong - should be normalized by 80, not 20');
 ggjaRS=.01/Nib;  % RS -> RS
 ggja=.02/Nib;  % IB -> IB
 ggjFS=.01/Nfs;  % FS -> FS
