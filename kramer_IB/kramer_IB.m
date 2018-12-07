@@ -38,11 +38,6 @@ save_figures = 0;               % Master switch for saving any figures in the si
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
-
-% % % % % % Parameter modifier flags
-high_IB_IB_connectivity = true;         % Increases IB_IB connectivity to help delta oscillator reset.
-
-
 % % % % % Simulation switches
 no_noise = 0;
 no_synapses = 0;
@@ -436,10 +431,8 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-    gAMPA_ibib=0.02/Nib;                          % IB -> IB
-    if high_IB_IB_connectivity
-        gAMPA_ibib = 0.1/Nib;
-    end
+    gAMPA_ibib=0.1/Nib;                          % IB -> IB
+
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
@@ -459,10 +452,7 @@ if ~no_synapses
     % % Delta -> Gamma oscillator connections
     gAMPA_ibrs = 0.08/Nib;
     if ~NMDA_block
-        gNMDA_ibrs = 8/Nib;
-        if high_IB_IB_connectivity
-            gNMDA_ibrs = 5/Nib;
-        end
+        gNMDA_ibrs = 5/Nib;
     end
 %     gGABAa_ngrs = 0.05/Nng;
     gGABAb_ngrs = 0.7/Nng;
@@ -510,13 +500,8 @@ if ~no_synapses
     gAMPA_RSdeepRS = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=0.1/Nfs;                        % FS -> IB
-    gGABAa_fs5ib=0.1/Nfs;                        % FS -> IB
-    if high_IB_IB_connectivity
-        gGABAa_fsib=0.2/Nfs;                        % FS -> IB
-        gGABAa_fsib=0.3/Nfs;                        % FS -> IB
-        gGABAa_fs5ib=0.2/Nfs;
-    end
+    gGABAa_fsib=0.3/Nfs;                        % FS -> IB
+    gGABAa_fs5ib=0.2/Nfs;
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
