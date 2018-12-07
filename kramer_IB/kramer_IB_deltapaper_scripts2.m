@@ -139,7 +139,7 @@ switch chosen_cell
         datapf1a = kramer_IB_function_mode(s{f},f);
         
     case '1b'
-        %% Paper Figs 1b - Pulse train AP
+        %% Paper Figs 1b1 - Pulse train AP
         
         clear s
         f = 1;
@@ -152,6 +152,34 @@ switch chosen_cell
         s{f}.PPonset = 350;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2'
+        %% Paper Figs 1b2 - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1b2'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -349,7 +377,7 @@ switch chosen_cell
         movefile(outpath1,outpath2);
         
     case '3a'
-        %% Paper Fig 3a - Vary frequencies low
+        %% Paper Fig 3a1 - Vary frequencies low
         % Setup
         clear s
         f=1;
@@ -359,7 +387,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[15,20,25,28,30,33,35,37]; ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[10,15,20,25,30,33,35,37]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -370,10 +398,41 @@ switch chosen_cell
         s{f}.random_seed = 'shuffle';
         
         datapf3a = kramer_IB_function_mode(s{f},f);
+    case '3a2'
+        %% Paper Fig 3a2 - Vary frequencies low - superficial only
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig3a2_lowfreq'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 0;
+        s{f}.vary = { '(RS,FS,LTS)','PPfreq',[10,15,20,25,30,33,35,37]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf3a = kramer_IB_function_mode(s{f},f);
         
     case '3b'
-        %% Paper Fig 3b - Vary frequency high
+        %% Paper Fig 3b1 - Vary frequency high
         
         % Setup
         clear s
@@ -393,6 +452,40 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        
+        datapf3b = kramer_IB_function_mode(s{f},f);
+        
+    case '3b2'
+        %% Paper Fig 3b2 - Vary frequency high - superficial only
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['DeltaFig3b2_highfreq'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 0;
+        s{f}.vary = { '(RS,FS,LTS)','PPfreq',[40,50,60,75,90,110]; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
         
         datapf3b = kramer_IB_function_mode(s{f},f);
 

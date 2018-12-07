@@ -6,14 +6,17 @@ myhours = 4;        % By default codes adds 30 minutes wall time. Definitely sho
 
 
 clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','1b',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1b',1,myhours);        % Click train with AP pulse
+clustersub('kramer_IB_deltapaper_scripts2','1b2',1,myhours);        % As 1b1, but only superficial oscillator
 clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1d',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','3b',6,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);        % Sweep low frequency
+clustersub('kramer_IB_deltapaper_scripts2','3a2',8,myhours);        % Sweep low frequencies only superficial oscillator
+clustersub('kramer_IB_deltapaper_scripts2','3b',6,myhours);        % Sweep high frequency
+clustersub('kramer_IB_deltapaper_scripts2','3b2',6,myhours);        % Sweep highf requency only superficial oscillator
 
 clustersub('kramer_IB_deltapaper_scripts2','4a',8,myhours);         % Lakatos 2005 figure
 clustersub('kramer_IB_deltapaper_scripts2','4a2',13,myhours);        % Lakatos 2005 figure with longer run time, higher downsampling
