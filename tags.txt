@@ -1,0 +1,21 @@
+
+Here is the format I use for defining tags
+
+There are several classes  of tags. These are defined by their prefix, for example:
+
+Figs - versions of model associated with a particular figures folder in model-dnsim-kramer_IB_Figs
+FigSub - versions of model associated with a particualr subfolder in model-dnsim-kramer_IB_Figs. For
+	example, d180321_t155456__hcurrent6_default/kr_DeltaFig1a11_hcurrent6/d180325_t191755__kr_DeltaFig1a11_hcurrent6
+Model - versions of model not associated with any thing in particular, but nonetheless measuring
+	major milestones in model development. Usually, models will have various subtags associated
+	with them. For example,
+		Model_v3.0 - describes the general chronological progression of my models
+		Model_hrw_v1.0 - describes version of a specific model configuration (in this case, the h-current rebound working model)
+
+Pres - versions of code associated with a particular presentation (in GDrive/Delta folder)
+
+Generally, I will have it set up so that the description of a particular tag class is included in the
+first (earliest) tag associated with that class. Some tags don't begin at 1.0 to allow earlier definitions of
+the model.
+
+For example, git show hrw_v1.0 will include a description of the general class of hrw tags.	
