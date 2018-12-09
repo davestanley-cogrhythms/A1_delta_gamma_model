@@ -1,0 +1,24 @@
+
+Specs.mat is a mat file containing spec structs corresponding to different
+tags in the git repo and also to different versions of kramer.m in the
+figure folders.
+
+For use with dsSpecDiff to identify differences between models.
+
+They are created by using utility_adjust_params.m to force most of the
+non-essential parameters to be the same, to reduce the amount of spam in
+dsSpecDiff. See utility_adjust_params.m
+
+The protocol to create one of these specs snapshots:
++ Put breakpoints before include_kramer_IB_populations 
+is called and also before the dsSimulate call.
++ Run kramer_IB.m.
++ When reach the first breakpoint (before populations are defined) run
+utility_adjust_params.m. This will ensure the adjusted params are used
+in creating the populations and synapses.
++ Continue running code
++ When reach second breakpoint, save the specs file and exit. 
++ Recommended naming convention is: specs_<tag_name> OR specs_<folder_name>
+
+
+
