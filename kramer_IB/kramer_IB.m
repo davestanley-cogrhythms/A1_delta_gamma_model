@@ -52,7 +52,7 @@ include_RS =   1;
 include_FS =   1;
 include_LTS =  1;
 include_NG =   1;
-include_dFS5 = 1;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -501,7 +501,7 @@ if ~no_synapses
     gAMPA_RSdeepRS = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=0.3/Nfs;                        % FS -> IB
+    gGABAa_fsib=0.0/Nfs;                        % FS -> IB
     gGABAa_fs5ib=0.0/Nfs;
     gAMPA_rsib=0.0/Nrs;                         % RS -> IB
     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
