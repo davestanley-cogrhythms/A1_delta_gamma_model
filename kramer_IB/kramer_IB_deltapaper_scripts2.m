@@ -1579,7 +1579,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '1a5'
-        %% Like Fig 1a1, except only have thalamus core input to L5 (modulatory); block core input to L4
+        %% Like Fig 1a1, except only have thalamus matrix input to L5 (modulatory); block core input to L4
         
         clear s
         f = 1;
