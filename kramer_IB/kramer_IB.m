@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 path
 
 tspan=[0 2000];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -38,7 +38,6 @@ save_figures = 0;               % Master switch for saving any figures in the si
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
-
 % % % % % Simulation switches
 no_noise = 0;
 no_synapses = 0;
@@ -52,7 +51,7 @@ include_RS =   1;
 include_FS =   1;
 include_LTS =  1;
 include_NG =   1;
-include_dFS5 = 0;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -81,7 +80,7 @@ kerneltype_IB = 2;
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
-gAR_d=0; % 155, IBda - max conductance of h-channel
+gAR_d=0.25; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
@@ -249,8 +248,8 @@ Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
 if include_NG
-    JRS1 = -1.9; % RS cells
-    JRS2 = -1.9; %
+    JRS1 = -2.1; % RS cells
+    JRS2 = -2.1; %
 end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
@@ -338,7 +337,7 @@ ggjdeepFS=.02/NdeepFS;  % deepFS -> deepFS
 % % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
 gsyn_hetero = .3;
-g_NMDA_hetero = 0;
+g_NMDA_hetero = .3;
 
 % % Eleak heterogenity (makes excitability of cells variable)
 IB_Eleak_std = 0;
@@ -433,7 +432,8 @@ if ~no_synapses
     % #mysynapses
     
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
-    gAMPA_ibib=0.02/Nib;                          % IB -> IB
+    gAMPA_ibib=0.1/Nib;                          % IB -> IB
+
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
@@ -453,10 +453,10 @@ if ~no_synapses
     % % Delta -> Gamma oscillator connections
     gAMPA_ibrs = 0.08/Nib;
     if ~NMDA_block
-        gNMDA_ibrs = 8/Nib;
+        gNMDA_ibrs = 5/Nib;
     end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.8/Nng;
+    gGABAb_ngrs = 0.7/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
@@ -501,12 +501,12 @@ if ~no_synapses
     gAMPA_RSdeepRS = 0.15/NdeepRS;
     
     % % Gamma -> Delta connections
-    gGABAa_fsib=0.0/Nfs;                        % FS -> IB
-    gGABAa_fs5ib=0.0/Nfs;
-    gAMPA_rsib=0.0/Nrs;                         % RS -> IB
-    gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
+    gGABAa_fsib=0.3/Nfs;                        % FS -> IB
+    gGABAa_fs5ib=0.2/Nfs;
+    gAMPA_rsib=0.1/Nrs;                         % RS -> IB
+%     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-%     gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
+    gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
     
     
 end
@@ -695,8 +695,8 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.25;
-RS_PP_gSYN = 0.2;
+IB_PP_gSYN = 0.075;
+RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
