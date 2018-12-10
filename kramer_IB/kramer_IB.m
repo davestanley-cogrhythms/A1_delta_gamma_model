@@ -337,6 +337,7 @@ ggjdeepFS=.02/NdeepFS;  % deepFS -> deepFS
 % % Chemical synapses, ZEROS - set everything to zero by default
 % % Synapse heterogenity
 gsyn_hetero = .3;
+g_NMDA_hetero = .3;
 
 % % Eleak heterogenity (makes excitability of cells variable)
 IB_Eleak_std = 0;
