@@ -80,7 +80,7 @@ kerneltype_IB = 2;
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
-gAR_d=0.25; % 155, IBda - max conductance of h-channel
+gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 
@@ -242,7 +242,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=0;    %         
+Jd2=1.5;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -252,7 +252,7 @@ if include_NG
     JRS2 = -2.1; %
 end
 Jfs=1;    % FS cells
-Jdfs5=1;    % FS cells
+Jdfs5=2;    % FS cells
 Jlts1=-2.5; % LTS cells
 Jlts2=-2.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -437,13 +437,13 @@ if ~no_synapses
     if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
-    if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
+    if ~NMDA_block; gNMDA_ibng=5/Nib; end        % IB -> NG NMDA
     
-    gGABAa_ngng=0.4/Nng;                       % NG -> NG
-    gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
+    gGABAa_ngng=0.6/Nng;                       % NG -> NG
+    gGABAb_ngng=0.2/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.6/Nng;                       % NG -> IB GABA B
     
     
     % % IB -> LTS
@@ -478,7 +478,7 @@ if ~no_synapses
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.5/Nrs;
+    gAMPA_rsfs5=0.5/Nrs;
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
@@ -502,7 +502,7 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
     gGABAa_fsib=0.3/Nfs;                        % FS -> IB
-    gGABAa_fs5ib=0.2/Nfs;
+    gGABAa_fs5ib=0.3/Nfs;
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
@@ -696,7 +696,7 @@ LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
 IB_PP_gSYN = 0.075;
-RS_PP_gSYN = 0.15;
+RS_PP_gSYN = 0.2;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
