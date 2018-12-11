@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_hcurrent6';
+namesuffix = '_hcurrent7';
 % namesuffix = '_IBPPStim0.05';
 % namesuffix = '_gar0.0';
 % namesuffix = '';

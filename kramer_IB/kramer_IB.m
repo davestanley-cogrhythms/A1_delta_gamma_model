@@ -325,10 +325,9 @@ end
 % % Gap junction connections.
 % % Deep cells
 % #mygap
-warning('RS gap junction normalization is wrong - should be normalized by 80, not 20');
-ggjaRS=.01/Nib;  % RS -> RS
+ggjaRS=.02/Nrs;  % RS -> RS
 ggja=.02/Nib;  % IB -> IB
-ggjFS=.01/Nfs;  % FS -> FS
+ggjFS=.02/Nfs;  % FS -> FS
 ggjLTS=.02/Nlts;  % LTS -> LTS
 % % deep cells
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
@@ -451,12 +450,13 @@ if ~no_synapses
 %     if ~NMDA_block; gNMDA_ibLTS=5/Nib; end
     
     % % Delta -> Gamma oscillator connections
-    gAMPA_ibrs = 0.08/Nib;
+    % Try making all delta->RS connections half of what IB cells receive
+    gAMPA_ibrs = 0.05/Nib;
     if ~NMDA_block
-        gNMDA_ibrs = 5/Nib;
+        gNMDA_ibrs = 3.5/Nib;
     end
 %     gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.7/Nng;
+    gGABAb_ngrs = 0.55/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
@@ -478,7 +478,7 @@ if ~no_synapses
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.5/Nrs;
+    gAMPA_rsfs5=1.5/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
