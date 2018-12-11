@@ -97,7 +97,8 @@ clustersub('kramer_IB_deltapaper_scripts2','12c',8,myhours);    % Low gM and gCa
 myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
 numcores = 4;
 clustersub('kramer_IB_deltapaper_tune1','1a',numcores,myhours);
-clustersub('kramer_IB_deltapaper_tune1','1b',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b1',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1c',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1d',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','4a',numcores,myhours);

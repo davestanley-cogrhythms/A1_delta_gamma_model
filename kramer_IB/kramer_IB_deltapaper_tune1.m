@@ -36,20 +36,47 @@ switch chosen_cell
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
-    case '1b'
+    case '1b1'
         %% Paper Figs 1b - Pulse train AP
         
         clear s
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1' num2str(f)];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2500];
         s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
 
