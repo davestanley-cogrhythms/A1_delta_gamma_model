@@ -1444,7 +1444,7 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
-        s{f}.IB_PP_gSYN=0.05;
+        s{f}.IB_PP_gSYN=0.075;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
