@@ -58,11 +58,11 @@ clustersub('kramer_IB_deltapaper_scripts2','9l',8,myhours);     % Polley fig 100
 clustersub('kramer_IB_deltapaper_scripts2','9m',8,myhours);     % Polley fig 200 ms block h-current
 
 %% Supplemental figures
-clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','8f',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','8g',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','8h',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','8i',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8f',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8g',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8h',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8i',8,myhours);     % As paper 8c - except non-zero IB PPStim
 
 % Block NMDA (for spontaneous activity)
 clustersub('kramer_IB_deltapaper_scripts2','1c2',1,myhours);
