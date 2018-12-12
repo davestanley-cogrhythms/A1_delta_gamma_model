@@ -30,14 +30,9 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=600;
+        s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
-        
-        % Remove the initial drive to NG cells - we want each sim to be as
-        % random as possible
-        s{f}.IB_offset1=0;
-        s{f}.IB_onset2=0;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -52,14 +47,9 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=600;
+        s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
-        
-        % Remove the initial drive to NG cells - we want each sim to be as
-        % random as possible
-        s{f}.IB_offset1=0;
-        s{f}.IB_onset2=0;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -74,14 +64,9 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=600;
+        s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
-        
-        % Remove the initial drive to NG cells - we want each sim to be as
-        % random as possible
-        s{f}.IB_offset1=0;
-        s{f}.IB_onset2=0;
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -108,11 +93,6 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        % Remove the initial drive to NG cells - we want each sim to be as
-        % random as possible
-        s{f}.IB_offset1=0;
-        s{f}.IB_onset2=0;
-        
         datapf1c = kramer_IB_function_mode(s{f},f);
         
     case '1d'
@@ -127,14 +107,9 @@ switch chosen_cell
         s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_IB = 4;         % Set to 4 for IB tones
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=600;
+        s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
-        
-        % Remove the initial drive to NG cells - we want each sim to be as
-        % random as possible
-        s{f}.IB_offset1=0;
-        s{f}.IB_onset2=0;
         
         datapf1d = kramer_IB_function_mode(s{f},f);
 
