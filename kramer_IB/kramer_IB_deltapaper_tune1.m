@@ -34,6 +34,8 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
+        s{f}.random_seed = 'shuffle';
+        
         datapf1a = kramer_IB_function_mode(s{f},f);
         
     case '1b1'
@@ -51,6 +53,8 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
+        s{f}.random_seed = 'shuffle';
+        
         datapf1b = kramer_IB_function_mode(s{f},f);
         
     case '1b2'
@@ -67,6 +71,8 @@ switch chosen_cell
         s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -93,6 +99,8 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
+        s{f}.random_seed = 'shuffle';
+        
         datapf1c = kramer_IB_function_mode(s{f},f);
         
     case '1d'
@@ -110,6 +118,8 @@ switch chosen_cell
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
         
         datapf1d = kramer_IB_function_mode(s{f},f);
 
