@@ -387,7 +387,14 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[10,15,20,25,30,33,35,37]; ...
+                % Use geometric sequence here. This has the property that
+                % subsequent entries in this sequence have the same spacing
+                % as the AP pulse. For example: 40*(2/3).^(-0.5:.5:3) =
+                % 48.9898   40.0000   32.6599   26.6667   21.7732   17.7778   14.5155   11.8519
+                % Here, 26.6667 Hz has the same spacing as the AP pulse for
+                % 40 Hz (e.g., 1000/(25+12.5) = 26.666). Similarly, 
+                % 1000/(37.5 + 37.5/2) = 17.7778.
+        s{f}.vary = { '(RS,FS,LTS)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -409,7 +416,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS)','PPfreq',[10,15,20,25,30,33,35,37]; ...
+        s{f}.vary = { '(RS,FS,LTS)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
