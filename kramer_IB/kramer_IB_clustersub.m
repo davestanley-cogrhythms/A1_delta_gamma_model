@@ -104,6 +104,21 @@ clustersub('kramer_IB_deltapaper_tune1','1d',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','4a',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','9b',numcores,myhours);
 
+% Supplementary - sweep PPFreq
+clustersub('kramer_IB_deltapaper_tune1','1b1_32Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2_32Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b1_26Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2_26Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b1_21Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2_21Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b1_17Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2_17Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b1_14Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2_14Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b1_11Hz',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1b2_11Hz',numcores,myhours);
+
+
 %% Job progress
 !qstat -u stanleyd
 clc; !cat cluster_*.o.*

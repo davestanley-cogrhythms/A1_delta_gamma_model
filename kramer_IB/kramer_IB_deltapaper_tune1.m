@@ -29,6 +29,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['tune1Fig1a1' num2str(f)];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
+        s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 2500];
         s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
@@ -48,6 +49,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['tune1Fig1b1' num2str(f)];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 2500];
         s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
@@ -67,6 +69,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['tune1Fig1b2' num2str(f)];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 2500];
         s{f}.PPonset=400;
         s{f}.PPoffset = 2000;
@@ -168,6 +171,321 @@ switch chosen_cell
 
         datapf9b = kramer_IB_function_mode(s{f},f);
         
+        
+    %% % % % % % % % % % % % % % % % % % % % % % Supplementary stuff - Sweep PPfreq % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+        
+    case '1b1_32Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b1_32Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 32.7; % in Hz
+        s{f}.ap_pulse_delay = 15.3;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2_32Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2_32Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 32.7; % in Hz
+        s{f}.ap_pulse_delay = 15.3;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b1_26Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b1_26Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 26.7; % in Hz
+        s{f}.ap_pulse_delay = 18.8;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2_26Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2_26Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 26.7; % in Hz
+        s{f}.ap_pulse_delay = 18.8;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b1_21Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b1_21Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 21.8; % in Hz
+        s{f}.ap_pulse_delay = 23.0;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2_21Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2_21Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 21.8; % in Hz
+        s{f}.ap_pulse_delay = 23.0;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '1b1_17Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b1_17Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 17.8; % in Hz
+        s{f}.ap_pulse_delay = 28.1;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2_17Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2_17Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 17.8; % in Hz
+        s{f}.ap_pulse_delay = 28.1;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b1_14Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b1_14Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 14.5; % in Hz
+        s{f}.ap_pulse_delay = 34.4;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2_14Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2_14Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 14.5; % in Hz
+        s{f}.ap_pulse_delay = 34.4;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b1_11Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b1_11Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 11.9; % in Hz
+        s{f}.ap_pulse_delay = 42.2;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2_11Hz'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.repo_studyname = ['tune1Fig1b2_11Hz' num2str(f)];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 11.9; % in Hz
+        s{f}.ap_pulse_delay = 42.2;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.random_seed = 'shuffle';
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
 
 
 end
