@@ -390,10 +390,16 @@ switch chosen_cell
                 % Use geometric sequence here. This has the property that
                 % subsequent entries in this sequence have the same spacing
                 % as the AP pulse. For example: 40*(2/3).^(-0.5:.5:3) =
+                %
                 % 48.9898   40.0000   32.6599   26.6667   21.7732   17.7778   14.5155   11.8519
+                %
                 % Here, 26.6667 Hz has the same spacing as the AP pulse for
                 % 40 Hz (e.g., 1000/(25+12.5) = 26.666). Similarly, 
                 % 1000/(37.5 + 37.5/2) = 17.7778.
+                % Note: List of appropriate AP durations is given by: 1000./((40*(2/3).^(-0.5:.5:3)) + .5*(40*(2/3).^(-0.5:.5:3)))
+                % This equals
+                % 10.2062   12.5000   15.3093   18.7500   22.9640   28.1250   34.4459   42.1875
+                % 
         s{f}.vary = { '(RS,FS,LTS)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
