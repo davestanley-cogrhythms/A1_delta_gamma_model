@@ -138,7 +138,7 @@ switch chosen_cell
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
-    case '1b'
+    case '1b1'
         %% Paper Figs 1b1 - Pulse train AP
         
         clear s
@@ -146,7 +146,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1b'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 350;

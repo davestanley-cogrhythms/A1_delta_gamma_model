@@ -6,7 +6,7 @@ myhours = 4;        % By default codes adds 30 minutes wall time. Definitely sho
 
 
 clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','1b',1,myhours);        % Click train with AP pulse
+clustersub('kramer_IB_deltapaper_scripts2','1b1',1,myhours);        % Click train with AP pulse
 clustersub('kramer_IB_deltapaper_scripts2','1b2',1,myhours);        % As 1b1, but only superficial oscillator
 clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1d',1,myhours);
