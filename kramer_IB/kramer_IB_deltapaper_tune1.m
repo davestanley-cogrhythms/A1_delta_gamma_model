@@ -19,14 +19,14 @@ namesuffix = '_hcurrent6';
 % namesuffix = '';
 
 switch chosen_cell
-    case '1a'
+    case '1a1'
         %% Paper Figs 1a - Pulse train no AP
         
         clear s
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1a' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1a1' num2str(f)];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2500];
