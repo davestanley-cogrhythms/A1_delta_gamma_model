@@ -400,7 +400,7 @@ switch chosen_cell
                 % This equals
                 % 10.2062   12.5000   15.3093   18.7500   22.9640   28.1250   34.4459   42.1875
                 % 
-        s{f}.vary = { '(RS,FS,LTS)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
