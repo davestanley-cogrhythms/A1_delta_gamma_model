@@ -479,7 +479,7 @@ if ~no_synapses
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=1.5/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
-    gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
+    gGABAa_fs5fs5 = 0.5/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
