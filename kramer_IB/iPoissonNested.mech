@@ -8,7 +8,6 @@ PPshift = 0; % in ms
 
 % Time series properties
 Tend=T(end); 	    % ms, max simulation duration
-dt=0.01;        % ms, t ime step duration
 
 
 % Parameters onset and offset of delta pulse trian
