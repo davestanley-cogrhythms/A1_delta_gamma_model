@@ -72,7 +72,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 %PPoffset = tspan(end)-0;   % ms, offset time
 PPoffset = Inf;
 %PPoffset = 1500;
-kerneltype_IB = 2;
+kerneltype_Poiss_IB = 2;
 
 % % % % % Default repo study name
 %#gar
@@ -717,17 +717,18 @@ PPmaskduration = 100;
 PPmaskshift = 0;
 
 % IB Poisson (thalamic input)
-poissScaling = 1000;
-if kerneltype_IB == 4
-    poissScaling = 200;
+poissScaling_Thal = 1000;
+if kerneltype_Poiss_IB == 4
+    poissScaling_Thal = 200;
 end
 poissTau = 2;
 
-IB_PP_width = 2;
+Poiss_PPwidth2_rise = 0.25;
+Poiss_PP_width = 2;
 
 % RS Poisson (L4 input)
 poissScaling_L4 = 1000;
-kerneltype_L4 = 2;          % This should always be 2, since L4 always does 40 Hz gamma
+kerneltype_Poiss_L4 = 2;          % This should always be 2, since L4 always does 40 Hz gamma
 
 
 switch pulse_mode
