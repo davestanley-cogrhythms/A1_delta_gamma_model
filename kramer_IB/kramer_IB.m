@@ -716,7 +716,7 @@ PPmaskfreq = 2.0;
 PPmaskduration = 100;
 PPmaskshift = 0;
 
-% IB Poisson Noise
+% IB Poisson (thalamic input)
 poissScaling = 1000;
 if kerneltype_IB == 4
     poissScaling = 200;
@@ -724,6 +724,11 @@ end
 poissTau = 2;
 
 IB_PP_width = 2;
+
+% RS Poisson (L4 input)
+poissScaling_L4 = 1000;
+kerneltype_L4 = 2;          % This should always be 2, since L4 always does 40 Hz gamma
+
 
 switch pulse_mode
     case 0                  % No stimulation
