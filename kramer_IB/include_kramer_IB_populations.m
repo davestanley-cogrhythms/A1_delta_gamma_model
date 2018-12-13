@@ -99,18 +99,6 @@ if include_FS
         pulse_train_preset = pulse_train_preset0 ;
     end
     
-    if do_jason_sPING      % Testing....
-        js_pop_FS.name='FS';
-        js_pop_FS.size=Nfs;
-        js_pop_FS.equations=eqns;
-        js_pop_FS.mechanism_list={'iPeriodicPulsesiSYNNested','iNa','iK'};
-        js_pop_FS.parameters={'Iapp',0,'gNa',120,'gK',36,'noise',40,...
-            'PPfreq', PPfreq,'PPwidth', PP_width,'PPshift',PPshift,'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', PPwidth2_rise,...
-            'PP_gSYN',FS_PP_gSYN,'E_SYN',EAMPA,'tauRx',PPtauRx,'tauDx',PPtauDx,'PP_g_SYN_hetero',gsyn_hetero,...
-            'PPmaskfreq',PPmaskfreq,'PPmaskshift',PPmaskshift,'PPmaskduration',PPmaskduration,'do_nested_mask',do_nested_mask,...
-             };
-        spec.populations(i) = js_pop_FS;
-    end
 end
 
 
@@ -136,22 +124,6 @@ if include_RS
       'gCaH',0,'E_CaH',ECa,...
       };
   
-      if do_jason_sPING      % Testing....
-          eqns={ 
-              'dV/dt=Iapp+@current+noise*randn(1,N_pop)';
-              'monitor iGABAa.functions, iAMPA.functions'
-              };
-          js_pop_RS.name='RS';
-          js_pop_RS.size=Nrs;
-          js_pop_RS.equations=eqns;
-          js_pop_RS.mechanism_list={'iPeriodicPulsesiSYNNested','iNa','iK'};
-          js_pop_RS.parameters={'Iapp',5,'gNa',120,'gK',36,'noise',40,...
-              'PPfreq', PPfreq,'PPwidth', PP_width,'PPshift',PPshift,'PPonset', PPonset, 'PPoffset', PPoffset, 'ap_pulse_num', ap_pulse_num, 'ap_pulse_delay', ap_pulse_delay,'pulse_train_preset',pulse_train_preset,'kernel_type', kernel_type, 'width2_rise', PPwidth2_rise,...
-              'PP_gSYN',RS_PP_gSYN,'E_SYN',EAMPA,'tauRx',PPtauRx,'tauDx',PPtauDx,'PP_g_SYN_hetero',gsyn_hetero,...
-              'PPmaskfreq',PPmaskfreq,'PPmaskshift',PPmaskshift,'PPmaskduration',PPmaskduration,'do_nested_mask',do_nested_mask,...
-              };
-          spec.populations(i) = js_pop_RS;
-      end
 end
 
 %% L5 FS cells

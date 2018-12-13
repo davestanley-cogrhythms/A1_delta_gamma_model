@@ -139,10 +139,6 @@ end
 mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
 sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
 
-% % % % % Mechanism overrides
-do_jason_sPING = 0;
-do_jason_sPING_syn = 0;
-
 % % % % % Display options
 plot_on = 0;
 visible_flag = 'on';

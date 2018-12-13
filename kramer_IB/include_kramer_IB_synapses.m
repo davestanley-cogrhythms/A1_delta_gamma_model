@@ -207,12 +207,6 @@ if include_FS && include_RS
     spec.connections(i).parameters = {'g_SYN',gGABAa_fsrs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
     
-    if do_jason_sPING_syn
-        js_conn_I_E.direction='FS->RS';
-        js_conn_I_E.mechanism_list={'iGABAa'};
-        js_conn_I_E.parameters={'tauD',10,'gSYN',.1*20/Nfs,'netcon','ones(N_pre,N_post)'};
-        spec.connections(i) = js_conn_I_E;
-    end
 end
 
 
