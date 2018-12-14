@@ -49,6 +49,82 @@ function varargout = dsPlot2_PPStim (data,varargin)
     
     xpp = xpp.squeezeRegexp('variables');
     
+    % Overwrite other XPP entries for non-IB cells with those from IB
+    % cells. The reason we want to do this is because IB cells reflect the
+    % thalamus matrix input, and don't go through the "gamma transformer"
+    % in L4.  
+    % (The net result is that this will produce solid red bars instead of
+    % dotted lines for the "pure tone" inputs)
+    % 
+    % If IB cells aren't present, we'll just leave each population alone,
+    % unless it doesn't have a PPStim mechanism. In this case, we'll look
+    % copy over from other cells that do have a PPStim mechanism
+    %
+    % This copying over is also necessary due to some mechanisms missing
+    % the PPstim mechanism.
+    % For details, see commmit: ce0323995ac0941163ecb27dafe5cbe1b8697308
+    % Or tag: <Major_Change1.3>
+    
+    % Get names of all populations
+    popaxis = xpp.findaxis('population');
+    mypops = xpp.axis(popaxis).values;
+    Npops = length(mypops);
+    
+    % Bring population axis temporarily to front
+    Nd = ndims(xpp);
+    inds = [popaxis, 1:popaxis-1, popaxis+1:Nd];
+    xpt = xpp.permute(inds);        % Temporary xpp matrix
+    
+    % Find IB cells and copy data over.
+    if any(strcmp(mypops,'IB'))     % If IB cells exist
+        dat = xpt.data;
+        xpt_IB = xpt.axisSubset('population','/^IB$/');     % Take population exactly matching IB
+        dat_IB = xpt_IB.data;                               % Get data from this population
+        for i = 1:Npops                                     % Copy this over to all populations
+            dat(i,:) = dat_IB;
+        end
+        xpt.data = dat;                                     % Re-assign it to xpt
+    else                            % If IB cells don't exist, there still might be some blank
+                                    % entries. Need to fill these in with data from other cells we know
+                                    % contains the mechs.
+        if any(strcmp(mypops,'dFS5'))
+            xpt_source = xpt.axisSubset('population','dFS5');
+        elseif any(strcmp(mypops,'RS'))
+            xpt_source = xpt.axisSubset('population','RS');
+        else
+            xpt_source = [];
+        end
+        
+        if ~isempty (xpt_source)        % If couldn't find a source, don't bother doing the replacement.. we just won't plot any red bars for this cell type, then
+            dat = xpt.data;
+        	dat_source = xpt_source.data;
+            for i = 1:Npops                                     % Copy this over to all populations
+                % Copy over only to blank entries. Use this form of
+                % indexing since we cdat could be high dimensional
+                cdat = dat(i,:);
+                for j = 1:numel(cdat)
+                    if isempty(cdat{j})
+                        cdat{j} = dat_source{j};
+                    end
+                end
+                dat(i,:) = cdat;
+            end
+            xpt.data = dat;
+        end
+        
+    end
+    
+    xpp = xpt.ipermute(inds);
+    
+    
+    
+    
+    for i = 1:numel(xpp.data)
+        xpp_temp = xpp(i);
+        
+    end
+    
+    
     if ~isempty(options.population)
         xpp = xpp.axisSubset('population',options.population);
     end
