@@ -129,8 +129,11 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     % 1 where there are pulses.
                     time= xpp.meta.datainfo(1).values;
                     blocks = xpp.data{i,j,1,1,1,1,1,1};      % These are the ticks that correspond to our current subplot. Add a bunch of extra 1's just incase it's very high dimensional. This type of indexing bad form but is OK
-                    blocks = mean(blocks,2);
                     
+                    % Only plot if blocks isn't empty
+                    if ~isempty(blocks)
+                    blocks = mean(blocks,2);
+
                     % Now we will set all values to NaN where we're below
                     % threshold, and values above threshold to be at the
                     % top of our plot. We use NaNs because they are ignored
@@ -142,7 +145,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     blocks(ind) = NaN;
                     yl = ylim;
                     blocks(~ind) = yl(2) - (yl(2) - yl(1))*0.01;    % Shift down 1% from top of plot
-                    
+
                     % This clause just looks at the subplot on the grid directly above
                     % the above the current one and sees if the ticks are
                     % the same. If they are, it skips plotting. 
@@ -152,11 +155,12 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                             plot_ppstim = false;
                         end
                     end
-                        
+
                     % Finally, plot the ticks.
                     if plot_ppstim && show_PP_ticks
                         %hold on; plot(time, blocks,'r--.','LineWidth',20);
                         hold on; plot(time, blocks,'r.','MarkerSize',5);
+                    end
                     end
                     
                     % Stores the current ticks for comparison in the next
