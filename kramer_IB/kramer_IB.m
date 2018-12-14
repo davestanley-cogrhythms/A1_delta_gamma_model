@@ -42,6 +42,7 @@ Cm_factor = Cm_Ben/.25;
 no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0;
+disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 
 
 

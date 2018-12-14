@@ -37,7 +37,7 @@ if include_IB && include_RS
 end
 
 % % IB->LTS
-if include_IB && include_LTS
+if include_IB && include_LTS && ( ~disable_unused_synapses || gAMPA_ibLTS>1e-10 || gNMDA_ibLTS>1e-10 )       % If disable_unused_synapses is true, only include synapse if conductances are greater than 0
     i=i+1;
     spec.connections(i).direction = 'IB->LTS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
@@ -82,7 +82,7 @@ if include_NG && include_RS
 end
 
 % % NG->FS Synaptic connections
-if include_NG && include_FS
+if include_NG && include_FS && ( ~disable_unused_synapses || gGABAa_ngfs>1e-10 || gGABAb_ngfs>1e-10 )       % If disable_unused_synapses is true, only include synapse if conductances are greater than 0
     i=i+1;
     spec.connections(i).direction = 'NG->FS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
@@ -93,7 +93,7 @@ if include_NG && include_FS
 end
 
 % % NG->LTS Synaptic connections
-if include_NG && include_LTS
+if include_NG && include_LTS && ( ~disable_unused_synapses || gGABAa_nglts>1e-10 || gGABAb_nglts>1e-10 )       % If disable_unused_synapses is true, only include synapse if conductances are greater than 0
     i=i+1;
     spec.connections(i).direction = 'NG->LTS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iGABABAustin'};
@@ -137,7 +137,7 @@ if include_RS && include_LTS
 end
 
 % % RS->NG synaptic connection
-if include_RS && include_NG
+if include_RS && include_NG && ( ~disable_unused_synapses || gAMPA_rsng>1e-10 )       % If disable_unused_synapses is true, only include synapse if conductances are greater than 0
     i=i+1;
     spec.connections(i).direction = 'RS->NG';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
