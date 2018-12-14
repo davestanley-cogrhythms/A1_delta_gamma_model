@@ -710,8 +710,6 @@ PPtauDx = tauAMPAd+jitter_fall; % in ms        % Broaden by fixed amount due to 
 PPtauRx = tauAMPAr+jitter_rise;      % Broaden by fixed amount due to presynaptic jitter
 ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
 ap_pulse_num = 0;                           % ms, the amount the spike should be delayed. 0 for no aperiodicity.
-PP_width = 0.25;
-PPwidth2_rise = 0.25;
 PPmaskfreq = 2.0;
 PPmaskduration = 100;
 PPmaskshift = 0;
@@ -726,7 +724,7 @@ poissTau = 2;
 Poiss_PPwidth2_rise = 0.25;
 Poiss_PP_width = 2;
 
-% RS Poisson (L4 input)
+% Non-IB Poisson (L4 input)
 poissScaling_L4 = 1000;
 kerneltype_Poiss_L4 = 2;          % This should always be 2, since L4 always does 40 Hz gamma
 
