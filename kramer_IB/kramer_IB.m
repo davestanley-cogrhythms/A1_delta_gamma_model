@@ -723,7 +723,7 @@ end
 poissTau = 2;
 
 Poiss_PPwidth2_rise = 0.25;
-Poiss_PP_width = 2;
+Poiss_PP_width = 1;
 
 % Non-IB Poisson (L4 input)
 poissScaling_L4 = 1000;
