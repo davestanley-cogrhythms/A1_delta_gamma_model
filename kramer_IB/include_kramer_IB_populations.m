@@ -163,7 +163,9 @@ if include_dFS5
     
     % Rearrange cells so this one comes after IB cells.
     ind = find(strcmp({spec.populations.name},'IB'));
-    spec.populations = [spec.populations(1:ind), spec.populations(i), spec.populations(ind+1:i-1)];
+    if ~isempty(ind)
+        spec.populations = [spec.populations(1:ind), spec.populations(i), spec.populations(ind+1:i-1)];
+    end
     
 end
 
