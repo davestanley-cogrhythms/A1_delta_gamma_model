@@ -452,7 +452,7 @@ if ~no_synapses
     if ~NMDA_block
         gNMDA_ibrs = 3.5/Nib;
     end
-%     gGABAa_ngrs = 0.05/Nng;
+    gGABAa_ngrs = 0.05/Nng;
     gGABAb_ngrs = 0.55/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
