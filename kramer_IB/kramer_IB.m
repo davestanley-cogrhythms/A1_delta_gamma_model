@@ -18,8 +18,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 path
 
-tspan=[0 2000];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1000];
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -47,12 +47,12 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 
 % % % % % Cells to include in model
-include_IB =   1;
+include_IB =   0;
 include_RS =   1;
 include_FS =   1;
 include_LTS =  1;
-include_NG =   1;
-include_dFS5 = 1;
+include_NG =   0;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -61,7 +61,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=80; % Number of RS cells
+Nrs=20; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
@@ -580,9 +580,9 @@ switch sim_mode
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
-            'RS','stim2',[-2.9:.2:-1.5]; ...
+            %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
-            %'RS','PP_gSYN',[.0:0.05:.3]; ...
+            'RS','PP_gSYN',[0.07:.03:.13]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'RS->dFS5','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'dFS5','PP_gSYN',[0, 0.15, 0.2, 0.25]; ...
