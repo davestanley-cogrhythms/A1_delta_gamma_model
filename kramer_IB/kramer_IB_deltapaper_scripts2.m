@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_hcurrent7g_inc_gFSFS_gFSLTS';
+namesuffix = '_hcurrent7h_restoreGamma';
 % namesuffix = '_IBPPStim0.05';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -157,6 +157,31 @@ switch chosen_cell
         
     case '1b2'
         %% Paper Figs 1b2 - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1b2'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 350;
+        s{f}.PPoffset = 1500;
+        s{f}.random_seed = 8;
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);    %% Paper Figs 1b2 - Pulse train AP
         
         clear s
         f = 1;
