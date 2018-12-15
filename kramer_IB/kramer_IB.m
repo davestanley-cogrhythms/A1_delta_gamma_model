@@ -76,8 +76,6 @@ PPoffset = Inf;
 kerneltype_Poiss_IB = 2;
 
 % % % % % Default repo study name
-%#gar
-%#gar
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
@@ -693,7 +691,7 @@ LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
 IB_PP_gSYN = 0.125;
-RS_PP_gSYN = 0.13;
+RS_PP_gSYN = 0.07;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
