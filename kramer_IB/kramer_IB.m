@@ -462,21 +462,21 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.0/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
-    gGABAa_fsfs=0.75/Nfs;                      % FS -> FS
-    gGABAa_fsrs=0.75/Nfs;                     % FS -> RS
+    gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
+    gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
     gAMPA_rsLTS = 0.2/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
-    gGABAa_fsLTS = 1.5/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.0/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
-    gGABAa_fs5fs5 = 0.75/Nfs;                    % dFS5 -> dFS5
+    gAMPA_rsfs5=1.5/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
+    gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
