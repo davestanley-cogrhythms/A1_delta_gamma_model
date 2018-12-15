@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:6;
+        handles_arr = 1:3;
         do_commit = 1;
-        currfigname = '181a_sweep_RS_PPStim';
+        currfigname = '181b_redo_fullsim';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Sweep RS PPStim. Goal: Reduce RS cell doublet firing.'];
+    mycomment = ['Re-ran previous sim with full network (including IB cells).'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
