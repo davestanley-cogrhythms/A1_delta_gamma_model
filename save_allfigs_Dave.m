@@ -24,7 +24,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:4;
         do_commit = 1;
-        currfigname = '181g_inc_gFSLTS_1.25';
+        currfigname = '181g2_redo_fullsim';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Increase gFSLTS. Goal: LTS more silent duing 40Hz and then produce better rebound'];
+    mycomment = ['Redo prev with full network sim 80 RS cells.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
