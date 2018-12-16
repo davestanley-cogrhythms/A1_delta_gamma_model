@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:6;
+        handles_arr = 1:9;
         do_commit = 1;
-        currfigname = '181d_sweep_dFS5IB';
+        currfigname = '181e_sweep_RSFS';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Try sweeping dFS5IB synapse. Goal: Make initial IB burst more resiliant'];
+    mycomment = ['Try sweeping RSFS and RSdFS5 synapse. Sweep is {(RS->dFS5,RS->FS),g_SYN,[0, .3:.2:1.5]/Nrs}. Goal: Make initial IB burst more resiliant'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
