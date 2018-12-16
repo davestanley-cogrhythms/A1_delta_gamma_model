@@ -16,7 +16,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % List loaded modules
 !module list
 !pwd
-path
+% path
 
 tspan=[0 1000];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
@@ -188,10 +188,6 @@ KDR_offset = 20;
 % % % % % Default ionic current values
 deep_gNaF = 100;
 FS_gM = 0;
-%#gar
-% gAR_d=155; % 155, IBda - max conductance of h-channel
-% gAR_d=4; % 155, IBda - max conductance of h-channel
-% gAR_d=0; % 155, IBda - max conductance of h-channel
 
 
 % % % % % Parameters for deep RS cells.
