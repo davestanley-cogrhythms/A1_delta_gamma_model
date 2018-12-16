@@ -686,7 +686,7 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.125;
+IB_PP_gSYN = 0.2;
 RS_PP_gSYN = 0.07;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
@@ -712,7 +712,7 @@ PPmaskshift = 0;
 % IB Poisson (thalamic input)
 poissScaling_Thal = 1000;
 if kerneltype_Poiss_IB == 4
-    poissScaling_Thal = 200;
+    poissScaling_Thal = 100;
 end
 poissTau = 2;
 
