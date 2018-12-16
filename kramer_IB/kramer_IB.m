@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 1500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -456,7 +456,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.3/Nrs;                     % RS -> FS
     
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
@@ -469,7 +469,7 @@ if ~no_synapses
     gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.5/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
+    gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     % % Theta oscillator (deep RS-FS circuit).
