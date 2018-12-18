@@ -24,7 +24,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '183a_get_RS_fire_jitter';
+        currfigname = '183b_inc_jLTS';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Goal: Want RS cells to fire on the jittered (10th) AP pulse. Now this is working. The 11th pulse is inhibited, just like in experimental data. Made many changes to get this.'];
+    mycomment = ['Goal: Wanted stronger LTS rebound. Inc jLTS to get this.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

@@ -247,8 +247,8 @@ if include_NG
 end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
-Jlts1=-1.8; % LTS cells
-Jlts2=-1.8; % LTS cells
+Jlts1=-2.0; % LTS cells
+Jlts2=-2.0; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
