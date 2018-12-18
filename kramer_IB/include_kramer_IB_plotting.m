@@ -545,7 +545,7 @@ end
             dsPlot2_PPStim(data,'plot_type','raster')
             dsPlot2(data,'variable','_s','do_mean',1,'population','RS')
             dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2)
-            dsPlot2(data,'do_mean',1,'population','RS','variable','RS_RS_IBaIBdbiSYNseed_s')                                % Plot just RS conductance
+            dsPlot2(data,'do_mean',1,'population','RS','variable','RS_IBaIBdbiSYNseed_s')                                % Plot just RS conductance
     end
 
     
