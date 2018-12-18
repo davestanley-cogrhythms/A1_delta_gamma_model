@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 2000];
+tspan=[0 500];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -47,12 +47,12 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 
 % % % % % Cells to include in model
-include_IB =   1;
+include_IB =   0;
 include_RS =   1;
 include_FS =   1;
 include_LTS =  1;
-include_NG =   1;
-include_dFS5 = 1;
+include_NG =   0;
+include_dFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -61,7 +61,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=80; % Number of RS cells
+Nrs=20; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
@@ -160,7 +160,7 @@ plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
 % plot_args = 
 
 % % % % % Major switches affecting model structure
-do_dualexp_synapse = 0;         % Use dual exponential synaspe model for LTS cells, as opposed
+do_dualexp_synapse = 1;         % Use dual exponential synaspe model for LTS cells, as opposed
                                 % to the standard ODE formalism
 
 Now = clock;
@@ -746,7 +746,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 350;    % ms, onset time
+        PPonset = 0;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
