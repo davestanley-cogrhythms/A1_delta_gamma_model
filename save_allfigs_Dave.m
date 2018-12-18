@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:3;
+        handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '182a_run_dualexp_test';
+        currfigname = '183a_get_RS_fire_jitter';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Sup layer only. Tested model with extremely long synaptic delay.'];
+    mycomment = ['Goal: Want RS cells to fire on the jittered (10th) AP pulse. Now this is working. The 11th pulse is inhibited, just like in experimental data. Made many changes to get this.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

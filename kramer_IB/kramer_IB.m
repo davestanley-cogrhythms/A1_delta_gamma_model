@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 500];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -61,7 +61,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=20; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
@@ -160,7 +160,7 @@ plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
 % plot_args = 
 
 % % % % % Major switches affecting model structure
-do_dualexp_synapse = 1;         % Use dual exponential synaspe model for LTS cells, as opposed
+do_dualexp_synapse = 0;         % Use dual exponential synaspe model for LTS cells, as opposed
                                 % to the standard ODE formalism
 
 Now = clock;
@@ -247,8 +247,8 @@ if include_NG
 end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
-Jlts1=-2.5; % LTS cells
-Jlts2=-2.5; % LTS cells
+Jlts1=-1.8; % LTS cells
+Jlts2=-1.8; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -465,11 +465,11 @@ if ~no_synapses
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.2/Nrs;                 % RS -> LTS
+    gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
-    gGABAa_fsLTS = 1.25/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 1.5/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
@@ -579,9 +579,10 @@ switch sim_mode
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
+            'LTS','stim2',[-2.5:.1:-1.9]; ...
             %'RS','PP_gSYN',[0.07:.03:.13]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
-            '(RS->dFS5,RS->FS)','g_SYN',[0, .3:.2:1.5]/Nrs;...
+            %'(RS->dFS5,RS->FS)','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'dFS5','PP_gSYN',[0, 0.15, 0.2, 0.25]; ...
             %'(FS->FS,dFS5->dFS5)','g_SYN',[.5 .6 .7 .8 .9 1 1.1 1.2]/Nfs;...
             %'RS->dFS5','g_SYN',[linspace(0.1,1.2,8)]/Nrs;...
@@ -667,7 +668,7 @@ switch sim_mode
             };
         
     case 14         % Vary random parameter to force shuffling random seed
-        vary = {'RS','asdfasdfadf',1:4 };       % shuffle starting seed 8 times
+        vary = {'RS','asdfasdfadf',1:3 };       % shuffle starting seed 8 times
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
         
