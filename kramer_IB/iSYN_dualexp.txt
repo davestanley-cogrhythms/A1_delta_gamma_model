@@ -1,0 +1,27 @@
+
+g_SYN=1;
+E_SYN=-95;
+tauDx=10;
+tauRx=5;
+delay=0;
+g_SYN_hetero = [0.005]
+
+fanout = inf
+UB = max(Npre,Npost)
+Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
+Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
+mask = double(abs(Xpre-Xpost)<=fanout)
+
+gsyn0=unifrnd(g_SYN*(1-g_SYN_hetero),g_SYN*(1+g_SYN_hetero),[Npost 1])'
+gsyn=gsyn0.* double(gsyn0 > 0)
+
+f(x) = (exp(-x/tauDx)-exp(-x/tauRx)).*(x>0)
+ISYN(X) = gsyn.*(sum(f(t-tspike_pre-delay),1)*mask).*(X-E_SYN)
+
+%monitor functions % always record the synaptic current
+%monitor ISYN % always record the synaptic current
+
+% Linkers
+@current += -ISYN(V_post)
+
+
