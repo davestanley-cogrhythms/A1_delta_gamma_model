@@ -539,6 +539,12 @@ end
             load handel.mat;
             sound(y, 1*Fs);
         end
+        
+        %% Latest figs (circa figures folder: d181218_t005222__kr_183a_get_RS_fire_jitter)
+            for i = 1:length(data); dsPlot2_PPStim(data(i),'plot_type','rastergram'); end
+            dsPlot2_PPStim(data,'plot_type','raster')
+            dsPlot2(data,'variable','_s','do_mean',1,'population','RS')
+            dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2)
     end
 
     
