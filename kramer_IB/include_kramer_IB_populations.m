@@ -66,8 +66,13 @@ if include_LTS
       'gKDR',30,'E_KDR',E_EKDR,...
       'gM',10,'E_M',E_EKDR,...
       };
+    if do_dualexp_synapse
+        spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]
+                    'monitor V.spikes(thresh)'
+            };
+        spec.populations(i).parameters(end+1:end+2) = {'thresh',0};
+    end
 end
-
 
 %% FS cells
 if include_FS

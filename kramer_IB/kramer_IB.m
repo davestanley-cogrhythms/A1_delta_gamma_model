@@ -159,6 +159,9 @@ end
 plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
 % plot_args = 
 
+% % % % % Major switches affecting model structure
+do_dualexp_synapse = 0;         % Use dual exponential synaspe model for LTS cells, as opposed
+                                % to the standard ODE formalism
 
 Now = clock;
 

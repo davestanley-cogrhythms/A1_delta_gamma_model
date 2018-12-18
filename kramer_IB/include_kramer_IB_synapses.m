@@ -134,6 +134,7 @@ if include_RS && include_LTS
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_rsLTS,'E_SYN',EAMPA,'tauDx',tauAMPAd_LTS,'tauRx',tauAMPAr_LTS,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
+    
 end
 
 % % RS->NG synaptic connection
@@ -272,6 +273,7 @@ if include_LTS && include_IB
         };
 end
 
+if ~do_dualexp_synapse
 % % LTS->RS Synaptic connections
 if include_LTS && include_RS
     i=i+1;
@@ -279,6 +281,20 @@ if include_LTS && include_RS
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gGABAa_LTSrs,'E_SYN',EGABA,'tauDx',tauGABAaLTSd_RS,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
+end
+else
+    % % LTS->RS Synaptic connections
+    if include_LTS && include_RS
+        i=i+1;
+        spec.connections(i).direction = 'LTS->RS';                  
+        spec.connections(i).mechanism_list = {'iSYN_dualexp'};
+            % Note that the dual exponential synapse is stronger than the
+            % standard ODE formalism, so gGABAa_LTSrs should be reduced
+            % when do_dualexp_synapse is on.
+        spec.connections(i).parameters = {'g_SYN',gGABAa_LTSrs,'E_SYN',EGABA,'tauDx',tauGABAaLTSd_RS,'tauRx',tauGABAaLTSr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+            'delay',0,...
+            };
+    end
 end
 
 
