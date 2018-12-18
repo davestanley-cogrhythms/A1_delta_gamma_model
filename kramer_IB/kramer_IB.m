@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 800];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -61,7 +61,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=80; % Number of RS cells
+Nrs=20; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
@@ -469,7 +469,7 @@ if ~no_synapses
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
-    gGABAa_fsLTS = 1.5/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
