@@ -691,7 +691,7 @@ LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
 IB_PP_gSYN = 0.2;
-RS_PP_gSYN = 0.07;
+RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
@@ -718,7 +718,7 @@ poissScaling_Thal = 1000;
 if kerneltype_Poiss_IB == 4
     poissScaling_Thal = 100;
 end
-poissTau = 2;
+poissTau = 1;
 
 Poiss_PPwidth2_rise = 0.25;
 Poiss_PP_width = 1;
