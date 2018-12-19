@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:7;
+        handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '185c_restore_IB_PoissTau';
+        currfigname = '186a_reduce_all_PoissTau';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Goal: See if increasing dFS5 stim will reduce IB bursting. Swept dFS5 IB PPStim.'];
+    mycomment = ['Reducing PoissTau for all populations. Goal: Reduce burstiness of IB and other cell types. Need to adjust PPStim_g_syn.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
