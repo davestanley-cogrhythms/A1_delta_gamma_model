@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:5;
+        handles_arr = 1:1;
         do_commit = 1;
-        currfigname = '187b_redo_prev';
+        currfigname = '187c_shuffle_PPOnset';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Goal: Get IB PPStim gSYN levels correct. Want to produce robust rebound, and not too prolongued offset either'];
+    mycomment = ['Goal: Make sure PPStim rest on IB cells is robust. Ran shuffle sim multiple times with different PPOnset. PPStim vals: [300, 350, 400, 500].'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
