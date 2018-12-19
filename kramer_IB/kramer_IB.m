@@ -696,7 +696,7 @@ RS_PP_gSYN = 0.15;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 % dFS_PP_gSYN = 0.35;
-if ~include_RS; dFS_PP_gSYN = 0.2;  % If not including RS, then add pseudo stimulation to deep FS cells
+if ~include_RS; dFS_PP_gSYN = 0.5;  % If not including RS, then add pseudo stimulation to deep FS cells
 else dFS_PP_gSYN = 0;
 end
 
