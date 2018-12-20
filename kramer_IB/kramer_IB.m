@@ -18,8 +18,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 2500];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1000];
+sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -48,9 +48,9 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   1;
-include_FS =   1;
-include_LTS =  1;
+include_RS =   0;
+include_FS =   0;
+include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -626,7 +626,8 @@ switch sim_mode
                  %'IB','PPshift',[1050,1150,1250];...
                  %'(RS,FS,LTS,IB,NG)','(PPonset,PPoffset)',[myonsets; myoffsets];...
                  %'(RS,FS,LTS,IB,NG)','(PPonset)',[300, 350,400,450, 500, 550, 600, 650, 700, 750];...
-                 '(RS,FS,LTS,IB,NG)','(PPonset)',[750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300];...
+                 %'(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[350:25:525];...
+                 '(IB,NG,dFS5)','PPonset',[350:25:525];...
                  %'RS','PPshift',[1050,1150,1250,1350]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
