@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 2200];
+tspan=[0 2500];
 sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -48,9 +48,9 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   0;
-include_FS =   0;
-include_LTS =  0;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -61,7 +61,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=20; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
@@ -72,7 +72,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 % % % % % PPStim parameters
 %PPoffset = tspan(end)-0;   % ms, offset time
 PPoffset = Inf;
-PPoffset = 1500;
+% PPoffset = 1500;
 kerneltype_Poiss_IB = 2;
 
 % % % % % Default repo study name
