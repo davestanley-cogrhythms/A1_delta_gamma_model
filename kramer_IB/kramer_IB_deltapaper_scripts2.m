@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_hcurrent7k_poissTau_1.0';
+namesuffix = '_narrowPoisson1a';
 % namesuffix = '_IBPPStim0.05';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -835,8 +835,9 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
             };
+        
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
@@ -860,7 +861,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 2;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -910,7 +911,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.Nfs = 20;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
                      'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
@@ -1367,7 +1368,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -1393,7 +1394,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -1419,7 +1420,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -1446,7 +1447,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
-        s{f}.vary = {'IB','PP_gSYN',[0,0.1:.2:1.3]/10; ...
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -1482,7 +1483,7 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
-        s{f}.IB_PP_gSYN=0.1;
+        s{f}.IB_PP_gSYN=0.4;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
