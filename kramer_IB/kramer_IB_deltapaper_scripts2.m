@@ -745,6 +745,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.PPmaskfreq = 2.5;
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -769,6 +770,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.PPmaskfreq = 2.5;
         s{f}.dsfact = 100;
         
         s{f}.gGABAa_fs5ib = 0;
@@ -794,6 +796,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.PPmaskfreq = 2.5;
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -819,6 +822,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.PPmaskfreq = 2.5;
         
         s{f}.IB_PP_gSYN=0;
         
