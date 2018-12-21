@@ -119,6 +119,14 @@ clustersub('kramer_IB_deltapaper_tune1','1b1_11Hz',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1b2_11Hz',numcores,myhours);
 
 
+
+%% Supp figs paper3
+
+clustersub('kramer_IB_deltapaper_scripts2','1b1_30Hz',1,myhours);        % Click train with AP pulse
+clustersub('kramer_IB_deltapaper_scripts2','1b2_30Hz',1,myhours);        % As 1b1, but only superficial oscillator
+
+
+
 %% Job progress
 !qstat -u stanleyd
 clc; !cat cluster_*.o.*
