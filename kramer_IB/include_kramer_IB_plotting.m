@@ -457,7 +457,7 @@ if plot_on
         case 14
             %% Case 14
             data_var = dsCalcAverages(data);                  % Average all cells together
-            data_var = RearrangeStudies2Neurons(data);      % Combine all studies together as cells
+            data_var = dsRearrangeStudies2Neurons(data);      % Combine all studies together as cells
             dsPlot_with_AP_line(data_var,'plot_type','waveform')
             dsPlot_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
