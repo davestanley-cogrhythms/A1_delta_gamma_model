@@ -143,6 +143,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     thresh = 0.1;
                     ind = blocks < thresh;
                     blocks(ind) = NaN;
+                    xl = xlim;
                     yl = ylim;
                     blocks(~ind) = yl(2) - (yl(2) - yl(1))*0.01;    % Shift down 1% from top of plot
 
@@ -162,6 +163,11 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                         hold on; plot(time, blocks,'r.','MarkerSize',5);
                     end
                     end
+                    
+                    % Restores axis limits, if altered by the above
+                    % plotting
+                    xlim(xl);
+                    ylim(yl);
                     
                     % Stores the current ticks for comparison in the next
                     % round. 
