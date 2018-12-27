@@ -41,6 +41,10 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
             % Display_mode: 0-Just plot directly
                           % 1-Plot as an image (cdata)
                           % 2-Save to a figure file 
+    op = struct_addDef(op,'show_AP_vertical_lines',false);
+    op = struct_addDef(op,'ap_pulse_num',[]);
+    op = struct_addDef(op,'PPfreq',[]);
+    op = struct_addDef(op,'PPshift',[]);
                           
     transpose_on = op.transpose_on;
     display_mode = op.display_mode;
@@ -55,6 +59,13 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     show_PP_ticks = op.show_PP_ticks;
     suppress_PP_ticks_columns = op.suppress_PP_ticks_columns;
     
+    show_AP_vertical_lines = op.show_AP_vertical_lines;
+    pulse_num = op.ap_pulse_num;
+    PPfreq = op.PPfreq;
+    shift = op.PPshift;
+    
+    
+    plot_debug = false;         % Debug plotting only
     
     if verLessThan('matlab','8.4') && display_mode == 1; warning('Display_mode==1 might not work with earlier versions of MATLAB.'); end
     if transpose_on && ismatrix(xp)
@@ -123,17 +134,19 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     if ~isempty(subplot_grid_handle); hold on; end
                     hxp.hsub{i,j} = xp.data{i,j}();
                     
-                    % % Now add the ticks. 
+                    % % % % % % % % % % % Now add the ticks % % % % % % % % % % % 
                     % First, pull out the PPStim state variable data. This
                     % will be generally zero where there are no pulses, and
                     % 1 where there are pulses.
                     time= xpp.meta.datainfo(1).values;
-                    blocks = xpp.data{i,j,1,1,1,1,1,1};      % These are the ticks that correspond to our current subplot. Add a bunch of extra 1's just incase it's very high dimensional. This type of indexing bad form but is OK
+                    blocks0 = xpp.data{i,j,1,1,1,1,1,1};      % These are the ticks that correspond to our current subplot. Add a bunch of extra 1's just incase it's very high dimensional. This type of indexing bad form but is OK
                     
                     % Only plot if blocks isn't empty
-                    if ~isempty(blocks)
-                    blocks = mean(blocks,2);
+                    if ~isempty(blocks0)
+                    blocks0 = mean(blocks0,2);
+                    blocks = blocks0;
 
+                    % % % % % % % % % % % Add the above-bar ticks % % % % % % % % % % % 
                     % Now we will set all values to NaN where we're below
                     % threshold, and values above threshold to be at the
                     % top of our plot. We use NaNs because they are ignored
@@ -163,6 +176,40 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                         hold on; plot(time, blocks,'r.','MarkerSize',5);
                     end
                     
+                    % % % % % % % % % % % Add the vertical lines for AP pulse % % % % % % % % % % % 
+                    if show_AP_vertical_lines
+                        % Find click timings
+                        sawtooth = blocks0;
+                        sawtooth = sawtooth > thresh;
+                        ind_upswings = find( sawtooth(1:end-1) == 0 & sawtooth(2:end) == 1)+1;
+                        if plot_debug
+                            figure; plot(time,sawtooth); hold on; plot(time(ind_upswings),sawtooth(ind_upswings),'bo');
+                        end
+
+                        % Find ind of AP pulse
+                        dt = double(mode(diff(time)));
+                        pulse_period = 1000/PPfreq;
+                        ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(pulse_num-1);  % Note: This line of code taken directly from: getDeltaTrainPresets2
+
+                        if plot_debug
+                            hold on; plot([time(ap_ind_orig) time(ap_ind_orig)],[0,1],'r--');
+                        end
+
+                        % Find ind of AP-1, AP+1, and AP+2
+                        ap_m1 = ind_upswings(find(ind_upswings < ap_ind_orig,1,'last'));
+                        ap_p1 = ind_upswings(find(ind_upswings > ap_ind_orig,1,'first'));
+                        if ~isempty(ap_p1); ap_p2 = ind_upswings(find(ind_upswings > ap_p1,1,'first')); else; ap_p2 = []; end   % Allow for the possibility that we might be at the end of the click train.
+                        if ~isempty(ap_p2); ap_p3 = ind_upswings(find(ind_upswings > ap_p2,1,'first')); else; ap_p3 = []; end
+
+                        % Draw in vertical lines
+                        hold on; plot([time(ap_m1), time(ap_m1)],[yl(1), yl(2)],'b--');
+                        hold on; plot([time(ap_ind_orig), time(ap_ind_orig)],[yl(1), yl(2)],'r--');
+                        ap_curr = ap_p1; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
+                        ap_curr = ap_p2; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
+                        ap_curr = ap_p3; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
+
+                    end
+                    
                     % Restores axis limits, if altered by the above
                     % plotting
                     xlim(xl);
@@ -172,6 +219,7 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                     % Stores the current ticks for comparison in the next
                     % round. 
                     blocks_j{j} = blocks;
+                    
                     
                     if i == 1 && j == 1 && ~isempty(legend1b) && ~suppress_legend
                         % Place a legend in the 1st subplot
