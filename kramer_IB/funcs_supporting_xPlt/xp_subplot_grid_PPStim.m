@@ -162,12 +162,12 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                         %hold on; plot(time, blocks,'r--.','LineWidth',20);
                         hold on; plot(time, blocks,'r.','MarkerSize',5);
                     end
-                    end
                     
                     % Restores axis limits, if altered by the above
                     % plotting
                     xlim(xl);
                     ylim(yl);
+                    end
                     
                     % Stores the current ticks for comparison in the next
                     % round. 
