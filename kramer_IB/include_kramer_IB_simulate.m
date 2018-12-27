@@ -153,12 +153,24 @@ if include_IB && include_NG && include_RS && include_FS && include_LTS && includ
                              'RS_NG_iGABABAustin_IGABAB',...
         },'RS_V',[EAMPA,EAMPA,EGABA,EGABA],'RS_LFPdelta');
 end
-if include_RS && include_FS && include_LTS && include_dFS5
+if include_RS && include_FS && include_LTS
     % RS conductance - contibutions from gamma oscillator
     data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
                              'RS_FS_IBaIBdbiSYNseed_ISYN',...
                              'RS_LTS_IBaIBdbiSYNseed_ISYN',...
         },'RS_V',[EAMPA,EGABA,EGABA],'RS_LFPgamma');
+end
+
+if include_RS
+    % RS conductance - contibutions from gamma oscillator
+    data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
+        },'RS_V',[EAMPA],'RS_LFPrs');
+end
+
+if include_RS && include_LTS
+    % RS conductance - contibutions from gamma oscillator
+    data = dsThevEquiv(data,{'RS_LTS_IBaIBdbiSYNseed_ISYN',...
+        },'RS_V',[EGABA],'RS_LFPlts');
 end
 
 % % Calculate averages across cells (e.g. mean field)
