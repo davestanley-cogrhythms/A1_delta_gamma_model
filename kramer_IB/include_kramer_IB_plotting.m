@@ -139,6 +139,7 @@ if save_figures
             so.ap_pulse_num = ap_pulse_num;
             so.PPfreq = PPfreq;
             so.PPshift = PPshift;
+            so.suppress_legend = true;
             
             maxNpopulations = 6;                % Maximum number of populations we expect to ever plot
             
@@ -161,12 +162,6 @@ if save_figures
                 
             end
         end
-        
-        
-        
-
-
-
         
         
         % % % % % % % % Imagesc plots with do_mean = true (no subplotting!) % % % % % % % %
