@@ -691,7 +691,7 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
-IB_PP_gSYN = 0.3;
+IB_PP_gSYN = 0.2;
 RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
