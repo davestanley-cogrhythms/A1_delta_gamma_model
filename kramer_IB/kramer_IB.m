@@ -674,8 +674,8 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
 	case 15         % Vary PPStim AP pulse delay
-        vary = {'RS','asdfasdfadf',1:2; ...
-            '(RS,FS,LTS,IB,NG,dFS5)','ap_pulse_delay',8:3:17
+        vary = {'RS','asdfasdfadf',1:8; ...
+            '(RS,FS,LTS,IB,NG,dFS5)','ap_pulse_delay',11:3:20,...
             };
         dsfact = 100;
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
