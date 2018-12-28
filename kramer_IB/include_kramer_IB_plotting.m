@@ -391,26 +391,11 @@ if plot_on
             %%
             % #myfigs1
             % dsPlot(data,'plot_type','waveform');
-            inds = 1:1:length(data);
-            h = dsPlot2_PPStim(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
-            
-            %dsPlot_with_AP_line(data,'plot_type','rastergram');
-            dsPlot2_PPStim(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','LTS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
-            
+
             plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
             dsPlot2_PPStim(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
             
-            if include_IB && include_NG && include_FS; dsPlot(data,'plot_type','waveform','variable',{'IB_NG_GABA_gTH','IB_THALL_GABA_gTH','IB_FS_GABA_gTH'});
-%             elseif include_IB && include_NG; dsPlot(data2,'plot_type','waveform','variable',{'IB_NG_GABA_gTH'});
-            elseif include_IB && include_FS; dsPlot(data2,'plot_type','waveform','variable',{'IB_FS_GABA_gTH'});
-            elseif include_FS;
-                %dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'});
-            end
-            
-            %             dsPlot(data,'plot_type','power');
-            
-            %elseif include_FS; dsPlot(data2,'plot_type','waveform','variable',{'FS_GABA2_gTH'}); end
-            %PlotFR(data);
+
         case {2,3}
             dsPlot(data,'plot_type','waveform');
             % dsPlot(data,'variable','IBaIBdbiSYNseed_s','plot_type','waveform');
