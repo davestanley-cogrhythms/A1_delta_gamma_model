@@ -175,7 +175,9 @@ if include_dFS5
     
 end
 
-
+% Rearrange all cell ordering so that RS cells come first. This produces
+% the correct ordering for rastergrams, now that rastergram code is updated
+spec.populations = spec.populations(fliplr(1:length(spec.populations)));
 
 
 %% Deep cells
