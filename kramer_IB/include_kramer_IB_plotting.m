@@ -413,9 +413,31 @@ if plot_on
             
             
         case 14
-            %% Case 14
+            %% Case 14 - Shuffle sims
 
             
+            % % % For plotting AP data % % %
+            % Center around AP pulse
+            cent=ap_pulse_num*1000/PPfreq;
+            crop_range=[cent-100,cent+100];
+
+            % Set up subplot_options
+            so.show_AP_vertical_lines = true;
+            so.ap_pulse_num = ap_pulse_num;
+            so.PPfreq = PPfreq;
+            so.PPshift = PPshift;
+            so.suppress_legend = true;
+
+            maxNpopulations = 6;                % Maximum number of populations we expect to ever plot
+
+            % Full voltage waveform plot on first dataset
+            dsPlot2_PPStim(data(1),'population','all','crop_range',crop_range,'figwidth',1/3,'subplot_options',so)
+
+            % Current and conductance plots - moving averages
+            dsPlot2_PPStim(data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
+            dsPlot2_PPStim(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
+
+
             
         otherwise
             if 0
