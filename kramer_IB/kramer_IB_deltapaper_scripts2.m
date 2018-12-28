@@ -132,7 +132,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -149,7 +149,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -166,7 +166,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1b2'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -210,7 +210,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -821,7 +821,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -846,7 +846,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -871,7 +871,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -897,7 +897,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1352,7 +1352,7 @@ switch chosen_cell
         s{f}.PPfreq = 30; % in Hz
         s{f}.ap_pulse_delay = 16;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 450;
         s{f}.PPoffset = 1500;
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
@@ -1372,7 +1372,7 @@ switch chosen_cell
         s{f}.PPfreq = 30; % in Hz
         s{f}.ap_pulse_delay = 16;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 450;
         s{f}.PPoffset = 1500;
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
@@ -1407,7 +1407,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1433,7 +1433,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1459,7 +1459,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1486,7 +1486,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1513,7 +1513,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
 
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1535,7 +1535,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset =450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -1641,7 +1641,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset =450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -1663,7 +1663,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 350;
+        s{f}.PPonset =450;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
