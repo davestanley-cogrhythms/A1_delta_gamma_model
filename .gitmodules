@@ -1,3 +1,6 @@
 [submodule "DynaSim"]
 	path = DynaSim
 	url = https://github.com/DynaSim/DynaSim.git
+[submodule "model-dnsim-kramer_IB_Figs2"]
+	path = model-dnsim-kramer_IB_Figs2
+	url = https://github.com/davestanley-cogrhythms/model-dnsim-kramer_IB_Figs2.git
