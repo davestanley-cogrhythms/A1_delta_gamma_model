@@ -27,6 +27,7 @@ sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 12 - Vary IB cells
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
+                            % 15 - Repeat sims, and also vary pulse delay
 pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
@@ -672,7 +673,12 @@ switch sim_mode
         vary = {'RS','asdfasdfadf',1:4 };       % shuffle starting seed 8 times
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
-        
+	case 15         % Vary PPStim AP pulse delay
+        vary = {'RS','asdfasdfadf',1:2; ...
+            '(RS,FS,LTS,IB,NG,dFS5)','ap_pulse_delay',8:3:17
+            };
+        dsfact = 100;
+        random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 18     % Inverse PAC with new nested PPStim method
         inter_train_interval=250;
