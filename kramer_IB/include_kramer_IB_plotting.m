@@ -130,6 +130,45 @@ if save_figures
                 'figheight',1/2};
         end
         
+        % % % % % % % % AP plots % % % % % % % %
+        if pulse_train_preset >= 1
+            cent=ap_pulse_num*1000/PPfreq;
+            crop_range=[cent-100,cent+100];
+            
+            so.show_AP_vertical_lines = true;
+            so.ap_pulse_num = ap_pulse_num;
+            so.PPfreq = PPfreq;
+            so.PPshift = PPshift;
+            
+            maxNpopulations = 6;                % Maximum number of populations we expect to ever plot
+            
+            % Full voltage waveform plot on first dataset
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, data(1),'population','all','crop_range',crop_range,'figwidth',1/3,'subplot_options',so,...
+                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                'figheight',length(spec.populations)/maxNpopulations};
+
+            if length(data) > 1 && include_RS && include_LTS
+                i=i+1;
+                parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                    'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                    };
+                
+                i=i+1;
+                parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                    'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
+                    };
+                
+            end
+        end
+        
+        
+        
+
+
+
+        
+        
         % % % % % % % % Imagesc plots with do_mean = true (no subplotting!) % % % % % % % %
         % IB GABA B 
         if include_IB && include_NG && length(data) > 1
@@ -458,8 +497,8 @@ if plot_on
             %% Case 14
             data_var = dsCalcAverages(data);                  % Average all cells together
             data_var = dsRearrangeStudies2Neurons(data);      % Combine all studies together as cells
-            dsPlot_with_AP_line(data_var,'plot_type','waveform')
-            dsPlot_with_AP_line(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
+            dsPlot(data_var,'plot_type','waveform')
+            dsPlot(data_var,'variable',{'RS_V','RS_LTS_IBaIBdbiSYNseed_s','RS_RS_IBaIBdbiSYNseed_s'});
             opts.save_std = 1;
             data_var2 = dsCalcAverages(data_var,opts);         % Average across cells/studies & store standard deviation
             figl;
