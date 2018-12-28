@@ -35,7 +35,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     c=clock;
     sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
     sp = [sp '__' currfname '_' currfigname];
-    basepath = fullfile('..','model-dnsim-kramer_IB_Figs');
+    basepath = fullfile('..','model-dnsim-kramer_IB_Figs2');
     % basepath = '~/figs_tosave';
     
     mkdir(fullfile(basepath,sp));
@@ -130,7 +130,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
         %% Commit
         !rm ../save_allfigs_Dave.m~
         currd = pwd;
-        cd ../model-dnsim-kramer_IB_Figs
+        cd ../model-dnsim-kramer_IB_Figs2
         system('git add *');
         system(['git commit -m "' currfigname ' ' mycomment '"']);
         %system('git push');
@@ -140,7 +140,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
         cd(currd);
         
 %         %% Push
-        cd ../model-dnsim-kramer_IB_Figs
+        cd ../model-dnsim-kramer_IB_Figs2
         cd(currd);
     end
     
