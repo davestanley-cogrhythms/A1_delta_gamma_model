@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 1500];
-sim_mode = 15;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -48,12 +48,12 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 
 % % % % % Cells to include in model
-include_IB =   0;
+include_IB =   1;
 include_RS =   1;
 include_FS =   1;
 include_LTS =  1;
-include_NG =   0;
-include_dFS5 = 0;
+include_NG =   1;
+include_dFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -62,7 +62,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=20; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
@@ -581,9 +581,9 @@ switch sim_mode
             %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
             %'LTS','stim2',[-2.5:.1:-1.9]; ...
-            %'RS','PP_gSYN',[0.07:.03:.13]; ...
+            'RS','PP_gSYN',[0.045:.015:.15]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
-            'IB','PP_gSYN',[.1:.1:.4]; ...
+            %'IB','PP_gSYN',[.1:.1:.4]; ...
             %'dFS5','PP_gSYN',[0.3:0.1:0.5]; ...
             %'(RS->dFS5,RS->FS)','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'(FS->FS,dFS5->dFS5)','g_SYN',[.5 .6 .7 .8 .9 1 1.1 1.2]/Nfs;...
@@ -754,7 +754,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
+        PPonset = 450;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.

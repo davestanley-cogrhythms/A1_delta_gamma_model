@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:5;
+        handles_arr = 1:14;
         do_commit = 1;
-        currfigname = '188a_IBPPStim_0.4_vary_APdelay';
+        currfigname = '189a_IBPPStim_0.4_sweep_RSPPStim';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Put IB PPStim back to 0.4; swept through various AP delays'];
+    mycomment = ['Goal: Get RS suppression at S2 and S4. First sweep RS PPStim'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
