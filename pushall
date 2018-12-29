@@ -1,0 +1,18 @@
+# Push current directory
+git push
+
+# Push figures
+pushd model-dnsim-kramer_IB_Figs2/
+git push
+popd
+
+# Push DynaSim
+pushd DynaSim
+git push
+popd
+
+# Push MDD
+pushd DynaSim/functions/dependencies/MDD_SM
+git push
+popd
+
