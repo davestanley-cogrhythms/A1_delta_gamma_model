@@ -153,6 +153,18 @@ if include_IB && include_NG && include_RS && include_FS && include_LTS && includ
                              'RS_NG_iGABABAustin_IGABAB',...
         },'RS_V',[EAMPA,EAMPA,EGABA,EGABA],'RS_LFPdelta');
 end
+
+% IB LFP
+if include_IB && include_NG
+    % IB conductance - contributions from delta oscillator
+    data = dsThevEquiv(data,{'IB_IB_IBaIBdbiSYNseed_ISYN',...
+                             'IB_IB_iNMDA_INMDA',...
+                             'IB_NG_IBaIBdbiSYNseed_ISYN',...
+                             'IB_NG_iGABABAustin_IGABAB',...
+        },'RS_V',[EAMPA,EAMPA,EGABA,EGABA],'IB_LFPdelta');
+end
+
+% RS LFP
 if include_RS && include_FS && include_LTS
     % RS conductance - contibutions from gamma oscillator
     data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
@@ -162,7 +174,7 @@ if include_RS && include_FS && include_LTS
 end
 
 if include_RS
-    % RS conductance - contibutions from gamma oscillator
+    % RS conductance - contibutions from RS cells only oscillator
     data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
         },'RS_V',[EAMPA],'RS_LFPrs');
 end
