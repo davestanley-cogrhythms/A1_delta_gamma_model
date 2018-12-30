@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_IBPPStim0.2';
+namesuffix = '_sweep_IBIB_NMDA_fullnet';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
 
@@ -54,9 +54,9 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.sim_mode = 11;
+        s{f}.sim_mode = 12;
         
-        s{f}.random_seed = 8;
+        s{f}.random_seed = 'shuffle';
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -98,10 +98,12 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['tune1Fig1c' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 3500];
         s{f}.PPonset=900;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
         
         s{f}.random_seed = 'shuffle';
         

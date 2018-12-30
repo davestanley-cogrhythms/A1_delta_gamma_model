@@ -49,9 +49,9 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   0;
-include_FS =   0;
-include_LTS =  0;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
 include_NG =   1;
 include_dFS5 = 1;
 include_deepRS = 0;
@@ -643,7 +643,7 @@ switch sim_mode
             %'IB','stim2',[-0.5:0.25:1.25]; ...
             %'(IB,NG,dFS5)','PPmaskshift',[1100:100:1800];...
             %                  'IB','g_l2',[.30:0.02:.44]/Nng; ...
-            'IB->IB','gNMDA',[6:1:13]/Nib;...
+            'IB->IB','gNMDA',[6.5:0.5:10]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
             %'dFS5->IB','g_SYN', [0.05:0.05:0.2]/Nfs;...
             %'(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
@@ -755,7 +755,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 450;    % ms, onset time
+        PPonset = 400;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
