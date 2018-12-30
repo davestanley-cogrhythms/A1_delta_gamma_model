@@ -25,7 +25,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1a1' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1a1' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
         s{f}.PPfreq = 40; % in Hz
@@ -45,7 +45,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -65,7 +65,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -94,7 +94,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1c' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1c' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         s{f}.tspan=[0 2500];
         s{f}.PPonset=900;
@@ -112,7 +112,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1d' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1d' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;         % Set to 4 for IB tones
@@ -133,7 +133,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig4_lakatos' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig4_lakatos' num2str(f) '' namesuffix];
         s{f}.kerneltype_Poiss_IB = 4;         % Set to 4 for IB tones
         s{f}.pulse_mode = 5;
         s{f}.tspan=[0 5500];
@@ -148,7 +148,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f)];
+        s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 3500];
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
@@ -163,7 +163,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f)];
+        s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
@@ -180,7 +180,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1_32Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1_32Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 32.7; % in Hz
@@ -201,7 +201,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2_32Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2_32Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 32.7; % in Hz
@@ -232,7 +232,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1_26Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1_26Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 26.7; % in Hz
@@ -253,7 +253,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2_26Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2_26Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 26.7; % in Hz
@@ -284,7 +284,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1_21Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1_21Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 21.8; % in Hz
@@ -305,7 +305,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2_21Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2_21Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 21.8; % in Hz
@@ -337,7 +337,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1_17Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1_17Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 17.8; % in Hz
@@ -358,7 +358,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2_17Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2_17Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 17.8; % in Hz
@@ -389,7 +389,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1_14Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1_14Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 14.5; % in Hz
@@ -410,7 +410,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2_14Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2_14Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 14.5; % in Hz
@@ -441,7 +441,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b1_11Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b1_11Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 11.9; % in Hz
@@ -462,7 +462,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
-        s{f}.repo_studyname = ['tune1Fig1b2_11Hz' num2str(f)];
+        s{f}.repo_studyname = ['tune1Fig1b2_11Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 11.9; % in Hz
