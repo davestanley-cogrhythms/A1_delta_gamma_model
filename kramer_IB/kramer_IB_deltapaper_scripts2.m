@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_IBPPStim0.2';
+namesuffix = '_IBPPStim0.3';
 % namesuffix = '_IBPPStim0.05';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -1517,7 +1517,7 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
-        s{f}.IB_PP_gSYN=0.2;
+        s{f}.IB_PP_gSYN=0.3;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
