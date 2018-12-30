@@ -1,4 +1,4 @@
-
+g
 
 function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     %% save_allfigs
@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:2;
+        handles_arr = 1:10;
         do_commit = 1;
-        currfigname = '191b_redo_deeponly';
+        currfigname = '191c_redo_deeponly_longsim';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Redo previous with deep oscillator only'];
+    mycomment = ['Redo previous with longer duration simulation'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

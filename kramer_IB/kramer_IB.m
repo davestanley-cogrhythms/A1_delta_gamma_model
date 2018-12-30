@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 3000];
+tspan=[0 5500];
 sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
