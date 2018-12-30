@@ -22,9 +22,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:7;
+        handles_arr = 1:10;
         do_commit = 1;
-        currfigname = '190c_IBPPStim_0.3';
+        currfigname = '191a_IBPPStim_0.3_sweep_IBstim';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -111,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Test different levels of IB PPStim again, with shuffling'];
+    mycomment = ['Goal: Get IB cells to be less excitable during spontaneous activity; allows for more robust reset'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
