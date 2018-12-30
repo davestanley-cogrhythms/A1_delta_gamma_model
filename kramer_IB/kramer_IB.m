@@ -428,7 +428,7 @@ if ~no_synapses
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
     gAMPA_ibib=0.1/Nib;                          % IB -> IB
 
-    if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
+    if ~NMDA_block; gNMDA_ibib=9/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
