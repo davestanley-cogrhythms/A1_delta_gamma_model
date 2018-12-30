@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_sweep_IBIB_NMDA_fullnet';
+namesuffix = '_IBIB_AMPA_0.15';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
 
