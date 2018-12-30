@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-% namesuffix = '_IBPPStim0.05';
+namesuffix = '_IBPPStim0.2';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
 
@@ -49,9 +49,9 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 1500];
         s{f}.PPonset=400;
-        s{f}.PPoffset = 2000;
+        s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         s{f}.random_seed = 'shuffle';
@@ -69,9 +69,9 @@ switch chosen_cell
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 1500];
         s{f}.PPonset=400;
-        s{f}.PPoffset = 2000;
+        s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         s{f}.random_seed = 'shuffle';
