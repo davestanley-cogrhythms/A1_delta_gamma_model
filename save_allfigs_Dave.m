@@ -1,4 +1,3 @@
-g
 
 function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
     %% save_allfigs
