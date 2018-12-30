@@ -54,7 +54,9 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        s{f}.sim_mode = 11;
+        
+        s{f}.random_seed = 8;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
