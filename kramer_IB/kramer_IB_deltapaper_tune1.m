@@ -35,7 +35,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -57,7 +57,7 @@ switch chosen_cell
         
         s{f}.sim_mode = 11;
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -77,7 +77,7 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -106,7 +106,7 @@ switch chosen_cell
         
         s{f}.sim_mode = 12;
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -126,7 +126,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1d = kramer_IB_function_mode(s{f},f);
 
@@ -195,7 +195,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -216,7 +216,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -247,7 +247,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -268,7 +268,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -299,7 +299,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -320,7 +320,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -352,7 +352,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -373,7 +373,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -404,7 +404,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -425,7 +425,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -456,7 +456,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -477,7 +477,7 @@ switch chosen_cell
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.random_seed = 'shuffle';
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
