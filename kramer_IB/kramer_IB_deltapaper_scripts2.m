@@ -12,8 +12,8 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-%namesuffix = '_IBIB_AMPA_0.15';
-namesuffix = '_IBPPStim0.3';
+namesuffix = '_IBPPStim0.2_IBIB_NMDA_9';
+%namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
 
