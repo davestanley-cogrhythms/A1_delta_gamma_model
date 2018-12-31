@@ -322,7 +322,11 @@ if save_figures
         
         
         % % % % % % % % PHASE locking figures % % % % % % % %
-        if length(data) > 1 && include_IB && tspan(2) > 5000
+%                                                         Note: PPoffset-PPonset being too low will
+%                                                         cause there to be only 1 cycle of the nested
+%                                                         stims. Therefore, don't do phase locking figures
+%                                                         in this case
+        if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2, data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_S2/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3,...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
