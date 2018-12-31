@@ -654,7 +654,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf6a = kramer_IB_function_mode(s{f},f);
 
@@ -691,7 +692,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf6b = kramer_IB_function_mode(s{f},f);
 
@@ -817,7 +819,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -842,7 +845,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -867,7 +871,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.IB_PP_gSYN=0;
         
@@ -998,7 +1003,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -1139,7 +1145,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -1205,7 +1212,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -1277,7 +1285,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
@@ -1482,7 +1491,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.2/s{f}.Nfs;
@@ -1509,7 +1519,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 300;
         s{f}.PPoffset = 1500;
-        s{f}.random_seed = 100;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.IB_PP_gSYN=0.4;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
