@@ -428,7 +428,7 @@ if ~no_synapses
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
     gAMPA_ibib=0.1/Nib;                          % IB -> IB
 
-    if ~NMDA_block; gNMDA_ibib=9/Nib; end        % IB -> IB NMDA
+    if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
@@ -470,7 +470,7 @@ if ~no_synapses
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
-    gGABAa_fsLTS = 2.5/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 1.5/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!

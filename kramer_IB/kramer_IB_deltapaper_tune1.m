@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_IBPPStim0.4_IBIB_NMDA_9';
+namesuffix = '_narrowPoisson1a';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
