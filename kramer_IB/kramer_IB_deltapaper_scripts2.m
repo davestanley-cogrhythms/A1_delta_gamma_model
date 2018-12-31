@@ -656,9 +656,6 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 100;
         
-%         s{f}.tspan=[0 2000];
-%         s{f}.random_seed = 100;
-        
         datapf6a = kramer_IB_function_mode(s{f},f);
 
     case '6b'
@@ -695,9 +692,6 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 100;
-        
-%         s{f}.tspan=[0 2000];
-%         s{f}.random_seed = 100;
         
         datapf6b = kramer_IB_function_mode(s{f},f);
 
