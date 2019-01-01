@@ -1,0 +1,88 @@
+% As iPoissonNested but with both AMPA and NMDA components
+% Generate pulse train 
+
+% Pulse train properties
+PPfreq = 40; % in Hz
+PPwidth = 2; % in ms        % Pseudo Action potential width
+PPshift = 0; % in ms
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+
+
+% Parameters onset and offset of delta pulse trian
+PPonset = 300;    % ms, onset time
+PPoffset = Inf;   % ms, offset time
+
+% Parameters for controlling square wave mask, applied over top of the pulse train
+PPmaskfreq = 2
+PPmaskshift = 0
+PPmaskduration = 100
+do_nested_mask = 1
+% Note: duty cycle of square wave = PPmaskfreq * PPmaskduration / [1000 (msec/sec)]
+
+% Aperiodic pulse specification
+ap_pulse_num = 0;        % The pulse number that should be delayed. 0 for no aperiodicity.
+ap_pulse_delay = 12.5;  % ms, the amount the spike should be delayed. 0 for no aperiodicity.
+
+% Pulse train preset (codes for different presets of pulse train; see getDeltaTrainPresets.m for details)
+pulse_train_preset = 1;
+
+% Convolves with delta train
+kernel_type = 2;
+width2_rise = 0.25;
+
+% Poisson properties
+poissScaling = 1000;
+poissTau = 2;
+
+% NMDA Poisson properties
+PP_gSYN_NMDA = 0		% mS/cm2, maximal conductance
+poissTauD_NMDA = 151.5;
+% poissTauR_NMDA = 13.89;           % Not used, since we don't have a dual exponential Poisson mechanism
+g_NMDA_hetero = 0
+
+% Synaptic response properties
+PP_gSYN = [0]		% mS/cm2, maximal conductance
+E_SYN = [0]             % mV, reversal potential
+IC = [0.0]
+PP_g_SYN_hetero = 0
+
+PPgsyn0=unifrnd(PP_gSYN*(1-PP_g_SYN_hetero),PP_gSYN*(1+PP_g_SYN_hetero),[Npop 1])'
+PPgsyn=PPgsyn0.* double(PPgsyn0 > 0)
+
+PPgsyn_nmda0=unifrnd(PP_gSYN_NMDA*(1-g_NMDA_hetero),PP_gSYN_NMDA*(1+g_NMDA_hetero),[Npop 1])'
+PPgsyn_nmda=PPgsyn_nmda0.* double(PPgsyn_nmda0 > 0)
+
+% Build pulse train
+s0 = getDeltaTrainPresets2(PPfreq,PPshift,Tend,dt,ap_pulse_num,ap_pulse_delay,pulse_train_preset);
+s0b = convolveDeltaTrainwithKernel(s0,dt,PPwidth,Npop,kernel_type,width2_rise);                     % Need to do this one prior to applying mask so kernel_type 4 will work.
+
+% Build masking pulse train
+s0_mask = getDeltaTrainPresets2(PPmaskfreq,PPmaskshift,Tend,dt,0,0,0);
+s0_maskb = convolveDeltaTrainwithKernel(s0_mask,dt,PPmaskduration,Npop,3,dt);
+
+s2 = applyMasks(s0b,PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
+
+s3 = rate2nonhomPoisson(s2,poissScaling,poissTau,Tend,dt);
+
+s3_NMDA = rate2nonhomPoisson(s2,poissScaling,poissTauD_NMDA,Tend,dt);
+
+% plot(S)
+% 
+% %%
+S2(k) = s2(k,:);        % Make this a function so we can record.
+S3(k) = s3(k,:);
+S3_NMDA(k) = s3_NMDA(k,:);
+
+% Mg block for NMDA
+BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods in Neuronal Modeling, page 9]
+
+% all presynaptic activations summed together, multiplied by
+% electrochemical drive
+ISYN(X,s) = (PPgsyn.*S3(k).*(X-E_SYN)) + (PPgsyn_nmda.*BMg(X).*S3_NMDA(k).*(X-E_SYN))
+
+monitor functions
+ 
+% Linkers
+@current += -ISYN(X,s)
