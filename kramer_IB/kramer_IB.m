@@ -527,15 +527,18 @@ EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
 
 
-% NMDA kinetics
-% Shift Rd and Rr to make NMDA desensitize more...
-increase_NMDA_desens = 1;
+% NMDA kinetics (for use with iNMDADestexhe1998Markov.mech, which we're not
+% currently using)
+increase_NMDA_desens = 1;       % Shift Rd and Rr to make NMDA desensitize more...
 if increase_NMDA_desens; Rd_delta = 2*8.4*10^-3;
 else Rd_delta = 0;
 end
 Rd = 8.4*10^-3 - Rd_delta;
 Rr = 6.8*10^-3 + Rd_delta;
 
+% For iNMDA.mech and also iPoissonNested_ampaNMDA: NMDA time constants
+tauNMDA = 151.5; 	 % page 15: 151.5=1/beta=(1/(.0066[1/ms])) 	% ms, decay time constant
+tauNMDAr = 13.89;    % page 15: 13.89 = 1/alpha=1/(.072[1/(mM*ms)]) 	% ms, rise time constant
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
