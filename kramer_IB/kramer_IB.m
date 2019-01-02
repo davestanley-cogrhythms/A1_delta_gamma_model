@@ -33,6 +33,8 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
                             % 3 - Auditory clicks @ 10 Hz
+                            % 6 - Polley stimulation mode 1 - PPStim to dFS5 cells
+                            % 7 - Polley stimulation mode 2 - PPStim to tFS5 cells and also NMDA to deep IB
 save_figures = 0;               % Master switch for saving any figures in the simulation. Controls saving figures within dsSimulate.
     save_combined_figures = 1;      % Flag for saving dsPlot2 across all simulations in data.
     save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
@@ -809,6 +811,31 @@ switch pulse_mode
         
         PPmaskfreq = 2;
         PPmaskduration = 100;
+        
+    case 7
+        % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
+        dFS_PP_gSYN = 0;
+        IB_PP_gSYN = 0.1;
+            IB_PP_gSYN_NMDA = 5;
+        RS_PP_gSYN = 0;
+        NG_PP_gSYN = 0;
+        FS_PP_gSYN = 0;
+        LTS_PP_gSYN = 0;
+        
+        PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
+        PPshift = 0; % in ms
+        PPonset = 0;    % ms, onset time
+        PPmaskshift = 300;
+        %PPoffset = tspan(end)-500;   % ms, offset time
+        pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
+        kernel_type = 1;
+        deepRSPPstim = -.5;
+        deepRSgSpike = 0;
+        do_nested_mask = 1;
+        
+        PPmaskfreq = 2;
+        PPmaskduration = 100;
+        
 
 end
 
