@@ -148,22 +148,23 @@ if save_figures
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data(1),'population','all','crop_range',crop_range,'figwidth',1/3,'subplot_options',so,...
                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                 'figheight',length(spec.populations)/maxNpopulations};
-
+            
+            % Plot average across last dimension
             if length(data) > 1 && include_RS && include_LTS
                 i=i+1;
-                parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
                     'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                     };
                 
                 i=i+1;
-                parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
                     'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
                     };
                 
             end
             
-            % Averaged waveform across shuffle dimension
-            % Conductance and current plots
+            % Averaged across first varied dimension, and then make
+            % subplots across 2nd (e.g., AP delay)
             if size(vary,1) > 1
                 i=i+1;
                 parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
@@ -451,8 +452,8 @@ if plot_on
             dsPlot2_PPStim(data(1),'population','all','crop_range',crop_range,'figwidth',1/3,'subplot_options',so)
 
             % Current and conductance plots - moving averages
-            dsPlot2_PPStim(data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
-            dsPlot2_PPStim(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
+            dsPlot2_PPStim(data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
+            dsPlot2_PPStim(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
 
         case 15         % Vary is 2D - 1st dimension is shuffle, 2nd is dimension of interest
             
