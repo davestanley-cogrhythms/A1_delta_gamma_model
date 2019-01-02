@@ -80,6 +80,13 @@ BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods
 
 % all presynaptic activations summed together, multiplied by
 % electrochemical drive
+
+% Calculate AMPA and NMDA components separately
+%ISYN_ampa(X,s) = (PPgsyn.*S3(k).*(X-E_SYN))
+%ISYN_nmda(X,s) = (PPgsyn_nmda.*BMg(X).*S3_NMDA(k).*(X-E_SYN))
+%ISYN(X,s) = ISYN_ampa(X,s)+ISYN_nmda(X,s)
+
+% Calculate everything together
 ISYN(X,s) = (PPgsyn.*S3(k).*(X-E_SYN)) + (PPgsyn_nmda.*BMg(X).*S3_NMDA(k).*(X-E_SYN))
 
 monitor functions
