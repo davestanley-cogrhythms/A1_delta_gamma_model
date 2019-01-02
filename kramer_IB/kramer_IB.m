@@ -703,6 +703,10 @@ FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
 
+% #Ben's stuff
+    deepRSPPstim = -.5;
+    deepRSgSpike = 0;
+
 IB_PP_gSYN = 0.4;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
@@ -751,14 +755,12 @@ switch pulse_mode
         PPshift = 0; % in ms
         PPonset = 10;    % ms, onset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        kernel_type = 1;         
         IB_PP_gSYN = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
         dFS_PP_gSYN = 0;
-        deepRSPPstim = 0;
         do_nested_mask = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
@@ -770,9 +772,8 @@ switch pulse_mode
         ap_pulse_delay = 11;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         %ap_pulse_delay = 0;                         % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        kernel_type = 1;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
+        
+        
         do_nested_mask = 0;
         
     case 2                  % Median nerve stimulation
@@ -783,10 +784,6 @@ switch pulse_mode
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        kernel_type = 1;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
-        %         deepRSPPstim = -7;
         do_nested_mask = 1;
         
     case 6                                  % Polley stim
@@ -804,9 +801,8 @@ switch pulse_mode
         PPmaskshift = 300;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        kernel_type = 1;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
+        
+        
         do_nested_mask = 1;
         
         PPmaskfreq = 2;
@@ -828,9 +824,8 @@ switch pulse_mode
         PPmaskshift = 300;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        kernel_type = 1;
-        deepRSPPstim = -.5;
-        deepRSgSpike = 0;
+        
+        
         do_nested_mask = 1;
         
         PPmaskfreq = 2;
