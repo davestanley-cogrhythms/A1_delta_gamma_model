@@ -45,7 +45,7 @@ function [s,f] = setupf_9a_sf(maxNcores,namesuffix,casenum,short_mode,blk_h_curr
         s{f}.Nrs = 20;
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         s{f}.tspan=[0 5500];
         
         % Shorten some sim parameters for short mode

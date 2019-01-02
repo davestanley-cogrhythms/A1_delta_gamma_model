@@ -978,14 +978,14 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig9b_polley'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         temp = [400:50:800,10000]; temp = 1000./(100+temp);
         s{f}.vary = { %'IB','PPstim',[-1:-1:-5]; ...
             '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskfreq)',[temp];...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         s{f}.tspan=[0 5500];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
@@ -1026,7 +1026,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig9c1_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         % Make NG stim longer
 %         s{f}.IB_offset1 = 100;
@@ -1050,7 +1050,7 @@ switch chosen_cell
 %         s{f}.Nrs = 20;
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
@@ -1168,7 +1168,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig9c2_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         % Make NG stim longer
 %         s{f}.IB_offset1 = 100;
@@ -1192,7 +1192,7 @@ switch chosen_cell
 %         s{f}.Nrs = 20;
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
@@ -1235,7 +1235,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig9c3_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         % Make NG stim longer
 %         s{f}.IB_offset1 = 100;
@@ -1259,7 +1259,7 @@ switch chosen_cell
 %         s{f}.Nrs = 20;
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
@@ -1308,7 +1308,7 @@ switch chosen_cell
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig9c4_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         % Make NG stim longer
 %         s{f}.IB_offset1 = 100;
@@ -1332,7 +1332,7 @@ switch chosen_cell
 %         s{f}.Nrs = 20;
 
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
