@@ -57,7 +57,7 @@ if include_tFS5
     %ind = find(strcmp({spec.populations.name},'FS'));
     i=i+1;
     spec.populations(i).name = 'tFS5';           % RS cells layer 5
-    spec.populations(i).size = Nfs;
+    spec.populations(i).size = Ntfs5;
     spec.populations(i).equations = {['V''=@current/Cm; V(0)=' num2str(IC_V) ]};
     spec.populations(i).mechanism_list = {'iPoissonNested','IBitonic','IBnoise','FSiNaF','FSiKDR','IBleaknoisy'};
     spec.populations(i).parameters = {...
