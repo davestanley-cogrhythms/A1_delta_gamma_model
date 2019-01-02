@@ -34,6 +34,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 1;
+        s{f}.include_tFS5 = 1;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -55,10 +56,33 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 1;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
         datapf0a = kramer_IB_function_mode(s{f},f);
+        
+        %% Compile - compile for just delta oscillator + FS resetter + translaminar FS
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 0;
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 1;
+        s{f}.include_tFS5 = 1;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf0a = kramer_IB_function_mode(s{f},f);
+        
         
         %% Compile - Small jobs - Just delta oscillator
         clear s
@@ -75,6 +99,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -95,6 +120,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -115,6 +141,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -177,6 +204,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -401,7 +429,7 @@ switch chosen_cell
                 % This equals
                 % 10.2062   12.5000   15.3093   18.7500   22.9640   28.1250   34.4459   42.1875
                 % 
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPfreq',40*(2/3).^(-0.5:.5:3); ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -440,6 +468,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -457,7 +486,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPfreq',[40,50,60,75,90,110]; ...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPfreq',[40,50,60,75,90,110]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -498,6 +527,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -514,7 +544,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig4_lakatos'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
             };
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
@@ -536,7 +566,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig4a2_lakatos'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
             };
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
@@ -645,7 +675,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
         };
          
         s{f}.kerneltype_Poiss_IB = 4;
@@ -683,7 +713,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
         };
          
         s{f}.kerneltype_Poiss_IB = 2;
@@ -930,7 +960,7 @@ switch chosen_cell
         
         temp = [400:50:800,10000]; temp = 1000./(100+temp);
         s{f}.vary = { %'IB','PPstim',[-1:-1:-5]; ...
-            '(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
+            '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskfreq)',[temp];...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         s{f}.pulse_mode = 6;
@@ -985,12 +1015,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         end
 
@@ -1127,12 +1157,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         end
 
@@ -1194,12 +1224,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         end
 
@@ -1267,12 +1297,12 @@ switch chosen_cell
         if strcmp(namesuffix,'blkgAR')
             % Do this one if AR current is off
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         else
             % Do this one otherwise
             s{f}.vary = { ...
-                '(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
             };
         end
 
@@ -1387,6 +1417,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -1824,6 +1855,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
         % Block all synapses
         s{f}.gAMPA_ibib = 0;
@@ -1851,6 +1883,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
 
         
@@ -1875,6 +1908,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
 
         
@@ -1904,6 +1938,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
         
         
@@ -1934,6 +1969,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -1968,6 +2004,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
         % Block certain synapses
         s{f}.gAMPA_ibng = 0;
@@ -2002,6 +2039,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
         % Block certain synapses
         s{f}.gAMPA_ibng = 0;
@@ -2039,6 +2077,7 @@ switch chosen_cell
         s{f}.include_LTS =  0;
         s{f}.include_NG =   1;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         
         % Block certain synapses
         s{f}.gAMPA_ibng = 0;
