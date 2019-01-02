@@ -23,7 +23,7 @@ function [s,f] = setupf_9a_sf(maxNcores,namesuffix,casenum,short_mode,blk_h_curr
         s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
         s{f}.repo_studyname = ['DeltaFig' casenum '_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
-        s{f}.pulse_mode = 6;
+        s{f}.pulse_mode = 7;
         
         % PPStim stuff
         s{f}.pulse_train_preset = 0;
