@@ -186,7 +186,7 @@ end
 
 
 % % RS->tFS5 synaptic connection
-if include_RS && include_tdFS5
+if include_RS && include_tFS5
     i=i+1;
     spec.connections(i).direction = 'RS->tFS5';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
