@@ -485,6 +485,7 @@ if 0        % Other plotting code that is run manually
         dsPlot2_PPStim(data,'plot_type','raster','population','dFS5');
         dsPlot2(data,'variable','_s','do_mean',1,'population','RS')
         dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2)
+        dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2)
         dsPlot2_PPStim(data,'do_mean',1,'population','RS','variable','RS_IBaIBdbiSYNseed_s')                                % Plot just RS conductance
         dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2)
             for i = 1:length(data)/2; dsPlot2_PPStim(data(2*i-1:2*i),'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2); end

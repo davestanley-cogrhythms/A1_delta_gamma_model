@@ -18,8 +18,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 1500];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1000];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 7;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -65,7 +65,7 @@ include_deepFS = 0;
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=80; % Number of RS cells
+Nrs=20; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Ntfs5 = 5; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
 Nlts=N; % Number of LTS cells
@@ -481,9 +481,9 @@ if ~no_synapses
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
-    gAMPA_rstfs5=0.5/Nrs;
+    gAMPA_rstfs5=0.1/Nrs;
     gGABAa_tfs5tfs5 = 1.0/Ntfs5;                    % tFS5 -> tFS5
-    gGABAa_tfs5rs = 0.5/Ntfs5;                     % tFS5 -> RS
+    gGABAa_tfs5rs = 2/Ntfs5;                     % tFS5 -> RS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -507,7 +507,7 @@ if ~no_synapses
     % % Gamma -> Delta connections
     gGABAa_fsib=0.3/Nfs;                        % FS -> IB
     gGABAa_fs5ib=0.2/Nfs;    
-    gGABAa_tfs5ib=0.5/Ntfs5;                    % tFS5 -> IB
+    gGABAa_tfs5ib=2/Ntfs5;                    % tFS5 -> IB
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
@@ -831,8 +831,8 @@ switch pulse_mode
     case 7
         % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
         dFS_PP_gSYN = 0;
-        IB_PP_gSYN = 0.1;
-            IB_PP_gSYN_NMDA = 5;
+        IB_PP_gSYN = 0.4;
+            IB_PP_gSYN_NMDA = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
@@ -842,7 +842,7 @@ switch pulse_mode
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPmaskshift = 300;
+        PPmaskshift = 500;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
