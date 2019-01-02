@@ -507,7 +507,7 @@ if ~no_synapses
     % % Gamma -> Delta connections
     gGABAa_fsib=0.3/Nfs;                        % FS -> IB
     gGABAa_fs5ib=0.2/Nfs;    
-    gGABAa_tfs5ib=2/Ntfs5;                    % tFS5 -> IB
+    gGABAa_tfs5ib=3/Ntfs5;                    % tFS5 -> IB
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
@@ -831,7 +831,7 @@ switch pulse_mode
     case 7
         % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
         dFS_PP_gSYN = 0;
-        IB_PP_gSYN = 0.4;
+        IB_PP_gSYN = 0.5;
             IB_PP_gSYN_NMDA = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
@@ -851,6 +851,11 @@ switch pulse_mode
         
         PPmaskfreq = 2;
         PPmaskduration = 100;
+        
+        % Make IB cells receive pure Poisson - assume CT cells are firing
+        % is less orderly
+        kerneltype_Poiss_IB = 4;
+        poissScaling_Thal = 300;
         
 
 end
