@@ -728,6 +728,7 @@ IB_PP_gSYN = 0.4;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
+    tFS5_PP_gSYN_NMDA = 0;
 RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
