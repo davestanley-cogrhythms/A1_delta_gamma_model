@@ -56,6 +56,7 @@ include_FS =   1;
 include_LTS =  1;
 include_NG =   1;
 include_dFS5 = 1;
+include_tFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -250,6 +251,7 @@ if include_NG
 end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
+Jtfs5 = 1;  % Translaminar FS cells layer 5
 Jlts1=-2.0; % LTS cells
 Jlts2=-2.0; % LTS cells
 deepJRS1 = 5;    % RS deep cells
@@ -702,6 +704,7 @@ NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
 LTS_PP_gSYN = 0;
 dFS_PP_gSYN = 0;
+tFS_PP_gSYN = 0;
 
 % #Ben's stuff
     deepRSPPstim = -.5;
@@ -716,6 +719,7 @@ RS_PP_gSYN = 0.15;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 % dFS_PP_gSYN = 0.35;
+% tFS_PP_gSYN = 0;
 if ~include_RS; dFS_PP_gSYN = 0.5;  % If not including RS, then add pseudo stimulation to deep FS cells
 else dFS_PP_gSYN = 0;
 end
@@ -761,6 +765,7 @@ switch pulse_mode
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
         dFS_PP_gSYN = 0;
+        tFS_PP_gSYN = 0; 
         do_nested_mask = 0;
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
@@ -794,6 +799,7 @@ switch pulse_mode
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
+        tFS_PP_gSYN = 0;
         
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
@@ -817,6 +823,7 @@ switch pulse_mode
         NG_PP_gSYN = 0;
         FS_PP_gSYN = 0;
         LTS_PP_gSYN = 0;
+        tFS_PP_gSYN = 0.65;
         
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
