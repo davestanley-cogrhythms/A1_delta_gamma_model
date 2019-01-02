@@ -89,8 +89,6 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     %subplot_grid_options = {'no_zoom'};
     subplot_grid_options = {};
     
-    sz = size(xp);
-    
     
     % % % Arrange axes so that the MDD object containing our ticks
     % information (xpp) aligns with the object we're actually plotting.
@@ -99,6 +97,16 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
     xpp = alignAxes(xpp,xp_temp);       % Perform the alignment. This makes xpp ordering follow xp_temp.
     clear xp_temp
     
+    % If xp contains variables as an axis, there will be a dimension
+    % mismatch here, because we squeezed the variables axis out earlier in
+    % order to get the PPStim information. Although unifyAxes will create a
+    % "dummy" axis called variables, this will not have the same number of
+    % values as that in xp. To deal with this, we'll repmat xpp, copying
+    % over the same data for each variable.
+    xpp = correct_variables_dimension(xpp,xp);
+
+    % Loop through the subplot grid
+    sz = size(xp);
     if ndims(xp.data) <= 2
         N1 = sz(1);
         N2 = sz(2);
@@ -287,4 +295,29 @@ function outstr = setup_axis_labels(xpa)
         outstr{j} = {'',vals{j}};
     end
     outstr{round(end/2)}{1} = strrep(xpa.name,'_',' ');
+end
+
+function xpp = correct_variables_dimension(xpp,xp)
+    ind = xp.findaxis('variables');
+    if ~isempty(ind)
+        Nvariables = size(xp,ind);
+        if Nvariables > 1             % If the variables axis in xp is > 1D, need to duplicate xpp variable axis
+
+            % Export the data in xpp
+            [data, axis_values] = xpp.exportData;
+
+            % Repmat the data
+            r = ones(1,ndims(data));
+            r(ind) = Nvariables;             % Duplicate the dimension corresponding to variables N times
+            data = repmat(data,r);
+
+            % Extend the axis
+            axis_values{ind} = 1:Nvariables;
+
+            % Re-import the data
+            xpp = xpp.importData(data,axis_values);
+
+            clear data axis_values
+        end
+    end
 end
