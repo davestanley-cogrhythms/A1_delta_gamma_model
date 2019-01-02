@@ -86,6 +86,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -225,6 +226,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -277,6 +279,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -329,6 +332,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -382,6 +386,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -434,6 +439,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
@@ -486,6 +492,7 @@ switch chosen_cell
         s{f}.include_LTS =  1;
         s{f}.include_NG =   0;
         s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
