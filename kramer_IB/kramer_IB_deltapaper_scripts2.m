@@ -1391,6 +1391,29 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
+        
+    case 10
+        %% Paper 3 - Sweep different AP delays
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
+        s{f}.tspan=[0 1000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.preset_number = 2;             % AP + reset
+        s{f}.random_seed = 8;
+        
+        s{f}.vary = {'RS','asdfasdfadf',1:4; ...
+            '(RS,FS,LTS,IB,NG,dFS5,tFS5)','ap_pulse_delay',8:3:17,...
+            };
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
 
 
