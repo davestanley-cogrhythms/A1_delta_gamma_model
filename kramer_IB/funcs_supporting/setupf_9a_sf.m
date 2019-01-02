@@ -31,6 +31,7 @@ function [s,f] = setupf_9a_sf(maxNcores,namesuffix,casenum,short_mode,blk_h_curr
         s{f}.PPmaskfreq = 1;    % Do a pulse every 1 second
         s{f}.PPonset = 3950;    % Just let the pulse at 4000 through
         s{f}.PPoffset = 4500;
+        s{f}.PPmaskshift = 300;     % Make sure mask shift is at 300!
         
 %         % Shuffle through a bunch of values        
 %         s{f}.vary = { ...
