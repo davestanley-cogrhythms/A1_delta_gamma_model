@@ -60,20 +60,6 @@ xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = dsMdd2ds(xp);
 
-% % If we're doing pulse_mode = 6 (polley stim), copy over traces from dFS
-% cells to other cell types for plotting purposes
-if pulse_mode == 6
-    for i = 1:length(data)
-        if isfield(data(i),'dFS5_iPeriodicPulsesiSYNNested_s')
-            if isfield(data(i),'IB_iPoissonNested_S3'); data(i).IB_iPoissonNested_S3 = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-            if isfield(data(i),'NG_iPeriodicPulsesiSYNNested_s'); data(i).NG_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-            if isfield(data(i),'RS_iPeriodicPulsesiSYNNested_s'); data(i).RS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-            if isfield(data(i),'FS_iPeriodicPulsesiSYNNested_s'); data(i).FS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-            if isfield(data(i),'LTS_iPeriodicPulsesiSYNNested_s'); data(i).LTS_iPeriodicPulsesiSYNNested_s = data(i).dFS5_iPeriodicPulsesiSYNNested_s; end
-        end
-    end
-end
-
 % Re-add synaptic currents to data
 recalc_synaptic_currents = 0;                   % Set this to true only if we need to recalc synaptic currents due to monitor functions being off
 if recalc_synaptic_currents
