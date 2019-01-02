@@ -23,9 +23,9 @@ function varargout = dsPlot2_PPStim (data,varargin)
     ind = xp.findaxis('variables');
     varvals = xp.exportAxisVals;
     varvals = varvals{ind};
-    if any(strcmp(varvals,'iPeriodicPulsesiSYNNested_s')) && any(strcmp(varvals,'iPoissonNested_S2'))    % If both periodic pulses are present...
+    if any(strcmp(varvals,'iPeriodicPulsesiSYNNested_s')) && any(strcmp(varvals,'iPoissonNested_ampaNMDA_S2'))    % If both periodic pulses are present...
         % ...then
-        xpp1 = xp.axisSubset('variables','iPoissonNested_S2');
+        xpp1 = xp.axisSubset('variables','iPoissonNested_ampaNMDA_S2');
         xpp2 = xp.axisSubset('variables','iPeriodicPulsesiSYNNested_s');
         
         dat1=xpp1.exportData;
@@ -39,10 +39,10 @@ function varargout = dsPlot2_PPStim (data,varargin)
         xpp1.data = dat1;
         xpp = xpp1;
         clear xpp1 xpp2
-    elseif  any(strcmp(varvals,'iPeriodicPulsesiSYNNested_s')) && ~any(strcmp(varvals,'iPoissonNested_S2')) 
+    elseif  any(strcmp(varvals,'iPeriodicPulsesiSYNNested_s')) && ~any(strcmp(varvals,'iPoissonNested_ampaNMDA_S2')) 
         xpp = xp.axisSubset('variables','iPeriodicPulsesiSYNNested_s');
-    elseif  ~any(strcmp(varvals,'iPeriodicPulsesiSYNNested_s')) && any(strcmp(varvals,'iPoissonNested_S2')) 
-        xpp = xp.axisSubset('variables','iPoissonNested_S2');
+    elseif  ~any(strcmp(varvals,'iPeriodicPulsesiSYNNested_s')) && any(strcmp(varvals,'iPoissonNested_ampaNMDA_S2')) 
+        xpp = xp.axisSubset('variables','iPoissonNested_ampaNMDA_S2');
     else
         error('Periodic pulse variable not found');
     end
