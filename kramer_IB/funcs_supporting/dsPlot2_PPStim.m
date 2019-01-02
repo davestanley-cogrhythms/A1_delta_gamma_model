@@ -81,21 +81,21 @@ function varargout = dsPlot2_PPStim (data,varargin)
         xpt_IB = xpt.axisSubset('population','/^IB$/');     % Take population exactly matching IB
         dat_IB = xpt_IB.data;                               % Get data from this population
         for i = 1:Npops                                     % Copy this over to all populations
-            dat(i,:) = dat_IB;
+            dat(i,:) = dat_IB(1,:);
         end
         xpt.data = dat;                                     % Re-assign it to xpt
     else                            % If IB cells don't exist, there still might be some blank
                                     % entries. Need to fill these in with data from other cells we know
                                     % contains the mechs.
-        if any(strcmp(mypops,'dFS5'))
+        if any(strcmp(mypops,'dFS5'))           % If no IB's, use dFS5 cells
             xpt_source = xpt.axisSubset('population','dFS5');
-        elseif any(strcmp(mypops,'RS'))
+        elseif any(strcmp(mypops,'RS'))         % If can't find dFS5, use RS cells 
             xpt_source = xpt.axisSubset('population','RS');
         else
-            xpt_source = [];
+            xpt_source = [];                    % If couldn't find a source, don't bother doing the replacement.. we just won't plot any red bars for this cell type, then
         end
         
-        if ~isempty (xpt_source)        % If couldn't find a source, don't bother doing the replacement.. we just won't plot any red bars for this cell type, then
+        if ~isempty (xpt_source)        
             dat = xpt.data;
         	dat_source = xpt_source.data;
             for i = 1:Npops                                     % Copy this over to all populations
