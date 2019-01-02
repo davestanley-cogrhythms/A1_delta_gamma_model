@@ -1392,7 +1392,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
         
-    case 10
+    case '10a'
         %% Paper 3 - Sweep different AP delays
         
         clear s
