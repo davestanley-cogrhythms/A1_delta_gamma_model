@@ -56,6 +56,7 @@ pop_struct.Nfs = Nfs;
 pop_struct.Nlts = Nlts;
 pop_struct.Nng = Nng;
 pop_struct.Ndfs5 = Nfs;
+pop_struct.Ntfs5 = Ntfs5;
 xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = dsMdd2ds(xp);
@@ -111,19 +112,40 @@ if recalc_synaptic_currents
 end
 
 % % Add Thevenin equivalents of GABA B conductances to data structure
-if include_IB && include_NG && include_dFS5; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_dFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
-if include_IB && include_NG && include_FS && ~include_dFS5; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
-if include_IB && include_dFS5; data = dsThevEquiv(data,{'IB_dFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABAA'); end                % FS GABA A only (deep)
-if include_IB && include_FS && ~include_dFS5; data = dsThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABAA'); end   % FS GABA A only (supra, only if deep is missing)
+    % All inhibitory currents going to IB cells
+if include_IB && include_NG && include_dFS5 && include_tFS5;                    data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_dFS5_IBaIBdbiSYNseed_ISYN','IB_tFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95,-95],'IB_THALL_GABA'); end
+if include_IB && include_NG && include_dFS5 && ~include_tFS5;                   data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_dFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
+if include_IB && include_NG && include_FS && ~include_dFS5 && ~include_tFS5;    data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB','IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95,-95],'IB_THALL_GABA'); end
+
+
+    % Only GABA A inhibition
+if include_IB && include_dFS5 && include_tFS5;                  data = dsThevEquiv(data,{'IB_dFS5_IBaIBdbiSYNseed_ISYN','IB_tFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95,-95],'IB_FS_GABAA'); end                % FS GABA A only (deep+translaminar)
+if include_IB && include_dFS5 && ~include_tFS5;                 data = dsThevEquiv(data,{'IB_dFS5_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABAA'); end                % FS GABA A only (deep)
+if include_IB && include_FS && ~include_dFS5 && ~include_tFS5;  data = dsThevEquiv(data,{'IB_FS_IBaIBdbiSYNseed_ISYN'},'IB_V',[-95],'IB_FS_GABAA'); end   % FS GABA A only (supra, only if deep is missing)
+
+    % Only GABA B
 if include_IB && include_NG; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABAall'); end   % NG GABA A & B
+
+    % Other stuff
 if include_IB; data = dsThevEquiv(data,{'IB_IB_IBaIBdbiSYNseed_ISYN','IB_IB_iNMDA_INMDA'},'IB_V',[0,0],'IB_IB_AMPANMDA'); end
 if include_IB; data = dsThevEquiv(data,{'IB_IB_iNMDA_INMDA'},'IB_V',[0],'IB_IB_NMDAonly'); end
 if include_IB; data = dsThevEquiv(data,{'IB_IB_IBaIBdbiSYNseed_ISYN'},'IB_V',[0],'IB_IB_AMPAonly'); end
 
 % RS LFP
-if include_IB && include_NG && include_RS && include_FS && include_LTS && include_dFS5
+if include_IB && include_NG && include_RS && include_FS && include_LTS
     % RS conductance - contributions from all cells
-    data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
+    if ~include_tFS5
+        data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
+                             'RS_FS_IBaIBdbiSYNseed_ISYN',...
+                             'RS_LTS_IBaIBdbiSYNseed_ISYN',...
+                             'RS_tFS5_IBaIBdbiSYNseed_ISYN',...
+                             'RS_IB_IBaIBdbiSYNseed_ISYN',...
+                             'RS_IB_iNMDA_INMDA',...
+                             'RS_NG_IBaIBdbiSYNseed_ISYN',...
+                             'RS_NG_iGABABAustin_IGABAB',...
+        },'RS_V',[EAMPA,EGABA,EGABA,EGABA,EAMPA,EAMPA,EGABA,EGABA],'RS_LFPall');
+    else
+        data = dsThevEquiv(data,{'RS_RS_IBaIBdbiSYNseed_ISYN',...
                              'RS_FS_IBaIBdbiSYNseed_ISYN',...
                              'RS_LTS_IBaIBdbiSYNseed_ISYN',...
                              'RS_IB_IBaIBdbiSYNseed_ISYN',...
@@ -131,7 +153,11 @@ if include_IB && include_NG && include_RS && include_FS && include_LTS && includ
                              'RS_NG_IBaIBdbiSYNseed_ISYN',...
                              'RS_NG_iGABABAustin_IGABAB',...
         },'RS_V',[EAMPA,EGABA,EGABA,EAMPA,EAMPA,EGABA,EGABA],'RS_LFPall');
+    end
     
+end
+   
+if include_IB && include_NG && include_RS
     % RS conductance - contributions from delta oscillator
     data = dsThevEquiv(data,{'RS_IB_IBaIBdbiSYNseed_ISYN',...
                              'RS_IB_iNMDA_INMDA',...
