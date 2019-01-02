@@ -184,6 +184,16 @@ if include_RS && include_dFS5
         };
 end
 
+
+% % RS->tFS5 synaptic connection
+if include_RS && include_tdFS5
+    i=i+1;
+    spec.connections(i).direction = 'RS->tFS5';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_rstfs5,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        };
+end
+
 %% FS Cells
 % % % % %  FS Cells  % % % % %
 % % FS->FS Synaptic connections
@@ -257,6 +267,47 @@ if include_dFS5 && include_IB
     spec.connections(i).parameters = {'g_SYN',gGABAa_fs5ib,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
+
+
+%% Translaminar FS Cells
+% % tFS5->tFS5 Synaptic connections
+if include_tFS5
+    i=i+1;
+    spec.connections(i).direction = 'tFS5->tFS5';                  
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_tfs5tfs5,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'g_GAP',ggjFS,...
+        };
+        
+%     % Import all other values from equivalent FS mechanism
+%     spec.connections(i).mechanism_list = spec.connections(ind).mechanism_list;
+%     params_list1 = spec.connections(ind).parameters;
+%     myoptions=dsCheckOptions(params_list1,{},false); % Swap them into a structure so they're easier to manipulate
+%     % ...Insert manipulations here... %
+%     params_list2 = dsOptions2Keyval(myoptions); 
+%     spec.connections(i).parameters = params_list2;
+end
+
+
+% % tFS5->IB Synaptic connections
+if include_tFS5 && include_IB
+    i=i+1;
+    spec.connections(i).direction = 'tFS5->IB';                  
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_tfs5ib,'E_SYN',EGABA,'tauDx',tauGABAad_tFS5,'tauRx',tauGABAar_tFS5,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
+
+
+% % tFS5->RS Synaptic connections
+if include_tFS5 && include_RS
+    i=i+1;
+    spec.connections(i).direction = 'tFS5->RS';                  
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
+    spec.connections(i).parameters = {'g_SYN',gGABAa_tfs5rs,'E_SYN',EGABA,'tauDx',tauGABAad,'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        };
+end
+
 
 
 %% LTS Cells

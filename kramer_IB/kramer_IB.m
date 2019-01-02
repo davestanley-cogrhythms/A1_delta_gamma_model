@@ -67,6 +67,7 @@ Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nrs=80; % Number of RS cells
 Nfs=N;  % Number of FS cells
+Ntfs5 = 5; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -461,7 +462,7 @@ if ~no_synapses
 %     gGABAa_nglts = 0.05/Nng;
 %     gGABAb_nglts = 0.6/Nng;
     
-    % % Gamma oscillator (RS-FS-LTS circuit)
+    % % Gamma oscillator (RS-FS-LTS circuit, plus deep FS cells)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
     gAMPA_rsfs=1.3/Nrs;                     % RS -> FS
@@ -479,6 +480,10 @@ if ~no_synapses
     
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
+    
+    gAMPA_rstfs5=0.5/Nrs;
+    gGABAa_tfs5tfs5 = 1.0/Ntfs5;                    % tFS5 -> tFS5
+    gGABAa_tfs5rs = 0.5/Ntfs5;                     % tFS5 -> RS
     
     % % Theta oscillator (deep RS-FS circuit).
     gAMPA_deepRSdeepRS=0.1/(NdeepRS);
@@ -501,17 +506,24 @@ if ~no_synapses
     
     % % Gamma -> Delta connections
     gGABAa_fsib=0.3/Nfs;                        % FS -> IB
-    gGABAa_fs5ib=0.2/Nfs;
+    gGABAa_fs5ib=0.2/Nfs;    
+    gGABAa_tfs5ib=0.5/Ntfs5;                    % tFS5 -> IB
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
     gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
     
     
+    
 end
 
 
 % % % % % Synaptic time constants & reversals
+    % Note that the rise times of all synapses simulated with ODE
+    % mechanisms should be *HALVED* because the mechanism does not properly
+    % normalize the tanh funciton. Specifically, (1+tanh(X_pre/10)) should
+    % be (1+tanh(X_pre/10))/2. Therefore, rate constants are doubled and
+    % time constants should be halved.
 tauAMPAr_LTS = .25;
 tauAMPAd_LTS = 1;
 tauAMPAr=.25;  % ms, AMPA rise time; Jung et al
@@ -520,12 +532,14 @@ tauNMDAr_Ben=5; % ms, NMDA rise time; Jung et al
 tauNMDAd_Ben=100; % ms, NMDA decay time; Jung et al
 tauGABAar=.5;  % ms, GABAa rise time; Jung et al
 tauGABAad=8;   % ms, GABAa decay time; Jung et al
+tauGABAar_tFS5=3.5;  % ms, deep translaminar FS GABAa rise time
+tauGABAad_tFS5=50;   % ms, deep translaminar FS GABAa decay time
 tauGABAaLTSr = .5;  % ms, LTS rise time; Jung et al
 tauGABAaLTSd_FS = 20;  % ms, LTS decay time; Jung et al
 tauGABAaLTSd_RS = 20; % ms, LTS decay time onto RS cells        % Using longer version
 tauGABAaLTSd_IB = 20; % ms, LTS decay time onto RS cells        % Using longer version
-tauGABAbr=38;  % ms, GABAa rise time; From NEURON Delta simulation
-tauGABAbd=150;   % ms, GABAa decay time; From NEURON Delta simulation
+tauGABAbr=38;  % ms, GABAb rise time; From NEURON Delta simulation
+tauGABAbd=150;   % ms, GABAb decay time; From NEURON Delta simulation
 EAMPA=0;
 EGABA=-95;
 TmaxGABAB=0.5;      % See iGABABAustin.txt
