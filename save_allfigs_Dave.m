@@ -21,9 +21,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:6;
+        handles_arr = 1:5;
         do_commit = 1;
-        currfigname = '195d_sweep_gNGIB_GABAb';
+        currfigname = '195e_sweep_IB_stim2';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Goal: Figure out how to reduce delta period. Try: Reducing GABAB conductance onto IB cells'];
+    mycomment = ['Goal: Figure out to make delta oscillator non-oscillatory. Goal is to test reset responses!'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
