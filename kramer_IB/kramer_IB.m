@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 7;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -56,7 +56,7 @@ include_FS =   0;
 include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 0;
-include_tFS5 = 0;
+include_tFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -242,7 +242,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=0;    % IB cells
-Jd2=0;    %         
+Jd2=1;    %         
 Jng1=1;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -712,7 +712,7 @@ switch sim_mode
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
         temp = [400:25:550,600,650,700, 750, 800];
-        %temp = [300,350,375,550,600];
+        temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
         
@@ -847,7 +847,7 @@ switch pulse_mode
     case 7
         % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
         dFS_PP_gSYN = 0;
-        IB_PP_gSYN = 0.5;
+        IB_PP_gSYN = 0.0;
             IB_PP_gSYN_NMDA = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
