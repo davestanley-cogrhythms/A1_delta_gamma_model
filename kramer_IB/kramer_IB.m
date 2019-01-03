@@ -67,7 +67,7 @@ Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
 Nrs=20; % Number of RS cells
 Nfs=N;  % Number of FS cells
-Ntfs5 = 5; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
+Ntfs5 = 20; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -252,7 +252,7 @@ if include_NG
 end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
-Jtfs5 = 1;  % Translaminar FS cells layer 5
+Jtfs5 = 1.5;  % Translaminar FS cells layer 5
 Jlts1=-2.0; % LTS cells
 Jlts2=-2.0; % LTS cells
 deepJRS1 = 5;    % RS deep cells
