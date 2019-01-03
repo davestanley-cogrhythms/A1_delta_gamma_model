@@ -512,6 +512,7 @@ if 0        % Other plotting code that is run manually
         % Latest plotting commands
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-90,-40])
         dsPlot2_PPStim(data,'plot_type','raster','population','IB');
+        dsPlot2(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2)
         
 end
 
