@@ -652,7 +652,7 @@ switch sim_mode
                  'RS','(PPfreq,PPwidth)',temp; ...
             };
         
-    case 11     % Vary PP stimulation frequency to all input cells
+    case 11     % Vary PP stimulation onset to all input cells
                 %myonsets = [950,1050,1150,1250,1350,1450];
                 %myonsets = [550,750,950,1150,1350,1550];
                 myonsets = [750,850,950,1050,1150,1250];
@@ -668,9 +668,6 @@ switch sim_mode
             };
         
     case 12     % Vary IB cells
-        temp = [400:25:550,600,650,700, 750, 800];
-        %temp = [300,350,375,550,600];
-        temp = 1000./(100+temp);
         vary = { %'IB','PPstim',[-1:-1:-5]; ...
             %'NG','PPstim',[-7:1:-1]; ...
             %'IB','stim2',[-0.5:0.25:1.25]; ...
@@ -679,7 +676,6 @@ switch sim_mode
             'IB->IB','gNMDA',[6.5:0.5:10]/Nib;...
             %'IB','PP_gSYN',[0:.25:1]/10; ...
             %'dFS5->IB','g_SYN', [0.05:0.05:0.2]/Nfs;...
-            %'(IB,NG,RS,FS,LTS,dFS5)','(PPmaskfreq)',[temp];...
             %'IB','gAR',[0,2]; ...
             %'NG->RS','gGABAB',[0.4:0.05:0.75]/Nng;...
             %'RS->IB','g_SYN',[0:0.1:0.3]/Nrs;...
@@ -713,6 +709,13 @@ switch sim_mode
             };
         dsfact = 100;
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
+        
+    case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
+        temp = [400:25:550,600,650,700, 750, 800];
+        %temp = [300,350,375,550,600];
+        vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
+            };
+        
         
     case 18     % Inverse PAC with new nested PPStim method
         inter_train_interval=250;
