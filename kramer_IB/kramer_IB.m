@@ -28,7 +28,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -51,12 +51,12 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   1;
-include_FS =   1;
-include_LTS =  1;
+include_RS =   0;
+include_FS =   0;
+include_LTS =  0;
 include_NG =   1;
-include_dFS5 = 1;
-include_tFS5 = 1;
+include_dFS5 = 0;
+include_tFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -153,7 +153,7 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 random_seed = 'shuffle';
-% random_seed = 8;
+random_seed = 8;
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
@@ -610,7 +610,8 @@ switch sim_mode
             %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
             %'LTS','stim2',[-2.5:.1:-1.9]; ...
-            'tFS5','stim',[1.25:.25:2]; ...
+            %'tFS5','stim',[1.25:.25:2]; ...
+            'IB','gRAN',[0,0.01,0.025,0.05];...
             %'RS','PP_gSYN',[0.045:.015:.15]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'IB','PP_gSYN',[.1:.1:.4]; ...

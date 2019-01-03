@@ -23,7 +23,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '194a_sweep_tFS5_stim';
+        currfigname = '195a_sweep_IB_gRAN';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Goal: Want tFS5 cells to be silent so can tune network.'];
+    mycomment = ['Spontaneous activity. Goal: Working on low GABAB oscillator, so it will be more easy to reset. First, just decreased excitatory drive to IB cells to see how the oscillator behaves at low drive.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
