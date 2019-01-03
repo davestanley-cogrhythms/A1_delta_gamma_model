@@ -21,9 +21,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:5;
+        handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '195e_sweep_IB_stim2';
+        currfigname = '195f_redoprev_randseed8';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Goal: Figure out to make delta oscillator non-oscillatory. Goal is to test reset responses!'];
+    mycomment = ['Re-do previous sim with known random seed (8), so can use it in future sims.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');

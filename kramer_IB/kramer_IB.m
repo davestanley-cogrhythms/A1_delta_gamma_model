@@ -153,8 +153,8 @@ save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
 % random_seed = 'shuffle';
-% random_seed = 8;
-a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+random_seed = 8;
+% a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
 study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
 % study_dir = [];
 % study_dir = ['study_dave'];
