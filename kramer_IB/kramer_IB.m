@@ -838,8 +838,8 @@ switch pulse_mode
         
         do_nested_mask = 1;
         
-        PPmaskfreq = 2;
-        PPmaskduration = 100;
+        PPmaskfreq = 1;
+        PPmaskduration = 50;
         
     case 7
         % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
@@ -862,8 +862,8 @@ switch pulse_mode
         
         do_nested_mask = 1;
         
-        PPmaskfreq = 2;
-        PPmaskduration = 100;
+        PPmaskfreq = 1;
+        PPmaskduration = 50;
         
         % Make IB cells receive pure Poisson - assume CT cells are firing
         % is less orderly
