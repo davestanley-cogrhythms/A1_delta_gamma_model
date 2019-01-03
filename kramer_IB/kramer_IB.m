@@ -386,15 +386,19 @@ gNMDA_rsfs=0;
 gGABAa_fsfs=0;
 gGABAa_fsrs=0;
 
-gAMPA_rsfs5=0;
-gGABAa_fs5fs5 = 0;
-
 gAMPA_rsLTS = 0;
 gNMDA_rsLTS = 0;
 gGABAa_LTSrs = 0;
 
 gGABAa_fsLTS = 0;
 gGABAa_LTSfs = 0;
+
+gAMPA_rsfs5=0;
+gGABAa_fs5fs5 = 0;
+
+gAMPA_rstfs5=0;
+gGABAa_tfs5tfs5 = 0;
+gGABAa_tfs5rs = 0;
 
 % % Gamma oscillator, deep (RS-FS circuit)
 gAMPA_deepRSdeepRS=0;
@@ -419,6 +423,7 @@ gAMPA_deepRSIB = 0;
 % % Gamma -> Delta connections
 gGABAa_fsib = 0;
 gGABAa_fs5ib = 0;
+gGABAa_tfs5ib = 0;
 gAMPA_rsib= 0;
 gAMPA_rsng = 0;
 gNMDA_rsng = 0;
