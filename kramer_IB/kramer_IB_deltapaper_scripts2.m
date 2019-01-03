@@ -105,6 +105,27 @@ switch chosen_cell
         
         datapf0a = kramer_IB_function_mode(s{f},f);
         
+        %% Compile - compile for just delta oscillator + translaminar FS
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 0;
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1;
+        
+        % % % % % Cells to include in model
+        s{f}.include_IB =   1;
+        s{f}.include_RS =   0;
+        s{f}.include_FS =   0;
+        s{f}.include_LTS =  0;
+        s{f}.include_NG =   1;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 1;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf0a = kramer_IB_function_mode(s{f},f);
+        
         
         %% Compile - Small jobs - Just delta oscillator
         clear s
