@@ -18,8 +18,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 1000];
-sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 700];
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -51,11 +51,11 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   1;
-include_FS =   1;
-include_LTS =  1;
+include_RS =   0;
+include_FS =   0;
+include_LTS =  0;
 include_NG =   1;
-include_dFS5 = 1;
+include_dFS5 = 0;
 include_tFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
@@ -145,7 +145,7 @@ sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2st
 
 % % % % % Display options
 plot_on = 0;
-plot_on2 = 0;
+plot_on2 = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(sim_mode >= 8 && ~cluster_flag);     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -242,9 +242,9 @@ fast_offset = 0;
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=5;    % IB cells
+Jd1=3;    % IB cells
 Jd2=1;    %         
-Jng1=-7;   % NG cells
+Jng1=-2;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -266,8 +266,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=50;
-IB_onset2=50;
+IB_offset1=100;
+IB_onset2=100;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
