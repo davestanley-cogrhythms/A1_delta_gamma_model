@@ -514,7 +514,7 @@ if ~no_synapses
     % % Gamma -> Delta connections
     gGABAa_fsib=0.3/Nfs;                        % FS -> IB
     gGABAa_fs5ib=0.2/Nfs;    
-    gGABAa_tfs5ib=1/Ntfs5;                    % tFS5 -> IB
+    gGABAa_tfs5ib=2/Ntfs5;                    % tFS5 -> IB
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
