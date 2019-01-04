@@ -21,9 +21,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:5;
+        handles_arr = 1:3;
         do_commit = 1;
-        currfigname = '195g_sweep_tFS5_stimtime';
+        currfigname = '196a_PPmaskduration_10';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Show that tFS5 stimulation can produce rebound earlier than would normally happen.'];
+    mycomment = ['Goal: Get the Polley reset working for 10ms laser. First step is just showing spontaneous activity and when bursts would normally happen'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
