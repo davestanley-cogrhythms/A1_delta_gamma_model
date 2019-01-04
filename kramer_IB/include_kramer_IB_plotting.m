@@ -513,9 +513,9 @@ end
 if 1 && plot_on2
         %% Latest plotting commands
         do_visible = 'off';
-        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-90,-40],'visible',do_visible)
-        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-90,-65],'visible',do_visible)
-        dsPlot2_PPStim(data,'plot_type','imagesc','population','IB','visible',do_visible);
+        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-40],'visible',do_visible)
+        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-65],'visible',do_visible)
+        dsPlot2_PPStim(data,'plot_type','raster','population','IB','visible',do_visible);
         dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
         %dsPlot2_PPStim(data,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'visible',do_visible)
         dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,'visible',do_visible)
