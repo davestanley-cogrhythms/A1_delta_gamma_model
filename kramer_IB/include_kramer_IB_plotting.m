@@ -508,8 +508,10 @@ if 0        % Other plotting code that is run manually
         
         % Plotting for case 7 - tFS5 stimulation
         dsPlot2_PPStim(data,'population','/IB|tFS5/','do_mean',1,'ylims',[-90,-40])
-        
-        % Latest plotting commands
+end
+
+if 1 && plot_on2
+        %% Latest plotting commands
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-90,-40])
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-90,-65])
         dsPlot2_PPStim(data,'plot_type','raster','population','IB');

@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 1000];
+tspan=[0 700];
 sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -145,6 +145,7 @@ sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2st
 
 % % % % % Display options
 plot_on = 0;
+plot_on2 = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(sim_mode >= 8 && ~cluster_flag);     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -859,7 +860,7 @@ switch pulse_mode
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPmaskshift = 500;
+        PPmaskshift = 400;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
