@@ -870,7 +870,7 @@ switch pulse_mode
         do_nested_mask = 1;
         
         PPmaskfreq = 1;
-        PPmaskduration = 50;
+        PPmaskduration = 10;
         
         % Make IB cells receive pure Poisson - assume CT cells are firing
         % is less orderly
