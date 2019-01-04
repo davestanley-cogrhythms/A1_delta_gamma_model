@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 700];
-sim_mode = 12;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -715,8 +715,8 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [400:25:550,600,650,700, 750, 800];
-        temp = [6000,800,1000,1200];
+        temp = [6000, 250:25:400];
+        %temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
         
@@ -851,7 +851,7 @@ switch pulse_mode
     case 7
         % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
         dFS_PP_gSYN = 0;
-        IB_PP_gSYN = 0.0;
+        IB_PP_gSYN = 0.33;
             IB_PP_gSYN_NMDA = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;

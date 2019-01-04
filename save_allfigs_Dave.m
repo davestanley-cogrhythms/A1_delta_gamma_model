@@ -23,7 +23,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:5;
         do_commit = 1;
-        currfigname = '196i_redo_prev_diff_range';
+        currfigname = '196j_IBPPStim_0.33';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = [''];
+    mycomment = ['Goal: want to find the earliest time current version of code can reproduce rebound'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
