@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_tFS5_test1';
+namesuffix = '_tFS5_lowGABABb_v1.2';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
