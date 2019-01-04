@@ -23,7 +23,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:5;
         do_commit = 1;
-        currfigname = '196e_Redid_prev_stronger';
+        currfigname = '196f_Redid_prev';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Redid previous with stronger stim'];
+    mycomment = [''];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
@@ -142,7 +142,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
         cd ../model-dnsim-kramer_IB_Figs2
         cd(currd);
     end
-    
+    close all
     
 
 end
