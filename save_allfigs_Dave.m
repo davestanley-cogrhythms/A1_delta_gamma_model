@@ -23,7 +23,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '197b_hrw_v1.3';
+        currfigname = '197c_dec_gNGIB';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Adjusted oscillator to make synapses more like hrw_v1.3 (low tension oscillator). This involves increasing g_ngng synapse to reduce ng GABAb activation'];
+    mycomment = ['Greatly decreased gNGIB. Now see what IB stim level to use to produce appropriate period oscillation.'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
