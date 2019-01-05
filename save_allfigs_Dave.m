@@ -21,9 +21,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:5;
+        handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '196m_PPmaskduration_10';
+        currfigname = '197a_vary_NGIB_GABAb';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
@@ -110,7 +110,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 %         end
 %     end
 %     %
-    mycomment = ['Redo prev with very short mask duration (10 ms)'];
+    mycomment = ['Goal: Redo delta oscillator to be more excitable between bursts. This involves having less stim to IB cells (which will slow period), but also having weaker GABAb (which will speed up period to compensate)'];
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
