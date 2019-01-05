@@ -18,8 +18,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 2000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 1500];
+sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -243,7 +243,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=3;    % IB cells
-Jd2=0;    %         
+Jd2=0.5;    %         
 Jng1=-2;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -663,7 +663,7 @@ switch sim_mode
                  %'(RS,FS,LTS,IB,NG)','(PPonset,PPoffset)',[myonsets; myoffsets];...
                  %'(RS,FS,LTS,IB,NG)','(PPonset)',[300, 350,400,450, 500, 550, 600, 650, 700, 750];...
                  %'(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[350:25:525];...
-                 '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPonset',[300:25:475];...
+                 '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPonset',[800,850,900,950];...
                  %'RS','PPshift',[1050,1150,1250,1350]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
