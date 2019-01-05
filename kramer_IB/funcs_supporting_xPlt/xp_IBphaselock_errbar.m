@@ -76,7 +76,7 @@ function hxp = xp_IBphaselock_errbar (xp, op)
         
         % Pull out spike times and pulse information
         spikes = data(i).IB_V_spike_times;    % Used later
-        pulsetrain = data(i).IB_iPoissonNested_S2;
+        pulsetrain = data(i).IB_iPoissonNested_ampaNMDA_S2;
         
         % Process pulses to get pulse onset and offset values
         pulsetrain = median(pulsetrain,2);
