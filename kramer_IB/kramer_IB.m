@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2500];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -175,7 +175,7 @@ Now = clock;
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-dsfact=dsfact*10;
+% dsfact=dsfact*10;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -450,7 +450,7 @@ if ~no_synapses
     gGABAb_ngng=0.2/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.3/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.8/Nng;                       % NG -> IB GABA B
     
     
     % % IB -> LTS
@@ -664,7 +664,7 @@ switch sim_mode
                  %'(RS,FS,LTS,IB,NG)','(PPonset,PPoffset)',[myonsets; myoffsets];...
                  %'(RS,FS,LTS,IB,NG)','(PPonset)',[300, 350,400,450, 500, 550, 600, 650, 700, 750];...
                  %'(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[350:25:525];...
-                 '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPonset',[800,850,900,950];...
+                 '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPonset',[500:50:850];...
                  %'RS','PPshift',[1050,1150,1250,1350]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };

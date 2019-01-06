@@ -515,7 +515,7 @@ if 1 && plot_on2
         do_visible = 'off';
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-40],'visible',do_visible)
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-65],'visible',do_visible)
-        %dsPlot2_PPStim(data,'plot_type','raster','population','IB','visible',do_visible);
+        dsPlot2_PPStim(data,'plot_type','raster','population','IB','visible',do_visible);
         dsPlot2_PPStim(data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',1);
         %dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
         dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
