@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2500];
-sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -145,7 +145,7 @@ sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2st
 
 % % % % % Display options
 plot_on = 0;
-plot_on2 = 1;
+plot_on2 = 0;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(sim_mode >= 8 && ~cluster_flag);     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
