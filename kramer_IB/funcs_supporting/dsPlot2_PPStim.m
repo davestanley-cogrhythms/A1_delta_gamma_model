@@ -16,10 +16,14 @@ function varargout = dsPlot2_PPStim (data,varargin)
       'variable',[],[],...          % [beg,end] (units must be consistent with dt and equations)  
       },false);
 
+    % Convert to MDD object if not one already
+    if ~isa(data,'MDD')
+        xp = dsAll2mdd(data);
+    else
+        xp = data;
+    end
     
     % Isolates the PPStim pulse train information
-    xp = dsAll2mdd(data);
-    
     ind = xp.findaxis('variables');
     varvals = xp.exportAxisVals;
     varvals = varvals{ind};
@@ -131,6 +135,6 @@ function varargout = dsPlot2_PPStim (data,varargin)
 
     % Call dsPlot2 supplying this custom function handle.
     varargout = cell(1,nargout);
-    [varargout{1:nargout}] = dsPlot2(data,varargin{:},'subplot_handle',@(xp,op) xp_subplot_grid_PPStim(xp,op,xpp));
+    [varargout{1:nargout}] = dsPlot2(xp,varargin{:},'subplot_handle',@(xp,op) xp_subplot_grid_PPStim(xp,op,xpp));
 
 end

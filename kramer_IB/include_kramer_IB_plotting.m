@@ -513,6 +513,7 @@ end
 if 1 && plot_on2
         %% Latest plotting commands
         do_visible = 'off';
+        if length(data(1).varied) <= 2
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-40],'visible',do_visible)
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-65],'visible',do_visible)
         %dsPlot2_PPStim(data,'plot_type','raster','population','IB','visible',do_visible);
@@ -521,15 +522,32 @@ if 1 && plot_on2
         dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
         dsPlot2_PPStim(data,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],'visible',do_visible);
         dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,'visible',do_visible)
+        end
         
 %         % Optional correction - flip x/y varied; not guranteed to work in all
 %         % situations
 %         xp = dsAll2mdd(data); xp=xp.permute([1,3,2,4,5]); data = dsMdd2ds(xp);
         
-        % Plot varied parameters individually
-        N=length(vary{3,3});
-        N=5;
-        for i = 1:N; dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'varied3',i,'visible',do_visible); end
+%         % Plot varied parameters individually
+%         N=length(vary{3,3});
+%         N=5;
+%         for i = 1:N; dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'varied3',i,'visible',do_visible); end
+        
+        if length(data(1).varied) == 4
+            % Plot combined 4D data 2D sweep
+            xp = dsAll2mdd(data);
+            for i = 1:size(xp,1)
+                dsPlot2_PPStim(xp(i,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible)
+            end
+
+            % Plot combined 4D data 1D sweeps
+            for i = 1:size(xp,1)
+                for j = 1:size(xp,2)
+                    dsPlot2_PPStim(xp(i,:,j,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'figwidth',1/2,'visible',do_visible)
+                end
+            end
+        end
+        
         
 %         % IB PPStim NMDA plots 
 %         dsPlot2_PPStim(data,'population','IB','variable','/iPoissonNested_ampaNMDA_S3|iPoissonNested_ampaNMDA_S3_NMDA|tFS5_IBaIBdbiSYNseed_s/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,'visible',do_visible)
