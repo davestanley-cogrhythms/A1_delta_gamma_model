@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2500];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -145,7 +145,7 @@ sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2st
 
 % % % % % Display options
 plot_on = 0;
-plot_on2 = 0;
+plot_on2 = 1;
 visible_flag = 'on';
 compile_flag = 1;
 parallel_flag = double(sim_mode >= 8 && ~cluster_flag);     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
@@ -175,7 +175,7 @@ Now = clock;
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-% dsfact=dsfact*10;
+dsfact=dsfact*10;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -610,7 +610,8 @@ switch sim_mode
             };
     case 9  % Vary RS cells in RS-FS network
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
-            'NG->IB','gGABAB',[.2:.1:1.1]/Nng;...
+            'IB','stim2',[0.0]; ...
+            'NG->IB','gGABAB',[.3:.1:1.1]/Nng;...
             %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
             %'IB','stim2',[0:0.25:1.0]; ...
@@ -619,7 +620,7 @@ switch sim_mode
             %'IB','gRAN',[0,0.01,0.025,0.05];...
             %'RS','PP_gSYN',[0.045:.015:.15]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
-            'IB','PP_gSYN',[0.5, .1:.1:.4]; ...
+            'IB','PP_gSYN',[0.05, .1:.1:.4]; ...
             %'dFS5','PP_gSYN',[0.3:0.1:0.5]; ...
             %'(RS->dFS5,RS->FS)','g_SYN',[0, .3:.2:1.5]/Nrs;...
             %'(FS->FS,dFS5->dFS5)','g_SYN',[.5 .6 .7 .8 .9 1 1.1 1.2]/Nfs;...
@@ -805,7 +806,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 800;    % ms, onset time
+        PPonset = 700;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
