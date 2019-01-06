@@ -23,7 +23,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:6;
         do_commit = 1;
-        currfigname = '197o_redoPrev_sweep2D_jIB_0.0';
+        currfigname = '197p_redoPrev_sweep2D_jIB_0.25';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
