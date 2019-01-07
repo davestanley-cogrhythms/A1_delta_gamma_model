@@ -29,7 +29,8 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     
     currfname = 'kr'; 
     
-    savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
+%     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
+%     savenames= cellfunu(@(x,y) [x y],repmat({'fig'},1,100),cellfunu(@num2str,num2cell(1:100)));
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
     sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
@@ -49,6 +50,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
                 set(i,'Position',[axp(1), axp(2), axp(3)*factor, axp(4)*factor]);
             end
             set(i,'PaperPositionMode','auto');
+            savenames{i} = ['fig' num2str(i)];
             %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
             tic; print(i,'-dpng','-r75',fullfile(basepath,sp,savenames{i}));toc
             %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
