@@ -503,8 +503,9 @@ if plot_on
             dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','C_IB_PPonset_RS_PPonse___','LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
             dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','C_IB_PPonset_RS_PPonse___','LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible);
             
-            %
+            %% As above, but color coordinated instaed of shifted
             
+            % Shift IB PPStim
             colourarr = {'k','b','g','r','y','m'};           
             i=1;
             po.plotargs= {'Color',colourarr{i}};
@@ -519,9 +520,9 @@ if plot_on
                 po.plotargs= {'Color',colourarr{i}};
                 dsPlot2_PPStim(xp(:,:,:,i,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','C_IB_PPonset_RS_PPonse___','LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
             end
+                      
             
-            %
-            
+            % Shift onset
             colourarr = {'g','b','k','r','y','m'};          
             %colourarr = fliplr(colourarr);
             i=1;
@@ -542,11 +543,11 @@ if plot_on
 
             %% Single plots
             
-            dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','IB_PP_gSYN','LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'visible',do_visible);
+            dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','IB_PP_gSYN','LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
             
             
             
-            % Do separate plot for each axis with name axname
+            %% Do separate plot for each axis with name axname
             axname = 'C_IB_PPonset_RS_PPonse___';
             ind = xp.findaxis(axname);
             Nd = ndims(xp);
@@ -554,10 +555,15 @@ if plot_on
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
                 dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible);
+            end
+            
+            % (Repeat above, but for individual plots)
+            for i = 1:size(xp2,1)
+                xp3 = xp2(i,:);
                 dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
             end
             
-            % Do separate plot for each axis with name axname
+            %% Do separate plot for each axis with name axname
             axname = 'IB_stim2';
             ind = xp.findaxis(axname);
             Nd = ndims(xp);
