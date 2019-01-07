@@ -926,7 +926,7 @@ switch pulse_mode
     case 7
         % Stimulate translaminar FS cells and L5 IB cells, everything else set to zero.
         dFS_PP_gSYN = 0;
-        IB_PP_gSYN = 0.0;
+        IB_PP_gSYN = 0.5;
             IB_PP_gSYN_NMDA = 0;
         RS_PP_gSYN = 0;
         NG_PP_gSYN = 0;
