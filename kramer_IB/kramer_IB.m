@@ -773,6 +773,24 @@ switch sim_mode
             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[10000,700,500];...
             };
         
+        do_covaried_L6CT = 0;
+        if do_covaried_L6CT
+            % (See  include_kramer_IB_plotting.m for description of what
+            % this mode is trying to do).
+            % % % FOR TESTING ONLY % % % 
+            clear vary_values
+            vary_values(:,:,1) = [0,0.5,0.5;0,0,0];                 % Population 1 (rows are parameters; columns are separate simulations)
+            vary_values(:,:,2) = [0.65,0.65,0.65;[0,1,2]/Ntfs5];    % Population 2
+
+
+            vary = { ...
+                'IB','gRAN',[0.05]; ...
+                'NG->IB','gGABAB',[.5, 1.1]/Nng;...
+                'IB','stim2',[0,1]; ...
+                '(IB,tFS5->IB)','(PP_gSYN,g_SYN)', vary_values;...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,500];...
+                };
+        end
 
 end
 

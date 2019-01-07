@@ -518,6 +518,21 @@ if plot_on
                     axis2 = 'tFS5_IB_g_SYN';
                     axis3 = 'IB_stim2';
                     axis4 = 'NG_IB_gGABAB';
+                    
+                    
+                    if do_covaried_L6CT
+                % This doesn't seem to work, but the goal is to make case
+                % 21 similar to case 20 by making the tFS5_IB axis co-vary
+                % with IB PPStim, setting IB PPStim to zero when synaptic
+                % input from tFS5 cells is zero, such that this could act
+                % as the "default" case for the simulation. Unfortunately,
+                % for some reason this didn't work (not clear why; could be
+                % residual noise coming through the synapse). 
+                        axis1 = 'C_IB_PP_gSYN_tFS5_IB_g___';
+                        axis2 = 'C_IB_PPmaskshift_RS_PP___';
+                        axis3 = 'IB_stim2';
+                        axis4 = 'NG_IB_gGABAB';
+                    end
             end
             
             % % % % % % % % Combined plots - all 4 dims compressed onto single plot % % % % % % % % 
