@@ -546,6 +546,16 @@ if 1 && plot_on2
                     dsPlot2_PPStim(xp(i,:,j,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'figwidth',1/2,'visible',do_visible)
                 end
             end
+            
+            % Plot only spontaneous activity
+            for i = 1:size(xp,1)
+                dsPlot2_PPStim(xp(i,:,:,1,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_stim2','LineWidth',2,'visible',do_visible)
+            end
+            
+            % Plot only spontaneous activity
+            for i = 1:size(xp,1)
+                dsPlot2_PPStim(xp(i,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
+            end
         end
         
         
