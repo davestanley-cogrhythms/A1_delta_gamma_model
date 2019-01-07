@@ -507,6 +507,9 @@ if plot_on
                     axis2 = 'C_IB_PPmaskshift_RS_PP___';                % Second 2 will either be overlaid as well, or separated out to create new figures
                     axis3 = 'IB_stim2';                                 % axis3 and 4 are tertiary axes, occasionally swapped in to view data from other angles
                     axis4 = 'NG_IB_gGABAB';
+                    
+                    chosen_var = '/GABAall_gTH/';
+                    chosen_ylims = [0 0.4];
                 case 21
                 % We flip axis1 and axis2 for case 21 (corresponds to
                 % pulse_mode = 7) because we need axis1 to contain the
@@ -533,16 +536,22 @@ if plot_on
                         axis3 = 'IB_stim2';
                         axis4 = 'NG_IB_gGABAB';
                     end
+                    
+                    chosen_var = '/V/';
+                    chosen_ylims = [-95 -20];
+                    
+%                     chosen_var = '/mAR/';
+%                     chosen_ylims = [];
             end
             
             % % % % % % % % Combined plots - all 4 dims compressed onto single plot % % % % % % % % 
             
             % Wih overlay shiftt
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last',axis1, 'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'force_last',axis1, 'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
             
             % Without overlay shift
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible);
 
             
             % Without overlay shift, but with grouping colours
@@ -550,7 +559,7 @@ if plot_on
                 % Plot first value
             i=1;
             po.plotargs= {'Color',colourarr{i}};
-            h = dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/',axis1,i,'do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po);
+            h = dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis1,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po);
                 % Plot remaining values with hold on
             clear fo so
             fo.suppress_newfig = true;
@@ -558,7 +567,7 @@ if plot_on
             ind = findaxis(xp,axis1);
             for i = 2:size(xp,ind)
                 po.plotargs= {'Color',colourarr{i}};
-                dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/',axis1,i,'do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
+                dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis1,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
             end
             
             % As above, alternate colour grouping
@@ -566,7 +575,7 @@ if plot_on
                 % Plot first value
             i=1;
             po.plotargs= {'Color',colourarr{i}};
-            h = dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/',axis2,i,'do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po);
+            h = dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis2,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po);
                 % Plot remaining values with hold on
             clear fo so
             fo.suppress_newfig = true;
@@ -574,12 +583,12 @@ if plot_on
             ind = findaxis(xp,axis2);
             for i = 2:size(xp,ind)
                 po.plotargs= {'Color',colourarr{i}};
-                dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/',axis2,i,'do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
+                dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis2,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
             end
             
             
             % % % % % % % % 1D subplots - sweeping along one axis, creating new figs for the other axis as we go % % % % % % % % 
-            %dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last',axis1,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
+            %dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'force_last',axis1,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
             
             
             % % % % % % % % 2D subplots, but only 1 dim overlaid in subplots % % % % % % % % 
@@ -589,13 +598,13 @@ if plot_on
             Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
             end
 
 %             % (Repeat above, but for individual plots - 1D subplots)
 %             for i = 1:size(xp2,1)
 %                 xp3 = xp2(i,:);
-%                 dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
+%                 dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
 %             end
 
             % Alternate config 1
@@ -604,7 +613,7 @@ if plot_on
             Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis2,'LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible);
             end
 
             % Alternate config 2
@@ -613,7 +622,7 @@ if plot_on
             Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
             end
             
             % Alternate config 3
@@ -622,7 +631,7 @@ if plot_on
             Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
             end
             
             % Alternate config 4
@@ -631,10 +640,9 @@ if plot_on
             Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
             end
 
-            
         otherwise
             if 0
                 dsPlot2(data,'plot_type','waveform');
