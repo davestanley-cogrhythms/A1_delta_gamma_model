@@ -484,22 +484,30 @@ if plot_on
             %%
             do_visible = 'off';
             
+            ppstim_variable_name = 'IB_PP_gSYN';
+            
             % 2D subplot grid
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'num_embedded_subplots',2,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'num_embedded_subplots',2,'visible',do_visible);
             
             % Force 1D subplot grid
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'num_embedded_subplots',1,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible);
 
             dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_stim2','LineWidth',2,'visible',do_visible,'figwidth',1/2)
             dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
             
-        case 20
+        case {20,21}
             do_visible = 'off';
             xp = dsAll2mdd(data);
             
+            switch sim_mode
+                case 20; ppstim_variable_name = 'IB_PP_gSYN';
+                case 21; ppstim_variable_name = 'tFS5_IB_g_SYN';
+            end
+            
+            
             
             % Everything together
-            dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','IB_PP_gSYN','LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible,'do_overlay_shift',true);
+            dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last',ppstim_variable_name,'LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible,'do_overlay_shift',true);
             dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','C_IB_PPmaskshift_RS_PP___','LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
             dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','C_IB_PPmaskshift_RS_PP___','LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible);
             
@@ -527,7 +535,7 @@ if plot_on
             %colourarr = fliplr(colourarr);
             i=1;
             po.plotargs= {'Color',colourarr{i}};
-            h = dsPlot2_PPStim(xp(:,:,:,:,i,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible,'plot_options',po);
+            h = dsPlot2_PPStim(xp(:,:,:,:,i,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'visible',do_visible,'plot_options',po);
             
             % Extract the handle for the subplot_grid subplot
             fo.suppress_newfig = true;
@@ -536,14 +544,14 @@ if plot_on
             for i = 2:size(xp,5)
                 % Hold on
                 po.plotargs= {'Color',colourarr{i}};
-                dsPlot2_PPStim(xp(:,:,:,:,i,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
+                dsPlot2_PPStim(xp(:,:,:,:,i,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
             end
             
             
 
             %% Single plots
             
-            dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','IB_PP_gSYN','LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
+            dsPlot2_PPStim(xp(:,:,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last',ppstim_variable_name,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
             
             
             
@@ -554,13 +562,13 @@ if plot_on
             xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'visible',do_visible);
             end
             
             % (Repeat above, but for individual plots)
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
+                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
             end
             
             %% Do separate plot for each axis with name axname
@@ -570,7 +578,7 @@ if plot_on
             xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'visible',do_visible);
             end
             
             %% Do separate plot for each axis with name axname
@@ -580,7 +588,7 @@ if plot_on
             xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);
             for i = 1:size(xp2,1)
                 xp3 = xp2(i,:);
-                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible);
+                dsPlot2_PPStim(xp3,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',ppstim_variable_name,'LineWidth',2,'visible',do_visible);
             end
 
             
