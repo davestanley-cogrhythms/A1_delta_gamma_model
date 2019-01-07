@@ -816,7 +816,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 700;    % ms, onset time
+        PPonset = 550;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
