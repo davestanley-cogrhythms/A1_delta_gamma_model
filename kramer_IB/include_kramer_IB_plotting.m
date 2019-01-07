@@ -481,31 +481,17 @@ if plot_on
             
             
         case 19
-            
+            %%
             do_visible = 'off';
             
-            % Plot combined 4D data 2D sweep
-            xp = dsAll2mdd(data);
-            for i = 1:size(xp,1)
-                dsPlot2_PPStim(xp(i,:,:,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'visible',do_visible)
-            end
+            % 2D subplot grid
+            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'num_embedded_subplots',2,'visible',do_visible);
+            
+            % Force 1D subplot grid
+            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'num_embedded_subplots',1,'visible',do_visible);
 
-            % Plot combined 4D data 1D sweeps
-            for i = 1:size(xp,1)
-                for j = 1:size(xp,2)
-                    dsPlot2_PPStim(xp(i,:,j,:,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_PP_gSYN','LineWidth',2,'figwidth',1/2,'visible',do_visible)
-                end
-            end
-            
-            % Plot only spontaneous activity
-            for i = 1:size(xp,1)
-                dsPlot2_PPStim(xp(i,:,:,1,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_stim2','LineWidth',2,'visible',do_visible)
-            end
-            
-            % Plot only spontaneous activity
-            for i = 1:size(xp,1)
-                dsPlot2_PPStim(xp(i,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
-            end
+            dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_stim2','LineWidth',2,'visible',do_visible,'figwidth',1/2)
+            dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
             
         case 20
             do_visible = 'off';
