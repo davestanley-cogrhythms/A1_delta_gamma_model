@@ -21,9 +21,9 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     supersize_me = 0;
     
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
-        handles_arr = 1:11;
+        handles_arr = 1:7;
         do_commit = 1;
-        currfigname = '198k_reduced_simMode20';
+        currfigname = '198m_reduced_simMode21';
         if ~exist('study_dir','var'); study_dir = []; end
     end
     
