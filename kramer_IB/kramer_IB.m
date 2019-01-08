@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 7;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -56,7 +56,7 @@ include_FS =   0;
 include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 0;
-include_tFS5 = 0;
+include_tFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -175,7 +175,7 @@ Now = clock;
 % % % % % Simulation controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-dsfact=dsfact*10;
+% dsfact=dsfact*10;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -718,7 +718,7 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [6000, 250:25:400];
+        temp = [6000, 350:50:650];
         %temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
