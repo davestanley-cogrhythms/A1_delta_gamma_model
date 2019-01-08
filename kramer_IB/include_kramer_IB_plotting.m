@@ -505,6 +505,7 @@ if plot_on
             plot_3D = 0;
             plot_2D = 1;
             plot_1D = 0;
+            plot_transpose = 0;
             
             
             k = 0;
@@ -515,9 +516,15 @@ if plot_on
                     axis3 = 'IB_stim2';                                 % axis3 and 4 are tertiary axes, occasionally swapped in to view data from other angles
                     axis4 = 'NG_IB_gGABAB';
                     
+                    % GABA B
                     k = k+1;
                     chosen_var0{k} = '/GABAall_gTH/';
                     chosen_ylims0{k} = [0 0.4];
+                    
+                    % Subthreshold range
+                    k = k+1;
+                    chosen_var0{k} = '/V/';
+                    chosen_ylims0{k} = [-95 -60];
                 case 21
                 % We flip axis1 and axis2 for case 21 (corresponds to
                 % pulse_mode = 7) because we need axis1 to contain the
@@ -671,14 +678,16 @@ if plot_on
                         end
                     end
 
-                    % Default configuration, but transposed
-                    axname = axis2;
-                    ind = xp.findaxis(axname);
-                    Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
-                    xp = xp.permute([1,3,2,4:Nd]);                                  % Permute the remaining 2 axes
-                    for i = 1:size(xp2,1)
-                        xp3 = xp2(i,:);
-                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                    if plot_transpose
+                        % Default configuration, but transposed
+                        axname = axis2;
+                        ind = xp.findaxis(axname);
+                        Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
+                        xp2 = xp.permute([1,3,2,4:Nd]);                                  % Permute the remaining 2 axes
+                        for i = 1:size(xp2,1)
+                            xp3 = xp2(i,:);
+                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                        end
                     end
                 end
             end
