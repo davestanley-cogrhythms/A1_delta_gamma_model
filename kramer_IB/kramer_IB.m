@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 21;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 11;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 21;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -56,7 +56,7 @@ include_FS =   0;
 include_LTS =  0;
 include_NG =   1;
 include_dFS5 = 0;
-include_tFS5 = 1;
+include_tFS5 = 0;
 include_deepRS = 0;
 include_deepFS = 0;
 
@@ -244,7 +244,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=3;    % IB cells
-Jd2=0.0;    %         
+Jd2=0.5;    %         
 Jng1=-2;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -450,7 +450,7 @@ if ~no_synapses
     gGABAb_ngng=0.2/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.7/Nng;                       % NG -> IB GABA B
     
     
     % % IB -> LTS
@@ -663,10 +663,10 @@ switch sim_mode
                  %'(RS,FS,LTS,IB,NG)','(PPonset,PPoffset)',[myonsets; myoffsets];...
                  %'(RS,FS,LTS,IB,NG)','(PPonset)',[300, 350,400,450, 500, 550, 600, 650, 700, 750];...
                  %'(IB,RS,FS,LTS,NG,dFS5)','PPmaskshift',[350:25:525];...
-                 'IB','gRAN',[0.01,0.05]; ...
-                 'IB','stim2',[-1:0.5:1]; ...
-                 'NG->IB','gGABAB',[.3:.2:1.1]/Nng;...
-                 '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPonset',[10000,700];...
+                 %'IB','gRAN',[0.01,0.05]; ...
+                 %'IB','stim2',[-1:0.5:1]; ...
+                 %'NG->IB','gGABAB',[.3:.2:1.1]/Nng;...
+                 '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPonset',[10000,400,500,600,700,800];...
                  %'RS','PPshift',[1050,1150,1250,1350]; ...
                  %'RS','PP_gSYN',[0.05:0.025:0.125]; ...
             };
