@@ -500,10 +500,15 @@ if plot_on
             k = 0;
             switch sim_mode
                 case 20
-                    axis1 = 'IB_PP_gSYN';                               % Axis 1 will generally be the default axis to overlay. Sometimes test the reverse, however
-                    axis2 = 'C_IB_PPmaskshift_RS_PP___';                % Second 2 will either be overlaid as well, or separated out to create new figures
-                    axis3 = 'IB_stim2';                                 % axis3 and 4 are tertiary axes, occasionally swapped in to view data from other angles
-                    axis4 = 'NG_IB_gGABAB';
+                    axnames = xp.exportAxisNames;
+                    axis1 = axnames{4};             % Axis 1 is compressed into overlaid plots  *** THIS SHOULD BE THE AXIS CONTAINING THE "DEFAULT" SIM ***
+                    axis2 = axnames{3};             % Axis 2 is reserved for separate figures
+                    axis3 = axnames{2};             % Subplots dim1
+                    axis4 = axnames{1};             % Subplots dim2
+%                     axis1 = 'IB_PP_gSYN';                               % Axis 1 will generally be the default axis to overlay. Sometimes test the reverse, however
+%                     axis2 = 'C_IB_PPmaskshift_RS_PP___';                % Second 2 will either be overlaid as well, or separated out to create new figures
+%                     axis3 = 'IB_stim2';                                 % axis3 and 4 are tertiary axes, occasionally swapped in to view data from other angles
+%                     axis4 = 'NG_IB_gGABAB';
                     
                     % GABA B
                     k = k+1;
@@ -521,20 +526,21 @@ if plot_on
                 % has to contain the no stim case, because tFS5_IB_g_SYN
                 % does not eliminate the L6 CT excitation to IB cells
                 % associated with pulse_mode=7
-                    axis1 = 'C_IB_PPmaskshift_RS_PP___';
-                    axis2 = 'tFS5_IB_g_SYN';
-                    axis3 = 'IB_stim2';
-                    axis4 = 'NG_IB_gGABAB';
+                    axnames = xp.exportAxisNames;
+                    axis1 = axnames{4};             % Axis 1 is compressed into overlaid plots  *** THIS SHOULD BE THE AXIS CONTAINING THE "DEFAULT" SIM ***
+                    axis2 = axnames{3};             % Axis 2 is reserved for separate figures
+                    axis3 = axnames{2};             % Subplots dim1
+                    axis4 = axnames{1};             % Subplots dim2
                     
                     
                     if do_covaried_L6CT
-                % This doesn't seem to work, but the goal is to make case
-                % 21 similar to case 20 by making the tFS5_IB axis co-vary
-                % with IB PPStim, setting IB PPStim to zero when synaptic
-                % input from tFS5 cells is zero, such that this could act
-                % as the "default" case for the simulation. Unfortunately,
-                % for some reason this didn't work (not clear why; could be
-                % residual noise coming through the synapse). 
+                        % This doesn't seem to work, but the goal is to make case
+                        % 21 similar to case 20 by making the tFS5_IB axis co-vary
+                        % with IB PPStim, setting IB PPStim to zero when synaptic
+                        % input from tFS5 cells is zero, such that this could act
+                        % as the "default" case for the simulation. Unfortunately,
+                        % for some reason this didn't work (not clear why; could be
+                        % residual noise coming through the synapse). 
                         axis1 = 'C_IB_PP_gSYN_tFS5_IB_g___';
                         axis2 = 'C_IB_PPmaskshift_RS_PP___';
                         axis3 = 'IB_stim2';
@@ -555,6 +561,11 @@ if plot_on
                     k = k+1;
                     chosen_var0{k} = '/mAR/';
                     chosen_ylims0{k} = [];              % Auto-adjust axes
+                    
+                    % GABA B
+                    k = k+1;
+                    chosen_var0{k} = '/GABAall_gTH/';
+                    chosen_ylims0{k} = [0 0.4];
             end
             
             for k = 1:length(chosen_var0)
