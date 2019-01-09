@@ -44,7 +44,8 @@ function [outpath] = save_simfiles_Dave(sp,repo_studyname,spec_all,do_commit,myc
     
     if do_commit
         %% Commit
-        run_commit(foldername,mycomment);
+        include_figures = false; 
+        run_commit(foldername,mycomment,include_figures);
     end
     
     
