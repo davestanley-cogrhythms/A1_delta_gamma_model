@@ -42,14 +42,14 @@ save_figures = 0;               % Save figures associated with individusl sims, 
     save_composite_figures = 0;     % Flag for saving composite figures comprised of PNGs stitched together from individual simulations into a single large canvas
 
 % % % % % Display options
-save_combined_figures = 1;      % Flag for figures based on post-hoc analysis of all sims together
+save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 0;
 plot_on2 = 0;
 do_visible = 'off';
 
 % % % % % Git options
-move_simfiles_to_repo_presim = false;
-save_figures_move_to_Figs_repo = true;
+save_simfiles_to_repo_presim = false;          % Saves simfiles to repo prior to running dsSimulate
+save_everything_to_repo_postsim = false;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
 do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 mycomment = [''];
 
@@ -1022,7 +1022,7 @@ pop_struct.Ntfs5 = Ntfs5;
 spec_all.spec = spec;
 spec_all.pop_struct = pop_struct;
 
-if move_simfiles_to_repo_presim
+if save_simfiles_to_repo_presim
     outpath = save_simfiles_Dave(sp,repo_studyname,spec_all,do_commit,mycomment);
     do_commit = false;      % Turn off commit so it is not called a 2nd time when running save_allfigs_Dave. We want only 1 commit per sim. Can add figures later
 end
@@ -1038,7 +1038,7 @@ end
 
 %% ##6.0 Save figures, composite figures, and files to data repo
 outpath = [];
-if save_figures_move_to_Figs_repo
+if save_everything_to_repo_postsim
     if plot_on || plot_on2
         h = gcf;
         handles_arr = 1:h.Number;
