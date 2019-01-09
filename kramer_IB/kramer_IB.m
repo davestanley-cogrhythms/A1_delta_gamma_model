@@ -250,7 +250,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=3;    % IB cells
-Jd2=0.75;    %         
+Jd2=1.0;    %         
 Jng1=-2;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
