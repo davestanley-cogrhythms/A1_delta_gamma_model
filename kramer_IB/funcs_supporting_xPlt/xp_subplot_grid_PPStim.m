@@ -189,33 +189,35 @@ function hxp = xp_subplot_grid_PPStim (xp, op, xpp)
                         % Find click timings
                         sawtooth = blocks0;
                         sawtooth = sawtooth > thresh;
+                        
                         ind_upswings = find( sawtooth(1:end-1) == 0 & sawtooth(2:end) == 1)+1;
-                        if plot_debug
-                            figure; plot(time,sawtooth); hold on; plot(time(ind_upswings),sawtooth(ind_upswings),'bo');
+                        if ~isempty(ind_upswings)
+                            if plot_debug
+                                figure; plot(time,sawtooth); hold on; plot(time(ind_upswings),sawtooth(ind_upswings),'bo');
+                            end
+
+                            % Find ind of AP pulse
+                            dt = double(mode(diff(time)));
+                            pulse_period = 1000/PPfreq;
+                            ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(pulse_num-1);  % Note: This line of code taken directly from: getDeltaTrainPresets2
+
+                            if plot_debug
+                                hold on; plot([time(ap_ind_orig) time(ap_ind_orig)],[0,1],'r--');
+                            end
+
+                            % Find ind of AP-1, AP+1, and AP+2
+                            ap_m1 = ind_upswings(find(ind_upswings < ap_ind_orig,1,'last'));
+                            ap_p1 = ind_upswings(find(ind_upswings > ap_ind_orig,1,'first'));
+                            if ~isempty(ap_p1); ap_p2 = ind_upswings(find(ind_upswings > ap_p1,1,'first')); else; ap_p2 = []; end   % Allow for the possibility that we might be at the end of the click train.
+                            if ~isempty(ap_p2); ap_p3 = ind_upswings(find(ind_upswings > ap_p2,1,'first')); else; ap_p3 = []; end
+
+                            % Draw in vertical lines
+                            hold on; plot([time(ap_m1), time(ap_m1)],[yl(1), yl(2)],'b--');
+                            hold on; plot([time(ap_ind_orig), time(ap_ind_orig)],[yl(1), yl(2)],'r--');
+                            ap_curr = ap_p1; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
+                            ap_curr = ap_p2; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
+                            ap_curr = ap_p3; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
                         end
-
-                        % Find ind of AP pulse
-                        dt = double(mode(diff(time)));
-                        pulse_period = 1000/PPfreq;
-                        ap_ind_orig = 1+round(shift/dt)+round(pulse_period/dt)*(pulse_num-1);  % Note: This line of code taken directly from: getDeltaTrainPresets2
-
-                        if plot_debug
-                            hold on; plot([time(ap_ind_orig) time(ap_ind_orig)],[0,1],'r--');
-                        end
-
-                        % Find ind of AP-1, AP+1, and AP+2
-                        ap_m1 = ind_upswings(find(ind_upswings < ap_ind_orig,1,'last'));
-                        ap_p1 = ind_upswings(find(ind_upswings > ap_ind_orig,1,'first'));
-                        if ~isempty(ap_p1); ap_p2 = ind_upswings(find(ind_upswings > ap_p1,1,'first')); else; ap_p2 = []; end   % Allow for the possibility that we might be at the end of the click train.
-                        if ~isempty(ap_p2); ap_p3 = ind_upswings(find(ind_upswings > ap_p2,1,'first')); else; ap_p3 = []; end
-
-                        % Draw in vertical lines
-                        hold on; plot([time(ap_m1), time(ap_m1)],[yl(1), yl(2)],'b--');
-                        hold on; plot([time(ap_ind_orig), time(ap_ind_orig)],[yl(1), yl(2)],'r--');
-                        ap_curr = ap_p1; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
-                        ap_curr = ap_p2; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
-                        ap_curr = ap_p3; if ~isempty(ap_curr); hold on; plot([time(ap_curr), time(ap_curr)],[yl(1), yl(2)],'b--'); end
-
                     end
                     
                     % Restores axis limits, if altered by the above
