@@ -985,7 +985,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        PPmaskduration = 100;
+        PPmaskduration = 50;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
@@ -1028,7 +1028,7 @@ switch chosen_cell
         s{f}.IB_onset2=100;
         
         % Setup mask
-        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskduration = 50;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         namesuffix1 = namesuffix;
@@ -1137,7 +1137,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        PPmaskduration = 100;
+        PPmaskduration = 50;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
@@ -1150,7 +1150,7 @@ switch chosen_cell
         blk_m_current = true;
         clear s
         
-        PPmaskduration = 100;
+        PPmaskduration = 50;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
@@ -1170,7 +1170,7 @@ switch chosen_cell
         s{f}.IB_onset2=100;
         
         % Setup mask
-        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskduration = 50;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         namesuffix1 = namesuffix;
@@ -1237,7 +1237,7 @@ switch chosen_cell
         s{f}.IB_onset2=100;
         
         % Setup mask
-        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskduration = 50;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         namesuffix1 = namesuffix;
@@ -1305,7 +1305,7 @@ switch chosen_cell
         s{f}.IB_onset2=100;
         
         % Setup mask
-        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskduration = 50;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         namesuffix1 = namesuffix;
