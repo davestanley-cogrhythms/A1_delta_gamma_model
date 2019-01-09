@@ -901,7 +901,7 @@ switch pulse_mode
         
         do_nested_mask = 0;
 
-        if sim_mode == 20
+        if sim_mode == 20 || sim_mode == 16
             % If in sim_mode = 20, we want to be able to use PPmaskshift in
             % order to vary the pulse onset time. 
             do_nested_mask = 1;
