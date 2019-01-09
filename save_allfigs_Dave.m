@@ -1,4 +1,3 @@
-
 function [outpath] = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,mycomment,handles_arr)
     %% Testing code
     if 0
