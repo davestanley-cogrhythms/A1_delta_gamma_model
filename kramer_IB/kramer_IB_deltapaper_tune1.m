@@ -24,27 +24,27 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0; s{f}.plot_on2 = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198s_sm16pm1' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 1;
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
-        datapf1a = kramer_IB_function_mode(s{f},f);
+        datapf0a = kramer_IB_function_mode(s{f},f);
         
     case '0b'
         %% Basic sim test 2
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0;  s{f}.plot_on2 = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198s_sm16pm7' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 7;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
-        datapf1a = kramer_IB_function_mode(s{f},f);
+        datapf0b = kramer_IB_function_mode(s{f},f);
         
     case '1a1'
         %% Paper Figs 1a - Pulse train no AP
