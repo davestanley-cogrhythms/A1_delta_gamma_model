@@ -129,8 +129,8 @@ if save_figures
                 'figheight',1/2};
         end
         
-        % % % % % % % % AP plots % % % % % % % %
-        if pulse_train_preset >= 1
+        % % % % % % % % Aperiodic plots % % % % % % % %
+        if pulse_train_preset >= 1 && include_LTS
             cent=ap_pulse_num*1000/PPfreq;
             crop_range=[cent-100,cent+100];
             
