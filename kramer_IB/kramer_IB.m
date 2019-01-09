@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 21;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 21;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -144,14 +144,14 @@ mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=cl
 sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
 
 % % % % % Display options
-plot_on = 1;
+plot_on = 0;
 plot_on2 = 0;
 do_visible = 'off';
 
 % % % % % Git options
-move_simfiles_to_repo_presim = true;
+move_simfiles_to_repo_presim = false;
 save_figures_move_to_Figs_repo = true;
-do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
+do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 mycomment = [''];
 
 % Simulate options
@@ -181,7 +181,7 @@ Now = clock;
 % % % % % Solver controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-dsfact=dsfact*10;
+% dsfact=dsfact*10;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -724,7 +724,7 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [6000, 400,500,600]
+        temp = [6000,300,400,500,600,700];
         %temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };

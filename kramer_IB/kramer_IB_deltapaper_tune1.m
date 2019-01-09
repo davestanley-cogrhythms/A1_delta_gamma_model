@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_tFS5_lowGABABb_v1.2';
+namesuffix = '_inc_gAR_0.5';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -24,7 +24,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198s_sm16pm1' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 1;
@@ -38,7 +38,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198s_sm16pm7' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 7;
