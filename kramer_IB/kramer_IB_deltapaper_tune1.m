@@ -46,6 +46,41 @@ switch chosen_cell
         
         datapf0b = kramer_IB_function_mode(s{f},f);
         
+    case '20'
+        %% Basic sim test 1 - Pure default simulation with save figs turned on 
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0; s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.repo_studyname = ['199_sweep4D_sm20pm1' namesuffix];
+        s{f}.sim_mode = 20;
+        s{f}.pulse_mode = 1;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        s{f}.plot_on = 1;
+        s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
+        s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
+        
+        datap20 = kramer_IB_function_mode(s{f},f);
+        
+    case '21'
+        %% Basic sim test 1 - Pure default simulation with save figs turned on 
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0; s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.repo_studyname = ['199_sweep4D_sm21pm7' namesuffix];
+        s{f}.sim_mode = 21;
+        s{f}.pulse_mode = 7;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        s{f}.plot_on = 1;
+        s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
+        s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
+        
+        datap21 = kramer_IB_function_mode(s{f},f);
     case '1a1'
         %% Paper Figs 1a - Pulse train no AP
         
