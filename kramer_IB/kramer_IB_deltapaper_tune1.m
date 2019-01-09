@@ -24,7 +24,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.plot_on2 = 0; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198_sm16pm1' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 1;
@@ -38,7 +38,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;  s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1;  s{f}.plot_on2 = 0; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198_sm16pm7' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 7;
@@ -51,7 +51,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0; s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 0; s{f}.plot_on2 = 0; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['199_sweep4D_sm20pm1' namesuffix];
         s{f}.sim_mode = 20;
         s{f}.pulse_mode = 1;
@@ -69,7 +69,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0; s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 0; s{f}.plot_on2 = 0; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['199_sweep4D_sm21pm7' namesuffix];
         s{f}.sim_mode = 21;
         s{f}.pulse_mode = 7;
@@ -87,7 +87,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1a1' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
@@ -107,7 +107,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -129,7 +129,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -159,7 +159,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1c' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         s{f}.tspan=[0 3500];
@@ -179,7 +179,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1d' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
@@ -200,7 +200,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig4_lakatos' num2str(f) '' namesuffix];
         s{f}.kerneltype_Poiss_IB = 4;         % Set to 4 for IB tones
         s{f}.pulse_mode = 5;
@@ -215,7 +215,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 3500];
@@ -230,7 +230,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
@@ -247,7 +247,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_32Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -268,7 +268,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_32Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -300,7 +300,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_26Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -321,7 +321,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_26Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -353,7 +353,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_21Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -374,7 +374,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_21Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -407,7 +407,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_17Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -428,7 +428,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_17Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -460,7 +460,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_14Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -481,7 +481,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_14Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -513,7 +513,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_11Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -534,7 +534,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
+        s{f}.save_everything_to_repo_postsim = true; s{f}.save_figures = 1; s{f}.save_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_11Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
