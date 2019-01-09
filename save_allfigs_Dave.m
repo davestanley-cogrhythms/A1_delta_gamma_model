@@ -1,5 +1,5 @@
 
-function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,currfigname)
+function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,folder_suffixname)
     %% save_allfigs
     % % For loop for saving figs
 %     if ~exist('currfname'); currfname = 'kramer_IB'; end
@@ -11,7 +11,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if nargin < 2; spec_all = []; end
     if nargin < 3; handles_arr = []; end
     if nargin < 4; do_commit = false; end
-    if nargin < 5; currfigname = 'unnamed'; end
+    if nargin < 5; folder_suffixname = 'unnamed'; end
 
 
     %% Set up
@@ -23,20 +23,15 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
         handles_arr = 1:9;
         do_commit = 1;
-        currfigname = '198q_reduced_simMode20';
+        folder_suffixname = '198q_reduced_simMode20';
         if ~exist('study_dir','var'); study_dir = []; end
     end
-    
-    currfname = 'kr'; 
-    
-%     savenames={'fig1','fig2','fig3','fig4','fig5','fig6','fig7','fig8','fig9','fig10','fig11','fig12','fig13','fig14','fig15','fig16','fig17','fig18','fig19','fig20','fig21','fig22','fig23','fig24','fig25','fig26','fig27','fig28','fig29','fig30'};
-%     savenames= cellfunu(@(x,y) [x y],repmat({'fig'},1,100),cellfunu(@num2str,num2cell(1:100)));
+        
     mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
     c=clock;
     sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
-    sp = [sp '__' currfname '_' currfigname];
+    sp = [sp '__' folder_suffixname];
     basepath = fullfile('..','model-dnsim-kramer_IB_Figs2');
-    % basepath = '~/figs_tosave';
     
     mkdir(fullfile(basepath,sp));
     
@@ -116,7 +111,7 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     
     % Write to a text file
     fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
-    fprintf(fileID,[currfigname ' ' mycomment]);
+    fprintf(fileID,[folder_suffixname ' ' mycomment]);
     fclose(fileID);
     
     outpath = fullfile(basepath,sp);
@@ -133,11 +128,11 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
         currd = pwd;
         cd ../model-dnsim-kramer_IB_Figs2
         system('git add *');
-        system(['git commit -m "' currfigname ' ' mycomment '"']);
+        system(['git commit -m "' folder_suffixname ' ' mycomment '"']);
         %system('git push');
         cd ..
         system('git add *');
-        system(['git commit -m "' currfigname ' ' mycomment '"']);
+        system(['git commit -m "' folder_suffixname ' ' mycomment '"']);
         cd(currd);
         
 %         %% Push
