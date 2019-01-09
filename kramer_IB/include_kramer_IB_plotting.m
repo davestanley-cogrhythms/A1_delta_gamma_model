@@ -2,8 +2,9 @@
 
 %% Save figures
 % Plotting composite figures
+save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
+
 if save_composite_figures && save_figures
-    save_path = fullfile(study_dir,'Figs_Composite');                       % For saving figures with save_figures flag turned on
     tv3 = tic;
     data_img = dsImportPlots(study_dir); xp_img_temp = dsAll2mdd(data_img);
     xp_img = calc_synaptic_totals(xp_img_temp,pop_struct); clear xp_img_temp
@@ -25,13 +26,14 @@ end
 
 if save_combined_figures
     %Names of state variables: NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
+    
+    
+    savefigure_options = {'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'prepend_date_time',false};
 
     % Control height of figures
     chosen_height = min(length(data),4) / 4;        % If lenght(data) >= 4, height is 1; otherwise, use fixed height.
 
-    % % Plot summary statistics
-    % Delta statistics - NMDA and GABA B
-
+    
     i=0;
     parallel_plot_entries = {};
 
@@ -40,38 +42,38 @@ if save_combined_figures
     if include_IB && include_NG && (include_FS || include_dFS5)
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
     if include_IB && include_NG && ~(include_FS || include_dFS5)
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % RS M current plot
     if include_RS && include_LTS
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % IB M current plot
     if include_IB
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % IB h-current plot
     if include_IB
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','AR','xlims',ind_range,'do_mean',true,'LineWidth',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
 
@@ -80,22 +82,22 @@ if save_combined_figures
         % All currents
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, data(1),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,...
-        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-        'figheight',1/2,'figwidth',1/2};
+        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+        'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
         % Just delta currents
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, data(1),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,...
-        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-        'figheight',1/2,'figwidth',1/2};
+        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+        'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     if include_RS && include_FS && include_LTS && include_dFS5
         % Just gammma oscillator
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, data(1),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,...
-        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-        'figheight',1/2,'figwidth',1/2};
+        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+        'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % % % % % % % % VOLTAGE Line plots % % % % % % % %
@@ -103,8 +105,8 @@ if save_combined_figures
     if include_IB
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,'ylims',[-85 45],...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % Mean plots
@@ -112,8 +114,8 @@ if save_combined_figures
         % Waveform plots mean all cells
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','waveform','do_mean',1,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % Mean plots
@@ -121,8 +123,8 @@ if save_combined_figures
         % Waveform plots mean all cells
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',1/2};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % % % % % % % % Aperiodic plots % % % % % % % %
@@ -141,20 +143,20 @@ if save_combined_figures
         % Full voltage waveform plot on first dataset
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data(1),'population','all','crop_range',crop_range,'figwidth',1/3,'subplot_options',so,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',length(spec.populations)/maxNpopulations};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',length(spec.populations)/maxNpopulations}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
         % Plot average across last dimension
         if length(data) > 1 && include_RS && include_LTS && size(vary,1) == 1
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                };
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                };
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
         end
 
@@ -163,12 +165,12 @@ if save_combined_figures
         if length(data) > 1 && include_RS && include_LTS && size(vary,1) > 1
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                };
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
             i=i+1;
             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                };
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         end
     end
 
@@ -178,8 +180,8 @@ if save_combined_figures
     if include_IB && include_NG && length(data) > 1
 %             i=i+1;
 %             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figheight',chosen_height};
+%                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % % % % % % % % Rastergram plots % % % % % % % %
@@ -187,13 +189,13 @@ if save_combined_figures
         % Default rastergram (slow)
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','xlims',ind_range,'plot_type','rastergram',...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 %             % Imagesc fast & cheap version
 %             i=i+1;
 %             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figheight',chosen_height};
+%                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     if include_IB && include_NG && (include_FS || include_dFS5) && length(data) > 1
@@ -207,8 +209,8 @@ if save_combined_figures
         myplot_options.show_lineplot_NG_GABA = false;
         myplot_options.show_lineplot_NGFS_GABA = false;
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         clear myplot_options
 
         % Default rastergram (slow) with GABA A and B lineplots. No background shading
@@ -232,8 +234,8 @@ if save_combined_figures
         myplot_options.show_lineplot_NGFS_GABA = true;
 
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         clear myplot_options
     end
 
@@ -249,8 +251,8 @@ if save_combined_figures
         myplot_options.show_lineplot_NGFS_GABA = false;
 
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         clear myplot_options
     end
 
@@ -276,30 +278,30 @@ if save_combined_figures
         myplot_options.show_lineplot_NGFS_GABA = false;
 
         parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'plot_type','raster','population','IB','plot_handle',@xp_raster1_GABAB,'variable','/V|THALL_GABA_gTH|GABAall_gTH|GABAA_gTH/','force_last','variables','Ndims_per_subplot',2,'plot_options',myplot_options,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',chosen_height};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         clear myplot_options
     end
 
     if include_RS && length(data) > 1
 %         i=i+1;
 %         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','RS','xlims',ind_range,'plot_type','rastergram',...
-%             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%             'figheight',chosen_height};
+%             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     if include_FS && length(data) > 1
 %         i=i+1;
 %         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','FS','xlims',ind_range,'plot_type','rastergram',...
-%             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%             'figheight',chosen_height};
+%             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     if include_LTS && length(data) > 1
 %             i=i+1;
 %             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figheight',chosen_height};
+%                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
 
@@ -307,8 +309,8 @@ if save_combined_figures
     if include_IB
 %         i=i+1;
 %         parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
-%             'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%             'figheight',chosen_height};
+%             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % % % % % % % % VOLTAGE Firing rate plots % % % % % % % %
@@ -316,8 +318,8 @@ if save_combined_figures
     if length(data) > 1
 %             i=i+1;
 %             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','heatmap_sortedFR','population','IB',...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figwidth',chosen_height};
+%                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%                 'figwidth',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % Firing rate means
@@ -325,8 +327,8 @@ if save_combined_figures
 %             i=i+1;
 %             so.autosuppress_interior_tics = true;
 %             parallel_plot_entries{i} = {@dsPlot2_PPStim, data,'xlims',ind_range,'plot_type','meanFR','population','IB','subplot_options',so,...
-%                 'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-%                 'figwidth',chosen_height};
+%                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+%                 'figwidth',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
 
@@ -338,13 +340,13 @@ if save_combined_figures
     if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, data,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_S2/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',1/3};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, data,'plot_type','waveform','population','IB','variable','/iPoissonNested_ampaNMDA_S2|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_resonance_errbar,'force_last','variable','Ndims_per_subplot',3,'do_mean',true,...
-            'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-            'figheight',1/3};
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
     end
 
@@ -362,8 +364,8 @@ if save_combined_figures
                 for j = 1:N_temp
                     i=i+1;
                     parallel_plot_entries{i} = {sim_struct.plot_func, data, sim_struct.parallel_plot_entries_additional{j}{:}, ...
-                        'saved_fignum',i,'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'save_figname_prefix',['Fig ' num2str(i)],'prepend_date_time',false, ...
-                        };                        
+                        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], ...
+                        }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
                 end
 
             end
