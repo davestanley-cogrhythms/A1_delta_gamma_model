@@ -198,8 +198,8 @@ if save_combined_figures
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
-
-    if include_IB && include_NG && (include_FS || include_dFS5) && length(data) > 1
+                                                                                    % These plots currently only work for max 2D sweeps. 
+    if include_IB && include_NG && (include_FS || include_dFS5) && length(data) > 1 && size(vary,1) <= 2
         % Default rastergram (slow) with shaded background & line plot
         i=i+1;
         clear myplot_options
@@ -240,7 +240,7 @@ if save_combined_figures
         clear myplot_options
     end
 
-    if include_IB && include_NG && length(data) > 1
+    if include_IB && include_NG && length(data) > 1 && size(vary,1) <= 2
         % Default rastergram (slow) with shaded background; no line plot
         i=i+1;
         clear myplot_options
@@ -257,7 +257,7 @@ if save_combined_figures
         clear myplot_options
     end
 
-    if include_IB && include_NG && ~(include_FS || include_dFS5) && length(data) > 1
+    if include_IB && include_NG && ~(include_FS || include_dFS5) && length(data) > 1 && size(vary,1) <= 2
         % Default rastergram (slow) with NG lineplots only.
         i=i+1;
         % Get normalization range
