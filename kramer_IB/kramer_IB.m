@@ -35,9 +35,24 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 3 - Auditory clicks @ 10 Hz
                             % 6 - Polley stimulation mode 1 - PPStim to dFS5 cells
                             % 7 - Polley stimulation mode 2 - PPStim to tFS5 cells and also NMDA to deep IB
-save_figures = 0;               % Master switch for saving any figures in the simulation. Controls saving figures within dsSimulate.
-    save_combined_figures = 1;      % Flag for saving dsPlot2 across all simulations in data.
-    save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
+                            
+
+% Save figures options within DynaSim                            
+save_figures = 0;               % Save figures associated with individusl sims, within dsSimulate. Controlled by plot_options (below)
+    save_composite_figures = 0;     % Flag for saving composite figures comprised of PNGs stitched together from individual simulations into a single large canvas
+
+% % % % % Display options
+save_combined_figures = 1;      % Flag for figures based on post-hoc analysis of all sims together
+plot_on = 0;
+plot_on2 = 0;
+do_visible = 'off';
+
+% % % % % Git options
+move_simfiles_to_repo_presim = false;
+save_figures_move_to_Figs_repo = true;
+do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
+mycomment = [''];
+
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
 
@@ -142,17 +157,6 @@ end
 sp = get_sp;
 mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
 sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
-
-% % % % % Display options
-plot_on = 0;
-plot_on2 = 0;
-do_visible = 'off';
-
-% % % % % Git options
-move_simfiles_to_repo_presim = false;
-save_figures_move_to_Figs_repo = true;
-do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
-mycomment = [''];
 
 % Simulate options
 compile_flag = 1;
