@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 20;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -755,8 +755,8 @@ switch sim_mode
             %'IB','PP_gSYN',[0,0.5]; ...
             'NG->IB','gGABAB',[.7:.1:.9]/Nng;...
             'IB','stim2',[.5:0.25:1]; ...
-            'IB','PP_gSYN',[0,0.2,0.4]; ...
-            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,600,500,400,300];...
+            'IB','PP_gSYN',[0,0.1,0.2,0.4]; ...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,600,500];...
             };
         
 %         % % % FOR TESTING ONLY % % % 
@@ -907,6 +907,7 @@ switch pulse_mode
             do_nested_mask = 1;
             PPmaskfreq = 1;         % Period of 1 and duration of 999.99 (e.g., 1 second - dt) should make it be always on
             PPmaskduration = 999.99;
+            PPonset = 0;
         end
         
         
