@@ -249,9 +249,9 @@ fast_offset = 0;
     % Note2: Positive values are hyperpolarizing, negative values are
     % depolarizing.
 % #mystim
-Jd1=3;    % IB cells
+Jd1=5;    % IB cells
 Jd2=1.0;    %         
-Jng1=-2;   % NG cells
+Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
 JRS2 = -1.5; %
@@ -273,8 +273,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
+IB_offset1=50;
+IB_onset2=50;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
