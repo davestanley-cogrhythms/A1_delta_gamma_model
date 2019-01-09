@@ -1,41 +1,49 @@
 
-function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,folder_suffixname)
-    %% save_allfigs
-    % % For loop for saving figs
-%     if ~exist('currfname'); currfname = 'kramer_IB'; end
-%     if ~exist('currfigname'); currfigname = '3_single_comp_only_Mcurr'; end
-    %clear all       % Clear memory for large data sets before saving figs.
-    
-    %% Control inputs
-    if nargin < 1; error('study_dir must be specified'); end
-    if nargin < 2; spec_all = []; end
-    if nargin < 3; handles_arr = []; end
-    if nargin < 4; do_commit = false; end
-    if nargin < 5; folder_suffixname = 'unnamed'; end
-
-
-    %% Set up
-
-    [a,b] = fileparts(pwd); if ~strcmp(b,'kramer_IB'); error('Must be in kramer_IB working directory to run.'); end
-        
-    supersize_me = 0;
-    
-    if strcmp(calledby(0), 'root')      % Commands inside here will only execute when running this code in cell mode (e.g. not as a function)
+function [outpath] = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,mycomment,handles_arr)
+    %% Testing code
+    if 0
+        %% Only run this if running in cell mode
+        repo_studyname = '198q_reduced_simMode20';
         handles_arr = 1:9;
         do_commit = 1;
-        folder_suffixname = '198q_reduced_simMode20';
-        if ~exist('study_dir','var'); study_dir = []; end
+        mycomment = [''];
     end
+    %% Set up
+    
+    % Make sure in appropriate working directory
+    [a,b] = fileparts(pwd); if ~strcmp(b,'kramer_IB'); error('Must be in kramer_IB working directory to run.'); end
+    
+    
+    study_dir = get_studydir(sp,repo_studyname);
         
-    mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/','');
-    c=clock;
-    sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
-    sp = [sp '__' folder_suffixname];
-    basepath = fullfile('..','model-dnsim-kramer_IB_Figs2');
+    supersize_me = 0;
+
     
-    mkdir(fullfile(basepath,sp));
+    % Outpath in model-dnsim-kramer_IB_Figs2 folder for saving data
+    [outpath,foldername] = get_outpath(sp,repo_studyname);
     
-    % Save plots
+    if ~exist(outpath,'dir')
+        % If basepath doesn't exist.... create it and copy over simulation
+        % files
+        mkdir(outpath);
+        
+        % Save specs
+        if exist('spec_all','var')
+            save_specs(spec_all,outpath);
+        end
+        
+        % Save m files
+        save_mfiles(outpath);
+        
+        % Write commit message to a text file
+        fileID = fopen(fullfile(outpath,'readme.txt'),'w');
+        fprintf(fileID,[repo_studyname ' ' mycomment]);
+        fclose(fileID);
+    else
+        mycomment = ['Update SM - Saving figures for ' foldername];
+    end
+    
+    % Save open figures
     if ~isempty(handles_arr)
         for i=handles_arr
             if supersize_me
@@ -46,30 +54,21 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
             end
             set(i,'PaperPositionMode','auto');
             savenames{i} = ['fig' num2str(i)];
-            %print(gcf,'-dpng','-r100',fullfile(basepath,sp,savenames{i}));
-            tic; print(i,'-dpng','-r75',fullfile(basepath,sp,savenames{i}));toc
+            %print(gcf,'-dpng','-r100',fullfile(outpath,savenames{i}));
+            tic; print(i,'-dpng','-r75',fullfile(outpath,savenames{i}));toc
             %tic; screencapture(gcf,[],fullfile(basepath,sp,[savenames{ina} '.png']));toc
-            %print(gcf,'-dpdf',fullfile(basepath,sp,savenames{i}))
-    %         print(gcf,'-dpng',fullfile(basepath,sp,savenames{i}))
+            %print(gcf,'-dpdf',fullfile(outpath,savenames{i}))
+            %print(gcf,'-dpng',fullfile(outpath,savenames{i}))
         end
+        close all
     end
     
-    % Save spec file
-    if exist('spec_all','var')
-        if ~isempty(spec_all)
-            save(fullfile(basepath,sp,'spec_all.mat'),'spec_all');
-        end
-    end
-    
-    % Save .m file
-    zip(fullfile(basepath,sp,'kramer_IB.zip'),{'kramer_IB.m','include_kramer_IB_populations.m','include_kramer_IB_synapses.m','include_kramer_IB_simulate.m','include_kramer_IB_plotting.m', ...
-        'kramer_IB_deltapaper_scripts2.m','kramer_IB_deltapaper_scripts1.m','kramer_IB_deltapaper_tune1.m','kramer_IB_clustersub.m'});
-    
+    % Save study dir stuff
     if ~isempty(study_dir)
         % Copy study info file
         if exist(fullfile(study_dir,'studyinfo.mat'),'file')
-            fprintf(['Copying ' fullfile(study_dir,'studyinfo.mat') ' to ' fullfile(basepath,sp) '\n']);
-            [~, message] = copyfile(fullfile(study_dir,'studyinfo.mat'),fullfile(basepath,sp));
+            fprintf(['Copying ' fullfile(study_dir,'studyinfo.mat') ' to ' outpath '\n']);
+            [~, message] = copyfile(fullfile(study_dir,'studyinfo.mat'),outpath);
             fprintf(['Copymessage: ' message '\n']);
         end
 
@@ -80,8 +79,8 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
                 D = dir(plots_folder);
                 plots_thresh = 50;
                 if length(D) < plots_thresh
-                    fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' fullfile(basepath,sp) '\n']);
-                    [~, message] = copyfile(plots_folder,fullfile(basepath,sp));
+                    fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' outpath '\n']);
+                    [~, message] = copyfile(plots_folder,outpath);
                     fprintf(['Copymessage: ' message '\n']);
                 else
                     fprintf(['Skipping saving plots folder due to number of files in ' plots_folder ' being ' num2str(length(D)) ', which is over threshold of ' num2str(plots_thresh) '\n']);
@@ -94,27 +93,11 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
 
         % Copy saved composite plots if not empty
         if exist(fullfile(study_dir,'Figs_Composite'),'dir')
-            fprintf(['Copying ' fullfile(study_dir,'Figs_Composite') ' to ' fullfile(basepath,sp) '\n']);
-            [~, message] = copyfile(fullfile(study_dir,'Figs_Composite'),fullfile(basepath,sp));
+            fprintf(['Copying ' fullfile(study_dir,'Figs_Composite') ' to ' outpath '\n']);
+            [~, message] = copyfile(fullfile(study_dir,'Figs_Composite'),outpath);
             fprintf(['Copymessage: ' message '\n']);
         end
     end
-    
-%     % Copy saved plots if not empty
-%     if exist('save_path','var')
-%         if exist(save_path,'dir')
-%             movefile(save_path,fullfile(basepath,sp));
-%         end
-%     end
-%     %
-    mycomment = [''];
-    
-    % Write to a text file
-    fileID = fopen(fullfile(basepath,sp,'readme.txt'),'w');
-    fprintf(fileID,[folder_suffixname ' ' mycomment]);
-    fclose(fileID);
-    
-    outpath = fullfile(basepath,sp);
     
     % Play Hallelujah
     if ismac
@@ -124,22 +107,10 @@ function [outpath] = save_allfigs_Dave(study_dir,spec_all,handles_arr,do_commit,
     
     if do_commit
         %% Commit
-        !rm ../save_allfigs_Dave.m~
-        currd = pwd;
-        cd ../model-dnsim-kramer_IB_Figs2
-        system('git add *');
-        system(['git commit -m "' folder_suffixname ' ' mycomment '"']);
-        %system('git push');
-        cd ..
-        system('git add *');
-        system(['git commit -m "' folder_suffixname ' ' mycomment '"']);
-        cd(currd);
-        
-%         %% Push
-        cd ../model-dnsim-kramer_IB_Figs2
-        cd(currd);
+        include_figures = do_commit == 2;       % Only save figures if do_commit is set to 2
+        run_commit(foldername,mycomment,include_figures);
     end
-    close all
+    
     
 
 end

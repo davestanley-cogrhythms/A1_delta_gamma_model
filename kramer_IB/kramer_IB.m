@@ -105,7 +105,6 @@ end
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-save_figures_move_to_Figs_repo = true;
 ind_range = [tspan(1) tspan(2)];
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
@@ -140,13 +139,22 @@ else
 end
 
 % % % % % Get currrent date time string
+sp = get_sp;
 mydate = datestr(datenum(date),'yy/mm/dd'); mydate = strrep(mydate,'/',''); c=clock;
 sp = ['d' mydate '_t' num2str(c(4),'%10.2d') '' num2str(c(5),'%10.2d') '' num2str(round(c(6)),'%10.2d')];
 
 % % % % % Display options
-plot_on = 0;
+plot_on = 1;
 plot_on2 = 0;
-visible_flag = 'on';
+do_visible = 'off';
+
+% % % % % Git options
+move_simfiles_to_repo_presim = true;
+save_figures_move_to_Figs_repo = true;
+do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
+mycomment = [''];
+
+% Simulate options
 compile_flag = 1;
 parallel_flag = double(sim_mode >= 8 && ~cluster_flag);     % Sim_modes 9 - 14 are for Dave's vary simulations. Want par mode on for these.
 maxNcores = 1;
@@ -156,15 +164,13 @@ verbose_flag = 1;
 % random_seed = 'shuffle';
 % random_seed = 8;
 a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
-study_dir = ['study_' sp '_' repo_studyname];               % Adding repo_studyname to make sure study_dir is unique!
-% study_dir = [];
-% study_dir = ['study_dave'];
+study_dir = get_studydir(sp,repo_studyname);
 
 if isempty(plot_options); plot_functions = [];
 else; plot_functions = repmat({@dsPlot2_PPStim},1,length(plot_options));
 end
 plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
-% plot_args = 
+
 
 % % % % % Major switches affecting model structure
 do_dualexp_synapse = 0;         % Use dual exponential synaspe model for LTS cells, as opposed
@@ -172,7 +178,7 @@ do_dualexp_synapse = 0;         % Use dual exponential synaspe model for LTS cel
 
 Now = clock;
 
-% % % % % Simulation controls
+% % % % % Solver controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
 dsfact=dsfact*10;
@@ -612,7 +618,7 @@ switch sim_mode
         vary = { %'RS','stim2',-1*[-.5:1:5]; ...
             %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
-            %'IB','stim2',[0:0.25:1.0]; ...
+            'IB','stim2',[0:0.25:0.75]; ...
             %'LTS','stim2',[-2.5:.1:-1.9]; ...
             %'tFS5','stim',[1.25:.25:2]; ...
             %'IB','gRAN',[0,0.01,0.025,0.05];...
@@ -990,6 +996,22 @@ include_kramer_IB_synapses;
 
 %% % % % % % % % % % % % %  ##4.0 Run simulation & post process % % % % % % % % % % % % %
 
+% Prepare spec_all
+pop_struct.Nib = Nib;
+pop_struct.Nrs = Nrs;
+pop_struct.Nfs = Nfs;
+pop_struct.Nlts = Nlts;
+pop_struct.Nng = Nng;
+pop_struct.Ndfs5 = Nfs;
+pop_struct.Ntfs5 = Ntfs5;
+spec_all.spec = spec;
+spec_all.pop_struct = pop_struct;
+
+if move_simfiles_to_repo_presim
+    outpath = save_simfiles_Dave(sp,repo_studyname,spec_all,do_commit,mycomment);
+    do_commit = false;      % Turn off commit so it is not called a 2nd time when running save_allfigs_Dave. We want only 1 commit per sim. Can add figures later
+end
+
 include_kramer_IB_simulate;
 
 %% ##5.0 Plotting
@@ -998,3 +1020,17 @@ if ~cluster_flag
     include_kramer_IB_plotting
 end
 
+
+%% ##6.0 Save figures, composite figures, and files to data repo
+outpath = [];
+if save_figures_move_to_Figs_repo
+    if plot_on || plot_on2
+        h = gcf;
+        handles_arr = 1:h.Number;
+    else
+        handles_arr = [];
+    end
+    outpath = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,mycomment,handles_arr);
+end
+
+fprintf('Elapsed time for full sim is: %g\n',toc(tv1));

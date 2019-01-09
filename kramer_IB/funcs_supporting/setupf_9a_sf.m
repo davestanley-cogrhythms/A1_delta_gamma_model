@@ -20,7 +20,7 @@ function [s,f] = setupf_9a_sf(maxNcores,namesuffix,casenum,short_mode,blk_h_curr
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig' casenum '_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;

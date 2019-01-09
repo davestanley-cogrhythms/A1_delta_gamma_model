@@ -1,7 +1,6 @@
 
 
-
-% Load figures from save if necessary
+%% Save figures
 if save_figures
     % mysaves
     
@@ -399,12 +398,14 @@ if save_figures
     
 end
 
-
+%% Plot_on plots
 if plot_on
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
-        case {1,11}            
-
+        case {1}            
+            dsPlot2_PPStim(data,'do_mean',true,'visible',do_visible);
+            dsPlot2_PPStim(data,'max_num_overlaid',2,'visible',do_visible);
+            dsPlot2_PPStim(data,'population','/IB/','plot_type','raster','visible',do_visible);
 
         case {2,3}
 
@@ -412,21 +413,12 @@ if plot_on
         case {5,6}
 
         case {8,9,10,12}
-
-            
-            %%
-            % #myfigs9
+            %% 2D plots
 
                 inds = 1:length(data);
-                
-
-
-                h = dsPlot2_PPStim(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
-                
-                
-                plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
-                dsPlot2_PPStim(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
-
+                %dsPlot2_PPStim(data,'do_mean',true,'visible',do_visible);
+                dsPlot2_PPStim(data(inds),'population','IB','xlims',ind_range,'plot_type','rastergram','visible',do_visible)
+                dsPlot2_PPStim(data(inds),'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2,'visible',do_visible)
             
             
             
@@ -482,8 +474,6 @@ if plot_on
             
         case 19
             %%
-            do_visible = 'off';
-            
             axis1 = 'IB_PP_gSYN';
             
             % 2D subplot grid
@@ -497,7 +487,6 @@ if plot_on
             
         case {20,21}            % For plotting up to 4D data (4 varied parameters, 1 population, and 1 variable). Additional dimensions will be as part of new figures
             %%
-            do_visible = 'off';
             xp = dsAll2mdd(data);
             
             % Switches to control which plotting
@@ -749,16 +738,5 @@ if 1 && plot_on2
 %         dsPlot2_PPStim(data,'population','IB','variable','/iPoissonNested_ampaNMDA_ISYN|tFS5_IBaIBdbiSYNseed_ISYN/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,'visible',do_visible)
 end
 
-    
-spec_all.spec = spec;
-spec_all.pop_struct = pop_struct;
-%% ##6.0 Move composite figures and individual figs to Figs repo.
-outpath = [];
-if save_figures_move_to_Figs_repo && save_figures
-    outpath = save_allfigs_Dave(study_dir,spec_all,[],false,repo_studyname);
-end
 
-fprintf('Elapsed time for full sim is: %g\n',toc(tv1));
-
-%%
 

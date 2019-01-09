@@ -50,13 +50,6 @@ end
 % % When varying synaptic connectivity, convert connectivity measure from
 % synaptic conductance / cell to total synaptic conductange 
 % (e.g. g_RSFS*N)
-pop_struct.Nib = Nib;
-pop_struct.Nrs = Nrs;
-pop_struct.Nfs = Nfs;
-pop_struct.Nlts = Nlts;
-pop_struct.Nng = Nng;
-pop_struct.Ndfs5 = Nfs;
-pop_struct.Ntfs5 = Ntfs5;
 xp = ds2mdd(data,true,true);           % Turned off merging by default
 xp = calc_synaptic_totals(xp,pop_struct);
 data = dsMdd2ds(xp);
