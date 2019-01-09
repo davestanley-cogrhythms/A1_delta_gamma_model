@@ -181,7 +181,6 @@ Now = clock;
 % % % % % Solver controls
 dt=.01; solver='euler'; % euler, rk2, rk4
 dsfact=max(round(0.1/dt),1); % downsample factor, applied after simulation
-% dsfact=dsfact*10;
 
 %% % % % % % % % % % % % %  ##2.0 Biophysical parameters % % % % % % % % % % % % %
 % Moved by BRPP on 1/19, since Cm_factor is required to define parameters
@@ -738,6 +737,7 @@ switch sim_mode
             };
         
     case 19     % For tuning excitatory reset of delta oscillator
+        dsfact=dsfact*10;
         vary = { ...
             'IB','gRAN',[0.05]; ...
             'NG->IB','gGABAB',[.5:.2:1.1]/Nng;...
@@ -747,6 +747,7 @@ switch sim_mode
         
     case 20     % For tuning excitatory reset of delta oscillator (includes tuning PPOnset)
         pulse_mode = 1;
+        dsfact=dsfact*10;
         % Full sweep
         vary = { ...
             %'IB','gRAN',[0.05]; ...
@@ -775,6 +776,7 @@ switch sim_mode
 %             };
 
     case 21     % For tuning excitatory reset of delta oscillator (includes tuning PPOnset)
+        dsfact=dsfact*10;
         pulse_mode = 7;
         % Full sweep
         vary = { ...
