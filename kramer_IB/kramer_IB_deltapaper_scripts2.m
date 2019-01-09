@@ -12,7 +12,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_tFS5_lowGABABb_v1.3';
+namesuffix = '_tFS5_lowGABABb_v1.4';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -1619,7 +1619,7 @@ switch chosen_cell
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
-        s{f}.IB_PP_gSYN=0.4;
+        s{f}.IB_PP_gSYN=0.2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
         
         data = kramer_IB_function_mode(s{f},f);
