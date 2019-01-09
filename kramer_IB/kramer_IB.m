@@ -51,11 +51,11 @@ disable_unused_synapses = true;     % This disables any synaptic mechanisms with
 
 % % % % % Cells to include in model
 include_IB =   1;
-include_RS =   0;
-include_FS =   0;
-include_LTS =  0;
+include_RS =   1;
+include_FS =   1;
+include_LTS =  1;
 include_NG =   1;
-include_dFS5 = 0;
+include_dFS5 = 1;
 include_tFS5 = 1;
 include_deepRS = 0;
 include_deepFS = 0;

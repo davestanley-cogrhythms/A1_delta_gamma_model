@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_inc_jIB_1.0';
+namesuffix = '_fullnet';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -24,8 +24,8 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0; s{f}.plot_on2 = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
-        s{f}.repo_studyname = ['198t_sm16pm1' namesuffix];
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1; s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.repo_studyname = ['198_sm16pm1' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 1;
         
@@ -38,8 +38,8 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 0;  s{f}.plot_on2 = 1; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
-        s{f}.repo_studyname = ['198t_sm16pm7' namesuffix];
+        s{f}.save_figures_move_to_Figs_repo = true; s{f}.save_figures = 1;  s{f}.plot_on2 = 0; s{f}.move_simfiles_to_repo_presim = true; s{f}.do_commit = 1;
+        s{f}.repo_studyname = ['198_sm16pm7' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 7;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
