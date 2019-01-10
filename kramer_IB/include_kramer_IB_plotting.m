@@ -410,7 +410,7 @@ if plot_on
         case {5,6}
 
         case {8,9,10,12}
-            %% 2D plots
+            % 2D plots
 
                 inds = 1:length(data);
                 %dsPlot2_PPStim(data,'do_mean',true,'visible',do_visible);
@@ -445,6 +445,7 @@ if plot_on
             dsPlot2_PPStim(data,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so)
 
         case 15         % Vary is 2D - 1st dimension is shuffle, 2nd is dimension of interest
+            %% AP pulse simulations
             
             % % % For plotting AP data % % %
             % Center around AP pulse
@@ -470,7 +471,7 @@ if plot_on
             
             
         case 19
-            %%
+            %% Spontanous activity 4D variation
             axis1 = 'IB_PP_gSYN';
             
             % 2D subplot grid
@@ -483,7 +484,7 @@ if plot_on
             dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
             
         case {20,21}            % For plotting up to 4D data (4 varied parameters, 1 population, and 1 variable). Additional dimensions will be as part of new figures
-            %%
+            %% Excitatory / inhibitory reset 4D variation
             xp = dsAll2mdd(data);
             
             % Switches to control which plotting
@@ -721,15 +722,16 @@ end
 
 if 1 && plot_on2
         %% Latest plotting commands
-        do_visible = 'off';
-        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-40],'visible',do_visible)
-        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-65],'visible',do_visible)
-        dsPlot2_PPStim(data,'plot_type','raster','population','IB','visible',do_visible);
-        dsPlot2_PPStim(data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',1,'visible',do_visible);
-        %dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
-        dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
-        dsPlot2_PPStim(data,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],'visible',do_visible);
-        dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,'visible',do_visible)
+        NESP = 1;
+        plot2_figure_options = {'visible',do_visible,'num_embedded_subplots',NESP};
+        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-40],plot2_figure_options{:})
+        dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-65],plot2_figure_options{:})
+        dsPlot2_PPStim(data,'plot_type','raster','population','IB',plot2_figure_options{:});
+        dsPlot2_PPStim(data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',1,plot2_figure_options{:});
+        %dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+        dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+        dsPlot2_PPStim(data,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],plot2_figure_options{:});
+        dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
         
 %         % Optional correction - flip x/y varied; not guranteed to work in all
 %         % situations
@@ -738,12 +740,12 @@ if 1 && plot_on2
 %         % Plot varied parameters individually
 %         N=length(vary{3,3});
 %         N=5;
-%         for i = 1:N; dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'varied3',i,'visible',do_visible); end
+%         for i = 1:N; dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'varied3',i,plot2_figure_options{:}); end
         
         
 %         % IB PPStim NMDA plots 
-%         dsPlot2_PPStim(data,'population','IB','variable','/iPoissonNested_ampaNMDA_S3|iPoissonNested_ampaNMDA_S3_NMDA|tFS5_IBaIBdbiSYNseed_s/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,'visible',do_visible)
-%         dsPlot2_PPStim(data,'population','IB','variable','/iPoissonNested_ampaNMDA_ISYN|tFS5_IBaIBdbiSYNseed_ISYN/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,'visible',do_visible)
+%         dsPlot2_PPStim(data,'population','IB','variable','/iPoissonNested_ampaNMDA_S3|iPoissonNested_ampaNMDA_S3_NMDA|tFS5_IBaIBdbiSYNseed_s/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+%         dsPlot2_PPStim(data,'population','IB','variable','/iPoissonNested_ampaNMDA_ISYN|tFS5_IBaIBdbiSYNseed_ISYN/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,plot2_figure_options{:})
 end
 
 
