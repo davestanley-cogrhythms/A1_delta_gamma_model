@@ -55,6 +55,7 @@ mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). 
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
+mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -105,7 +106,7 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['201f_dec_gRAN_sm21pm7'];
+repo_studyname = ['201e_sweep4D_NMDA_sm21pm7_gRan_0.5'];
 
 % IB Ca and M current
 gM_d = 2;
@@ -287,7 +288,7 @@ RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.01;      % synaptic noise conductance IB cells
+gRAN=.05;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 100;  % Mean frequency Poisson IPSPs
