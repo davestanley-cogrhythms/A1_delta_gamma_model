@@ -488,7 +488,7 @@ if plot_on
             xp = dsAll2mdd(data);
             
             % Switches to control which plotting
-            plot_everything = 1;                                        % Setting to 1 plots many different axis combinations; setting to 0 plots a much smaller subset
+            plot_everything = 0;                                        % Setting to 1 plots many different axis combinations; setting to 0 plots a much smaller subset
             plot_3D = 0;
             plot_2D = 1;
             plot_1D = 0;
@@ -550,10 +550,10 @@ if plot_on
                     chosen_var0{k} = '/V/';
                     chosen_ylims0{k} = [-95 -20];
                     
-                    % Subthreshold range
-                    k = k+1;
-                    chosen_var0{k} = '/V/';
-                    chosen_ylims0{k} = [-95 -60];
+%                     % Subthreshold range
+%                     k = k+1;
+%                     chosen_var0{k} = '/V/';
+%                     chosen_ylims0{k} = [-95 -60];
                     
                     % h current
                     k = k+1;
