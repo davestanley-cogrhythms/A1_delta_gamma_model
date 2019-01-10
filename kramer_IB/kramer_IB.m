@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 2000];
+tspan=[0 1000];
 sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -28,7 +28,7 @@ sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 7;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -44,14 +44,14 @@ save_figures = 0;               % Save figures associated with individusl sims, 
 % % % % % Display options
 save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 0;
-plot_on2 = 0;
+plot_on2 = 1;
 do_visible = 'off';
 
 % % % % % Git options
 save_simfiles_to_repo_presim = false;          % Saves simfiles to repo prior to running dsSimulate
-save_everything_to_repo_postsim = false;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
-do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
-mycomment = [''];
+save_everything_to_repo_postsim = true;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
+do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
+mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -101,7 +101,8 @@ kerneltype_Poiss_IB = 2;
 % gAR_d=2; % 155, IBda - max conductance of h-channel
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
-repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
+% repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
+repo_studyname = ['201a_dec_jIB_1.5' num2str(gAR_d)];
 
 % IB Ca and M current
 gM_d = 2;
@@ -253,7 +254,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=1.0;    %         
+Jd2=1.5;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -727,7 +728,7 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [6000,300,400,500,600,700];
+        temp = [6000,500,600,700];
         %temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
