@@ -52,8 +52,8 @@ save_simfiles_to_repo_presim = true;          % Saves simfiles to repo prior to 
 save_everything_to_repo_postsim = true;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
 do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
-mycomment = ['Restore jIB to 1.0'];
-mycomment = ['Redo_prev'];
+mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
+% mycomment = ['Redo_prev'];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -104,7 +104,7 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['201c_redo_prev'];
+repo_studyname = ['201d_inc_gNGIB_0.9'];
 
 % IB Ca and M current
 gM_d = 2;
@@ -462,7 +462,7 @@ if ~no_synapses
     gGABAb_ngng=0.2/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.7/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=0.9/Nng;                       % NG -> IB GABA B
     
     
     % % IB -> LTS
