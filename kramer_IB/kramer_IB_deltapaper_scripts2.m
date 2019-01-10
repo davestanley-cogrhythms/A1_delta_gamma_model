@@ -197,7 +197,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -214,7 +214,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
@@ -231,7 +231,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b2'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
@@ -260,7 +260,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c1'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 2000];
@@ -275,7 +275,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1d1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -297,7 +297,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1ac'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0; s{f}.pulse_train_preset = 0;
@@ -377,7 +377,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1dc'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0; s{f}.pulse_train_preset = 0;
@@ -454,7 +454,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig3a_lowfreq'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
@@ -489,7 +489,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig3a2_lowfreq'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
@@ -524,7 +524,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig3b_highfreq'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
@@ -548,7 +548,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig3b2_highfreq'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1;
@@ -583,7 +583,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig4_lakatos'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
@@ -605,7 +605,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig4a2_lakatos'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
@@ -628,7 +628,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig5a_iPAC'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 18;
         s{f}.pulse_mode = 5;
@@ -652,7 +652,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig5b_iPAC'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 18;
         s{f}.pulse_mode = 5;
@@ -677,7 +677,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig5c_iPAC'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 18;
         s{f}.pulse_mode = 5;
@@ -712,7 +712,7 @@ switch chosen_cell
         s{f}.PPmaskduration = 100;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig6a_onset'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -750,7 +750,7 @@ switch chosen_cell
         s{f}.PPmaskduration = 100;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig6b_onset'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -777,7 +777,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig7a_2HzPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
@@ -802,7 +802,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig7a2_2HzPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
@@ -828,7 +828,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig7b_2HzPoiss40Hz'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
@@ -853,7 +853,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig7c_2Hz_FSIB40Hz'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
@@ -879,7 +879,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8a_OnsetPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -906,7 +906,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8b_OnsetPoiss40Hz'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -931,7 +931,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8c_Onset_FSIB40Hz'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -957,7 +957,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8d_2D'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -996,7 +996,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9b_polley'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
@@ -1044,7 +1044,7 @@ switch chosen_cell
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9c1_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
@@ -1186,7 +1186,7 @@ switch chosen_cell
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9c2_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
@@ -1253,7 +1253,7 @@ switch chosen_cell
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9c3_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
@@ -1326,7 +1326,7 @@ switch chosen_cell
             s{f}.NMDA_block = 1;
         end
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9c4_polley'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
@@ -1419,7 +1419,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
@@ -1444,7 +1444,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b1_30Hz'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
@@ -1464,7 +1464,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b2_30Hz'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
@@ -1497,7 +1497,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8e_OnsetPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1523,7 +1523,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8f_OnsetPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1549,7 +1549,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8g_OnsetPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1576,7 +1576,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8h_OnsetPoisson'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1603,7 +1603,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8i_Onset_FSIB40Hz'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1631,7 +1631,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a2'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1658,7 +1658,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a3'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1737,7 +1737,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a4'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1759,7 +1759,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a5'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1780,7 +1780,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c2'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 3000];
@@ -1852,7 +1852,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c3'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 3000];
@@ -1883,7 +1883,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1c4'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 3000];
@@ -1907,7 +1907,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11a'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 1500];
@@ -1935,7 +1935,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11b'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 1500];
@@ -1960,7 +1960,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11c'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 1500];
@@ -1986,7 +1986,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11d'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 1500];
@@ -2017,7 +2017,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig11e'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 1500];
@@ -2050,7 +2050,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig12a'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -2085,7 +2085,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig12b'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -2123,7 +2123,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = false; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig12c'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
