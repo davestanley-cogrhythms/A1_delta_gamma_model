@@ -728,11 +728,13 @@ if 1 && plot_on2
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-40],plot2_figure_options{:})
         dsPlot2_PPStim(data,'population','all','do_mean',1,'ylims',[-95,-65],plot2_figure_options{:})
         dsPlot2_PPStim(data,'plot_type','raster','population','IB',plot2_figure_options{:});
+        dsPlot2_PPStim(data,'plot_type','raster','population','NG',plot2_figure_options{:});
         dsPlot2_PPStim(data,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',1,plot2_figure_options{:});
         %dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
         dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
         dsPlot2_PPStim(data,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],plot2_figure_options{:});
         dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
+        dsPlot2_PPStim(data,'population','/IB/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
         
 %         % Optional correction - flip x/y varied; not guranteed to work in all
 %         % situations
