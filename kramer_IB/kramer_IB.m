@@ -48,11 +48,12 @@ plot_on2 = 1;
 do_visible = 'off';
 
 % % % % % Git options
-save_simfiles_to_repo_presim = false;          % Saves simfiles to repo prior to running dsSimulate
+save_simfiles_to_repo_presim = true;          % Saves simfiles to repo prior to running dsSimulate
 save_everything_to_repo_postsim = true;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
 do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Restore jIB to 1.0'];
+mycomment = ['Redo_prev'];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -103,7 +104,7 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['201c_inc_jIB_1.0'];
+repo_studyname = ['201c_redo_prev'];
 
 % IB Ca and M current
 gM_d = 2;
