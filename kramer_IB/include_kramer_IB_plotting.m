@@ -499,8 +499,8 @@ if plot_on
             switch sim_mode
                 case 20
                     axnames = xp.exportAxisNames;
-                    axis1 = axnames{4};             % Axis 1 is compressed into overlaid plots  *** THIS SHOULD BE THE AXIS CONTAINING THE "DEFAULT" SIM ***
-                    axis2 = axnames{3};             % Axis 2 is reserved for separate figures
+                    axis1 = axnames{3};             % Axis 1 is compressed into overlaid plots  *** THIS SHOULD BE THE AXIS CONTAINING THE "DEFAULT" SIM ***
+                    axis2 = axnames{4};             % Axis 2 is reserved for separate figures
                     axis3 = axnames{2};             % Subplots dim1
                     axis4 = axnames{1};             % Subplots dim2
 %                     axis1 = 'IB_PP_gSYN';                               % Axis 1 will generally be the default axis to overlay. Sometimes test the reverse, however
@@ -638,16 +638,17 @@ if plot_on
         %                 dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
         %             end
 
+                    
+                    % Alternate config 1
+                    axname = axis1;
+                    ind = xp.findaxis(axname);
+                    Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
+                    for i = 1:size(xp2,1)
+                        xp3 = xp2(i,:);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible);
+                    end
+                        
                     if plot_everything
-                        % Alternate config 1
-                        axname = axis1;
-                        ind = xp.findaxis(axname);
-                        Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
-                        for i = 1:size(xp2,1)
-                            xp3 = xp2(i,:);
-                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible);
-                        end
-
                         % Alternate config 2
                         axname = axis2;
                         ind = xp.findaxis(axname);
