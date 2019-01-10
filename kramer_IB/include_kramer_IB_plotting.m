@@ -488,7 +488,7 @@ if plot_on
             xp = dsAll2mdd(data);
             
             % Switches to control which plotting
-            plot_everything = 0;                                        % Setting to 1 plots many different axis combinations; setting to 0 plots a much smaller subset
+            plot_everything = 1;                                        % Setting to 1 plots many different axis combinations; setting to 0 plots a much smaller subset
             plot_3D = 0;
             plot_2D = 1;
             plot_1D = 0;
