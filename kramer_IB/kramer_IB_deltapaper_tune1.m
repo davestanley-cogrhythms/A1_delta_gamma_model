@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_inc_gARd_0.25';
+namesuffix = '_vary_gARd';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -52,7 +52,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
-        s{f}.repo_studyname = ['200a_sweep4D_sm20pm1' namesuffix];
+        s{f}.repo_studyname = ['200b_sweep4D_sm20pm1' namesuffix];
         s{f}.sim_mode = 20;
         s{f}.pulse_mode = 1;
         
@@ -70,7 +70,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
-        s{f}.repo_studyname = ['200a_sweep4D_sm21pm7' namesuffix];
+        s{f}.repo_studyname = ['200b_sweep4D_sm21pm7' namesuffix];
         s{f}.sim_mode = 21;
         s{f}.pulse_mode = 7;
         
