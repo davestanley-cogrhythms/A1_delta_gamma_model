@@ -508,10 +508,10 @@ if ~no_synapses
     
     gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
-    gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
+%     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
     gGABAa_fsLTS = 1.5/Nfs;                  % FS -> LTS
-    gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
+%     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
@@ -546,7 +546,7 @@ if ~no_synapses
     gAMPA_rsib=0.1/Nrs;                         % RS -> IB
 %     gAMPA_rsng = 0.3/Nrs;                       % RS -> NG
 %     if ~NMDA_block; gNMDA_rsng = 2/Nrs; end     % RS -> NG NMDA
-    gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
+%     gGABAa_LTSib = 0.1/Nlts;                     % LTS -> IB
     
     
     
