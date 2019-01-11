@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 1000];
+tspan=[0 2000];
 sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -56,7 +56,7 @@ mycomment = ['Try increasing gNGIB, since we need to do this to get better super
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
 % mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
-mycomment = ['Test effects of high NMDA'];
+mycomment = ['Figure out what stimulation times to use '];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -107,7 +107,7 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['202a_incgRAN_incNMDA'];
+repo_studyname = ['202b_decNMDA_add_IBoffset_50'];
 
 % IB Ca and M current
 gM_d = 2;
@@ -282,8 +282,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
+IB_offset1=50;
+IB_onset2=50;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
@@ -456,7 +456,7 @@ if ~no_synapses
     % % % % % Delta oscillator (IB-NG circuit) % % % % % % % % % % % % % % % %
     gAMPA_ibib=0.1/Nib;                          % IB -> IB
 
-    if ~NMDA_block; gNMDA_ibib=11/Nib; end        % IB -> IB NMDA
+    if ~NMDA_block; gNMDA_ibib=7/Nib; end        % IB -> IB NMDA
     
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
@@ -733,7 +733,7 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [6000,400,500,600,700];
+        temp = [6000,400,500,600,700,800];
         %temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
