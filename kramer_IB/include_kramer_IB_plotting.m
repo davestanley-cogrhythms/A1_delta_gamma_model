@@ -639,13 +639,31 @@ if plot_on
         %             end
 
                     
-                    % Alternate config 1
+                    % Alternate colours
                     axname = axis1;
                     ind = xp.findaxis(axname);
                     Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                     for i = 1:size(xp2,1)
                         xp3 = xp2(i,:);
                         dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible);
+                    end
+                    
+                    % Alternate colours
+                    axname = axis2;
+                    ind = xp.findaxis(axname);
+                    Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
+                    for i = 1:size(xp2,1)
+                        xp3 = xp2(i,:);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis3,'LineWidth',2,'visible',do_visible);
+                    end
+                    
+                    % Alternate colours
+                    axname = axis2;
+                    ind = xp.findaxis(axname);
+                    Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
+                    for i = 1:size(xp2,1)
+                        xp3 = xp2(i,:);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis4,'LineWidth',2,'visible',do_visible);
                     end
                         
                     if plot_everything
