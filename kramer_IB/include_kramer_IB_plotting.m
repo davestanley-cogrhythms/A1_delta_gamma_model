@@ -546,7 +546,7 @@ if plot_on
                     % NMDA conductance
                     k = k+1;
                     chosen_var0{k} = '/iNMDA_s/';
-                    chosen_ylims0{k} = [-95 -60];
+                    chosen_ylims0{k} = [0 0.4];
                     
                     
                 case 21
