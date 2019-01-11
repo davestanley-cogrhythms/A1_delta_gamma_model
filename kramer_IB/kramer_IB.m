@@ -61,7 +61,6 @@ no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
-do_low_gRAN = true;
 
 % % % % % Cells to include in model
 include_IB =   1;
@@ -272,11 +271,7 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-if do_low_gRAN
-    Jd2=0.5;    %         
-else
-    Jd2=2.0;    %         
-end
+Jd2=0.5;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -306,11 +301,7 @@ RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-if do_low_gRAN
-    gRAN=.01;      % synaptic noise conductance IB cells
-else
-    gRAN=.05;      % synaptic noise conductance IB cells
-end
+gRAN=.01;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 100;  % Mean frequency Poisson IPSPs
@@ -828,14 +819,6 @@ switch sim_mode
 %             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800,700,600,500,400,300,10000];...
 %             };
         
-        if strcmp(vary{2,1},'IB') && strcmp(vary{2,2},'stim2')      % Make sure row 2 is IB stim row: 'IB','stim2'
-            if do_low_gRAN
-                % If we're doing low gRAN, shift IB stim towards more
-                % excitation to capture interesting region of stim space
-                vary{2,3} = vary{2,3}-0.5;
-            end
-        end
-        
 %         % gRAN exploration
 %         vary = { ...
 %             %'IB','PP_gSYN',[0,0.5]; ...
@@ -884,14 +867,6 @@ switch sim_mode
             'IB->IB','gNMDA', [7,9,11]/Nib;...
             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[200,300,400,500,600,700,10000];...
             };
-        
-        if strcmp(vary{2,1},'IB') && strcmp(vary{2,2},'stim2')      % Make sure row 2 is IB stim row: 'IB','stim2'
-            if do_low_gRAN
-                % If we're doing low gRAN, shift IB stim towards more
-                % excitation to capture interesting region of stim space
-                vary{2,3} = vary{2,3}-0.5;
-            end
-        end
         
 %         % gRAN exploration
 %         vary = { ...

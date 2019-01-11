@@ -106,8 +106,6 @@ clustersub('kramer_IB_deltapaper_tune1','0b',numcores,myhours);
 % 4D Sweeps
 clustersub('kramer_IB_deltapaper_tune1','20',16,myhours);
 clustersub('kramer_IB_deltapaper_tune1','21',16,myhours);
-clustersub('kramer_IB_deltapaper_tune1','22',16,myhours);
-clustersub('kramer_IB_deltapaper_tune1','23',16,myhours);
 
 
 myhours = 1;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!

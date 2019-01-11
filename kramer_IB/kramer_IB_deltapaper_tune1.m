@@ -14,6 +14,7 @@ if nargin < 2
 end
 
 namesuffix = '_gRAN_0.5_redo';
+namesuffix = '_gRAN_0.5_highrez';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -47,7 +48,6 @@ switch chosen_cell
         datapf0b = kramer_IB_function_mode(s{f},f);
         
     case '20'
-        namesuffix = '_gRAN_0.5_highrez';
         %% Basic sim test 1 - Pure default simulation with save figs turned on 
         clear s
         f = 1;
@@ -61,7 +61,6 @@ switch chosen_cell
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
-        s{f}.do_low_gRAN = false;
         s{f}.plot_on = 1;
         s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
         s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
@@ -69,7 +68,6 @@ switch chosen_cell
         datap20 = kramer_IB_function_mode(s{f},f);
         
     case '21'
-        namesuffix = '_gRAN_0.5_highrez';
         %% Basic sim test 1 - Pure default simulation with save figs turned on 
         clear s
         f = 1;
@@ -83,56 +81,12 @@ switch chosen_cell
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
-        s{f}.do_low_gRAN = false;
         s{f}.plot_on = 1;
         s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
         s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
         
         datap21 = kramer_IB_function_mode(s{f},f);
         
-    case '22'
-        namesuffix = '_gRAN_0.1_highrez';
-        %% Basic sim test 1 - Pure default simulation with save figs turned on 
-        clear s
-        f = 1;
-        s{f} = struct;
-        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
-        s{f}.repo_studyname = ['sweep4D_sm20pm1' namesuffix];
-        s{f}.sim_mode = 20;
-        s{f}.mycomment = [''];
-        s{f}.pulse_mode = 1;
-        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
-        
-        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
-        
-        s{f}.do_low_gRAN = true;
-        s{f}.plot_on = 1;
-        s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
-        s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
-        
-        datap20 = kramer_IB_function_mode(s{f},f);
-        
-    case '23'
-        namesuffix = '_gRAN_0.1_highrez';
-        %% Basic sim test 1 - Pure default simulation with save figs turned on 
-        clear s
-        f = 1;
-        s{f} = struct;
-        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
-        s{f}.repo_studyname = ['sweep4D_sm21pm7' namesuffix];
-        s{f}.mycomment = [''];
-        s{f}.sim_mode = 21;
-        s{f}.pulse_mode = 7;
-        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
-        
-        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
-        
-        s{f}.do_low_gRAN = true;
-        s{f}.plot_on = 1;
-        s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
-        s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
-        
-        datap21 = kramer_IB_function_mode(s{f},f);
     case '1a1'
         %% Paper Figs 1a - Pulse train no AP
         
