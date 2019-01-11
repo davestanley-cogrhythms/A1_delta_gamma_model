@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -56,7 +56,7 @@ mycomment = ['Try increasing gNGIB, since we need to do this to get better super
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
 % mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
-mycomment = ['Figure out what stimulation times to use '];
+mycomment = ['Figure out what NG stimulation times to use.'];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -107,7 +107,7 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['202b_decNMDA_add_IBoffset_50'];
+repo_studyname = ['202c_decNMDA_add_IBoffset_100'];
 
 % IB Ca and M current
 gM_d = 2;
@@ -282,8 +282,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=50;
-IB_onset2=50;
+IB_offset1=100;
+IB_onset2=100;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
@@ -628,6 +628,7 @@ switch sim_mode
             %'RS','stim2',[-2.9:.2:-1.5]; ...
             %'IB','stim',[1:.25:1.75]; ...
             'IB','stim2',[0:0.25:0.75]; ...
+            'NG','stim',[-7:-1]; ...
             %'LTS','stim2',[-2.5:.1:-1.9]; ...
             %'tFS5','stim',[1.25:.25:2]; ...
             %'IB','gRAN',[0,0.01,0.025,0.05];...
