@@ -48,7 +48,7 @@ function [outpath] = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,myco
             if supersize_me
                 axp = get(i,'Position');
                 set(i,'Visible','off');
-                factor = 3;
+                factor = 2;
                 set(i,'Position',[axp(1), axp(2), axp(3)*factor, axp(4)*factor]);
             end
             set(i,'PaperPositionMode','auto');
