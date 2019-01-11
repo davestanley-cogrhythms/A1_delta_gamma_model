@@ -56,6 +56,7 @@ switch chosen_cell
         s{f}.sim_mode = 20;
         s{f}.mycomment = [''];
         s{f}.pulse_mode = 1;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
@@ -75,6 +76,7 @@ switch chosen_cell
         s{f}.mycomment = [''];
         s{f}.sim_mode = 21;
         s{f}.pulse_mode = 7;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
