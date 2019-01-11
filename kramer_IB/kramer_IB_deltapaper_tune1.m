@@ -10,10 +10,10 @@ function kramer_IB_deltapaper_tune1(chosen_cell,maxNcores)
 
 
 if nargin < 2
-    maxNcores = Inf;
+    maxNcores = Inf; 
 end
 
-namesuffix = '_gRAN_0.1';
+namesuffix = '_gRAN_0.1_redo';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
