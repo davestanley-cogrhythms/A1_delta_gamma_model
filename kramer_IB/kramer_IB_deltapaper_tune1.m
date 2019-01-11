@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf;
 end
 
-namesuffix = '_gIBIBnmda_gRAN';
+namesuffix = '_gRAN_0.5';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -54,6 +54,7 @@ switch chosen_cell
         s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['sweep4D_sm20pm1' namesuffix];
         s{f}.sim_mode = 20;
+        s{f}.mycomment = [''];
         s{f}.pulse_mode = 1;
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
@@ -71,6 +72,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['sweep4D_sm21pm7' namesuffix];
+        s{f}.mycomment = [''];
         s{f}.sim_mode = 21;
         s{f}.pulse_mode = 7;
         
