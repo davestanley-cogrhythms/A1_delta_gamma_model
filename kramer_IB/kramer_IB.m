@@ -1074,7 +1074,7 @@ switch pulse_mode
         
         do_nested_mask = 1;
         
-        PPmaskfreq = 1;
+        PPmaskfreq = 0.001;
         PPmaskduration = 50;
         
         % Make IB cells receive pure Poisson - assume CT cells are firing
