@@ -48,8 +48,9 @@ function [outpath] = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,myco
             if supersize_me
                 axp = get(i,'Position');
                 set(i,'Visible','off');
-                factor = 2;
-                set(i,'Position',[axp(1), axp(2), axp(3)*factor, axp(4)*factor]);
+                factorx = 2;
+                factory = 1.33;
+                set(i,'Position',[axp(1), axp(2), axp(3)*factorx, axp(4)*factory]);
             end
             set(i,'PaperPositionMode','auto');
             savenames{i} = ['fig' num2str(i)];
