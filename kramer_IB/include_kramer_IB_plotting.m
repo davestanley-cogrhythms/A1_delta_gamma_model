@@ -538,7 +538,14 @@ if plot_on
                     % Subthreshold range
                     k = k+1;
                     chosen_var0{k} = '/V/';
+                    chosen_ylims0{k} = [-95 -20];
+                    
+                    % NMDA conductance
+                    k = k+1;
+                    chosen_var0{k} = '/iNMDA_s/';
                     chosen_ylims0{k} = [-95 -60];
+                    
+                    
                 case 21
                 % We flip axis1 and axis2 for case 21 (corresponds to
                 % pulse_mode = 7) because we need axis1 to contain the
