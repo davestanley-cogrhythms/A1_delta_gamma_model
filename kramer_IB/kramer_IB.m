@@ -44,13 +44,13 @@ save_figures = 0;               % Save figures associated with individusl sims, 
 % % % % % Display options
 save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 0;
-plot_on2 = 1;
+plot_on2 = 0;
 do_visible = 'off';
 
 % % % % % Git options
-save_simfiles_to_repo_presim = true;          % Saves simfiles to repo prior to running dsSimulate
-save_everything_to_repo_postsim = true;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
-do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
+save_simfiles_to_repo_presim = false;          % Saves simfiles to repo prior to running dsSimulate
+save_everything_to_repo_postsim = false;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
+do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
