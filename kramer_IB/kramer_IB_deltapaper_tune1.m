@@ -13,11 +13,7 @@ if nargin < 2
     maxNcores = Inf; 
 end
 
-namesuffix = '_gRAN_0.5_redo';
-namesuffix = '_gRAN_0.5_highrez';
-%namesuffix = '_IBPPStim0.3';
-% namesuffix = '_gar0.0';
-% namesuffix = '';
+namesuffix = '_low_gRAN';
 
 switch chosen_cell
     case '0a'
@@ -123,7 +119,7 @@ switch chosen_cell
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
-        s{f}.sim_mode = 11;
+        s{f}.sim_mode = 9;
         
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
@@ -157,6 +153,8 @@ switch chosen_cell
         s{f}.include_tFS5 = 0;
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
+        
+        s{f}.sim_mode = 9;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
 
