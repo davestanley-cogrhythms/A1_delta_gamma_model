@@ -521,8 +521,8 @@ if plot_on
             switch sim_mode
                 case 20
                     axnames = xp.exportAxisNames;
-                    axis1 = axnames{3};             % Axis 1 is compressed into overlaid plots  *** THIS SHOULD BE THE AXIS CONTAINING THE "DEFAULT" SIM ***
-                    axis2 = axnames{4};             % Axis 2 is reserved for separate figures
+                    axis1 = axnames{4};             % Axis 1 is compressed into overlaid plots  *** THIS SHOULD BE THE AXIS CONTAINING THE "DEFAULT" SIM ***
+                    axis2 = axnames{3};             % Axis 2 is reserved for separate figures
                     axis3 = axnames{2};             % Subplots dim1
                     axis4 = axnames{1};             % Subplots dim2
 %                     axis1 = 'IB_PP_gSYN';                               % Axis 1 will generally be the default axis to overlay. Sometimes test the reverse, however
@@ -567,6 +567,11 @@ if plot_on
                         axis4 = 'NG_IB_gGABAB';
                     end
                     
+                    % GABA B
+                    k = k+1;
+                    chosen_var0{k} = '/GABAall_gTH/';
+                    chosen_ylims0{k} = [0 0.4];
+                    
                     % Membrane voltage
                     k = k+1;
                     chosen_var0{k} = '/V/';
@@ -577,15 +582,12 @@ if plot_on
 %                     chosen_var0{k} = '/V/';
 %                     chosen_ylims0{k} = [-95 -60];
                     
-                    % h current
-                    k = k+1;
-                    chosen_var0{k} = '/mAR/';
-                    chosen_ylims0{k} = [];              % Auto-adjust axes
+%                     % h current
+%                     k = k+1;
+%                     chosen_var0{k} = '/mAR/';
+%                     chosen_ylims0{k} = [];              % Auto-adjust axes
                     
-                    % GABA B
-                    k = k+1;
-                    chosen_var0{k} = '/GABAall_gTH/';
-                    chosen_ylims0{k} = [0 0.4];
+                    
             end
             
             for k = 1:length(chosen_var0)
