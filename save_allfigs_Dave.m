@@ -15,7 +15,7 @@ function [outpath] = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,myco
     
     study_dir = get_studydir(sp,repo_studyname);
         
-    supersize_me = 0;
+    supersize_me = 1;
 
     
     % Outpath in model-dnsim-kramer_IB_Figs2 folder for saving data
