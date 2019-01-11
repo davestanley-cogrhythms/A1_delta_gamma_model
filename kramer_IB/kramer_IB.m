@@ -824,7 +824,7 @@ switch sim_mode
             if do_low_gRAN
                 % If we're doing low gRAN, shift IB stim towards more
                 % excitation to capture interesting region of stim space
-                vary{2,3} = [-0.5:0.5:1.0];
+                vary{2,3} = vary{2,3}-0.5;
             end
         end
         
@@ -881,7 +881,7 @@ switch sim_mode
             if do_low_gRAN
                 % If we're doing low gRAN, shift IB stim towards more
                 % excitation to capture interesting region of stim space
-                vary{2,3} = [-0.5:0.5:1.0];
+                vary{2,3} = vary{2,3}-0.5;
             end
         end
         
