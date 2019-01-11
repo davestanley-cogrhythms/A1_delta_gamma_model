@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 20;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 20;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 7;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -43,13 +43,13 @@ save_figures = 0;               % Save figures associated with individusl sims, 
 
 % % % % % Display options
 save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
-plot_on = 0;
+plot_on = 1;
 plot_on2 = 0;
 do_visible = 'off';
 
 % % % % % Git options
-save_simfiles_to_repo_presim = false;          % Saves simfiles to repo prior to running dsSimulate
-save_everything_to_repo_postsim = false;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
+save_simfiles_to_repo_presim = true;          % Saves simfiles to repo prior to running dsSimulate
+save_everything_to_repo_postsim = true;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
 do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 
 Cm_Ben = 2.7;
@@ -61,7 +61,7 @@ no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
-do_low_gRAN = false;
+do_low_gRAN = true;
 
 % % % % % Cells to include in model
 include_IB =   1;
@@ -102,13 +102,14 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['202c_decNMDA_add_IBoffset_100'];
+repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
+% repo_studyname = ['203a_redoPrev_0.5_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
 % mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
-mycomment = ['Figure out what NG stimulation times to use.'];
+mycomment = [''];
 
 % IB Ca and M current
 gM_d = 2;
@@ -271,7 +272,11 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=1.0;    %         
+if do_low_gRAN
+    Jd2=0.5;    %         
+else
+    Jd2=2.0;    %         
+end
 Jng1=-7;   % NG cells
 Jng2=1;   %
 JRS1 = -1.5; % RS cells
@@ -294,8 +299,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=100;
-IB_onset2=100;
+IB_offset1=0;
+IB_onset2=0;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
@@ -752,7 +757,10 @@ switch sim_mode
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
         temp = [6000,400,500,600,700,800];
         %temp = [6000,800,1000,1200];
-        vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
+        vary = { ...
+            %'IB->IB','g_SYN', [0.1,.15,0.2]/Nib;...
+            'IB->IB','gNMDA', [7,9,11]/Nib;...
+            '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
         
         
