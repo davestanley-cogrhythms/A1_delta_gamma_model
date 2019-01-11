@@ -400,9 +400,12 @@ if plot_on
     % % Do different plots depending on which parallel sim we are running
     switch sim_mode
         case {1}            
+            %% Case 1 plotting
+            do_visible = 'on';      % Override to show plots for case 1
             dsPlot2_PPStim(data,'do_mean',true,'visible',do_visible);
-            dsPlot2_PPStim(data,'max_num_overlaid',2,'visible',do_visible);
-            dsPlot2_PPStim(data,'population','all','plot_type','raster','visible',do_visible);
+            dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
+%             dsPlot2_PPStim(data,'max_num_overlaid',2,'visible',do_visible);
+%             dsPlot2_PPStim(data,'population','all','plot_type','raster','visible',do_visible);
 
         case {2,3}
 
