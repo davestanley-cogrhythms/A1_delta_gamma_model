@@ -157,6 +157,400 @@ switch chosen_cell
         s{f}.sim_mode = 9;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b1a'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.11' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.11;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2a'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.11' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.11;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+    case '1b1b'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.13' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.13;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2b'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.13' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.13;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+    case '1b1c'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.15' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.15;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2c'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.15' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.15;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+    case '1b1d'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.17' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.17;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2d'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.17' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.17;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+    case '1b1e'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.19' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.19;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2e'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.19' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.19;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+    case '1b1f'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.21' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.21;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2f'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.21' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.21;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+    case '1b1g'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.23' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.23;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
+    case '1b2g'
+        %% Paper Figs 1b - Pulse train AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.23' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1;
+        s{f}.pulse_train_preset = 1;
+        s{f}.PPfreq = 40; % in Hz
+        s{f}.tspan=[0 1500];
+        s{f}.PPonset=400;
+        s{f}.PPoffset = 1500;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        s{f}.RS_PP_gSYN = 0.23;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1b = kramer_IB_function_mode(s{f},f);
+        
 
     case '1c' 
         %% Paper Figs 1c - Spontaneous
