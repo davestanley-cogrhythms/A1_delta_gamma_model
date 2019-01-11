@@ -300,7 +300,7 @@ RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.05;      % synaptic noise conductance IB cells
+gRAN=.01;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 100;  % Mean frequency Poisson IPSPs
