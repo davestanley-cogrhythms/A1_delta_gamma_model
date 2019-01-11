@@ -47,7 +47,7 @@ switch chosen_cell
         datapf0b = kramer_IB_function_mode(s{f},f);
         
     case '20'
-        namesuffix = '_gRAN_0.5_redo';
+        namesuffix = '_gRAN_0.5_highrez';
         %% Basic sim test 1 - Pure default simulation with save figs turned on 
         clear s
         f = 1;
@@ -69,7 +69,7 @@ switch chosen_cell
         datap20 = kramer_IB_function_mode(s{f},f);
         
     case '21'
-        namesuffix = '_gRAN_0.5_redo';
+        namesuffix = '_gRAN_0.5_highrez';
         %% Basic sim test 1 - Pure default simulation with save figs turned on 
         clear s
         f = 1;
@@ -91,7 +91,7 @@ switch chosen_cell
         datap21 = kramer_IB_function_mode(s{f},f);
         
     case '22'
-        namesuffix = '_gRAN_0.1_redo';
+        namesuffix = '_gRAN_0.1_highrez';
         %% Basic sim test 1 - Pure default simulation with save figs turned on 
         clear s
         f = 1;
@@ -113,7 +113,7 @@ switch chosen_cell
         datap20 = kramer_IB_function_mode(s{f},f);
         
     case '23'
-        namesuffix = '_gRAN_0.1_redo';
+        namesuffix = '_gRAN_0.1_highrez';
         %% Basic sim test 1 - Pure default simulation with save figs turned on 
         clear s
         f = 1;
