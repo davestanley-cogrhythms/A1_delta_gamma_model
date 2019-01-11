@@ -733,7 +733,7 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [6000,500,600,700];
+        temp = [6000,400,500,600,700];
         %temp = [6000,800,1000,1200];
         vary = { '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
             };
