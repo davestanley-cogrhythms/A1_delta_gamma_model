@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 20;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 0;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -862,7 +862,7 @@ switch sim_mode
         vary = { ...
             %'IB','PP_gSYN',[0,0.5]; ...
             'NG->IB','gGABAB',[.7:.2:1.1]/Nng;...
-            'IB','stim2',[-0.5:0.5:1.5]; ...
+            'IB','stim2',[0:0.5:1.5]; ...
             'IB->IB','gNMDA', [7,9,11]/Nib;...
             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[300,400,500,600,700,10000];...
             };
