@@ -66,7 +66,7 @@ no_noise = 0;
 no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
-
+do_fast_sim = false; 
 
 
 % % % % % Cells to include in model
@@ -185,6 +185,17 @@ plot_args = {'plot_functions',plot_functions,'plot_options',plot_options};
 % % % % % Major switches affecting model structure
 do_dualexp_synapse = 0;         % Use dual exponential synaspe model for LTS cells, as opposed
                                 % to the standard ODE formalism
+                                
+                                
+% % % % % % Trim down number of cells if doing fast simulation
+if do_fast_sim
+    Nib=ceil(Nib/10);  % Number of excitatory cells
+    Nng=ceil(Nng/10);
+    Nrs=ceil(Nrs/10);
+    Nfs=ceil(Nfs/10);
+    Ntfs5=ceil(Ntfs5/10);
+    Nlts=ceil(Nlts/10);
+end
 
 Now = clock;
 
@@ -803,31 +814,6 @@ switch sim_mode
             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,600,500,10000];...
             'IB','gRAN',[0.01,0.05]; ...
             };
-%         
-%         % % % FOR TESTING ONLY % % % 
-%         vary = { ...
-%             %'IB','gRAN',[0.05]; ...
-%             'NG->IB','gGABAB',[.5, 1.1]/Nng;...
-%             'IB','stim2',[0,1]; ...
-%             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,500];...
-%             'IB','PP_gSYN',[0,0.2]; ...
-%             };
-%         % gAR exploration
-%         vary = { ...
-%             %'IB','PP_gSYN',[0,0.5]; ...
-%             'NG->IB','gGABAB',[.7,1.1]/Nng;...
-%             'IB','stim2',[0.5,1]; ...
-%             'IB','gAR', [0.25,0.5];...
-%             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,10000];...
-%             };
-%         % NMDA exploration
-%         vary = { ...
-%             %'IB','PP_gSYN',[0,0.5]; ...
-%             'NG->IB','gGABAB',[.7, 1.1]/Nng;...
-%             'IB','stim2',[0.0, 1.5]; ...
-%             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[700,10000];...
-%             'IB->IB','gNMDA', [7,11]/Nib;...
-%             };
 
     case 21     % For tuning excitatory reset of delta oscillator (includes tuning PPOnset)
         dsfact=dsfact*10;
@@ -876,15 +862,6 @@ switch sim_mode
             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[300,400,500,600,700,10000];...
             };
         
-%         % % % FOR TESTING ONLY % % % 
-%         vary = { ...
-%             %'IB','gRAN',[0.05]; ...
-%             'NG->IB','gGABAB',[.5, 1.1]/Nng;...
-%             'IB','stim2',[0,1]; ...
-%             'tFS5->IB','g_SYN', [0,1,2]/Ntfs5;...
-%             '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[10000,500,700];...
-%             };
-        
         do_covaried_L6CT = 0;
         if do_covaried_L6CT
             % (See  include_kramer_IB_plotting.m for description of what
@@ -905,6 +882,14 @@ switch sim_mode
         end
 
 end
+
+% For testing
+if do_fast_sim                  % Only do 1st and last entry for each row in vary statement. Will create 2^N simulations
+    for i = 1:size(vary,1)
+        vary{i,end} = [vary{i,end}(1), vary{i,end}(end)];
+    end
+end
+
 
 %% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
 % #myppstim             
