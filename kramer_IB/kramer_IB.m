@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 1000];
-sim_mode = 21;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 20;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -28,7 +28,7 @@ sim_mode = 21;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -55,7 +55,7 @@ mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). 
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
-mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
+% mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -106,7 +106,7 @@ kerneltype_Poiss_IB = 2;
 gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
-repo_studyname = ['201e_sweep4D_NMDA_sm21pm7_gRan_0.5'];
+repo_studyname = ['201f_dec_gRAN_sm20pm1'];
 
 % IB Ca and M current
 gM_d = 2;
@@ -288,7 +288,7 @@ RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.05;      % synaptic noise conductance IB cells
+gRAN=.01;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 100;  % Mean frequency Poisson IPSPs
