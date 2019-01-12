@@ -321,8 +321,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
+IB_offset1=100;
+IB_onset2=100;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
