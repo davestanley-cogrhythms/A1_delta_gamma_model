@@ -45,6 +45,7 @@ save_figures = 0;               % Save figures associated with individusl sims, 
 save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 1;
 plot_on2 = 0;
+    do_all_power_plots = true;  % Show all power plots instead of just first one
 do_visible = 'off';
 
 % % % % % Git options
