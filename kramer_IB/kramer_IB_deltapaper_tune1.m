@@ -95,7 +95,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 0;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -115,7 +115,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -137,7 +137,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -170,7 +170,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -193,7 +193,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -226,7 +226,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -249,7 +249,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -282,7 +282,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -305,7 +305,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -338,7 +338,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -361,7 +361,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -394,7 +394,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -417,7 +417,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -450,7 +450,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -473,7 +473,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -506,7 +506,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -529,7 +529,7 @@ switch chosen_cell
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
         s{f}.tspan=[0 1500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 1500;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -682,7 +682,7 @@ switch chosen_cell
         s{f}.PPfreq = 32.7; % in Hz
         s{f}.ap_pulse_delay = 15.3;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -703,7 +703,7 @@ switch chosen_cell
         s{f}.PPfreq = 32.7; % in Hz
         s{f}.ap_pulse_delay = 15.3;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -735,7 +735,7 @@ switch chosen_cell
         s{f}.PPfreq = 26.7; % in Hz
         s{f}.ap_pulse_delay = 18.8;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -756,7 +756,7 @@ switch chosen_cell
         s{f}.PPfreq = 26.7; % in Hz
         s{f}.ap_pulse_delay = 18.8;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -788,7 +788,7 @@ switch chosen_cell
         s{f}.PPfreq = 21.8; % in Hz
         s{f}.ap_pulse_delay = 23.0;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -809,7 +809,7 @@ switch chosen_cell
         s{f}.PPfreq = 21.8; % in Hz
         s{f}.ap_pulse_delay = 23.0;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -842,7 +842,7 @@ switch chosen_cell
         s{f}.PPfreq = 17.8; % in Hz
         s{f}.ap_pulse_delay = 28.1;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -863,7 +863,7 @@ switch chosen_cell
         s{f}.PPfreq = 17.8; % in Hz
         s{f}.ap_pulse_delay = 28.1;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -895,7 +895,7 @@ switch chosen_cell
         s{f}.PPfreq = 14.5; % in Hz
         s{f}.ap_pulse_delay = 34.4;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -916,7 +916,7 @@ switch chosen_cell
         s{f}.PPfreq = 14.5; % in Hz
         s{f}.ap_pulse_delay = 34.4;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -948,7 +948,7 @@ switch chosen_cell
         s{f}.PPfreq = 11.9; % in Hz
         s{f}.ap_pulse_delay = 42.2;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
@@ -969,7 +969,7 @@ switch chosen_cell
         s{f}.PPfreq = 11.9; % in Hz
         s{f}.ap_pulse_delay = 42.2;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2500];
-        s{f}.PPonset=700;
+        s{f}.PPonset=800;
         s{f}.PPoffset = 2000;
         s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
         
