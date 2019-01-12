@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['205b_sweep_Onset_onset0_pm' num2str(pulse_mode)];
+repo_studyname = ['205c_sweep_Onset_onset75_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -321,8 +321,8 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=0;
-IB_onset2=0;
+IB_offset1=75;
+IB_onset2=75;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
