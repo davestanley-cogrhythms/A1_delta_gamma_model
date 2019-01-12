@@ -275,11 +275,11 @@ Jd1=5;    % IB cells
 Jd2=0.5;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
-JRS1 = -1.5; % RS cells
-JRS2 = -1.5; %
+JRS1 = -1.3; % RS cells
+JRS2 = -1.3; %
 if include_NG
-    JRS1 = -2.5; % RS cells
-    JRS2 = -2.5; %
+    JRS1 = -2.1; % RS cells
+    JRS2 = -2.1; %
 end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
