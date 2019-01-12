@@ -165,7 +165,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.11' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.11' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -221,7 +221,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.13' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.13' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -277,7 +277,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.15' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.15' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -333,7 +333,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.17' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.17' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -389,7 +389,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.19' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.19' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -445,7 +445,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.21' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.21' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
@@ -501,7 +501,7 @@ switch chosen_cell
         f = 1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.23' num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.23' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
         s{f}.PPfreq = 40; % in Hz
