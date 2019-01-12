@@ -45,7 +45,7 @@ save_figures = 0;               % Save figures associated with individusl sims, 
 save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 1;
 plot_on2 = 0;
-    do_all_power_plots = true;  % Show all power plots instead of just first one
+    do_all_power_plots = false;  % Show all power plots instead of just first one
 do_visible = 'off';
 
 % % % % % Git options
@@ -162,7 +162,7 @@ if save_figures
 
     plot_options = {...
                     {universal_options{:},'plot_type','rastergram','crop_range',ind_range,'population','all'}, ...        
-                    {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'ylims',[0,1],'do_mean',true,'population','RS'}, ...                    
+%                     {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'ylims',[0,1],'do_mean',true,'population','RS'}, ...                    
                     
                     };
 %                 {universal_options{:},'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 80],'population','IB'}, ...
