@@ -28,7 +28,7 @@ sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -38,7 +38,7 @@ pulse_mode = 7;             % % % % Choise of periodic pulsing input
                             
 
 % Save figures options within DynaSim                            
-save_figures = 0;               % Save figures associated with individusl sims, within dsSimulate. Controlled by plot_options (below)
+save_figures = 1;               % Save figures associated with individusl sims, within dsSimulate. Controlled by plot_options (below)
     save_composite_figures = 0;     % Flag for saving composite figures comprised of PNGs stitched together from individual simulations into a single large canvas
 
 % % % % % Display options
@@ -103,6 +103,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
+% repo_studyname = ['204a_deltaonly_pm' num2str(pulse_mode)];
 % repo_studyname = ['203a_redoPrev_0.5_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
@@ -1007,7 +1008,8 @@ if ~cluster_flag
 end
 
 
-%% ##6.0 Save figures, composite figures, and files to data repo
+%% ##6.0 Save figures, composite figures, 
+and files to data repo
 outpath = [];
 if save_everything_to_repo_postsim
     if plot_on || plot_on2
