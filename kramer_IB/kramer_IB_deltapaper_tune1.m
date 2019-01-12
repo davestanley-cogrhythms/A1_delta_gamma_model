@@ -571,6 +571,36 @@ switch chosen_cell
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
+    case '1c2' 
+        %% Paper Figs 1c - Spontaneous
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['tune1Fig1c2' num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 0;     % Turn off pulsemode
+        s{f}.tspan=[0 3500];
+        s{f}.PPonset=900;
+        s{f}.PPoffset = 2000;
+        s{f}.maxNcores = maxNcores; s{f}.parallel_flag = 1;     % Parallel flag and Ncores should always be active
+        
+        s{f}.sim_mode = 12;
+        
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        % % Only superficial oscillator
+        s{f}.include_IB =   0;
+        s{f}.include_RS =   1;
+        s{f}.include_FS =   1;
+        s{f}.include_LTS =  1;
+        s{f}.include_NG =   0;
+        s{f}.include_dFS5 = 0;
+        s{f}.include_tFS5 = 0;
+        s{f}.include_deepRS = 0;
+        s{f}.include_deepFS = 0;
+        
+        datapf1c = kramer_IB_function_mode(s{f},f);
+        
     case '1d'
         %% Paper Figs 1d - Tones - like 1a, except tones instead of 40 Hz
         

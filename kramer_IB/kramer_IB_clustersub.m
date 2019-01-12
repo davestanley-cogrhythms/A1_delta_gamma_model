@@ -128,6 +128,7 @@ clustersub('kramer_IB_deltapaper_tune1','1b2f',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1b1g',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1b2g',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1c',numcores,myhours);
+clustersub('kramer_IB_deltapaper_tune1','1c2',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','1d',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','4a',numcores,myhours);
 clustersub('kramer_IB_deltapaper_tune1','9b',numcores,myhours);
