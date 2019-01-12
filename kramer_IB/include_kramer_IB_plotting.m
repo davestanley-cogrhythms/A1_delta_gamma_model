@@ -77,28 +77,35 @@ if save_combined_figures
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
-
+    
     % % % % % % % % CONDUCTANCES Power plots % % % % % % % %
-    if include_IB && include_NG && include_RS && include_FS && include_LTS && include_dFS5
-        % All currents
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, data(1), 'num_embedded_subplots', NESP,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,...
-        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-        'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-
-        % Just delta currents
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, data(1), 'num_embedded_subplots', NESP,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,...
-        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-        'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    if do_all_power_plots
+        inds = 1:length(data);
+    else
+        inds = 1;
     end
+    for k = inds
+        if include_IB && include_NG && include_RS && include_FS && include_LTS && include_dFS5
+            % All currents
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data(k), 'num_embedded_subplots', NESP,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
-    if include_RS && include_FS && include_LTS && include_dFS5
-        % Just gammma oscillator
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, data(1), 'num_embedded_subplots', NESP,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,...
-        'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-        'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+            % Just delta currents
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data(k), 'num_embedded_subplots', NESP,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        end
+
+        if include_RS && include_FS && include_LTS && include_dFS5
+            % Just gammma oscillator
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2, data(k), 'num_embedded_subplots', NESP,'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPgamma_gTH/','do_mean',1,'LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        end
     end
 
     % % % % % % % % VOLTAGE Line plots % % % % % % % %
