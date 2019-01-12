@@ -77,7 +77,7 @@ function [outpath] = save_allfigs_Dave(sp,repo_studyname,spec_all,do_commit,myco
             try       % % % % % Delete this later once know code works % % % % % 
                 plots_folder = fullfile(study_dir,'plots');
                 D = dir(plots_folder);
-                plots_thresh = 50;
+                plots_thresh = 500;
                 if length(D) < plots_thresh
                     fprintf(['Copying ' fullfile(study_dir,'plots') ' to ' outpath '\n']);
                     [~, message] = copyfile(plots_folder,outpath);
