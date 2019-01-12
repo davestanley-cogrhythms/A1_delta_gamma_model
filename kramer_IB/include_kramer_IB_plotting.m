@@ -198,6 +198,19 @@ if save_combined_figures
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
+    
+    if include_RS && length(data) > 1
+        % Default rastergram (slow)
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, data, 'num_embedded_subplots', NESP,'population','RS','xlims',ind_range,'plot_type','rastergram',...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+%             % Imagesc fast & cheap version
+%             i=i+1;
+%             parallel_plot_entries{i} = {@dsPlot2, data,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+%                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
+%                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
                                                                                     % These plots currently only work for max 2D sweeps. 
     if include_IB && include_NG && (include_FS || include_dFS5) && length(data) > 1 && size(vary,1) <= 2
         % Default rastergram (slow) with shaded background & line plot
