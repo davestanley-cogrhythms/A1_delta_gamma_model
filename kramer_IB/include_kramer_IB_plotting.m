@@ -569,11 +569,11 @@ if plot_on
                     k = k+1;
                     chosen_var0{k} = '/V/';
                     chosen_ylims0{k} = [-95 -20];
-                    
-                    % NMDA conductance
-                    k = k+1;
-                    chosen_var0{k} = '/iNMDA_s/';
-                    chosen_ylims0{k} = [0 0.4];
+%                     
+%                     % NMDA conductance
+%                     k = k+1;
+%                     chosen_var0{k} = '/iNMDA_s/';
+%                     chosen_ylims0{k} = [0 0.4];
                     
                     
                 case 21
