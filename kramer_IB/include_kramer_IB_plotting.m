@@ -457,7 +457,7 @@ if plot_on
 %             dsPlot2_PPStim(xp,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],plot2_figure_options{:});
 %             dsPlot2_PPStim(xp,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
 %             dsPlot2_PPStim(xp,'population','/IB/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
-
+            dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
 
 % 
 %             % Plot varied parameters individually
