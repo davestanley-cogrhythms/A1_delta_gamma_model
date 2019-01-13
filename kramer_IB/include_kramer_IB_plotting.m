@@ -52,6 +52,30 @@ if save_combined_figures
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
+    
+    % If we're doing a shuffle run, and varying no other parameters, plot
+    % waveformErr of all conductances (NMDA + GABAb, etc)
+    if include_IB && include_NG && (include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','RS_asdfasdfadf','LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
+    
+    if include_IB && include_NG && ~(include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
+    
+    % If we're doing a shuffle run and sweeping some other parameter, plot waveformErr average of just GABAb 
+    if include_IB && include_NG && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) > 1            % This is the vary marker for shuffling across dims, meaning we should average
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
 
     % RS M current plot
     if include_RS && include_LTS
