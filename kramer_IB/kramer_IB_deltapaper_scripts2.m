@@ -202,7 +202,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -219,7 +219,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -236,7 +236,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1b2'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -281,7 +281,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -291,7 +291,7 @@ switch chosen_cell
     case '1ac'
         %% Do both Figs 1a and 1c together to do spectrogram comparison (Gamma input)
         
-        myonset = 400;
+        myonset = 700;
         myoffset = 3000;
         
         clear s
@@ -371,7 +371,7 @@ switch chosen_cell
     case '1dc'
         %% Do both Figs 1d and 1c together to do spectrogram comparison (Poisson input)
         
-        myonset = 400;
+        myonset = 700;
         myoffset = 3000;
         
         clear s
@@ -718,7 +718,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-400;...
         };
          
         s{f}.kerneltype_Poiss_IB = 4;
@@ -756,7 +756,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-500;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-400;...
         };
          
         s{f}.kerneltype_Poiss_IB = 2;
@@ -890,7 +890,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
@@ -916,7 +916,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
@@ -942,7 +942,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
@@ -969,7 +969,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1451,7 +1451,7 @@ switch chosen_cell
         s{f}.PPfreq = 30; % in Hz
         s{f}.ap_pulse_delay = 16;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
@@ -1471,7 +1471,7 @@ switch chosen_cell
         s{f}.PPfreq = 30; % in Hz
         s{f}.ap_pulse_delay = 16;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
@@ -1507,7 +1507,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1533,7 +1533,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1559,7 +1559,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 100;
         
@@ -1586,7 +1586,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
@@ -1614,7 +1614,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
 
         s{f}.tspan=[0 2000];
-        s{f}.PPonset = 300;
+        s{f}.PPonset = 600;
         s{f}.PPoffset = 1500;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
@@ -1637,7 +1637,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset =450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -1664,7 +1664,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         myoffset = 1200;
         s{f}.tspan=[0 myoffset];
-        s{f}.PPonset = 400;         % Onset at 400 
+        s{f}.PPonset = 700;         % Onset at 400 
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 5;
         
@@ -1743,7 +1743,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset =450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         
@@ -1765,7 +1765,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.tspan=[0 2000];
-        s{f}.PPonset =450;
+        s{f}.PPonset = 700;
         s{f}.PPoffset = 1500;
         s{f}.random_seed = 8;
         

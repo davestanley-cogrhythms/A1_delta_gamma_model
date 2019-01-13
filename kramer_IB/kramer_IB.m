@@ -918,7 +918,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 550;    % ms, onset time
+        PPonset = 700;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
@@ -961,7 +961,7 @@ switch pulse_mode
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPmaskshift = 300;
+        PPmaskshift = 700;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
@@ -985,7 +985,7 @@ switch pulse_mode
         PPfreq = 110; % in Hz               % See Polley et al, 2017 - peak at 110 Hz; harmonic at 220 Hz.
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
-        PPmaskshift = 400;
+        PPmaskshift = 700;
         %PPoffset = tspan(end)-500;   % ms, offset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
