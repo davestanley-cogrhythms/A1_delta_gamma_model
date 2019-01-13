@@ -135,7 +135,7 @@ mycomment = ['Try increasing gNGIB, since we need to do this to get better super
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
 % mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
-mycomment = ['Goal: Excitatory reset was too weak. This is due to activity of L5 FS cells. Need to increase IB PPStim to compensate.'];
+mycomment = [''];
 
 % IB Ca and M current
 gM_d = 2;
