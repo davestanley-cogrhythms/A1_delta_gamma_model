@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 1000];
-sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -62,7 +62,7 @@ no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
-do_gamma_only = true;
+do_gamma_only = false;
 do_delta_only = false;
 
 % % % % % Cells to include in model
@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['208c_inc_FSPPStim_smallnet_pm' num2str(pulse_mode)];
+repo_studyname = ['208d_sweep_LTSstim_smallnet_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -202,7 +202,7 @@ save_results_flag = double(~isempty(plot_options));         % If plot_options is
 verbose_flag = 1;
 random_seed = 'shuffle';
 % random_seed = 8;
-% a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
 study_dir = get_studydir(sp,repo_studyname);
 
 if isempty(plot_options); plot_functions = [];
@@ -669,10 +669,10 @@ switch sim_mode
             %'IB','stim',[1:.25:1.75]; ...
             %'IB','stim2',[0:0.25:0.75]; ...
             %'NG','stim',[-7:-1]; ...
-            %'LTS','stim2',[-2.5:.1:-1.9]; ...
+            'LTS','stim2',[-2.4:.1:-1.4]; ...
             %'tFS5','stim',[1.25:.25:2]; ...
             %'IB','gRAN',[0,0.01,0.025,0.05];...
-            'FS','PP_gSYN',[0,0.05:0.02:0.15]; ...
+            %'FS','PP_gSYN',[0,0.05:0.02:0.15]; ...
             %'RS','PP_gSYN',[0.11:.02:.23]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'IB','PP_gSYN',[0.05, .1:.1:.4]; ...
