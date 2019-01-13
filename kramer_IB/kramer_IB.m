@@ -513,12 +513,12 @@ if ~no_synapses
     
     % % Delta -> Gamma oscillator connections
     % Try making all delta->RS connections half of what IB cells receive
-    gAMPA_ibrs = 0.05/Nib;
+    gAMPA_ibrs = 0.1/Nib;
     if ~NMDA_block
-        gNMDA_ibrs = 3.5/Nib;
+        gNMDA_ibrs = 7/Nib;
     end
-    gGABAa_ngrs = 0.05/Nng;
-    gGABAb_ngrs = 0.55/Nng;
+    gGABAa_ngrs = 0.1/Nng;
+    gGABAb_ngrs = 0.7/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
