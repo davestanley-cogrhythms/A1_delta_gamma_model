@@ -1172,7 +1172,7 @@ switch chosen_cell
         
         if blk_h_current
             namesuffix1 = [namesuffix1 '_blkgAR'];
-            s{f}.gAR_d = 0;
+            s{f}.gAR_d = 0; s{f}.Jd2=-0.5;      % Block AR and increase injected current to compensate (otherwise, won't get any oscillation)
         end
         
         if blk_m_current
@@ -1239,7 +1239,7 @@ switch chosen_cell
         
         if blk_h_current
             namesuffix1 = [namesuffix1 '_blkgAR'];
-            s{f}.gAR_d = 0;
+            s{f}.gAR_d = 0; s{f}.Jd2=-0.5;      % Block AR and increase injected current to compensate (otherwise, won't get any oscillation)
         end
         
         if blk_m_current
