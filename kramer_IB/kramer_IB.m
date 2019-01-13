@@ -43,7 +43,7 @@ save_figures = 1;               % Save figures associated with individusl sims, 
 
 % % % % % Display options
 save_combined_figures = 1;      % Flag for figures based on post-hoc analysis of all sims together
-plot_on = 1;
+plot_on = 0;
 plot_on2 = 0;
     do_all_power_plots = false;  % Show all power plots instead of just first one
 do_visible = 'off';
@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['208b_vary_FS_PPStim_smallnet_pm' num2str(pulse_mode)];
+repo_studyname = ['208b_vary_FS_PPStim_fullnet_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -676,7 +676,7 @@ switch sim_mode
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'IB','PP_gSYN',[0.05, .1:.1:.4]; ...
             %'dFS5','PP_gSYN',[0.3:0.1:0.5]; ...
-            '(RS->dFS5,RS->FS)','g_SYN',[1.0,1.3,1.5]/Nrs;...
+            %'(RS->dFS5,RS->FS)','g_SYN',[1.0,1.3,1.5]/Nrs;...
             %'(FS->FS,dFS5->dFS5)','g_SYN',[.5 .6 .7 .8 .9 1 1.1 1.2]/Nfs;...
             %'IB->IB','g_SYN',[0:0.025:0.175]/Nib;...
             %'RS->dFS5','g_SYN',[linspace(0.1,1.2,8)]/Nrs;...
