@@ -62,7 +62,7 @@ no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
-do_gamma_only = true;
+do_gamma_only = false;
 do_delta_only = false;
 
 % % % % % Cells to include in model
