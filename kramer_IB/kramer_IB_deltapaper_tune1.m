@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf; 
 end
 
-namesuffix = '_small_PPonset75';
+namesuffix = '_incDtoG';        % Delta to gamma
 
 switch chosen_cell
     case '0a'
