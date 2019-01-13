@@ -846,6 +846,7 @@ end
 %% % % % % % % % % % % % %  ##2.5 Periodic pulse parameters % % % % % % % % % % % % %
 % #myppstim             
 IB_PP_gSYN = 0;
+FS_PP_gSYN = 0;
 RS_PP_gSYN = 0;
 NG_PP_gSYN = 0;
 FS_PP_gSYN = 0;
@@ -858,6 +859,7 @@ tFS_PP_gSYN = 0;
     deepRSgSpike = 0;
 
 IB_PP_gSYN = 0.2;
+% FS_PP_gSYN = 0.15;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
