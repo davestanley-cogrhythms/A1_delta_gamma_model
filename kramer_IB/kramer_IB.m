@@ -18,7 +18,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 2000];
+tspan=[0 1000];
 sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
@@ -62,7 +62,7 @@ no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
-do_gamma_only = false;
+do_gamma_only = true;
 do_delta_only = false;
 
 % % % % % Cells to include in model
@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['208b_vary_FS_PPStim' num2str(pulse_mode)];
+repo_studyname = ['208b_vary_FS_PPStim_smallnet_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -671,12 +671,12 @@ switch sim_mode
             %'LTS','stim2',[-2.5:.1:-1.9]; ...
             %'tFS5','stim',[1.25:.25:2]; ...
             %'IB','gRAN',[0,0.01,0.025,0.05];...
-            'FS','PP_gSYN',[0.05:0.02:0.15]; ...
+            'FS','PP_gSYN',[0,0.05:0.02:0.15]; ...
             %'RS','PP_gSYN',[0.11:.02:.23]; ...
             %'NG','PP_gSYN',[.0:0.05:.15]; ...
             %'IB','PP_gSYN',[0.05, .1:.1:.4]; ...
             %'dFS5','PP_gSYN',[0.3:0.1:0.5]; ...
-            %'(RS->dFS5,RS->FS)','g_SYN',[0, .3:.2:1.5]/Nrs;...
+            '(RS->dFS5,RS->FS)','g_SYN',[1.0,1.3,1.5]/Nrs;...
             %'(FS->FS,dFS5->dFS5)','g_SYN',[.5 .6 .7 .8 .9 1 1.1 1.2]/Nfs;...
             %'IB->IB','g_SYN',[0:0.025:0.175]/Nib;...
             %'RS->dFS5','g_SYN',[linspace(0.1,1.2,8)]/Nrs;...
@@ -921,7 +921,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 700;    % ms, onset time
+        PPonset = 0;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
