@@ -14,7 +14,7 @@ end
 
 include_tFS5_global = false;        % Should be off for paper #1, on for papers #2 and #3
 
-namesuffix = '_incDtoG';
+namesuffix = '_incDtoG_v2.0';        % Delta to gamma
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
@@ -1287,7 +1287,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        PPmaskduration = 50;
+        PPmaskduration = 100;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
 
         data = kramer_IB_function_mode(s{f},f);
