@@ -528,7 +528,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit, plus deep FS cells)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.0/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.3/Nrs;                     % RS -> FS
     
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
@@ -541,7 +541,7 @@ if ~no_synapses
     gGABAa_fsLTS = 2.5/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.0/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
+    gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     gAMPA_rstfs5=0.0/Nrs;
@@ -861,7 +861,7 @@ tFS_PP_gSYN = 0;
     deepRSgSpike = 0;
 
 IB_PP_gSYN = 0.2;
-FS_PP_gSYN = 0.1;
+% FS_PP_gSYN = 0.1;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
