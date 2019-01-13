@@ -42,13 +42,13 @@ if save_combined_figures
     % AMPA, GABA A, GABA B
     if include_IB && include_NG && (include_FS || include_dFS5)
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
     if include_IB && include_NG && ~(include_FS || include_dFS5)
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -57,14 +57,14 @@ if save_combined_figures
     % waveformErr of all conductances (NMDA + GABAb, etc)
     if include_IB && include_NG && (include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','RS_asdfasdfadf','LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.7],'force_last','RS_asdfasdfadf','LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
     
     if include_IB && include_NG && ~(include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -72,7 +72,7 @@ if save_combined_figures
     % If we're doing a shuffle run and sweeping some other parameter, plot waveformErr average of just GABAb 
     if include_IB && include_NG && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) > 1            % This is the vary marker for shuffling across dims, meaning we should average
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -80,7 +80,7 @@ if save_combined_figures
     % RS M current plot
     if include_RS && include_LTS
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','/RS|LTS/','variable','Mich','xlims',xlims_range,'do_mean',true,'LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -88,7 +88,7 @@ if save_combined_figures
     % IB M current plot
     if include_IB
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','Mich','xlims',xlims_range,'do_mean',true,'LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -96,7 +96,7 @@ if save_combined_figures
     % IB h-current plot
     if include_IB
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','AR','xlims',ind_range,'do_mean',true,'LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','AR','xlims',xlims_range,'do_mean',true,'LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -136,7 +136,7 @@ if save_combined_figures
     % Waveform plots 2 IB cells
     if include_IB
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,'ylims',[-85 45],...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','xlims',xlims_range,'plot_type','waveform','max_num_overlaid',2,'ylims',[-85 45],...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -145,7 +145,7 @@ if save_combined_figures
     if 1
         % Waveform plots mean all cells
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',ind_range,'plot_type','waveform','do_mean',1,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',xlims_range,'plot_type','waveform','do_mean',1,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -154,7 +154,7 @@ if save_combined_figures
     if length(data) == 1
         % Waveform plots mean all cells
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',ind_range,'plot_type','waveform','max_num_overlaid',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',xlims_range,'plot_type','waveform','max_num_overlaid',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -213,7 +213,7 @@ if save_combined_figures
     % IB GABA B 
     if include_IB && include_NG && length(data) > 1
 %             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2, xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'force_last','varied1','plot_type','imagesc',...
+%             parallel_plot_entries{i} = {@dsPlot2, xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'force_last','varied1','plot_type','imagesc',...
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -222,12 +222,12 @@ if save_combined_figures
     if include_IB && length(data) > 1
         % Default rastergram (slow)
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','xlims',ind_range,'plot_type','rastergram',...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','xlims',xlims_range,'plot_type','rastergram',...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 %             % Imagesc fast & cheap version
 %             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2, xp,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+%             parallel_plot_entries{i} = {@dsPlot2, xp,'population','IB','variable','/V/','do_mean',false,'xlims',xlims_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -235,12 +235,12 @@ if save_combined_figures
     if include_RS && length(data) > 1
         % Default rastergram (slow)
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','xlims',ind_range,'plot_type','rastergram',...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','xlims',xlims_range,'plot_type','rastergram',...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 %             % Imagesc fast & cheap version
 %             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2, xp,'population','IB','variable','/V/','do_mean',false,'xlims',ind_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
+%             parallel_plot_entries{i} = {@dsPlot2, xp,'population','IB','variable','/V/','do_mean',false,'xlims',xlims_range,'force_last','varied1','plot_type','imagesc','zlims',[-85,-50]...
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -332,21 +332,21 @@ if save_combined_figures
 
     if include_RS && length(data) > 1
 %         i=i+1;
-%         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','xlims',ind_range,'plot_type','rastergram',...
+%         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','xlims',xlims_range,'plot_type','rastergram',...
 %             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     if include_FS && length(data) > 1
 %         i=i+1;
-%         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','FS','xlims',ind_range,'plot_type','rastergram',...
+%         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','FS','xlims',xlims_range,'plot_type','rastergram',...
 %             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     if include_LTS && length(data) > 1
 %             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','LTS','xlims',ind_range,'plot_type','rastergram',...
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','LTS','xlims',xlims_range,'plot_type','rastergram',...
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -355,7 +355,7 @@ if save_combined_figures
     % Compare different IB->IB currents (NMDA, AMPA, total)
     if include_IB
 %         i=i+1;
-%         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',ind_range,'force_last','variable','LineWidth',2,...
+%         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|NMDAonly_gTH|AMPAonly_gTH/','do_mean',true,'xlims',xlims_range,'force_last','variable','LineWidth',2,...
 %             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -364,7 +364,7 @@ if save_combined_figures
     % Firing rate heatmap
     if length(data) > 1
 %             i=i+1;
-%             parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',ind_range,'plot_type','heatmap_sortedFR','population','IB',...
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',xlims_range,'plot_type','heatmap_sortedFR','population','IB',...
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figwidth',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -373,7 +373,7 @@ if save_combined_figures
     if length(data) > 1
 %             i=i+1;
 %             so.autosuppress_interior_tics = true;
-%             parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',ind_range,'plot_type','meanFR','population','IB','subplot_options',so,...
+%             parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'xlims',xlims_range,'plot_type','meanFR','population','IB','subplot_options',so,...
 %                 'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)], 'num_embedded_subplots', NSP,...
 %                 'figwidth',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
@@ -450,7 +450,7 @@ if plot_on
             
             do_visible = 'on';      % Override to show plots for case 1
             dsPlot2_PPStim(data,'do_mean',true,'visible',do_visible);
-            dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
+            dsPlot2_PPStim(data,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
 %             dsPlot2_PPStim(xp,'max_num_overlaid',2,'visible',do_visible);
 %             dsPlot2_PPStim(xp,'population','all','plot_type','raster','visible',do_visible);
 
@@ -473,29 +473,29 @@ if plot_on
             end
 
             NESP = 1;
-            plot2_figure_options = {'visible',do_visible,'num_embedded_subplots',NESP,'xlims',ind_range};
+            plot2_figure_options = {'visible',do_visible,'num_embedded_subplots',NESP,'xlims',xlims_range};
             %dsPlot2_PPStim(xp,'population','all','do_mean',1,'ylims',[-95,-40],plot2_figure_options{:})
             %dsPlot2_PPStim(xp,'population','all','do_mean',1,'ylims',[-95,-65],plot2_figure_options{:})
             if include_IB; dsPlot2_PPStim(xp,'plot_type','raster','population','IB',plot2_figure_options{:}); end
             %dsPlot2_PPStim(xp,'plot_type','raster','population','NG',plot2_figure_options{:});
-            %dsPlot2_PPStim(xp,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',1,plot2_figure_options{:});
-    %         dsPlot2_PPStim(xp,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
-            dsPlot2_PPStim(xp,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
-%             dsPlot2_PPStim(xp,'population','/IB/','variable','/iGABABAustin_g/','xlims',ind_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],plot2_figure_options{:});
-%             dsPlot2_PPStim(xp,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
-%             dsPlot2_PPStim(xp,'population','/IB/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
-            dsPlot2_PPStim(xp,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
+            %dsPlot2_PPStim(xp,'population','IB','xlims',xlims_range,'plot_type','waveform','max_num_overlaid',1,plot2_figure_options{:});
+    %         dsPlot2_PPStim(xp,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+            dsPlot2_PPStim(xp,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+%             dsPlot2_PPStim(xp,'population','/IB/','variable','/iGABABAustin_g/','xlims',xlims_range,'do_mean',true,'LineWidth',2,'ylims',[0 3],plot2_figure_options{:});
+%             dsPlot2_PPStim(xp,'population','/IB/','variable','mAR','xlims',xlims_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
+%             dsPlot2_PPStim(xp,'population','/IB/','variable','Mich','xlims',xlims_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
+            dsPlot2_PPStim(xp,'population','/RS|LTS/','variable','Mich','xlims',xlims_range,'do_mean',true,'LineWidth',2,plot2_figure_options{:})
 
 % 
 %             % Plot varied parameters individually
 %             N=length(vary{3,3});
 %             N=5;
-%             for i = 1:N; dsPlot2_PPStim(xp,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'varied3',i,plot2_figure_options{:}); end
+%             for i = 1:N; dsPlot2_PPStim(xp,'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'varied3',i,plot2_figure_options{:}); end
 % 
 % 
 %             % IB PPStim NMDA plots 
-%             dsPlot2_PPStim(xp,'population','IB','variable','/iPoissonNested_ampaNMDA_S3|iPoissonNested_ampaNMDA_S3_NMDA|tFS5_IBaIBdbiSYNseed_s/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,plot2_figure_options{:})
-%             dsPlot2_PPStim(xp,'population','IB','variable','/iPoissonNested_ampaNMDA_ISYN|tFS5_IBaIBdbiSYNseed_ISYN/','do_mean',true,'xlims',ind_range,'ylims',[],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+%             dsPlot2_PPStim(xp,'population','IB','variable','/iPoissonNested_ampaNMDA_S3|iPoissonNested_ampaNMDA_S3_NMDA|tFS5_IBaIBdbiSYNseed_s/','do_mean',true,'xlims',xlims_range,'ylims',[],'force_last','variable','LineWidth',2,plot2_figure_options{:})
+%             dsPlot2_PPStim(xp,'population','IB','variable','/iPoissonNested_ampaNMDA_ISYN|tFS5_IBaIBdbiSYNseed_ISYN/','do_mean',true,'xlims',xlims_range,'ylims',[],'force_last','variable','LineWidth',2,plot2_figure_options{:})
 
 
         case 14
@@ -558,13 +558,13 @@ if plot_on
             axis1 = 'IB_PP_gSYN';
             
             % 2D subplot grid
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'num_embedded_subplots',2,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'num_embedded_subplots',2,'visible',do_visible);
             
             % Force 1D subplot grid
-            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible);
+            dsPlot2_PPStim(xp,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible);
 
-            dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','IB_stim2','LineWidth',2,'visible',do_visible,'figwidth',1/2)
-            dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
+            dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','IB_stim2','LineWidth',2,'visible',do_visible,'figwidth',1/2)
+            dsPlot2_PPStim(xp(:,:,:,1,:,:),'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,'visible',do_visible)
             
         case {20,21}            % For plotting up to 4D data (4 varied parameters, 1 population, and 1 variable). Additional dimensions will be as part of new figures
             %% Excitatory / inhibitory reset 4D variation
@@ -650,11 +650,11 @@ if plot_on
                 % % % % % % % % Combined plots - all 4 dims compressed onto single plot % % % % % % % % 
                 if plot_3D
                     % With overlay shiftt
-                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'force_last',axis1, 'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
-                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
+                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'force_last',axis1, 'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
+                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'visible',do_visible);
 
                     % Without overlay shift
-                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible);
+                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'Ndims_per_subplot',2,'visible',do_visible);
 
 
 
@@ -663,7 +663,7 @@ if plot_on
                         % Plot first value
                     i=1;
                     po.plotargs= {'Color',colourarr{i}};
-                    h = dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis1,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po);
+                    h = dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis1,i,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po);
                         % Plot remaining values with hold on
                     clear fo so
                     fo.suppress_newfig = true;
@@ -671,7 +671,7 @@ if plot_on
                     ind = findaxis(xp,axis1);
                     for i = 2:size(xp,ind)
                         po.plotargs= {'Color',colourarr{i}};
-                        dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis1,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
+                        dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis1,i,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
                     end
 
                     % As above, alternate colour grouping
@@ -679,7 +679,7 @@ if plot_on
                         % Plot first value
                     i=1;
                     po.plotargs= {'Color',colourarr{i}};
-                    h = dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis2,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po);
+                    h = dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis2,i,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po);
                         % Plot remaining values with hold on
                     clear fo so
                     fo.suppress_newfig = true;
@@ -687,14 +687,14 @@ if plot_on
                     ind = findaxis(xp,axis2);
                     for i = 2:size(xp,ind)
                         po.plotargs= {'Color',colourarr{i}};
-                        dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis2,i,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
+                        dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,axis2,i,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible,'plot_options',po,'figure_options',fo,'subplot_options',so);
                     end
                 end
 
 
                 % % % % % % % % 1D subplots - sweeping along one axis, creating new figs for the other axis as we go % % % % % % % % 
                 if plot_1D
-                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'force_last',axis1,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
+                    dsPlot2_PPStim(xp,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'force_last',axis1,'LineWidth',2,'Ndims_per_subplot',2,'do_overlay_shift',true,'num_embedded_subplots',1,'figwidth',1/2,'visible',do_visible);
                 end
 
 
@@ -706,13 +706,13 @@ if plot_on
                     Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                     for i = 1:size(xp2,1)
                         xp3 = xp2(i,:);
-                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
                     end
 
         %             % (Repeat above, but for individual plots - 1D subplots)
         %             for i = 1:size(xp2,1)
         %                 xp3 = xp2(i,:);
-        %                 dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
+        %                 dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'num_embedded_subplots',1,'visible',do_visible,'figwidth',1/2); 
         %             end
 
                     
@@ -722,7 +722,7 @@ if plot_on
                     Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                     for i = 1:size(xp2,1)
                         xp3 = xp2(i,:);
-                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis2,'LineWidth',2,'visible',do_visible);
                     end
                     
                     % Alternate colours
@@ -731,7 +731,7 @@ if plot_on
                     Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                     for i = 1:size(xp2,1)
                         xp3 = xp2(i,:);
-                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis3,'LineWidth',2,'visible',do_visible);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis3,'LineWidth',2,'visible',do_visible);
                     end
                     
                     % Alternate colours
@@ -740,7 +740,7 @@ if plot_on
                     Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                     for i = 1:size(xp2,1)
                         xp3 = xp2(i,:);
-                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis4,'LineWidth',2,'visible',do_visible);
+                        dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis4,'LineWidth',2,'visible',do_visible);
                     end
                         
                     if plot_everything
@@ -750,7 +750,7 @@ if plot_on
                         Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                         for i = 1:size(xp2,1)
                             xp3 = xp2(i,:);
-                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
                         end
 
                         % Alternate config 3
@@ -759,7 +759,7 @@ if plot_on
                         Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                         for i = 1:size(xp2,1)
                             xp3 = xp2(i,:);
-                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
                         end
 
                         % Alternate config 4
@@ -768,7 +768,7 @@ if plot_on
                         Nd = ndims(xp); xp2 = xp.permute([ind,1:ind-1,ind+1:Nd]);       % Bring chosen axis to front
                         for i = 1:size(xp2,1)
                             xp3 = xp2(i,:);
-                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
                         end
                     end
 
@@ -780,7 +780,7 @@ if plot_on
                         xp2 = xp.permute([1,3,2,4:Nd]);                                  % Permute the remaining 2 axes
                         for i = 1:size(xp2,1)
                             xp3 = xp2(i,:);
-                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',ind_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
+                            dsPlot2_PPStim(xp3,'population','IB','variable',chosen_var,'do_mean',true,'xlims',xlims_range,'ylims',chosen_ylims,'force_last',axis1,'LineWidth',2,'visible',do_visible);
                         end
                     end
                 end
@@ -804,11 +804,11 @@ if 0        % Other plotting code that is run manually
         dsPlot2_PPStim(data,'plot_type','waveform','population','IB');
         dsPlot2_PPStim(data,'plot_type','raster','population','dFS5');
         dsPlot2_PPStim(data,'variable','_s','do_mean',1,'population','RS')
-        dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',ind_range,'do_mean',true,'LineWidth',2)
-        dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',ind_range,'do_mean',true,'LineWidth',2)
+        dsPlot2_PPStim(data,'population','/RS|LTS/','variable','Mich','xlims',xlims_range,'do_mean',true,'LineWidth',2)
+        dsPlot2_PPStim(data,'population','/IB/','variable','mAR','xlims',xlims_range,'do_mean',true,'LineWidth',2)
         dsPlot2_PPStim(data,'do_mean',1,'population','RS','variable','RS_IBaIBdbiSYNseed_s')                                % Plot just RS conductance
-        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2)
-            for i = 1:length(data)/2; dsPlot2_PPStim(data(2*i-1:2*i),'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',ind_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2); end
+        dsPlot2_PPStim(data,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2)
+            for i = 1:length(data)/2; dsPlot2_PPStim(data(2*i-1:2*i),'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.7],'force_last','variable','LineWidth',2); end
         for i = 1:length(data); dsPlot2(data(i),'plot_type','power','xlims',[0 80],'population','RS','variable','/LFPall_gTH/','do_mean',1,'LineWidth',2); end
         for i = 1:length(data); dsPlot2(data(i),'plot_type','power','xlims',[0 10],'population','IB','variable','/LFPdelta_gTH/','do_mean',1,'LineWidth',2); end
         

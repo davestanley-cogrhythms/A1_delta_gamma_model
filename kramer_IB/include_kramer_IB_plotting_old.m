@@ -10,7 +10,7 @@ if plot_on
             % #myfigs1
             % dsPlot(data,'plot_type','waveform');
 
-            plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+            plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,xlims_range);
             dsPlot2_PPStim(data,'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','ylims',[-.3 1.2],'lock_axes',false);
             
 
@@ -30,15 +30,15 @@ if plot_on
             % #myfigs9
 
                 inds = 1:length(data);
-                h = dsPlot2_PPStim(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',ind_range);
+                h = dsPlot2_PPStim(data(inds),'population','all','force_last',{'populations'},'supersize_me',false,'do_overlay_shift',true,'overlay_shift_val',40,'plot_handle',@xp1D_matrix_plot_with_AP,'crop_range',xlims_range);
 
-                dsPlot2_PPStim(data(inds),'plot_type','imagesc','crop_range',ind_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
+                dsPlot2_PPStim(data(inds),'plot_type','imagesc','crop_range',xlims_range,'population','RS','zlims',[-100 -20],'plot_handle',@xp_matrix_imagesc_with_AP);
 
-                h = dsPlot2_PPStim(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'plot_handle',@xp_PlotData_with_AP);
-                h = dsPlot2_PPStim(data(inds),'plot_type','rastergram','crop_range',ind_range,'xlim',ind_range,'supersize_me',true)
-                %dsPlot2_PPStim(data,'do_mean',1,'plot_type','power','crop_range',[ind_range(1), tspan(end)],'xlims',[0 120]);
+                h = dsPlot2_PPStim(data(inds),'plot_type','rastergram','crop_range',xlims_range,'xlim',xlims_range,'plot_handle',@xp_PlotData_with_AP);
+                h = dsPlot2_PPStim(data(inds),'plot_type','rastergram','crop_range',xlims_range,'xlim',xlims_range,'supersize_me',true)
+                %dsPlot2_PPStim(data,'do_mean',1,'plot_type','power','crop_range',[xlims_range(1), tspan(end)],'xlims',[0 120]);
 
-                plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,ind_range);
+                plot_func = @(xp, op) xp_plot_AP_timing1b_RSFS_Vm(xp,op,xlims_range);
                 dsPlot2_PPStim(data(inds),'plot_handle',plot_func,'Ndims_per_subplot',3,'force_last',{'populations','variables'},'population','all','variable','all','supersize_me',false,'ylims',[-.3 .5],'lock_axes',false);
 
             
