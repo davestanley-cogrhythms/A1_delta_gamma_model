@@ -155,7 +155,7 @@ end
 
 % % % % % Options for saving figures to png for offline viewing
 xlims_range = [tspan(1) tspan(2)];
-xlims_range = [450 950]; warning('comment this out');
+% xlims_range = [450 950]; warning('comment this out');
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
