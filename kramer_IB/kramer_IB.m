@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 1000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 14;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['208b_vary_FS_PPStim_fullnet_pm' num2str(pulse_mode)];
+repo_studyname = ['208c_inc_FSPPStim_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -155,7 +155,7 @@ end
 
 % % % % % Options for saving figures to png for offline viewing
 ind_range = [tspan(1) tspan(2)];
-ind_range = [650 850]; warning('comment this out');
+ind_range = [450 950]; warning('comment this out');
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
@@ -200,9 +200,9 @@ maxNcores = 4;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
-% random_seed = 'shuffle';
+random_seed = 'shuffle';
 % random_seed = 8;
-a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+% a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
 study_dir = get_studydir(sp,repo_studyname);
 
 if isempty(plot_options); plot_functions = [];
@@ -765,7 +765,7 @@ switch sim_mode
             };
         
     case 14         % Vary random parameter to force shuffling random seed
-        vary = {'RS','asdfasdfadf',1:4 };       % shuffle starting seed 8 times
+        vary = {'RS','asdfasdfadf',1:6 };       % shuffle starting seed 8 times
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
 	case 15         % Vary PPStim AP pulse delay
@@ -861,7 +861,7 @@ tFS_PP_gSYN = 0;
     deepRSgSpike = 0;
 
 IB_PP_gSYN = 0.2;
-% FS_PP_gSYN = 0.15;
+FS_PP_gSYN = 0.1;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
