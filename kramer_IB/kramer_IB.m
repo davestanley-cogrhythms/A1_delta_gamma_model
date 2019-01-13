@@ -82,7 +82,7 @@ if do_delta_only
     include_FS =   0;
     include_LTS =  0;
     include_NG =   1;
-    include_dFS5 = 1;
+    include_dFS5 = 0;
     include_tFS5 = 1;
     include_deepRS = 0;
     include_deepFS = 0;
