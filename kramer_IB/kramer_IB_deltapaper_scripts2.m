@@ -12,6 +12,8 @@ if nargin < 2
     maxNcores = Inf;
 end
 
+include_tFS5_global = false;        % Should be off for paper #1, on for papers #2 and #3
+
 namesuffix = '_incDtoG';
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
@@ -203,6 +205,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
@@ -218,6 +221,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -246,7 +250,6 @@ switch chosen_cell
         s{f}.include_deepRS = 0;
         s{f}.include_deepFS = 0;
         
-        
         datapf1b = kramer_IB_function_mode(s{f},f);    %% Paper Figs 1b2 - Pulse train AP
         
         
@@ -261,6 +264,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1c = kramer_IB_function_mode(s{f},f);
         
@@ -278,6 +282,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1d = kramer_IB_function_mode(s{f},f);
        
@@ -300,6 +305,7 @@ switch chosen_cell
         s{f}.PPonset = myonset;
         s{f}.PPoffset = myoffset;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
@@ -380,6 +386,7 @@ switch chosen_cell
         s{f}.PPonset = myonset;
         s{f}.PPoffset = myoffset;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
@@ -475,6 +482,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf3a = kramer_IB_function_mode(s{f},f);
     case '3a2'
@@ -532,6 +540,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf3b = kramer_IB_function_mode(s{f},f);
         
@@ -556,6 +565,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         % % Only superficial oscillator
         s{f}.include_IB =   0;
@@ -589,6 +599,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf4a = kramer_IB_function_mode(s{f},f);
         
@@ -611,6 +622,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         s{f}.dsfact = 100;
         
         datapf4a = kramer_IB_function_mode(s{f},f);
@@ -634,6 +646,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf5a = kramer_IB_function_mode(s{f},f);
         
@@ -658,6 +671,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.IB_PP_gSYN=0;
         
@@ -683,6 +697,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.deep_gNaF=0;
         
@@ -723,6 +738,7 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
 
@@ -761,6 +777,7 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf6b = kramer_IB_function_mode(s{f},f);
 
@@ -784,6 +801,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         s{f}.PPmaskfreq = 2.5;
         
         s{f}.gGABAa_fs5ib = 0;
@@ -809,6 +827,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         s{f}.PPmaskfreq = 2.5;
         s{f}.dsfact = 100;
         
@@ -835,6 +854,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         s{f}.PPmaskfreq = 2.5;
         
         s{f}.gGABAa_fs5ib = 0;
@@ -861,6 +881,7 @@ switch chosen_cell
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         s{f}.PPmaskfreq = 2.5;
         
         s{f}.IB_PP_gSYN=0;
@@ -887,6 +908,7 @@ switch chosen_cell
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -912,6 +934,7 @@ switch chosen_cell
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.gGABAa_fs5ib = 0;
         
@@ -937,6 +960,7 @@ switch chosen_cell
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.IB_PP_gSYN=0;
         
@@ -962,6 +986,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         s{f}.random_seed = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         data = kramer_IB_function_mode(s{f},f);
         
@@ -1418,6 +1443,7 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         s{f}.preset_number = 2;             % AP + reset
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.vary = {'RS','asdfasdfadf',1:4; ...
             '(RS,FS,LTS,IB,NG,dFS5,tFS5)','ap_pulse_delay',8:3:17,...
@@ -1444,6 +1470,7 @@ switch chosen_cell
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
@@ -1497,6 +1524,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         s{f}.random_seed = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.05/s{f}.Nfs;
@@ -1522,6 +1550,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         s{f}.random_seed = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.1/s{f}.Nfs;
@@ -1547,6 +1576,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         s{f}.random_seed = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.15/s{f}.Nfs;
@@ -1574,6 +1604,7 @@ switch chosen_cell
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.Nfs = 20;
         s{f}.gGABAa_fs5ib = 0.2/s{f}.Nfs;
@@ -1601,6 +1632,7 @@ switch chosen_cell
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.IB_PP_gSYN=0.2;
         s{f}.repo_studyname = [s{f}.repo_studyname '_IBPPStim' num2str(s{f}.IB_PP_gSYN)];
@@ -1622,6 +1654,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         % % Gamma -> Delta connections (some of these are already
         % zeroed-out)
@@ -1647,6 +1680,7 @@ switch chosen_cell
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 2400; s{f}.xlims_range = [400 tspan(2)];         % Onset at 400 
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 5;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
@@ -1726,6 +1760,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         % % Gamma -> Delta connections (some of these are already
         % zeroed-out)
@@ -1747,6 +1782,7 @@ switch chosen_cell
         
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         % % Gamma -> Delta connections (some of these are already
         % zeroed-out)
@@ -1765,6 +1801,7 @@ switch chosen_cell
         s{f}.tspan=[0 3000];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
         
@@ -1837,6 +1874,7 @@ switch chosen_cell
         s{f}.tspan=[0 3000];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         % Block connecitons from IB cells and NG cells to RS cells
         s{f}.gAMPA_ibrs = 0;
@@ -1868,6 +1906,7 @@ switch chosen_cell
         s{f}.tspan=[0 3000];
         s{f}.pulse_mode = 0;
         s{f}.random_seed = 4;
+        s{f}.include_tFS5 = include_tFS5_global;
         
         % % Gamma -> Delta connections (some of these are already
         % zeroed-out)
