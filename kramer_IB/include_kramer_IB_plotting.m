@@ -449,7 +449,7 @@ if plot_on
             plot2_figure_options = {'visible',do_visible,'num_embedded_subplots',NESP,'xlims',ind_range};
             %dsPlot2_PPStim(xp,'population','all','do_mean',1,'ylims',[-95,-40],plot2_figure_options{:})
             %dsPlot2_PPStim(xp,'population','all','do_mean',1,'ylims',[-95,-65],plot2_figure_options{:})
-            dsPlot2_PPStim(xp,'plot_type','raster','population','IB',plot2_figure_options{:});
+            if include_IB; dsPlot2_PPStim(xp,'plot_type','raster','population','IB',plot2_figure_options{:}); end
             %dsPlot2_PPStim(xp,'plot_type','raster','population','NG',plot2_figure_options{:});
             %dsPlot2_PPStim(xp,'population','IB','xlims',ind_range,'plot_type','waveform','max_num_overlaid',1,plot2_figure_options{:});
     %         dsPlot2_PPStim(xp,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH|iNMDA_s/','do_mean',true,'xlims',ind_range,'ylims',[0 0.4],'force_last','variable','LineWidth',2,plot2_figure_options{:})

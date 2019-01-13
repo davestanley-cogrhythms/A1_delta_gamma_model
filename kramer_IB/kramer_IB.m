@@ -42,7 +42,7 @@ save_figures = 1;               % Save figures associated with individusl sims, 
     save_composite_figures = 0;     % Flag for saving composite figures comprised of PNGs stitched together from individual simulations into a single large canvas
 
 % % % % % Display options
-save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
+save_combined_figures = 1;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 1;
 plot_on2 = 0;
     do_all_power_plots = false;  % Show all power plots instead of just first one
