@@ -201,8 +201,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
@@ -217,8 +216,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         datapf1b = kramer_IB_function_mode(s{f},f);
@@ -234,8 +232,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1b2'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         % % Only superficial oscillator
@@ -279,8 +276,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         datapf1d = kramer_IB_function_mode(s{f},f);
@@ -1449,8 +1445,7 @@ switch chosen_cell
         s{f}.PPfreq = 30; % in Hz
         s{f}.ap_pulse_delay = 16;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
         
@@ -1469,8 +1464,7 @@ switch chosen_cell
         s{f}.PPfreq = 30; % in Hz
         s{f}.ap_pulse_delay = 16;                        % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.ap_pulse_num = round(min(s{f}.PPoffset,s{f}.tspan(end))/(1000/s{f}.PPfreq))-10;
         s{f}.random_seed = 8;
         
@@ -1635,8 +1629,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         % % Gamma -> Delta connections (some of these are already
@@ -1660,9 +1653,7 @@ switch chosen_cell
         s{f}.sim_mode = 1;
         s{f}.repo_studyname = ['DeltaFig1a3'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
-        myoffset = 1200;
-        s{f}.tspan=[0 myoffset];
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];         % Onset at 400 
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 2400; s{f}.xlims_range = [400 tspan(2)];         % Onset at 400 
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 5;
         
@@ -1686,7 +1677,8 @@ switch chosen_cell
         data(1).NMDAblk = 'Control';
         data(2).NMDAblk = 'Blocked';
         
-        PSD_onset = 400;
+        PSD_onset = s{f}.PPonset + 200;
+        myoffset = s{f}.PPoffset;
         
         % Plot combined power spectra for blocked vs control all LFP gTH,
         % delta LFP, and gamma LFP gTH
@@ -1741,8 +1733,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         % % Gamma -> Delta connections (some of these are already
@@ -1763,8 +1754,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         
-        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.xlims_range = [400 tspan(2)];
-        s{f}.PPoffset = 1500;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 tspan(2)];
         s{f}.random_seed = 8;
         
         % % Gamma -> Delta connections (some of these are already
