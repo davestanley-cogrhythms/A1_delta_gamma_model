@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['207e_inc_dec_IBPPStim_pm' num2str(pulse_mode)];
+repo_studyname = ['207f_inc_gNGRS_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -518,7 +518,7 @@ if ~no_synapses
         gNMDA_ibrs = 7/Nib;
     end
     gGABAa_ngrs = 0.1/Nng;
-    gGABAb_ngrs = 0.7/Nng;
+    gGABAb_ngrs = 0.9/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
