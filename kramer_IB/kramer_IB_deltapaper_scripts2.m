@@ -931,7 +931,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 2;
         s{f}.Nfs = 20;
-        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
+        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.04:0.3]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -958,7 +958,7 @@ switch chosen_cell
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.Nfs = 20;
         s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
-                     'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
+                     'dFS5->IB','g_SYN',[0:0.04:0.3]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
@@ -1601,7 +1601,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.Nfs = 20;
-        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.05:0.35]/s{f}.Nfs;...
+        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.04:0.3]/s{f}.Nfs;...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
 
