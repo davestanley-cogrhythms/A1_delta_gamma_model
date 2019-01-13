@@ -28,7 +28,7 @@ sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel 
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 7;             % % % % Choise of periodic pulsing input
+pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['207f_inc_gNGRS_pm' num2str(pulse_mode)];
+repo_studyname = ['208a_dec_gRSFS' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
@@ -199,9 +199,9 @@ maxNcores = 4;
 save_data_flag = 0;
 save_results_flag = double(~isempty(plot_options));         % If plot_options is supplied, save the results.
 verbose_flag = 1;
-% random_seed = 'shuffle';
+random_seed = 'shuffle';
 % random_seed = 8;
-a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+% a = clock; random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
 study_dir = get_studydir(sp,repo_studyname);
 
 if isempty(plot_options); plot_functions = [];
@@ -527,7 +527,7 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit, plus deep FS cells)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.3/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.0/Nrs;                     % RS -> FS
     
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
@@ -540,7 +540,7 @@ if ~no_synapses
     gGABAa_fsLTS = 2.5/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
+    gAMPA_rsfs5=1.0/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     gAMPA_rstfs5=0.0/Nrs;
