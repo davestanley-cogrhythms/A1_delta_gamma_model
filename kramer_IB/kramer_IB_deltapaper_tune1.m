@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf; 
 end
 
-namesuffix = '_PPonset0';
+namesuffix = '_small_PPonset0';
 
 switch chosen_cell
     case '0a'
