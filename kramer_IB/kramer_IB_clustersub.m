@@ -28,6 +28,7 @@ clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','6a_shuffle',16,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','6b',8,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','7a',8,myhours);
@@ -36,13 +37,16 @@ clustersub('kramer_IB_deltapaper_scripts2','7b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','7c',8,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','8a',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','8a_shuffle',16,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8b',8,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','8c_shuffle',16,myhours);
 % clustersub('kramer_IB_deltapaper_scripts2','8d',16,myhours);
 
 clustersub('kramer_IB_deltapaper_scripts2','9a',8,myhours);     % Polley figure defualt
 % clustersub('kramer_IB_deltapaper_scripts2','9b',6,myhours);   % Lakatos version
 clustersub('kramer_IB_deltapaper_scripts2','9c1',8,myhours);   % Sweep timing
+clustersub('kramer_IB_deltapaper_scripts2','9c1_shuffle',16,myhours);   % Sweep timing
 clustersub('kramer_IB_deltapaper_scripts2','9c2',8,myhours);   % Sweep timing with AR block
 clustersub('kramer_IB_deltapaper_scripts2','9c3',8,myhours);   % Sweep timing with M block
 clustersub('kramer_IB_deltapaper_scripts2','9c4',8,myhours);   % Sweep timing with NMDA block
@@ -57,7 +61,7 @@ clustersub('kramer_IB_deltapaper_scripts2','9k',8,myhours);     % Polley fig 20 
 clustersub('kramer_IB_deltapaper_scripts2','9l',8,myhours);     % Polley fig 100 ms block h-current
 clustersub('kramer_IB_deltapaper_scripts2','9m',8,myhours);     % Polley fig 200 ms block h-current
 
-clustersub('kramer_IB_deltapaper_scripts2','10a',16,myhours);     % Polley figure defualt
+clustersub('kramer_IB_deltapaper_scripts2','10a',16,myhours);     % Vary AP delay figure
 
 %% Supplemental figures
 clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance

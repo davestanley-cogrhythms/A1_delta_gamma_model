@@ -741,6 +741,45 @@ switch chosen_cell
         s{f}.include_tFS5 = include_tFS5_global;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
+        
+    case '6a_shuffle'
+        %% Paper Fig 6a - Vary onset
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        
+        % Make NG stim longer
+        s{f}.IB_offset1=100;
+        s{f}.IB_onset2=100;
+        
+        % Setup mask
+        s{f}.PPonset = 0;
+        s{f}.do_nested_mask = 1;
+        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
+        
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig6a_onset'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.vary = { ...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:100:1450,3001]-400;...
+            'RS','asdfasdfadf',1:8; ...
+        };
+         
+        s{f}.kerneltype_Poiss_IB = 4;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        datapf6a = kramer_IB_function_mode(s{f},f);
 
     case '6b'
         %% Paper Fig 6b - As Fig 6a except 40 Hz Thalamic input instead of poisson
@@ -914,6 +953,32 @@ switch chosen_cell
         
         data = kramer_IB_function_mode(s{f},f);
         
+    case '8a_shuffle'
+        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep IB Poisson (use this one for paper, since pure tone)
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig8a_OnsetPoisson'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_Poiss_IB = 4;
+        s{f}.vary = {'IB','PP_gSYN',[0:0.1:0.7]; ...
+                     'RS','asdfasdfadf',1:8; ...
+            };
+        
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
+        
+        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        s{f}.gGABAa_fs5ib = 0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
         
     case '8b'
         %% Paper 8b - Characterize delta rhythm - block gamma input; sweep IB Poisson 40 Hz
@@ -960,6 +1025,32 @@ switch chosen_cell
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        s{f}.IB_PP_gSYN=0;
+        
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '8c_shuffle'
+        %% Paper 8c - Characterize delta rhythm - Poisson input, sweep gamma dFS->IB
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig8c_Onset_FSIB40Hz'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_Poiss_IB = 2;
+        s{f}.Nfs = 20;
+        s{f}.vary = {'dFS5->IB','g_SYN',[0:0.04:0.3]/s{f}.Nfs;...
+            'RS','asdfasdfadf',1:8; ...
+            };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
+        
+        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 tspan(2)];
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
         s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.IB_PP_gSYN=0;
@@ -1093,6 +1184,74 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        
+        datapf9c = kramer_IB_function_mode(s{f},f);
+        
+    case '9c1_shuffle'
+        %% Paper 9c - Sweep timing of dFS stimulation
+        % Setup
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        f=1;
+        s{f} = struct;
+              
+        % Make NG stim longer
+        s{f}.IB_offset1=100;
+        s{f}.IB_onset2=100;
+        
+        % Setup mask
+        s{f}.PPmaskduration = 50;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
+        
+        namesuffix1 = namesuffix;
+        namesuffix1 = [namesuffix1 '_pulse_' num2str(s{f}.PPmaskduration) 'ms'];
+        
+        if blk_h_current
+            namesuffix1 = [namesuffix1 '_blkgAR'];
+            s{f}.gAR_d = 0;
+        end
+        
+        if blk_m_current
+            namesuffix1 = [namesuffix1 '_blkgM'];
+            s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
+        end
+        
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig9c1_polley'  num2str(f) '' namesuffix1];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 7;
+        
+        % Make NG stim longer
+%         s{f}.IB_offset1 = 100;
+%         s{f}.IB_onset2=100;
+        
+        % PPStim stuff
+        s{f}.pulse_train_preset = 0;
+        if strcmp(namesuffix,'blkgAR')
+            % Do this one if AR current is off
+            s{f}.vary = { ...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:100:1450,3001]-500;...
+                'RS','asdfasdfadf',1:8; ...
+            };
+        else
+            % Do this one otherwise
+            s{f}.vary = { ...
+                '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:100:1450,3001]-500;...
+                'RS','asdfasdfadf',1:8; ...
+            };
+        end
+
+        % Reduce Ncells
+%         s{f}.Nrs = 20;
+
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.pulse_mode = 7;
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         

@@ -18,8 +18,8 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 !pwd
 % path
 
-tspan=[0 1000];
-sim_mode = 9;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+tspan=[0 2000];
+sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -38,20 +38,20 @@ pulse_mode = 1;             % % % % Choise of periodic pulsing input
                             
 
 % Save figures options within DynaSim                            
-save_figures = 1;               % Save figures associated with individusl sims, within dsSimulate. Controlled by plot_options (below)
+save_figures = 0;               % Save figures associated with individusl sims, within dsSimulate. Controlled by plot_options (below)
     save_composite_figures = 0;     % Flag for saving composite figures comprised of PNGs stitched together from individual simulations into a single large canvas
 
 % % % % % Display options
-save_combined_figures = 1;      % Flag for figures based on post-hoc analysis of all sims together
+save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
 plot_on = 0;
 plot_on2 = 0;
     do_all_power_plots = false;  % Show all power plots instead of just first one
 do_visible = 'off';
 
 % % % % % Git options
-save_simfiles_to_repo_presim = true;          % Saves simfiles to repo prior to running dsSimulate
-save_everything_to_repo_postsim = true;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
-do_commit = 1;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
+save_simfiles_to_repo_presim = false;          % Saves simfiles to repo prior to running dsSimulate
+save_everything_to_repo_postsim = false;        % Saves any open figures to repo, also copies over any already-saved figures and simfiles (if not already saved by save_simfiles_to_repo_presim being set to true)
+do_commit = 0;                          % 0-not commit at all; 1-commit ignoring figures; 2-commit everything
 
 Cm_Ben = 2.7;
 Cm_factor = Cm_Ben/.25;
@@ -105,7 +105,7 @@ end
 N=20;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=20; % Number of RS cells
+Nrs=80; % Number of RS cells
 Nfs=N;  % Number of FS cells
 Ntfs5 = 20; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
 Nlts=N; % Number of LTS cells
