@@ -62,7 +62,7 @@ no_synapses = 0;
 NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
-do_gamma_only = false;
+do_gamma_only = true;
 do_delta_only = false;
 
 % % % % % Cells to include in model
@@ -129,7 +129,7 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['208d_sweep_LTSstim_smallnet_pm' num2str(pulse_mode)];
+repo_studyname = ['208d_sweep_LTSstim_fullllnet_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
