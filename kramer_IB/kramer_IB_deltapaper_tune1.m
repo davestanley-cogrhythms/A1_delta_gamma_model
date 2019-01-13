@@ -13,7 +13,7 @@ if nargin < 2
     maxNcores = Inf; 
 end
 
-namesuffix = '_vary_IBPPStim';
+namesuffix = '_PPonset0';
 
 switch chosen_cell
     case '0a'
