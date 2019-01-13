@@ -19,7 +19,7 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % path
 
 tspan=[0 2000];
-sim_mode = 20;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
+sim_mode = 16;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
                             % 9 - sim study FS-RS circuit vary RS stim
                              % 10 - Inverse PAC
@@ -63,7 +63,7 @@ NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
 do_gamma_only = false;
-do_delta_only = true;
+do_delta_only = false;
 
 % % % % % Cells to include in model
 include_IB =   1;
@@ -129,13 +129,13 @@ gAR_d=0.5; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
-repo_studyname = ['205d_sweep_Onset_onset75_deltaonly_pm' num2str(pulse_mode)];
+repo_studyname = ['206a_inc_IBPPStim_0.3_pm' num2str(pulse_mode)];
 mycomment = ['Test rebound for VERY low tension oscillator (gNGIB=0.7,jIB=1.5). Try to see why its failing to burst. gAR is still 0.5 '];
 mycomment = ['Try increasing gNGIB, since we need to do this to get better superficial modulation'];
 % mycomment = ['Redo_prev'];
 mycomment = ['Reduce gRAN. Goal: See if reducing noise can reduce delay caused by IB partial bursts.'];
 % mycomment = ['Goal: See if can remove the partial IB bursts, which actually delay subsequent delta cycle. Note G_ran is restored'];
-mycomment = [''];
+mycomment = ['Goal: Excitatory reset was too weak. This is due to activity of L5 FS cells. Need to increase IB PPStim to compensate.'];
 
 % IB Ca and M current
 gM_d = 2;
@@ -774,7 +774,7 @@ switch sim_mode
         random_seed = 'shuffle';                % Need shuffling to turn on, otherwise this is pointless.
         
     case 16         % Vary timing of 100ms pulse. Useful for reproducing deltapaper 6a or 9c
-        temp = [6000,300,400,500,600,700,800];
+        temp = [6000,400,500,600,700,800,900];
         %temp = [6000,800,1000,1200];
         vary = { ...
             '(IB,NG,RS,FS,LTS,dFS5,tFS5)','(PPmaskshift)',[temp];...
@@ -857,7 +857,7 @@ tFS_PP_gSYN = 0;
     deepRSPPstim = -.5;
     deepRSgSpike = 0;
 
-IB_PP_gSYN = 0.2;
+IB_PP_gSYN = 0.3;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
