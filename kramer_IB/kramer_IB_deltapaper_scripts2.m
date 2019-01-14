@@ -776,7 +776,8 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100; s{f}.Nrs = 20;
+        
         s{f}.include_tFS5 = include_tFS5_global;
         
         datapf6a = kramer_IB_function_mode(s{f},f);
@@ -972,7 +973,7 @@ switch chosen_cell
         
         
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
-        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100; s{f}.Nrs = 20;
         s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.gGABAa_fs5ib = 0;
@@ -1050,7 +1051,7 @@ switch chosen_cell
         
         
         s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
-        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100; s{f}.Nrs = 20;
         s{f}.include_tFS5 = include_tFS5_global;
         
         s{f}.IB_PP_gSYN=0;
@@ -1251,7 +1252,7 @@ switch chosen_cell
         s{f}.tspan=[0 2000];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
-        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100; s{f}.Nrs = 20;
         
         datapf9c = kramer_IB_function_mode(s{f},f);
         
