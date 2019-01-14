@@ -820,6 +820,24 @@ switch chosen_cell
         s{f}.include_tFS5 = include_tFS5_global;
         
         datapf6b = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '6c'
+        %% Paper fig 6c - As 6a, but doing a reset figure like Fig9c
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        
+        PPmaskduration = 100;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+        
+        % Setup mask
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.do_nested_mask = 1;
+
+        data = kramer_IB_function_mode(s{f},f);
 
              
     case '7a'
