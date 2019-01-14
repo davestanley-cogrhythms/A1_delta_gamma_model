@@ -1595,7 +1595,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1b1'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig10a_APdelay'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 1;
         s{f}.tspan=[0 1000];
         s{f}.PPonset = 0;
