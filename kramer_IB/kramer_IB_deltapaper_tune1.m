@@ -21,7 +21,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 0; s{f}.plot_on2 = 1; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
+        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 1; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['198_sm16pm1' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 1;
@@ -35,7 +35,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 0; s{f}.plot_on2 = 1; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 1; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['198_sm16pm7' namesuffix];
         s{f}.sim_mode = 16;
         s{f}.pulse_mode = 7;
@@ -48,7 +48,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
+        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['sweep4D_sm20pm1' namesuffix];
         s{f}.sim_mode = 20;
         s{f}.mycomment = [''];
@@ -58,7 +58,7 @@ switch chosen_cell
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.plot_on = 1;
-        s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
+        s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1;      % Flag for saving dsPlot2 across all simulations in data.
         s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
         
         datap20 = kramer_IB_function_mode(s{f},f);
@@ -68,7 +68,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
+        s{f}.save_figures = 0; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 1; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 1;
         s{f}.repo_studyname = ['sweep4D_sm21pm7' namesuffix];
         s{f}.mycomment = [''];
         s{f}.sim_mode = 21;
@@ -78,7 +78,7 @@ switch chosen_cell
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         
         s{f}.plot_on = 1;
-        s{f}.save_combined_figures = 0;      % Flag for saving dsPlot2 across all simulations in data.
+        s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1;      % Flag for saving dsPlot2 across all simulations in data.
         s{f}.save_composite_figures = 0;     % Flag for saving composite figures comprised of multiple subfigures.
         
         datap21 = kramer_IB_function_mode(s{f},f);
@@ -89,7 +89,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1a1' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
@@ -109,7 +109,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -131,7 +131,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -164,7 +164,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.11' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -187,7 +187,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.11' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -220,7 +220,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.13' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -243,7 +243,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.13' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -276,7 +276,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.15' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -299,7 +299,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.15' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -332,7 +332,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.17' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -355,7 +355,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.17' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -388,7 +388,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.19' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -411,7 +411,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.19' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -444,7 +444,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.21' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -467,7 +467,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.21' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -500,7 +500,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_IBPPStim_0.23' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -523,7 +523,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_IBPPStim_0.23' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -557,7 +557,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1c' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         s{f}.tspan=[0 3500];
@@ -576,7 +576,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1c2' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 0;     % Turn off pulsemode
         s{f}.tspan=[0 3500];
@@ -607,7 +607,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1d' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 0;
@@ -628,7 +628,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig4_lakatos' num2str(f) '' namesuffix];
         s{f}.kerneltype_Poiss_IB = 4;         % Set to 4 for IB tones
         s{f}.pulse_mode = 5;
@@ -643,7 +643,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9a_polley' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 3500];
@@ -658,7 +658,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9b_polleytune' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 6;
         s{f}.tspan=[0 5500];
@@ -675,7 +675,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_32Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -696,7 +696,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_32Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -728,7 +728,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_26Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -749,7 +749,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_26Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -781,7 +781,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_21Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -802,7 +802,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_21Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -835,7 +835,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_17Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -856,7 +856,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_17Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -888,7 +888,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_14Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -909,7 +909,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_14Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -941,7 +941,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b1_11Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;
@@ -962,7 +962,7 @@ switch chosen_cell
         clear s
         f = 1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['tune1Fig1b2_11Hz' num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1;
         s{f}.pulse_train_preset = 1;

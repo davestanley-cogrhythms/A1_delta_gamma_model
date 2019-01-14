@@ -42,7 +42,8 @@ save_figures = 0;               % Save figures associated with individusl sims, 
     save_composite_figures = 0;     % Flag for saving composite figures comprised of PNGs stitched together from individual simulations into a single large canvas
 
 % % % % % Display options
-save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together
+save_combined_figures = 0;      % Flag for figures based on post-hoc analysis of all sims together. Should turn off when running shuffle experiments (see below)
+save_shuffle_figures = 1;       % Flag for saving figures associated with shuffle experiments and error bars. This option has it's own internal switch, which will only turn on when it detects a shuffle experiment being run
 plot_on = 0;
 plot_on2 = 0;
     do_all_power_plots = false;  % Show all power plots instead of just first one

@@ -24,7 +24,7 @@ if save_composite_figures && save_figures
 
 end
 
-if save_combined_figures
+if save_combined_figures || save_shuffle_figures
     %Names of state variables: NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
     xp = dsAll2mdd(data);
     
@@ -37,6 +37,10 @@ if save_combined_figures
     
     i=0;
     parallel_plot_entries = {};
+    
+end
+
+if save_combined_figures
 
     % % % % % % % % CURRENTS Line plots % % % % % % % %
     % AMPA, GABA A, GABA B
@@ -51,30 +55,6 @@ if save_combined_figures
         parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.5],'force_last','variable','LineWidth',2,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',chosen_height}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-    end
-    
-    % If we're doing a shuffle run, and varying no other parameters, plot
-    % waveformErr of all conductances (NMDA + GABAb, etc)
-    if include_IB && include_NG && (include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.7],'force_last','RS_asdfasdfadf','LineWidth',2,...
-            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-    end
-    
-    if include_IB && include_NG && ~(include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
-            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-    end
-    
-    % If we're doing a shuffle run and sweeping some other parameter, plot waveformErr average of just GABAb 
-    if include_IB && include_NG && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) > 1            % This is the vary marker for shuffling across dims, meaning we should average
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
-            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
     % RS M current plot
@@ -159,56 +139,7 @@ if save_combined_figures
             'figheight',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
 
-    % % % % % % % % Aperiodic plots % % % % % % % %
-    if pulse_train_preset >= 1 && include_LTS
-        cent=ap_pulse_num*1000/PPfreq;
-        crop_range=[cent-100,cent+100];
-
-        so.show_AP_vertical_lines = true;
-        so.ap_pulse_num = ap_pulse_num;
-        so.PPfreq = PPfreq;
-        so.PPshift = PPshift;
-        so.suppress_legend = true;
-
-        maxNpopulations = 6;                % Maximum number of populations we expect to ever plot
-
-        % Full voltage waveform plot on first dataset
-        i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, data(1), 'num_embedded_subplots', NESP,'population','/RS|FS|LTS/','crop_range',crop_range,'figwidth',1/3,'subplot_options',so,...
-            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-            'figheight',length(spec.populations)/maxNpopulations}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-
-        % Plot average across last dimension
-        if length(data) > 1 && include_RS && include_LTS && size(vary,1) == 1
-            % Conductance plot
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-
-            % Ionic current plot
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-
-        end
-
-        % Averaged across first varied dimension, and then make
-        % subplots across 2nd (e.g., for varying AP delay)
-        if length(data) > 1 && include_RS && include_LTS && size(vary,1) > 1
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-            i=i+1;
-            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
-                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
-                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
-        end
-    end
-
-
+    
     % % % % % % % % Imagesc plots with do_mean = true (no subplotting!) % % % % % % % %
     % IB GABA B 
     if include_IB && include_NG && length(data) > 1
@@ -396,6 +327,91 @@ if save_combined_figures
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
     end
+    
+end
+
+if save_shuffle_figures
+    
+    % % % % % % % % CURRENTS Line plots % % % % % % % %
+    % AMPA, GABA A, GABA B
+    % If we're doing a shuffle run, and varying no other parameters, plot
+    % waveformErr of all conductances (NMDA + GABAb, etc)
+    if include_IB && include_NG && (include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|THALL_GABA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.7],'force_last','RS_asdfasdfadf','LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
+
+    if include_IB && include_NG && ~(include_FS || include_dFS5) && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) == 1            % This is the vary marker for shuffling across dims, meaning we should average
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/AMPANMDA_gTH|GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
+
+    % If we're doing a shuffle run and sweeping some other parameter, plot waveformErr average of just GABAb 
+    if include_IB && include_NG && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) > 1            % This is the vary marker for shuffling across dims, meaning we should average
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+    end
+    
+    
+    % % % % % % % % Aperiodic plots % % % % % % % %
+    if pulse_train_preset >= 1 && include_LTS
+        cent=ap_pulse_num*1000/PPfreq;
+        crop_range=[cent-100,cent+100];
+
+        so.show_AP_vertical_lines = true;
+        so.ap_pulse_num = ap_pulse_num;
+        so.PPfreq = PPfreq;
+        so.PPshift = PPshift;
+        so.suppress_legend = true;
+
+        maxNpopulations = 6;                % Maximum number of populations we expect to ever plot
+
+        % Full voltage waveform plot on first dataset
+        i=i+1;
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, data(1), 'num_embedded_subplots', NESP,'population','/RS|FS|LTS/','crop_range',crop_range,'figwidth',1/3,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',length(spec.populations)/maxNpopulations}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+
+        % Plot average across last dimension
+        if length(data) > 1 && include_RS && include_LTS && size(vary,1) == 1
+            % Conductance plot
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+
+            % Ionic current plot
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+
+        end
+
+        % Averaged across first varied dimension, and then make
+        % subplots across 2nd (e.g., for varying AP delay)
+        if length(data) > 1 && include_RS && include_LTS && size(vary,1) > 1
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/LFPrs_gTH|LFPlts_gTH/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+            i=i+1;
+            parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'num_embedded_subplots', NESP,'population','RS','variable','/RS_IBaIBdbiSYNseed_ISYN|LTS_IBaIBdbiSYNseed_ISYN/','do_mean',true,'dim_stacking',{'populations','varied2','variables','varied1'},'LineWidth',2,'plot_type','waveformErr','lock_axes',true,'Ndims_per_subplot',2,'crop_range',crop_range,'figwidth',1/3,'figheight',1/2,'subplot_options',so,...
+                'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+                }; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        end
+    end
+    
+end
+
+
+if save_combined_figures || save_shuffle_figures
 
     % Import any extra plots provided in sim_struct, specific to this
     % simulation
