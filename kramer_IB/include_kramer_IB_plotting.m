@@ -352,8 +352,17 @@ if save_shuffle_figures
 
     % If we're doing a shuffle run and sweeping some other parameter, plot waveformErr average of just GABAb 
     if include_IB && include_NG && any(strcmp(vary(:,2),'asdfasdfadf')) && size(vary,1) > 1            % This is the vary marker for shuffling across dims, meaning we should average
+        
+        clear so po
+        ind = xp.findaxis('RS_asdfasdfadf');
+        ind = 3-ind;            % If shuffle axis is 2, axis of interest is 3-2=1; if shuffle axis is 1, axis of interest is 3-1=2
+        N = size(xp,ind);
+        so.suppress_legend = true;
+        po.cmap = winter(N);
+        po.cmap(1,:) = [0,0,0];
+        
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,...
+        parallel_plot_entries{i} = {@dsPlot2_PPStim, xp, 'plot_type','waveformErr', 'num_embedded_subplots', NESP,'Ndims_per_subplot',2,'population','IB','variable','/GABAall_gTH/','do_mean',true,'xlims',xlims_range,'ylims',[0 0.4],'force_last','RS_asdfasdfadf','LineWidth',2,'subplot_options',so,'plot_options',po,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
     end
