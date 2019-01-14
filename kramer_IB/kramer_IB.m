@@ -622,13 +622,12 @@ tauNMDA = 151.5; 	 % page 15: 151.5=1/beta=(1/(.0066[1/ms])) 	% ms, decay time c
 tauNMDAr = 13.89;    % page 15: 13.89 = 1/alpha=1/(.072[1/(mM*ms)]) 	% ms, rise time constant
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
+
+vary = cell(1,3);
 switch sim_mode
     case 0
-        vary = [];
         
     case 1                                                                  % Everything default, single simulation
-        
-        vary = [];
         
     case 2
         
