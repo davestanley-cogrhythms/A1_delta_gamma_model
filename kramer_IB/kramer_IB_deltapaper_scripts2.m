@@ -209,6 +209,24 @@ switch chosen_cell
         
         datapf1a = kramer_IB_function_mode(s{f},f);
         
+        
+    case '1a1_shuffle'
+        %% Paper Figs 1a - Pulse train no AP
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a1_shuffle'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 s{f}.tspan(2)];
+        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.include_tFS5 = include_tFS5_global;
+        s{f}.vary = {'RS','asdfasdfadf',1:4};
+        
+        datapf1a = kramer_IB_function_mode(s{f},f);
+        
     case '1b1'
         %% Paper Figs 1b1 - Pulse train AP
         
@@ -830,6 +848,7 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
+        chosen_cell = '6c';
         PPmaskduration = 100;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
         

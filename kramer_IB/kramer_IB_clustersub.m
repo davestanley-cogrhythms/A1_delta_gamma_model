@@ -15,6 +15,8 @@ clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);
 clustersub('kramer_IB_deltapaper_scripts2','1a4',1,myhours);        % Core input only
 clustersub('kramer_IB_deltapaper_scripts2','1a5',1,myhours);        % Matrix input only
 
+clustersub('kramer_IB_deltapaper_scripts2','1a1_shuffle',4,myhours);
+
 clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);        % Sweep low frequency
 clustersub('kramer_IB_deltapaper_scripts2','3a2',8,myhours);        % Sweep low frequencies only superficial oscillator
 clustersub('kramer_IB_deltapaper_scripts2','3b',6,myhours);        % Sweep high frequency
