@@ -760,7 +760,7 @@ switch chosen_cell
         s{f}.PPmaskduration = 100;
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig6a_shuffle'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -960,7 +960,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8a_shuffle'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1038,7 +1038,7 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig8c_shuffle'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
@@ -1218,7 +1218,7 @@ switch chosen_cell
             s{f}.gM_d = 0.5;        % Don't fully block, just reduce it substantially
         end
         
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 0; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.repo_studyname = ['DeltaFig9c1_shuffle'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
