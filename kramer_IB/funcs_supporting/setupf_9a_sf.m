@@ -85,6 +85,12 @@ function [s,f] = setupf_9a_sf(maxNcores,namesuffix,casenum,short_mode,blk_h_curr
         s{f}.parallel_plot_entries_additional{6} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
             'xlims',[4000,5500],'figheight',chosen_height};
         
+        % 2000 ms - to catch the subsequent delta cycles
+        s{f}.parallel_plot_entries_additional{7} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
+            'xlims',[3500,5500],'figheight',chosen_height};
+        s{f}.parallel_plot_entries_additional{8} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'xlims',[3500,5500],'figheight',chosen_height};
+        
         % Adjust AR
         % s{f}.gAR_d=0.5;
 
