@@ -761,7 +761,7 @@ switch chosen_cell
         s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
         
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['DeltaFig6a_onset'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig6a_shuffle'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
@@ -960,7 +960,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['DeltaFig8a_OnsetPoisson'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig8a_shuffle'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 4;
@@ -1038,7 +1038,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['DeltaFig8c_Onset_FSIB40Hz'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig8c_shuffle'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.kerneltype_Poiss_IB = 2;
@@ -1218,7 +1218,7 @@ switch chosen_cell
         end
         
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['DeltaFig9c1_polley'  num2str(f) '' namesuffix1];
+        s{f}.repo_studyname = ['DeltaFig9c1_shuffle'  num2str(f) '' namesuffix1];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 7;
         
