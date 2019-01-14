@@ -24,6 +24,12 @@ if save_composite_figures && save_figures
 
 end
 
+% Cheap hack so we can query elements of vary (e.g., vary{1,2}) and not
+% have it produce errors. Better way to do this would be to just pull out xp
+% axes and query them directly. Lines like: any(strcmp(vary(:,2),'asdfasdfadf')) in
+% paricular would previously produce errors.
+if isempty(vary); vary = cell(1,3); end
+
 if save_combined_figures || save_shuffle_figures
     %Names of state variables: NMDA_s, NMDAgbar, AMPANMDA_gTH, AMPAonly_gTH, NMDAonly_gTH
     xp = dsAll2mdd(data);

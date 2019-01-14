@@ -624,7 +624,7 @@ tauNMDAr = 13.89;    % page 15: 13.89 = 1/alpha=1/(.072[1/(mM*ms)]) 	% ms, rise 
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 
-vary = cell(1,3);
+vary = [];
 switch sim_mode
     case 0
         
