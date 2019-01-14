@@ -840,7 +840,7 @@ switch chosen_cell
         datapf6b = kramer_IB_function_mode(s{f},f);
         
         
-    case '6c'
+    case '6a2'
         %% Paper fig 6c - As 6a, but doing a reset figure like Fig9c
         % Setup
         short_mode = false;  % If true, do a shorter sim
@@ -848,13 +848,14 @@ switch chosen_cell
         blk_m_current = false;
         clear s
         
-        chosen_cell = '6c';
+        chosen_cell = '6a2';
         PPmaskduration = 100;
         [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
         
         % Setup mask
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.do_nested_mask = 1;
+        s{f}.kerneltype_Poiss_IB = 4;
 
         data = kramer_IB_function_mode(s{f},f);
 
