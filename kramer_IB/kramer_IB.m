@@ -152,11 +152,19 @@ if function_mode
 end
 
 
+%% % % % % % % % % % % % %  ##0.9 Simulation parameters % % % % % % % % % % % % %
+% Do another round of parameter definitions and overwrite imports
+
+xlims_range = [tspan(1) tspan(2)];
+
+% Overwrite master parameters as needed, before deriving the rest.
+if function_mode
+    unpack_sim_struct       % Unpack sim struct to override these defaults if necessary
+end
+
 %% % % % % % % % % % % % %  ##1.0 Simulation parameters % % % % % % % % % % % % %
 
 % % % % % Options for saving figures to png for offline viewing
-xlims_range = [tspan(1) tspan(2)];
-% xlims_range = [450 950]; warning('comment this out');
 if save_figures
     universal_options = {'format','png','visible','off','figheight',.9,'figwidth',.9,};
     
