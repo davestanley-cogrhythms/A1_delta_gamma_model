@@ -547,7 +547,7 @@ if ~no_synapses
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
-    gGABAa_fsLTS = 2.5/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
     gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
@@ -874,7 +874,7 @@ IB_PP_gSYN = 0.2;
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     tFS5_PP_gSYN_NMDA = 0;
-RS_PP_gSYN = 0.15;
+RS_PP_gSYN = 0.10;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
