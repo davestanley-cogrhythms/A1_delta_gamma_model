@@ -204,7 +204,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1a1'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 s{f}.tspan(2)];
-        s{f}.random_seed = 8;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1a = kramer_IB_function_mode(s{f},f);
@@ -1957,7 +1957,7 @@ switch chosen_cell
         
         
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 s{f}.tspan(2)];
-        s{f}.random_seed = 8;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
         
         % % Gamma -> Delta connections (some of these are already
@@ -1998,7 +1998,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1c2'  num2str(f) '' namesuffix];
         s{f}.tspan=[0 3000];
         s{f}.pulse_mode = 0;
-        s{f}.random_seed = 4;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
@@ -2019,7 +2019,7 @@ switch chosen_cell
             data(i).varied={'NMDAblk'};
         end
         data(1).NMDAblk = 'Control';
-        data(2).NMDAblk = 'Blocked';
+        data(2).NMDAblk = 'NMDA Blocked';
         
         % Plot combined power spectra for blocked vs control all LFP gTH,
         % delta LFP, and gamma LFP gTH
