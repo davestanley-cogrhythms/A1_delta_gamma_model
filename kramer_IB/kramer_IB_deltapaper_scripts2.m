@@ -308,7 +308,7 @@ switch chosen_cell
     case '1ac'
         %% Do both Figs 1a and 1c together to do spectrogram comparison (Gamma input)
         
-        myonset = 700;
+        myonset = 600;
         myoffset = 3000;
         
         clear s
@@ -389,7 +389,7 @@ switch chosen_cell
     case '1dc'
         %% Do both Figs 1d and 1c together to do spectrogram comparison (Poisson input)
         
-        myonset = 700;
+        myonset = 600;
         myoffset = 3000;
         
         clear s
