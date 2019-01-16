@@ -14,7 +14,7 @@ end
 
 include_tFS5_global = false;        % Should be off for paper #1, on for papers #2 and #3
 
-namesuffix = '_dec_RSPPStim';        % Delta to gamma
+namesuffix = '_inc_RSPPStim_0.12';        % Delta to gamma
 %namesuffix = '_IBPPStim0.3';
 % namesuffix = '_gar0.0';
 % namesuffix = '';
