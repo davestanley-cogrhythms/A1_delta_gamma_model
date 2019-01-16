@@ -221,7 +221,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig1a1_shuffle'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2400]; s{f}.PPonset = 700; s{f}.PPoffset = 1800; s{f}.xlims_range = [400 s{f}.tspan(2)];
-        s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100;
+        s{f}.random_seed = 'shuffle';
         s{f}.include_tFS5 = include_tFS5_global;
         s{f}.vary = {'RS','asdfasdfadf',1:4};
         
@@ -745,7 +745,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-400;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[300:50:800,3000,3001]-0;...
         };
          
         s{f}.kerneltype_Poiss_IB = 4;
@@ -784,7 +784,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:100:1450,3001]-400;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[300:50:800,3000,3001]-0;...
             'RS','asdfasdfadf',1:8; ...
         };
          
@@ -824,7 +824,7 @@ switch chosen_cell
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         
         s{f}.vary = { ...
-            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[800:50:1450,3000,3001]-400;...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[300:50:800,3000,3001]-0;...
         };
          
         s{f}.kerneltype_Poiss_IB = 2;
