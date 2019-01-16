@@ -760,6 +760,49 @@ switch chosen_cell
         
         datapf6a = kramer_IB_function_mode(s{f},f);
         
+    case '6a_core'
+        %% Paper Fig 6a - Vary onset
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        
+        % Make NG stim longer
+        s{f}.IB_offset1=100;
+        s{f}.IB_onset2=100;
+        
+        % Setup mask
+        s{f}.PPonset = 0;
+        s{f}.do_nested_mask = 1;
+        s{f}.PPmaskduration = 100;
+        s{f}.PPmaskfreq = 0.01;    % 1 pulse every 100 seconds. This should make only pulse ever happen.
+        
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig6a_core'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        
+        s{f}.vary = { ...
+            '(IB,RS,FS,LTS,NG,dFS5,tFS5)','PPmaskshift',[300:50:800,3000,3001]-0;...
+        };
+         
+        s{f}.kerneltype_Poiss_IB = 4;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        % s{f}.random_seed = 100;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        
+        s{f}.IB_PP_gSYN=0;      % Block IB PPStim to do core only
+        
+        datapf6a = kramer_IB_function_mode(s{f},f);
+        
+        
     case '6a_shuffle'
         %% Paper Fig 6a - Vary onset
         
@@ -857,6 +900,26 @@ switch chosen_cell
         s{f}.do_nested_mask = 1;
         s{f}.kerneltype_Poiss_IB = 4;
 
+        data = kramer_IB_function_mode(s{f},f);
+        
+    case '6a2_core'
+        %% Paper fig 6c - As 6a, but doing a reset figure like Fig9c
+        % Setup
+        short_mode = false;  % If true, do a shorter sim
+        blk_h_current = false;        
+        blk_m_current = false;
+        clear s
+        
+        chosen_cell = '6a2_core';
+        PPmaskduration = 100;
+        [s,f] = setupf_9a_sf(maxNcores,namesuffix,chosen_cell,short_mode,blk_h_current,blk_m_current,PPmaskduration);
+        
+        % Setup mask
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.do_nested_mask = 1;
+        s{f}.kerneltype_Poiss_IB = 4;
+        
+        s{f}.IB_PP_gSYN=0;
         data = kramer_IB_function_mode(s{f},f);
 
              
