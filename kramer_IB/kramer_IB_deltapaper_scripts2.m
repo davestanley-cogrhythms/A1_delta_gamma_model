@@ -1046,7 +1046,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
@@ -1073,7 +1073,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100; s{f}.Nrs = 20;
         s{f}.include_tFS5 = include_tFS5_global;
         
@@ -1098,7 +1098,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
@@ -1124,7 +1124,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
@@ -1151,7 +1151,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.random_seed = 'shuffle'; s{f}.dsfact = 100; s{f}.Nrs = 20;
         s{f}.include_tFS5 = include_tFS5_global;
         
@@ -1177,7 +1177,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.random_seed = 100;
         s{f}.include_tFS5 = include_tFS5_global;
         
@@ -1783,7 +1783,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.random_seed = 100;
         s{f}.include_tFS5 = include_tFS5_global;
         
@@ -1809,7 +1809,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.random_seed = 100;
         s{f}.include_tFS5 = include_tFS5_global;
         
@@ -1835,7 +1835,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.random_seed = 100;
         s{f}.include_tFS5 = include_tFS5_global;
         
@@ -1862,7 +1862,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
         
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
@@ -1890,7 +1890,7 @@ switch chosen_cell
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
 
         
-        s{f}.tspan=[0 2300]; s{f}.PPonset = 500; s{f}.PPoffset = 1600; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 500; s{f}.PPoffset = 1700; s{f}.xlims_range = [300 s{f}.tspan(2)];
         % s{f}.random_seed = 100;
         a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
