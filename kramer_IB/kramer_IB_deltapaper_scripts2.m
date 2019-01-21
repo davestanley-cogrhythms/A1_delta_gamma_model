@@ -322,7 +322,7 @@ switch chosen_cell
         s{f}.kerneltype_Poiss_IB = 2;
         s{f}.PPonset = myonset;
         s{f}.PPoffset = myoffset;
-        s{f}.random_seed = 8;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
         s{f}.include_tFS5 = include_tFS5_global;
         
         [data1,outpath1] = kramer_IB_function_mode(s{f},f);
