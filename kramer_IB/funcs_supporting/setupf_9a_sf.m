@@ -91,6 +91,13 @@ function [s,f] = setupf_9a_sf(maxNcores,namesuffix,casenum,short_mode,blk_h_curr
         s{f}.parallel_plot_entries_additional{8} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
             'xlims',[3500,5500],'figheight',chosen_height};
         
+        % as before, but fix ylims (for comparisons in Fig6a for default vs
+        % core-only)
+        s{f}.parallel_plot_entries_additional{9} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
+            'xlims',[3500,5500],'ylims',[-90,-40],'figheight',chosen_height};
+        s{f}.parallel_plot_entries_additional{10} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'xlims',[3500,5500],'ylims',[-90,-40],'figheight',chosen_height};
+        
         % Adjust AR
         % s{f}.gAR_d=0.5;
 
