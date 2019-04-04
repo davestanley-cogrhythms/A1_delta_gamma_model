@@ -244,7 +244,7 @@ switch chosen_cell
         datapf1b = kramer_IB_function_mode(s{f},f);
         
     case '1b2'
-        %% Paper Figs 1b2 - Pulse train AP
+        %% Paper Figs 1b2 - Pulse train AP - Only superficial oscillator
         
         clear s
         f = 1;
