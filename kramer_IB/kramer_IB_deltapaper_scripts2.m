@@ -2306,7 +2306,7 @@ switch chosen_cell
         s{f}.vary = {'IB','gM',[linspace(0.5,3.5,8)]; ...
             };
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.random_seed = 4;
+        s{f}.random_seed = 'shuffle';
         
         % % % % % Cells to include in model
         s{f}.include_IB =   1;
