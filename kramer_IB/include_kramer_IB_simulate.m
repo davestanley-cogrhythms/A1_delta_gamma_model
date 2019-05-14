@@ -119,6 +119,10 @@ if include_IB && include_FS && ~include_dFS5 && ~include_tFS5;  data = dsThevEqu
     % Only GABA B
 if include_IB && include_NG; data = dsThevEquiv(data,{'IB_NG_IBaIBdbiSYNseed_ISYN','IB_NG_iGABABAustin_IGABAB'},'IB_V',[-95,-95],'IB_NG_GABAall'); end   % NG GABA A & B
 
+if two_columns_mode 
+    if include_IB && include_NG; data = dsThevEquiv(data,{'c2IB_c2NG_IBaIBdbiSYNseed_ISYN','c2IB_c2NG_iGABABAustin_IGABAB'},'c2IB_V',[-95,-95],'c2IB_NG_GABAall'); end   % NG GABA A & B
+end
+
     % Other stuff
 if include_IB; data = dsThevEquiv(data,{'IB_IB_IBaIBdbiSYNseed_ISYN','IB_IB_iNMDA_INMDA'},'IB_V',[0,0],'IB_IB_AMPANMDA'); end
 if include_IB; data = dsThevEquiv(data,{'IB_IB_iNMDA_INMDA'},'IB_V',[0],'IB_IB_NMDAonly'); end

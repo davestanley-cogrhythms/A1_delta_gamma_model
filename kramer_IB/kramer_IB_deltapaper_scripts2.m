@@ -1713,6 +1713,130 @@ switch chosen_cell
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
+        
+
+        
+    case '11a1'
+        %% Paper 2 - Two column mode - spontaneous
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.two_columns_mode = true;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig11a1_spont'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 0;
+%         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
+%             };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = true;
+        
+        datapf11a = kramer_IB_function_mode(s{f},f);
+        
+        
+    case '11a2'
+        %% Paper 2 - Two column mode - spontaneous - shuffle
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.two_columns_mode = true;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig11a2_spontShuffle'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 0;
+        s{f}.vary = { ...
+            'IB','offset',[0:15]*50+500;...
+        };
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 5000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = true;
+        
+        % Add a plot
+        %plot_options.linecolor = 'k';
+        chosen_height = 1/3;
+        s{f}.plot_func = @dsPlot2;
+        % Full range
+%         s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,'plot_options',plot_options,...
+%             'figheight',chosen_height};
+%         s{f}.parallel_plot_entries_additional{2} = {'population','IB','variable','/THALL_GABA_gTH|GABAall_gTH|AMPANMDA_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+%             'figheight',chosen_height};
+
+        s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'figheight',chosen_height};
+        s{f}.parallel_plot_entries_additional{2} = {'population','IB','variable','/GABAall_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'figheight',chosen_height};
+        datapf11a = kramer_IB_function_mode(s{f},f);
+        
+    case '11b1'
+        %% Paper 2 - Two column mode - driven
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.two_columns_mode = true;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig11b1_driven'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+%         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
+%             };
+        s{f}.kerneltype_Poiss_IB = 4;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = true;
+        
+        datapf11b = kramer_IB_function_mode(s{f},f);
+        
+    case '11b2'
+        %% Paper 2 - Two column mode - driven
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.two_columns_mode = true;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig11b2_drivenShuffle'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.vary = { ...
+            'IB','offset',[0:15]*50+500;...
+        };
+        s{f}.kerneltype_Poiss_IB = 4;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 5000];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = true;
+        
+        s{f}.IB_PP_gSYN = 0.4;
+        s{f}.PPmaskfreq = 1.5;
+        
+        
+        s{f}.parallel_plot_entries_additional{1} = {'population','IB','variable','/V/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'figheight',chosen_height};
+        s{f}.parallel_plot_entries_additional{2} = {'population','IB','variable','/GABAall_gTH/','do_mean',true,'force_last','varied1','LineWidth',2,'plot_type','waveformErr','lock_axes',false,'Ndims_per_subplot',3,...
+            'figheight',chosen_height};
+        
+        datapf11b = kramer_IB_function_mode(s{f},f);
+        
+        
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
 
 

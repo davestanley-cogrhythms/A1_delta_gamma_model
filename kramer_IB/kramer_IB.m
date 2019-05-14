@@ -28,7 +28,7 @@ sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel s
                             % 13 - Vary LTS cell synapses
                             % 14 - Vary random parameter in order to get repeat sims
                             % 15 - Repeat sims, and also vary pulse delay
-pulse_mode = 1;             % % % % Choise of periodic pulsing input
+pulse_mode = 0;             % % % % Choise of periodic pulsing input
                             % 0 - No stimulation
                             % 1 - Gamma pulse train
                             % 2 - Median nerve stimulation
@@ -64,7 +64,10 @@ NMDA_block = 0;
 disable_unused_synapses = true;     % This disables any synaptic mechanisms with gsyn = 0 from being included in the code
 do_fast_sim = false; 
 do_gamma_only = false;
-do_delta_only = false;
+do_delta_only = true;
+
+% % % % % Do two-columns mode
+two_columns_mode = true;
 
 % % % % % Cells to include in model
 include_IB =   1;
@@ -103,12 +106,12 @@ end
 
 % % % % % % Number of cells per population
 % #mynumcells
-N=20;    % Default number of cells
+N=2;    % Default number of cells
 Nib=N;  % Number of excitatory cells
 Nng=N;  % Number of FSNG cells
-Nrs=80; % Number of RS cells
+Nrs=2; % Number of RS cells
 Nfs=N;  % Number of FS cells
-Ntfs5 = 20; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
+Ntfs5 = 2; % Number of deep translaminar FS cells - make fewer, so each cell individually has a larger effect
 Nlts=N; % Number of LTS cells
 % NdeepRS = 30;
 NdeepFS = N;
@@ -1030,6 +1033,7 @@ include_kramer_IB_synapses;
 %% % % % % % % % % % % % %  ##4.0 Run simulation & post process % % % % % % % % % % % % %
 
 % Prepare spec_all
+pop_struct = struct;
 pop_struct.Nib = Nib;
 pop_struct.Nrs = Nrs;
 pop_struct.Nfs = Nfs;
@@ -1044,6 +1048,61 @@ if save_simfiles_to_repo_presim
     outpath = save_simfiles_Dave(sp,repo_studyname,spec_all,do_commit,mycomment);
     do_commit = false;      % Turn off commit so it is not called a 2nd time when running save_allfigs_Dave. We want only 1 commit per sim. Can add figures later
 end
+
+%% Create two copies of the oscillator
+if two_columns_mode
+    % Add second column
+    % spec_column1 = add_column_prefix(spec,'c1');
+    spec_column2 = add_column_prefix(spec,'c2');
+
+    spec = spec;
+    spec.populations = cat(2,spec.populations,spec_column2.populations);
+    spec.connections = cat(2,spec.connections,spec_column2.connections);
+
+    % Also update population structure
+    % pop_struct_c1 = add_column_prefix_popstruct(pop_struct,'c1');
+    pop_struct_c2 = add_column_prefix_popstruct(pop_struct,'c2');
+    pop_struct = catstruct(pop_struct,pop_struct_c2);
+    
+    % Intercolumnar connection strengths
+    gAMPA_intercolumnar = 0;
+    gNMDA_intercolumnar = 0;
+    gAMPA_intercolumnar = 0.1/Nib;
+    if ~NMDA_block
+        gNMDA_intercolumnar = 3/Nib;
+    end
+    
+    % Finally, add IB -> tFS5 connections between the two columns
+    i=length(spec.connections);
+    
+    % Column 1 to 2
+    i=i+1;
+    spec.connections(i).direction = 'IB->c2tFS5';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_intercolumnar,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_intercolumnar,'ENMDA',EAMPA,'Rd ', Rd, 'Rr', Rr, 'g_NMDA_hetero',g_NMDA_hetero, ...    
+        'tauNMDA',tauNMDA,'tauNMDAr',tauNMDAr,...
+        };
+    
+    % Column 2 to 1
+    i=i+1;
+    spec.connections(i).direction = 'c2IB->tFS5';
+    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA'};
+    spec.connections(i).parameters = {'g_SYN',gAMPA_intercolumnar,'E_SYN',EAMPA,'tauDx',tauAMPAd,'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'gNMDA',gNMDA_intercolumnar,'ENMDA',EAMPA,'Rd ', Rd, 'Rr', Rr, 'g_NMDA_hetero',g_NMDA_hetero, ...    
+        'tauNMDA',tauNMDA,'tauNMDAr',tauNMDAr,...
+        };
+    
+    % Make sure PPStim is disabled for column 2
+    foo = {spec.populations.name};
+    ind = strcmp(foo,'c2IB');
+    ind2 = find(strcmp(spec.populations(ind).parameters,'PPonset'));
+    spec.populations(ind).parameters{ind2+1} = Inf;
+    
+    
+end
+
+%% Run sim
 
 include_kramer_IB_simulate;
 
