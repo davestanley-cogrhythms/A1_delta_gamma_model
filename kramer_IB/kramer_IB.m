@@ -126,7 +126,7 @@ kerneltype_Poiss_IB = 2;
 % gAR_d=155; % 155, IBda - max conductance of h-channel
 % gAR_d=4; % 155, IBda - max conductance of h-channel
 % gAR_d=2; % 155, IBda - max conductance of h-channel
-gAR_d=0.5; % 155, IBda - max conductance of h-channel
+gAR_d=0.25; % 155, IBda - max conductance of h-channel
 % gAR_d=0; % 155, IBda - max conductance of h-channel
 % repo_studyname = ['batch01a_gar_' num2str(gAR_d)];
 repo_studyname = ['203a_sweepNMDA_gRAN_0.1_jIB_0.5_pm' num2str(pulse_mode) '_gAR' num2str(gAR_d)];
@@ -308,11 +308,11 @@ fast_offset = 0;
     % depolarizing.
 % #mystim
 Jd1=5;    % IB cells
-Jd2=0.5;    %         
+Jd2=0;    %         
 Jng1=-7;   % NG cells
 Jng2=1;   %
-JRS1 = -1.3; % RS cells
-JRS2 = -1.3; %
+JRS1 = -1.5; % RS cells
+JRS2 = -1.5; %
 if include_NG
     JRS1 = -2.1; % RS cells
     JRS2 = -2.1; %
@@ -320,8 +320,8 @@ end
 Jfs=1;    % FS cells
 Jdfs5=1;    % FS cells
 Jtfs5 = 1.5;  % Translaminar FS cells layer 5
-Jlts1=-2.0; % LTS cells
-Jlts2=-2.0; % LTS cells
+Jlts1=-2.5; % LTS cells
+Jlts2=-2.5; % LTS cells
 deepJRS1 = 5;    % RS deep cells
 deepJRS2 = 0.75;
 deepJfs = 1;     % FS deep cells
@@ -331,14 +331,14 @@ JdeepRS = -10;   % Ben's RS theta cells
     % Times at which injected currents turn on and off (in milliseconds). See
     % itonicPaired.txt. Setting these to 0 essentially removes the first
     % hyperpolarization step.
-IB_offset1=75;
-IB_onset2=75;
+IB_offset1=50;
+IB_onset2=50;
 IB_offset2 = Inf;
 RS_offset1=000;         % 200 is a good settling time for RS cells
 RS_onset2=000;
 
 % % Poisson EPSPs to IB and RS cells (synaptic noise)
-gRAN=.01;      % synaptic noise conductance IB cells
+gRAN=.05;      % synaptic noise conductance IB cells
 ERAN=0;
 tauRAN=2;
 lambda = 100;  % Mean frequency Poisson IPSPs
@@ -392,9 +392,9 @@ end
 % % Gap junction connections.
 % % Deep cells
 % #mygap
-ggjaRS=.02/Nrs;  % RS -> RS
+ggjaRS=.01/Nib;  % RS -> RS
 ggja=.02/Nib;  % IB -> IB
-ggjFS=.02/Nfs;  % FS -> FS
+ggjFS=.01/Nfs;  % FS -> FS
 ggjLTS=.02/Nlts;  % LTS -> LTS
 % % deep cells
 ggjadeepRS=.00/(NdeepRS);  % deepRS -> deepRS         % Disabled RS-RS gap junctions because otherwise the Eleaknoise doesn't have any effect
@@ -510,11 +510,11 @@ if ~no_synapses
     gAMPA_ibng=0.02/Nib;                          % IB -> NG
     if ~NMDA_block; gNMDA_ibng=7/Nib; end        % IB -> NG NMDA
     
-    gGABAa_ngng=0.6/Nng;                       % NG -> NG
-    gGABAb_ngng=0.2/Nng;                       % NG -> NG GABA B
+    gGABAa_ngng=0.4/Nng;                       % NG -> NG
+    gGABAb_ngng=0.15/Nng;                       % NG -> NG GABA B
     
     gGABAa_ngib=0.1/Nng;                       % NG -> IB
-    gGABAb_ngib=0.9/Nng;                       % NG -> IB GABA B
+    gGABAb_ngib=1.1/Nng;                       % NG -> IB GABA B
     
     
     % % IB -> LTS
@@ -523,12 +523,12 @@ if ~no_synapses
     
     % % Delta -> Gamma oscillator connections
     % Try making all delta->RS connections half of what IB cells receive
-    gAMPA_ibrs = 0.1/Nib;
+    gAMPA_ibrs = 0.08/Nib;
     if ~NMDA_block
-        gNMDA_ibrs = 7/Nib;
+        gNMDA_ibrs = 5/Nib;
     end
-    gGABAa_ngrs = 0.1/Nng;
-    gGABAb_ngrs = 0.9/Nng;
+    gGABAa_ngrs = 0.0/Nng;
+    gGABAb_ngrs = 0.7/Nng;
 %     gGABAa_ngfs = 0.05/Nng;
 %     gGABAb_ngfs = 0.6/Nng;
 %     gGABAa_nglts = 0.05/Nng;
@@ -537,20 +537,20 @@ if ~no_synapses
     % % Gamma oscillator (RS-FS-LTS circuit, plus deep FS cells)
     gAMPA_rsrs=.1/Nrs;                     % RS -> RS
     %     gNMDA_rsrs=5/Nrs;                 % RS -> RS NMDA
-    gAMPA_rsfs=1.3/Nrs;                     % RS -> FS
+    gAMPA_rsfs=1.5/Nrs;                     % RS -> FS
     
     %     gNMDA_rsfs=0/Nrs;                 % RS -> FS NMDA
     gGABAa_fsfs=1.0/Nfs;                      % FS -> FS
     gGABAa_fsrs=1.0/Nfs;                     % FS -> RS
     
-    gAMPA_rsLTS = 0.6/Nrs;                 % RS -> LTS
+    gAMPA_rsLTS = 0.2/Nrs;                 % RS -> LTS
     %     gNMDA_rsLTS = 0/Nrs;              % RS -> LTS NMDA
     gGABAa_LTSrs = 0.5/Nlts;                  % LTS -> RS
     
-    gGABAa_fsLTS = 3.0/Nfs;                  % FS -> LTS
+    gGABAa_fsLTS = 1/Nfs;                  % FS -> LTS
     gGABAa_LTSfs = 0.5/Nlts;                % LTS -> FS
     
-    gAMPA_rsfs5=1.3/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
+    gAMPA_rsfs5=1.5/Nrs;	% Note: reduce this when add in deep translaminar FS cells!
     gGABAa_fs5fs5 = 1.0/Nfs;                    % dFS5 -> dFS5
     
     gAMPA_rstfs5=0.0/Nrs;
@@ -868,19 +868,19 @@ tFS_PP_gSYN = 0;
     deepRSPPstim = -.5;
     deepRSgSpike = 0;
 
-IB_PP_gSYN = 0.2;
+IB_PP_gSYN = 0.075;
 % FS_PP_gSYN = 0.1;
     IB_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     RS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     dFS_PP_gSYN_NMDA = 0;       % NMDA component of IB PPStim - should only be active when doing L6 CT stim
     tFS5_PP_gSYN_NMDA = 0;
-RS_PP_gSYN = 0.12;
+RS_PP_gSYN = 0.15;
 % NG_PP_gSYN = 0.125;
 % FS_PP_gSYN = 0.15;
 % LTS_PP_gSYN = 0.1;
 % dFS_PP_gSYN = 0.35;
 % tFS_PP_gSYN = 0;
-if ~include_RS; dFS_PP_gSYN = 0.5;  % If not including RS, then add pseudo stimulation to deep FS cells
+if ~include_RS; dFS_PP_gSYN = 0.2;  % If not including RS, then add pseudo stimulation to deep FS cells
 else dFS_PP_gSYN = 0;
 end
 
@@ -900,16 +900,16 @@ PPmaskshift = 0;
 % IB Poisson (thalamic input)
 poissScaling_Thal = 1000;
 if kerneltype_Poiss_IB == 4
-    poissScaling_Thal = 100;
+    poissScaling_Thal = 200;
 end
-poissTau = 1;
+poissTau = 2;
 
 Poiss_PPwidth2_rise = 0.25;
-Poiss_PP_width = 1;
+Poiss_PP_width = 2;
 
 % Non-IB Poisson (L4 input)
 poissScaling_L4 = 1000;
-kerneltype_Poiss_L4 = 2;          % This should always be 2, since L4 always does 40 Hz gamma
+kerneltype_Poiss_L4 = 1;          % This should always be 2, since L4 always does 40 Hz gamma
 
 
 switch pulse_mode
@@ -930,7 +930,7 @@ switch pulse_mode
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
-        PPonset = 0;    % ms, onset time
+        PPonset = 350;    % ms, onset time
         %PPoffset = tspan(end)-500;   % ms, offset time
         ap_pulse_num = round(min(PPoffset,tspan(end))/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
         %ap_pulse_num = round((tspan(end)-500)/(1000/PPfreq))-10;     % The pulse number that should be delayed. 0 for no aperiodicity.
