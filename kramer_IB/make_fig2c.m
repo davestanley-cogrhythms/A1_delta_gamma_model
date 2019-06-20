@@ -5,7 +5,7 @@ if ~exist('figure_number', 'var'), figure_number = 2; end
 if ~exist('I_app', 'var'), I_app = -8.5; end
 
 vary = {'deepRS', 'FMPstim', [0 -.8:-.1:-1.2];... % 0:-.2:-1;... % -1;... % 
-    'deepRS', '(FMPhighfreq, FMPlowfreq)', [7 8 9 10 11; 1 2 3 4 5];... [7 8 9 9 11 11 13 14; 4 3.5 3 2 3 2 1 .5];... [9 11 13 14; 3 2 1 .5];...
+    'deepRS', '(FMPhighfreq, FMPlowfreq)', [7 8 9 9 11 11 13 14; 4 3.5 3 2 3 2 1 .5];... [7 8 9 10 11; 1 2 3 4 5];... [9 11 13 14; 3 2 1 .5];...
     'deepRS', 'I_app', I_app;...
     'deepRS', 'PPstim', 0;...
     'deepRS', 'STPstim', 0;...
@@ -70,13 +70,13 @@ for f = 1:length(highfreqs)
 
 end
 
-plot_2_vars(data, 'deepRS_V', 'deepRS_iFMPulses_input', [], [6 12]*10^4, [6, length(data)/6], 'column', titles)
+plot_2_vars(data, 'deepRS_V', 'deepRS_iFMPulses_input', [], [6 12]*10^4, [length(lowfreqs), round(length(data)/length(lowfreqs))], 'column', titles)
 
 saveas(gcf, [name, '_6to12s.fig'])
 
 for s = 1:length(stims)
     
-    plot_2_vars(data(FMPstim == stims(s)), 'deepRS_V', 'deepRS_iFMPulses_input', [], [], [length(data)/6, 1], [], freq_titles)
+    plot_2_vars(data(FMPstim == stims(s)), 'deepRS_V', 'deepRS_iFMPulses_input', [], [], [length(data)/length(lowfreqs), 1], [], freq_titles)
     
     saveas(gcf, sprintf('%s_FMPstim%g.fig', name, stims(s)))
     
@@ -126,7 +126,9 @@ for c = 1:length(selected_FMPhighfreq)
 
     if exist('data', 'var')
     
-        current_index = abs(FMPstim - selected_FMPstim) < 2*eps & FMPhighfreq == selected_FMPhighfreq(c);
+        current_index = abs(FMPstim - selected_FMPstim) < 2*eps...
+            & FMPhighfreq == selected_FMPhighfreq(c)...
+            & FMPlowfreq == selected_FMPlowfreq(c);
     
         current_data = data(current_index);
         
@@ -204,7 +206,7 @@ end
     
 set(fig_for_plot, 'Units', 'inches', 'Position', [0 0 6 6], 'PaperUnits', 'inches', 'PaperPosition', [0 0 6 6])
 
-fig_name = sprintf('fig2c_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz_%gto%g', I_app,...
+fig_name = sprintf('%s_fig2c_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz_%gto%g', name, I_app,...
     selected_FMPstim, selected_FMPlowfreq, selected_FMPhighfreq,...
     time_start/1000, time_stop/1000);
 
@@ -257,8 +259,8 @@ adjusted_plv = ((abs(mrvs).^2).*nspikes - 1)./(nspikes - 1);
 
 adjusted_plv = adjusted_plv(:, 1:(end - 1)) - repmat(adjusted_plv(:, end), 1, size(adjusted_plv, 2) - 1);
 
-plot_indices = [1:3 6:8];
-ap_for_plot = adjusted_plv(plot_indices, :);
+%plot_indices = [1:3 6:8];
+ap_for_plot = adjusted_plv; %(plot_indices, :);
 
 subplot(3, 1, 1)
 
@@ -284,13 +286,13 @@ for f = 1:length(highfreqs)
     
 end
 
-set(gca, 'XTick', 1:length(my_xticks(plot_indices)), 'XTickLabel', my_xticks(plot_indices)) % {'.5-14 Hz', '1-13 Hz', '2-11 Hz', '3-9 Hz'})
+set(gca, 'XTick', 1:length(my_xticks(plot_indices)), 'XTickLabel', my_xticks) % (plot_indices)) % {'.5-14 Hz', '1-13 Hz', '2-11 Hz', '3-9 Hz'})
 
 axis tight
 
 ylim([0 1])
 
-fig_name = sprintf('fig2c_Iapp%g', I_app);
+fig_name = sprintf('%s_fig2c_Iapp%g', name, I_app);
     
 print(gcf, '-painters', '-dpdf', '-r600', [fig_name, '.pdf'])
 
@@ -300,8 +302,8 @@ saveas(gcf, [fig_name, '.fig'])
 
 selected_FMPstim = -1.2; % [-.5 -.5 -.5 -.5];
 
-selected_FMPhighfreq = [9 11 13 14]; % 13.5 18 27];
-selected_FMPlowfreq = [3 2 1 .5]; % 2 1.5 1];
+selected_FMPhighfreq = highfreqs; % [7 8 9 10 11]; %[9 11 13 14]; % 13.5 18 27];
+selected_FMPlowfreq = lowfreqs; % [1 2 3 4 5]; % [3 2 1 .5]; % 2 1.5 1];
 
 if ~exist('data', 'var')
         
@@ -332,7 +334,9 @@ for c = 1:length(selected_FMPhighfreq)
     
     axxes(c) = gca;
     
-    current_index = abs(FMPstim - selected_FMPstim) < 2*eps & FMPhighfreq == selected_FMPhighfreq(c);
+    current_index = abs(FMPstim - selected_FMPstim) < 2*eps...
+        & FMPhighfreq == selected_FMPhighfreq(c); %...
+        %& FMPlowfreq == selected_FMPlowfreq(c);
     
     current_results = results(current_index);
     
@@ -405,7 +409,8 @@ for c = 1:length(selected_FMPhighfreq)
     set(gcf, 'Units', 'inches', 'Position', plot_dims,...
         'PaperUnits', 'inches', 'PaperPosition', plot_dims)
     
-    fig_name = sprintf('fig2c_Iapp%g_stim%g_%g-%gHz_rose', I_app, selected_FMPstim, selected_FMPlowfreq(c), selected_FMPhighfreq(c));
+    fig_name = sprintf('%s_fig2c_Iapp%g_stim%g_%g-%gHz_rose', name, I_app,...
+        selected_FMPstim, selected_FMPlowfreq(c), selected_FMPhighfreq(c));
     
     print(gcf, '-painters', '-deps', '-r600', [fig_name, '.eps'])
     

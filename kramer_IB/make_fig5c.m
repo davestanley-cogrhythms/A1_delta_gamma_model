@@ -3,7 +3,7 @@
 % if ~exist('I_app', 'var'), I_app = -9; end
 
 vary = {'deepRS', 'FMPstim', [0 -.8:-.1:-1.2];... 0:-.2:-1;...
-    'deepRS', '(FMPhighfreq, FMPlowfreq)', [7 8 9 10 11; 1 2 3 4 5];... [7 8 9 9 11 11 13 14; 4 3.5 3 2 3 2 1 .5];... [9 11 13 14; 3 2 1 .5];... [9 13.5 18 27; 3 2 1.5 1];...
+    'deepRS', '(FMPhighfreq, FMPlowfreq)', [7 8 9 9 11 11 13 14; 4 3.5 3 2 3 2 1 .5];... [7 8 9 10 11; 1 2 3 4 5];... [9 11 13 14; 3 2 1 .5];... [9 13.5 18 27; 3 2 1.5 1];...
     'deepRS', 'I_app', I_app;... -7.5:-.5:-9.5;... -6.5:-.5:-8.5;...
     'deepRS', 'PPduty', .25;...
     'deepRS', 'kernel_type', 25;... 7;...
@@ -183,7 +183,7 @@ end
     
 set(fig_for_plot, 'Units', 'inches', 'Position', [0 0 6 6], 'PaperUnits', 'inches', 'PaperPosition', [0 0 6 6])
 
-fig_name = sprintf('fig5c_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz_%gto%g', I_app,...
+fig_name = sprintf('%s_fig5c_Iapp%g_stim%g_%gHz_%gHz_%gHz_%gHz_%gto%g', name, I_app,...
     selected_FMPstim, selected_FMPlowfreq, selected_FMPhighfreq,...
     time_start/1000, time_stop/1000);
 
@@ -239,7 +239,7 @@ axis tight
 
 ylim([0 1])
 
-fig_name = sprintf('fig5c_Iapp%g', I_app);
+fig_name = sprintf('%s_fig5c_Iapp%g', name, I_app);
     
 print(gcf, '-painters', '-dpdf', '-r600', [fig_name, '.pdf'])
 
@@ -354,7 +354,8 @@ for c = 1:length(selected_FMPhighfreq)
     set(gcf, 'Units', 'inches', 'Position', plot_dims,...
         'PaperUnits', 'inches', 'PaperPosition', plot_dims)
     
-    fig_name = sprintf('fig5c_Iapp%g_stim%g_%g-%gHz_rose', I_app, selected_FMPstim, selected_FMPlowfreq(c), selected_FMPhighfreq(c));
+    fig_name = sprintf('%s_fig5c_Iapp%g_stim%g_%g-%gHz_rose', name, I_app,...
+        selected_FMPstim, selected_FMPlowfreq(c), selected_FMPhighfreq(c));
     
     print(gcf, '-painters', '-deps', '-r600', [fig_name, '.eps'])
     
