@@ -1,0 +1,21 @@
+%% Produces frequency modulated input.
+
+% Pulse train properties
+DPstim = -.1;
+DPlowfreq = 3;
+DPhighfreq = 9; % in Hz
+DPwindowlength = (1000/mean([DPlowfreq DPhighfreq]));
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+sampling_freq = 1000/dt;
+
+s2 = phase_modulated(dt, Tend, sampling_freq, [DPlowfreq DPhighfreq], DPwindowlength, 1);
+
+% Functions
+input(X) = s2(k,:)
+Iext(X) = DPstim*input(X)
+
+@current += -Iext(X)
+
