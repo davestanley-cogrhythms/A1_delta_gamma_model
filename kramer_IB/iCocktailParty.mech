@@ -1,0 +1,40 @@
+% iCocktailParty: a pair of rhythmic inputs, differing in intensity.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pulse train properties
+PP1stim = -.1;
+PP1freq = 1.5; % in Hz
+PP1duty = .25; % fraction of cycle during which pulse is "on"
+PP1shift = 0; % in ms
+PP1width = (1000/PP1freq)*PP1duty;
+PP1center = 0;
+PP1norm = 0;
+
+PP2stim = -.1;
+PP2freq = 1.5; % in Hz
+PP2duty = .25; % fraction of cycle during which pulse is "on"
+PP2shift = 0; % in ms
+PP2width = (1000/PP2freq)*PP2duty;
+PP2center = 0;
+PP2norm = 0;
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+PP1onset = 500;    % ms, onset time
+PP1offset = Inf;   % ms, offset time
+PP2onset = 500;    % ms, onset time
+PP2offset = Inf;   % ms, offset time
+
+kernel_type = 7;
+width2_rise = 0.25;
+
+s1 = getPeriodicPulseFastBensVersion(PP1freq,PP1width,PP1shift,Tend,dt,PP1onset,PP1offset,Npop,kernel_type,width2_rise,PP1center,PP1norm,0);
+
+s2 = getPeriodicPulseFastBensVersion(PP2freq,PP2width,PP2shift,Tend,dt,PP2onset,PP2offset,Npop,kernel_type,width2_rise,PP2center,PP2norm,0);
+
+% Functions
+input1(X) = s1(k,:)
+input2(X) = s2(k,:)
+Iext(X) = PP1stim*input1(X)+PP2stim*input2(X)
+
+@current += -Iext(X)
