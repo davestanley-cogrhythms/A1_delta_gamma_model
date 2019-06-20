@@ -1,13 +1,13 @@
 function s4 = getPulseFast(width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,center_flag,norm,plot_demo_on)
 
-switch norm
-    case 0
-        norm = 'total';
-    case 1
-        norm = 'pulse';
-    case 2
-        norm = 'max';
-end
+% switch norm
+%     case 0
+%         norm = 'total';
+%     case 1
+%         norm = 'pulse';
+%     case 2
+%         norm = 'max';
+% end
 
 % plot_demo_on = 1;  % Plot if desired
 
@@ -67,9 +67,9 @@ end
 
 kernel = kernel(:);
 
-if strcmp(norm, 'max')
+if norm == 2 % strcmp(norm, 'max')
     kernel = kernel./max(kernel);
-elseif strcmp(norm, 'pulse')
+elseif norm == 1 % strcmp(norm, 'pulse')
     kernel = kernel./sum(kernel*dt);
 end
 
@@ -101,7 +101,7 @@ starting = round((N2-N)/2);
 s3=s2(1+starting:N+starting);       % Each edge we're dropping should be half the difference in the length of the two vectors.
 %s2=wkeep(s2,length(s),'c');        % wkeep doesn't work with compiled code
 
-if strcmp(norm, 'total')
+if norm == 0 % strcmp(norm, 'total')
     s4 = sum(t>=onset & t<=offset)*dt*s3/sum(s3*dt);
 else
     s4 = s3;

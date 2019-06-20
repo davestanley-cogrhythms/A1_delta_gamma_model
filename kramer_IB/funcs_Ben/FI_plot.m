@@ -1,13 +1,62 @@
-function FI_plot(data, results, name)
+function FI_plot(name, data, results)
 
-if isempty(results)
+if nargin < 3, results = []; end
+
+if nargin < 2, data = []; end
+
+if isempty(results) && isempty(data)
+    
+    try
+        
+        results = dsImportResults(name);
+        
+        data = results;
+        
+    catch error
+        
+    end
+    
+    if isempty(results)
+        
+        data = dsImport(name);
+        
+        results = dsAnalyze(data, @spike_metrics);
+
+        save([name, '_spike_metrics.mat'], 'results', 'name')
+        
+    end
+    
+elseif isempty(data) && ~isempty(results)
+    
+    data = results;
+    
+elseif isempty(results) && ~isempty(data)
     
     results = dsAnalyze(data, @spike_metrics);
     
+    save([name, '_spike_metrics.mat'], 'results', 'name')
+    
 end
 
-time = data.time;
-F = [results.no_spikes]/(time(end)/1000 - 1);
+if isfield(data(1), 'time')
+
+    time = data(1).time;
+    
+    tspan = time(end);
+    
+else
+    
+    sim_struct = load([name, '_sim_spec.mat'], 'sim_struct');
+    
+    sim_struct = sim_struct.sim_struct;
+    
+    tspan = sim_struct.tspan;
+    
+    tspan = tspan(end);
+    
+end
+
+F = [results.no_spikes]/(tspan/1000 - 1);
 I = [data.deepRS_I_app];
 
 Freqs = cell(length(results), 1);
@@ -127,5 +176,9 @@ legend(handles, mylegend, 'Location', 'Northwest')
 % end
 
 save_as_pdf(gcf, [name, '_FI'])
+
+ylim([0 10])
+
+save_as_pdf(gcf, [name, '_FI_below10Hz'])
 
 end

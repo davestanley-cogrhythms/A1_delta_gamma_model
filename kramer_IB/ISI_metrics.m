@@ -7,7 +7,17 @@ ref_name = 'CarracedoSpikes.mat';
 ref = load(ref_name);
 ref_ISIs = ref.ISIs;
 
-spikes = data.([v_pop, '_V_spikes']);
+if isfield(data, [v_pop, '_V_spikes'])
+    
+    spikes = data.([v_pop, '_V_spikes']);
+    
+else
+    
+    V = data.([v_pop, '_V']);
+    spikes = diff(V >= 0) == 1;
+    
+end
+    
 time = data.time;
 
 spike_times = time(logical(spikes))/1000;

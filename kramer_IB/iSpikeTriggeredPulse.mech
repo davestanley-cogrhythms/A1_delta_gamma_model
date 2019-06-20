@@ -22,7 +22,7 @@ dsfact = 10;
 s2 = getPulseFast(STPwidth,STPshift,Tend+STPonset,dt,0,STPoffset,Npop,STPkernelType,STP_width2rise,STPcenter,STPnorm,0);
 
 % Functions
-spikeIndicator(t) = abs(t-tspike(1,:)-dt)<=.5*dt | abs(t-tspike(2,:)-dt)<=.5*dt
+spikeIndicator(t) = abs(t-tspike(1,:)-dt)<=dt | abs(t-tspike(2,:)-dt)<=dt % <=.5*dt
 dsNdt(t) = double((t>=STPonset)&spikeIndicator(t))./(dt)
 firstSpikeIndicator(t) = spikeNumber == 0
 % (spikeNumber>0)&(spikeNumber<=.5)

@@ -4,9 +4,9 @@
 
 echo "Executing cd '"$1"', make_fig2_function('"$1"', "$2", "$3", "$4")"
 
-module unload matlab/2014a
+#module unload matlab/2014a
 
-module load matlab/2016a
+module load matlab/2018a
 
 matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', make_fig2_function('$2', $3, $4, $5), exit"
 

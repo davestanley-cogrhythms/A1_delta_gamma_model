@@ -1,27 +1,39 @@
-function [data, results] = plot_ISI_dist_by_Iapp(name, data, results)
+function [data, results] = plot_ISI_dist_by_Iapp(name, results, data)
 
-if nargin < 3, results = []; end
+if nargin < 2, results = []; end
 
-if nargin < 2, data = []; end
+if nargin < 3, data = []; end
 
-if isempty(data)
+if isempty(results) && isempty(data)
     
-    if ~isempty(results)
+    try
+        
+        results = dsImportResults(name);
         
         data = results;
         
-    else
+    catch error
         
-        data = dsImport(name);
-    
     end
     
-end
+    if isempty(results)
+        
+        data = dsImport(name);
+        
+        results = dsAnalyze(data, @ISI_metrics);
 
-if isempty(results)
+        save([name, '_ISI_metrics.mat'], 'results', 'name')
+        
+    end
+    
+elseif isempty(data) && ~isempty(results)
+    
+    data = results;
+    
+elseif isempty(results) && ~isempty(data)
     
     results = dsAnalyze(data, @ISI_metrics);
-
+    
     save([name, '_ISI_metrics.mat'], 'results', 'name')
     
 end
@@ -56,7 +68,7 @@ for i = 1:2
     
     figure
     
-    imagesc(abs(Is), abs(gCars), reshape(angles, dims))
+    imagesc(fliplr(abs(Is)), fliplr(abs(gCars)), reshape(angles, dims))
     
     axis xy
     
@@ -74,7 +86,7 @@ for i = 1:2
     
     figure
     
-    imagesc(abs(Is), abs(gCars), reshape(KSstats, dims))
+    imagesc(fliplr(abs(Is)), fliplr(abs(gCars)), reshape(KSstats, dims))
     
     axis xy
     

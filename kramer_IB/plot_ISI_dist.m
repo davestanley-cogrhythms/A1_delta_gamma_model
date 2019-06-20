@@ -16,7 +16,7 @@ gCars = [data.deepRS_gCar];
 
 for i = 1:length(data)
     
-    plot(results(i).ISI_bins, results(i).ISI_dist, 'Color', (i - 1)/9*[0 1 1] + (10 - i)/9*[1 0 1], 'LineWidth', 2)
+    plot(results(i).ISI_bins, results(i).ISI_dist, 'Color', (i - 1)/(length(data) - 1)*[0 1 1] + (length(data) - i)/(length(data) - 1)*[1 0 1], 'LineWidth', 2)
     
     hold on
 
@@ -28,7 +28,7 @@ load('/projectnb/crc-nak/brpp/model-dnsim-kramer_IB/kramer_IB/CarracedoSpikes.ma
 
 plot(ISI_bins, ISI_dist, 'LineWidth', 2, 'Color', [0 0 0])
 
-xlim([min(ISI_bins) max(ISI_bins)])
+% xlim([min(ISI_bins) max(ISI_bins)])
 
 box off
 

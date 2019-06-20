@@ -4,11 +4,9 @@
 
 echo "Executing cd '"$1"', load(['"$2"', '_sim_spec.mat']), data = dsImport(name);  FI_plot(data, [], name)"
 
-module unload matlab/2014a
+module load matlab/2018a
 
-module load matlab/2016a
-
-matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']), data = dsImport(name); FI_plot(data, [], name), exit"
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']), FI_plot(name), exit"
 
 # for i in Figs_Ben/18-02-16/*sim_spec.mat;
 # do j=$(basename $i);

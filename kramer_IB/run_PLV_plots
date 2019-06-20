@@ -4,11 +4,11 @@
 
 echo "Executing cd '"$1"', load(['"$2"', '_sim_spec.mat']), data = dsImport(name);  spike_locking_to_input_plot(data, [], name)"
 
-module unload matlab/2014a
+#module unload matlab/2014a
 
-module load matlab/2016a
+module load matlab/2018a
 
-matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']), data = dsImport(name); spike_locking_to_input_plot(data, [], name), exit"
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']), data = dsImportDataOrResults(name); results = dsImportResults(name); spike_locking_to_input_plot(data, results, name), exit"
 
 # for i in Figs_Ben/18-02-16/*sim_spec.mat;
 # do j=$(basename $i);

@@ -74,9 +74,49 @@ for s = 1:no_sims
         
         if ~isempty(titles)
             
-            if length(titles) >= s
+            if length(titles) == subplot_dims(1)
+                
+                if strcmp(suplot_direction, 'rows')
+                
+                    if s <= subplot_dims(1)
+                    
+                        ylabel(titles{ceil(s/subplot_dims(1))}, 'rotation', 0) % title(titles{s})
+                    
+                    end
+                    
+                elseif strcmp(subplot_direction, 'column')
+                    
+                    if mod(s, subplot_dims(1)) == 1
+                    
+                        ylabel(titles{s}, 'rotation', 0) % title(titles{s})
+                    
+                    end
+                    
+                end
             
-                ylabel(titles{s}, 'rotation', 0) % title(titles{s})
+            elseif length(titles) == subplot_dims(2)
+                
+                if strcmp(subplot_direction, 'rows')
+                    
+                    if mod(s, subplot_dims(1)) == 1
+                        
+                        title(titles{ceil(s/subplot_dims(1))})
+                        
+                    end
+                
+                elseif strcmp(subplot_direction, 'column')
+                
+                    if s <= subplot_dims(2)
+                        
+                        title(titles{s})
+                        
+                    end
+                    
+                end
+                
+            else
+                
+                title(titles{s})
             
             end
             
@@ -108,8 +148,24 @@ for s = 1:no_sims
         
         if ~isempty(titles)
             
-            if length(titles) >= s
+            if length(titles) == subplot_dims(1)
+                
+                if s <= subplot_dims(1)
+                    
+                    ylabel(titles{s}, 'rotation', 0) % title(titles{s})
+                    
+                end
             
+            elseif length(titles) == subplot_dims(2)
+                
+                if mod(s, subplot_dims(2)) == 1
+            
+                    title(titles{s})
+                
+                end
+                
+            else
+                
                 title(titles{s})
             
             end

@@ -495,7 +495,7 @@ switch sim_mode
             'deepFS->deepRS', 'g_SYN', .075;... 0:.01:.1;... .01:.005:.05;... [.01 .05];... [.05 .1 .2 .3];... % THIS IS REALLY RS->FS 7/14/17
             'deepFS->deepRS', 'tauRx', .25;... % THIS IS REALLY RS->FS
             'deepFS->deepRS', 'tauDx', 2.5;... % THIS IS REALLY RS->FS
-            'deepRS->deepFS', 'tauDx', 30;... 65;... 45;... % THIS IS REALLY FS->RS
+            'deepRS->deepFS', 'tauDx', 50;... 65;... 45;... % THIS IS REALLY FS->RS
             'deepRS->deepFS', 'tauRx', .25;... % THIS IS REALLY FS->RS
             'deepFS', 'stim', .95;... .825:.05:.975;... .6:.1:1;...
             'deepRS', 'gl', .78;... .8;... 

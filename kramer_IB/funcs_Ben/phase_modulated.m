@@ -14,11 +14,17 @@ transitions = [transitions length(time)];
 
 if transitions(1) > 1, transitions = [1 transitions]; end
 
-freqs = rand(1, length(transitions) - 1)*range(freq_lims) + min(freq_lims);
+no_frequencies = length(transitions) - 1;
 
-for f = 1:length(freqs)
+frequencies = zeros(no_frequencies, 1);
+
+frequencies = rand(size(frequencies)).*(max(freq_lims) - min(freq_lims)) + min(freq_lims);
+
+freq_vector = zeros(size(time));
+
+for f = 1:no_frequencies
     
-    freq_vector(transitions(f):transitions(f + 1)) = freqs(f);
+    freq_vector(transitions(f):transitions(f + 1)) = frequencies(f);
     
 end
 
@@ -26,9 +32,13 @@ flip_length = min(sampling_freq/dt, length(time));
 
 fv_flipped = [fliplr(freq_vector(1:flip_length)), freq_vector, fliplr(freq_vector((end - flip_length + 1):end))];
 
-kernel = gauss(window_length/(2*dt), 2.5);
+kernel = zeros(1, round(window_length/(2*dt)));
 
-kernel = kernel/sum(kernel);
+kernel = gauss(round(window_length/(2*dt)), 2.5);
+
+kernel = kernel/sum(kernel');
+
+fv_conv = zeros(size(fv_flipped));
 
 fv_conv = conv(fv_flipped, kernel, 'same');
 

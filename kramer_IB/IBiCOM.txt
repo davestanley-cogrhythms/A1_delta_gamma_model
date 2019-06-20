@@ -1,4 +1,4 @@
-g_COM = [0.2]
+Ig_COM = [0.2]
 comspan = [0.5]
  
 UB = max(Npre,Npost)
