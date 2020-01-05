@@ -13,11 +13,6 @@ addpath(genpath(fullfile(pwd,'funcs_Ben')));
 % There are some partameters that are derived from master parameters. Put
 % these master parameters first!
 
-% List loaded modules
-!module list
-!pwd
-% path
-
 tspan=[0 2000];
 sim_mode = 1;               % % % % Choice normal sim (sim_mode=1) or parallel sim options
                             % 2 - Vary I_app in deep RS cells
