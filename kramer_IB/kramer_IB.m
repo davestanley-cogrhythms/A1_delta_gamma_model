@@ -119,7 +119,7 @@ NdeepRS = 1;    % Number of deep theta-resonant RS cells
 %PPoffset = tspan(end)-0;   % ms, offset time
 PPoffset = Inf;
 % PPoffset = 1500;
-kerneltype_Poiss_IB = 2;
+kerneltype_Poiss_IB = 2;            % Set to 2 for click train; set to 4 for pure tones (poisson input)
 
 % % % % % Default repo study name
 % % % #myreponames
@@ -926,7 +926,7 @@ switch pulse_mode
         LTS_PP_gSYN = 0;
         dFS_PP_gSYN = 0;
         tFS_PP_gSYN = 0; 
-        do_nested_mask = 0;
+        do_nested_mask = 0;         % Turns on nested_mask. This makes use of PPmaskfreq, etc., in order to periodically turn PPStim on and off
     case 1                  % Gamma stimulation (with aperiodicity)
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
@@ -938,7 +938,7 @@ switch pulse_mode
         %ap_pulse_delay = 0;                         % ms, the amount the spike should be delayed. 0 for no aperiodicity.
         pulse_train_preset = 1;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
-        do_nested_mask = 0;
+        do_nested_mask = 0;         % Turns on nested_mask. This makes use of PPmaskfreq, etc., in order to periodically turn PPStim on and off
 
         if sim_mode == 20 || sim_mode == 16
             % If in sim_mode = 20, we want to be able to use PPmaskshift in
@@ -954,11 +954,13 @@ switch pulse_mode
         % Disabled for now...
         
     case 5
+        % Gamma stimulation with nested_mask turned on. This means pulse
+        % train stimulation will periodically turn on and off.
         PPfreq = 40; % in Hz
         PPshift = 0; % in ms
         PPonset = 0;    % ms, onset time
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
-        do_nested_mask = 1;
+        do_nested_mask = 1;         % Turns on nested_mask. This makes use of PPmaskfreq, etc., in order to periodically turn PPStim on and off
         
     case 6                                  % Polley stim
         % Stimulate deep FS cells, everything else set to zero.
@@ -978,7 +980,7 @@ switch pulse_mode
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
         
-        do_nested_mask = 1;
+        do_nested_mask = 1;         % Turns on nested_mask. This makes use of PPmaskfreq, etc., in order to periodically turn PPStim on and off
         
         PPmaskfreq = 1;
         PPmaskduration = 50;
@@ -1002,7 +1004,7 @@ switch pulse_mode
         pulse_train_preset = 0;     % Preset number to use for manipulation on pulse train (see getDeltaTrainPresets.m for details; 0-no manipulation; 1-aperiodic pulse; etc.)
         
         
-        do_nested_mask = 1;
+        do_nested_mask = 1;         % Turns on nested_mask. This makes use of PPmaskfreq, etc., in order to periodically turn PPStim on and off
         
         PPmaskfreq = 0.001;
         PPmaskduration = 50;

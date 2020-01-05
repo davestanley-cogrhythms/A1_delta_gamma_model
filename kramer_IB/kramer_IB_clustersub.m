@@ -4,48 +4,57 @@
 
 myhours = 4;        % By default codes adds 30 minutes wall time. Definitely shoudln't take longer than 30 minutes!
 
-
-clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);
+% Full network, single run
+clustersub('kramer_IB_deltapaper_scripts2','1a1',1,myhours);        % No AP pulse
 clustersub('kramer_IB_deltapaper_scripts2','1b1',1,myhours);        % Click train with AP pulse
 clustersub('kramer_IB_deltapaper_scripts2','1b2',1,myhours);        % As 1b1, but only superficial oscillator
-clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','1d',1,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);        % Spontaneous oscillations
+clustersub('kramer_IB_deltapaper_scripts2','1d',1,myhours);         % 1a1, but with Poisson input instead of 
+clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);        % Figs 1a and 1c together to do spectrogram 
+clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);        % Do both Figs 1d and 1c together to do spectrogram comparison (Poisson input)
 clustersub('kramer_IB_deltapaper_scripts2','1a4',1,myhours);        % Core input only
 clustersub('kramer_IB_deltapaper_scripts2','1a5',1,myhours);        % Matrix input only
 
+% Repeated runs with shuffling (not sure what the point of this was)
 clustersub('kramer_IB_deltapaper_scripts2','1a1_shuffle',4,myhours);
 
+% Sweep through different frequency click trains.
 clustersub('kramer_IB_deltapaper_scripts2','3a',8,myhours);        % Sweep low frequency
 clustersub('kramer_IB_deltapaper_scripts2','3a2',8,myhours);        % Sweep low frequencies only superficial oscillator
 clustersub('kramer_IB_deltapaper_scripts2','3b',6,myhours);        % Sweep high frequency
-clustersub('kramer_IB_deltapaper_scripts2','3b2',6,myhours);        % Sweep highf requency only superficial oscillator
+clustersub('kramer_IB_deltapaper_scripts2','3b2',6,myhours);        % Sweep high frequency only superficial oscillator
 
+% Lakatos delta entrainment figures
 clustersub('kramer_IB_deltapaper_scripts2','4a',8,myhours);         % Lakatos 2005 figure
 clustersub('kramer_IB_deltapaper_scripts2','4a2',13,myhours);        % Lakatos 2005 figure with longer run time, higher downsampling
 
-clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);
+% Inverse phase-amplitude coupling figures
+clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);        % Inverse PAC  
+clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);        % Inverse PAC part 2 - block IB PPStim
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 
-clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','6a_core',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','6b',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','6a2',16,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','6a2_core',16,myhours);
+% Vary onset timing of PPStim
+clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);         % Vary onset, Poisson stim.
+clustersub('kramer_IB_deltapaper_scripts2','6a_core',8,myhours);    % As 6a, but core stim only
+clustersub('kramer_IB_deltapaper_scripts2','6b',8,myhours);         % As Fig 6a except 40 Hz Thalamic input instead of poisson
+clustersub('kramer_IB_deltapaper_scripts2','6a2',16,myhours);       % As 6a, but doing a reset figure like Fig9c
+clustersub('kramer_IB_deltapaper_scripts2','6a2_core',16,myhours);  % As 6a2, but core stim only
 
-clustersub('kramer_IB_deltapaper_scripts2','7a',8,myhours);
+% No longer used. Shows entrainment (as in Fig 4a, Lakatos figure) for
+% varying synaptic strengths. Uses same synaptic pathways as 8.
+clustersub('kramer_IB_deltapaper_scripts2','7a',8,myhours);         % Block gamma input; sweep IB Poisson
 clustersub('kramer_IB_deltapaper_scripts2','7a2',9,myhours);        % As 7a,  but with longer run time, higher downsampling
-clustersub('kramer_IB_deltapaper_scripts2','7b',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','7c',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','7b',8,myhours);         % Block gamma input; sweep IB Poisson 40 Hz
+clustersub('kramer_IB_deltapaper_scripts2','7c',8,myhours);         % Block Poisson input; sweep FS gamma
 
-clustersub('kramer_IB_deltapaper_scripts2','8a',8,myhours);
+% Vary synaptic input strengths for a single long-duration stimulus (as in
+% Fig 1a). 
+clustersub('kramer_IB_deltapaper_scripts2','8a',8,myhours);         % block gamma input; sweep IB Poisson (use this one for paper, since pure tone)
 clustersub('kramer_IB_deltapaper_scripts2','8a_shuffle',16,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','8b',8,myhours);
-clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);
+clustersub('kramer_IB_deltapaper_scripts2','8b',8,myhours);         % block gamma input; sweep IB Poisson 40 Hz
+clustersub('kramer_IB_deltapaper_scripts2','8c',8,myhours);         % Poisson input, sweep gamma dFS->IB
 clustersub('kramer_IB_deltapaper_scripts2','8c_shuffle',16,myhours);
-% clustersub('kramer_IB_deltapaper_scripts2','8d',16,myhours);
+% clustersub('kramer_IB_deltapaper_scripts2','8d',16,myhours);      % Sweep both IB Poisson and gamma input strength (not used)
 
 
 clustersub('kramer_IB_deltapaper_scripts2','10a',16,myhours);     % Vary AP delay figure
@@ -70,11 +79,11 @@ clustersub('kramer_IB_deltapaper_scripts2','9m',8,myhours);     % Polley fig 200
 
 
 %% Supplemental figures
-clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
-clustersub('kramer_IB_deltapaper_scripts2','8f',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
-clustersub('kramer_IB_deltapaper_scripts2','8g',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
-clustersub('kramer_IB_deltapaper_scripts2','8h',8,myhours);     % As paper 8a, except different gFS5 -> IB conductance
-clustersub('kramer_IB_deltapaper_scripts2','8i',8,myhours);     % As paper 8c - except non-zero IB PPStim
+clustersub('kramer_IB_deltapaper_scripts2','8e',8,myhours);     % As 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8f',8,myhours);     % As 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8g',8,myhours);     % As 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8h',8,myhours);     % As 8a, except different gFS5 -> IB conductance
+clustersub('kramer_IB_deltapaper_scripts2','8i',8,myhours);     % As 8c - except non-zero IB PPStim
 
 % Block NMDA (for spontaneous activity)
 clustersub('kramer_IB_deltapaper_scripts2','1c2',1,myhours);

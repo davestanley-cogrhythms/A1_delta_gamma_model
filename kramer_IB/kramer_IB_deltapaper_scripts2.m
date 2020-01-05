@@ -722,7 +722,7 @@ switch chosen_cell
         datapf5c = kramer_IB_function_mode(s{f},f);
    
     case '6a'
-        %% Paper Fig 6a - Vary onset
+        %% Paper Fig 6a - Vary onset (Poisson stim)
         
         % Setup
         clear s
@@ -904,7 +904,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '6a2_core'
-        %% Paper fig 6c - As 6a, but doing a reset figure like Fig9c
+        %% Paper fig 6c - As 6a2, but core stim only. Should not produce a reset
         % Setup
         short_mode = false;  % If true, do a shorter sim
         blk_h_current = false;        
@@ -1004,7 +1004,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '7c'
-        %% Paper 7c - Characterize delta rhythm - block Poisson input; allow FS gamma
+        %% Paper 7c - Characterize delta rhythm - block Poisson input; sweep FS gamma
         % Setup
         clear s
         f=1;
@@ -1057,7 +1057,7 @@ switch chosen_cell
         data = kramer_IB_function_mode(s{f},f);
         
     case '8a_shuffle'
-        %% Paper 8a - Characterize delta rhythm - block gamma input; sweep IB Poisson (use this one for paper, since pure tone)
+        %% Paper 8a - As Fig 8a, except run multiple simulations and average
         % Setup
         clear s
         f=1;
