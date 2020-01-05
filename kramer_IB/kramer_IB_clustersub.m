@@ -181,6 +181,10 @@ clustersub('kramer_IB_deltapaper_scripts2','1b2_30Hz',1,myhours);        % As 1b
 clc; !cat cluster_*.o.*
 clc; !cat cluster_*.e.*
 
+! qstat  | grep " r " | wc -l
+! qstat  | grep " qw " | wc -l
+
+
 %% List temp output files progress
 clc
 !ls -la localOutput
