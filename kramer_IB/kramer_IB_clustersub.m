@@ -27,6 +27,7 @@ clustersub('kramer_IB_deltapaper_scripts2','3b2',6,myhours);        % Sweep high
 % Lakatos delta entrainment figures
 clustersub('kramer_IB_deltapaper_scripts2','4a',8,myhours);         % Lakatos 2005 figure
 clustersub('kramer_IB_deltapaper_scripts2','4a2',13,myhours);        % Lakatos 2005 figure with longer run time, higher downsampling
+clustersub('kramer_IB_deltapaper_scripts2','4b',8,myhours);         % As Fig 4a, except use gamma 40 Hz stim instead of Poisson
 
 % Inverse phase-amplitude coupling figures
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);        % Inverse PAC  
