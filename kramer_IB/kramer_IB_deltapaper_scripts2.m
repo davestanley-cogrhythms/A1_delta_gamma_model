@@ -653,7 +653,7 @@ switch chosen_cell
         f=1;
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['DeltaFig4_lakatos'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig4b_lakatos'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','PPmaskfreq',[0.01,fliplr([[1:11]-6]*.3+2)];...
@@ -666,7 +666,7 @@ switch chosen_cell
         s{f}.random_seed = 'shuffle';
         s{f}.include_tFS5 = include_tFS5_global;
         
-        datapf4a = kramer_IB_function_mode(s{f},f);
+        datapf4b = kramer_IB_function_mode(s{f},f);
         
     case '5a'
         %% Paper Fig 5a - Inverse PAC
