@@ -53,6 +53,13 @@ s0_maskb = convolveDeltaTrainwithKernel(s0_mask,dt,PPmaskduration,1,3,dt);
 s1 = applyMasks(s0,PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
 s2 = convolveDeltaTrainwithKernel(s1,dt,PPwidth,Npop,kernel_type,width2_rise);
 
+% For saving the mask - apply the mask to an array of entirely ones. This
+% applies both the nested mask (PPmaskfreq) and also PPOnset and PPOffset.
+allmasks = applyMasks(ones(size(s0)),PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
+
+% Make this a function so we can record.
+Allmasks(k) = allmasks(k,:) % Also save the mask
+
 % Convert train to pseudo Vm (action potentials)
 X_pseudo(k) = 100*s2(k,:) - 60;           % Membrane voltage of simulated pre-synaptic cell action potentials goes from -60 to +40 mV 
 
