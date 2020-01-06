@@ -75,7 +75,7 @@ S2(k) = s2(k,:);        % Make this a function so we can record.
 S3(k) = s3(k,:);
 S3_NMDA(k) = s3_NMDA(k,:);
 
-S0_maskb = s0_maskb(k,:) % Also save the mask
+S0_maskb(k) = s0_maskb(k,:) % Also save the mask
 
 % Mg block for NMDA
 BMg(X) = 1./(1+exp(-.062*X)*1.5/3.57)		% sigmoidal magnesium block from [Methods in Neuronal Modeling, page 9]
