@@ -57,12 +57,17 @@ s2 = applyMasks(s0b,PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
 
 s3 = rate2nonhomPoisson(s2,poissScaling,poissTau,Tend,dt);
 
+% For saving the mask - apply the mask to an array of entirely ones. This
+% applies both the nested mask (PPmaskfreq) and also PPOnset and PPOffset.
+allmasks = applyMasks(ones(size(s0b)),PPonset,PPoffset,Tend,dt,do_nested_mask,s0_maskb);
+
 % plot(S)
 % 
 % %%
 S2(k) = s2(k,:);        % Make this a function so we can record.
 S3(k) = s3(k,:);
 
+Allmasks(k) = allmasks(k,:) % Also save the mask
 
 % all presynaptic activations summed together, multiplied by
 % electrochemical drive
