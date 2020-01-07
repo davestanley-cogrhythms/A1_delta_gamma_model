@@ -1,16 +1,16 @@
 
 
-function hxp = xp_IBphaselock_errbar (xp, op)
+function hxp = xp_IBphaselock_contrast_index_errbar (xp, op)
     % xp must be 1x1 (e.g. 0 dimensional)
     
     % Setup duty cycle
         % Duty cycle determines what fraction of the pulse cycle is
-        % considered "on" and "off." Setting this to 50% will cause 50% of
+        % considered "on" and "off." Setting this to 0.5 will cause 50% of
         % the time following the start of the pulse to be considered on,
         % and the remaining to be considered off. 
         % This is used for calculating total_spks_pulse_on / off, or other
         % variables for measuring phase locking.
-    duty_cycle = -1;        % Set to -1 to use the pulse width to determine the duty cycle
+    duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
     
     hxp = struct;
     
@@ -84,7 +84,7 @@ function hxp = xp_IBphaselock_errbar (xp, op)
         t = data(i).time;
         
         % Pull out spike times and pulse information
-        spikes = data(i).IB_V_spike_times;    % Used later
+        variable = data(i).IB_NG_GABAall_gTH;    % Used later
         pulsetrain = data(i).IB_iPoissonNested_ampaNMDA_Allmasks;
         
         % Process pulses to get pulse onset and offset values
@@ -96,8 +96,9 @@ function hxp = xp_IBphaselock_errbar (xp, op)
         offs = find(dp < -0.5) + 1;  % All values < offs are inside pulse
         
         % Convert to ms so it's in the same units as the spike times
-        ons = ons * dt;
-        offs = offs * dt;
+        % Comment this out, so that we can stay working in indices
+%         ons = ons * dt;
+%         offs = offs * dt;
         
         % Loop through each cycle in the pulse train. Drop the last "on"
         % since this cycle is guaranteed to be incomplete.
@@ -129,28 +130,26 @@ function hxp = xp_IBphaselock_errbar (xp, op)
             end
 
             % Total spikes for the on portion of the  cycle
-            total_spks_pulse_on{i}(j) = count_spikes(spikes,mystart,mystop);
+            mean_on{i}(j) = mean(mean(variable(mystart:mystop-1,:)));
             
             % Total spikes for the off portion of the cycle
-            total_spks_pulse_off{i}(j) = count_spikes(spikes,mystop,mystart2);
+            mean_off{i}(j) = mean(mean(variable(mystop:mystart2-1,:)));
         end
             
     end
     
     
     % Calculate phase locking ratio for all sims
-    mu_n = zeros(1,Nsims);
+    af = cell(1,Nsims);
     mu_af = zeros(1,Nsims);
     std_af = zeros(1,Nsims);
     ste_af = zeros(1,Nsims);
-    for i = 1:Nsims
-        mu_n(i) = mean(total_spks_pulse_on{i} + total_spks_pulse_off{i});
-    end
     
     for i = 1:Nsims
+        af{i} = zeros(1,Ncycles(i));
         for j = 1:Ncycles(i)
-            af{i}(j) = total_spks_pulse_on{i}(j) / mu_n(i);     % Aligned fraction
-
+            % Calculate contrast index
+            af{i}(j) = (mean_on{i}(j) - mean_off{i}(j)) / (mean_on{i}(j) + mean_off{i}(j));
         end
     end
     
@@ -161,7 +160,6 @@ function hxp = xp_IBphaselock_errbar (xp, op)
     end
     
     hxp.hcurr = barwitherr(ste_af,mu_af,'k');
-    ylim([0,1.2]);
     
 end
 
