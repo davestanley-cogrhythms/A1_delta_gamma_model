@@ -124,7 +124,7 @@ function hxp = xp_IBphaselock_contrast_index_errbar (xp, op)
             mystart2 = ons(j+1);
             
             if duty_cycle > 0
-                mystop = (mystart2 - mystart)*duty_cycle + mystart;             % mystop is duty_cycle fraction of the way between mystart and mystart2
+                mystop = floor((mystart2 - mystart)*duty_cycle + mystart);             % mystop is duty_cycle fraction of the way between mystart and mystart2
             else
                 mystop = offs(temp);
             end
