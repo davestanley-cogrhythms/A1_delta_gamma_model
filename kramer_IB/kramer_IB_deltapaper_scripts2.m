@@ -1736,6 +1736,51 @@ switch chosen_cell
         
         datapf1b = kramer_IB_function_mode(s{f},f);
         
+            
+    case '13a'
+        %% Paper 1 - 2D Lakatos figure
+        % A 2D version of Fig 4a - Lakatos. Sweep through both different
+        % frequencies and stim durations
+        
+        % Setup PP freqmask parameters        
+        inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
+        PPmaskdurations = [50,100,150,200,250,300,400,500];
+        
+        % Make into meshgrid and then two giant Nx1 array
+        [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
+        PPmaskdurations = PPmaskdurations(:);
+        inter_train_interval = inter_train_interval(:);
+        PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
+        
+        
+%         % Use abbreviated version for testing
+%         PPmaskfreqs = PPmaskfreqs([1,2,end]);
+%         PPmaskdurations = PPmaskdurations([1,2,end]);
+        
+%         % Mask freqs (From fig 4a, for comparison only!)
+%         fig_4a_periods = 1000./[0.01,fliplr([[1:11]-6]*.3+2)];      % Periods in Fig4a (e.g., total ISI + pulse duration)
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig13a_lakatos2D'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 1;
+        s{f}.pulse_mode = 5;
+        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
+            };
+        s{f}.kerneltype_Poiss_IB = 4;
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        s{f}.tspan=[0 2500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        datapf13a = kramer_IB_function_mode(s{f},f);
+
+        
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
 
 
