@@ -1768,7 +1768,7 @@ switch chosen_cell
         s{f}.repo_studyname = ['DeltaFig13a_lakatos2D'  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
-        s{f}.vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
+        s{f}.vary = { '(RS,IB,dFS5)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
             };
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
