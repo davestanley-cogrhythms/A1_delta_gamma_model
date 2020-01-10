@@ -1772,7 +1772,7 @@ switch chosen_cell
             };
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 2500];
+        s{f}.tspan=[0 5500];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
