@@ -1752,6 +1752,12 @@ switch chosen_cell
         inter_train_interval = inter_train_interval(:)';
         PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
         
+        % Do rounding, to produce shorter strings (annoying bug in MDD - when merged varied strings get too long, they start to overlap and cause errors)
+        PPmaskfreqs = round(PPmaskfreqs,2);
+        
+        % Testing
+%         inter_train_interval2 = 1000 ./ PPmaskfreqs - PPmaskdurations;
+        
         
 %         % Use abbreviated version for testing
 %         PPmaskfreqs = PPmaskfreqs([1,2,end]);
