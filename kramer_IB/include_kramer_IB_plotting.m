@@ -322,6 +322,22 @@ if save_combined_figures
 %                                                         cause there to be only 1 cycle of the nested
 %                                                         stims. Therefore, don't do phase locking figures
 %                                                         in this case
+
+
+    % Saving workspace code. Should be off in most cases, except for
+    % debugging
+    save_abbreviated_workspace = false;
+    save_workspace = false;
+    if save_abbreviated_workspace
+        labels2keep = {'IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks'}
+        data_decim = dsDecimateLabels(data,labels2keep)
+        save('wrkspc_13a_abbrev.mat','data_decim','-v7.3')
+    end
+    
+    if save_workspace
+        save('wrkspc_13a_abbrev.mat','data','-v7.3')
+    end
+    
     if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3,...
