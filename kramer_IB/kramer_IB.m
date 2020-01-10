@@ -790,7 +790,7 @@ switch sim_mode
         inter_train_interval=300;
         PPmaskdurations = [250:250:2000];
         PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
-        vary = { '(RS,FS,LTS,IB,NG)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
+        vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
             };
         
     case 19     % For tuning excitatory reset of delta oscillator

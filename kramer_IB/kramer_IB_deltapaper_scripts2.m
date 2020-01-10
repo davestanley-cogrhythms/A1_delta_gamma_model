@@ -1748,8 +1748,8 @@ switch chosen_cell
         
         % Make into meshgrid and then two giant Nx1 array
         [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
-        PPmaskdurations = PPmaskdurations(:);
-        inter_train_interval = inter_train_interval(:);
+        PPmaskdurations = PPmaskdurations(:)';
+        inter_train_interval = inter_train_interval(:)';
         PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
         
         
