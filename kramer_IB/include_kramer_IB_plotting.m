@@ -335,7 +335,7 @@ if save_combined_figures
     end
     
     if save_workspace
-        save('wrkspc_13a_abbrev.mat','data','-v7.3')
+        save('wrkspc_13a.mat','data','-v7.3')
     end
     
     if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
