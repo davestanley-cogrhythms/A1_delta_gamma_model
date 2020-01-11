@@ -329,8 +329,9 @@ if save_combined_figures
     save_abbreviated_workspace = false;
     save_workspace = false;
     if save_abbreviated_workspace
-        labels2keep = {'IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks'};
+        labels2keep = {'IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks','time'};
         data_decim = dsDecimateLabels(data,labels2keep);
+        data_decim = rmfield(data_decim,'model');
         save('wrkspc_13a_abbrev.mat','data_decim','-v7.3')
     end
     
