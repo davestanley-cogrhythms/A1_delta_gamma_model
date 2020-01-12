@@ -1,6 +1,6 @@
 
 
-function data = decode_PPmaskfreq_PPmaskdurations (data0,varied_new)
+function data = convert_ds_colinear_to_2D (data0,varied_new)
 % Converts a 1D DynaSim structure that is actually varied across 2
 % dimensions back into its original dimensions. This undoes the linear
 % indepence operations of dsMDDds
