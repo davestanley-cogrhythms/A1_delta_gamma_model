@@ -46,6 +46,11 @@ end
 % % Crop data within a time range
 % t = data(1).time; data = CropData(data, t > 300 & t <= t(end));
 
+% Trim model struct. Remove fixed_variables because it takes a ton of
+% space. Don't remove entire model structure because dsCalcFR needs
+% this.
+for i = 1:length(data); data(i).model = rmfield(data(i).model,'fixed_variables'); end
+% data_decim = rmfield(data_decim,'model');             % data.model is needed for dsCalcFR
 
 % % When varying synaptic connectivity, convert connectivity measure from
 % synaptic conductance / cell to total synaptic conductange 
