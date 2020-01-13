@@ -1786,6 +1786,9 @@ switch chosen_cell
         
         % Downsample factor
 %         s{f}.dsfact = 100;
+
+        % Reduce number of RS cells
+        s{f}.Nrs = 20;
         
         % Save info used to generate vary
         s{f}.PPmaskdurations = PPmaskdurations;
