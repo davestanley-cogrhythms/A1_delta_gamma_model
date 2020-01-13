@@ -1784,6 +1784,9 @@ switch chosen_cell
         s{f}.random_seed = 'shuffle';
         s{f}.include_tFS5 = include_tFS5_global;
         
+        % Downsample factor
+        s{f}.dsfact = 100;
+        
         % Save info used to generate vary
         s{f}.PPmaskdurations = PPmaskdurations;
         s{f}.inter_train_interval = inter_train_interval;
