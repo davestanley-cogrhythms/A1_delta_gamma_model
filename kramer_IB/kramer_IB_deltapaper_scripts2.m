@@ -1742,7 +1742,7 @@ switch chosen_cell
         % A 2D version of Fig 4a - Lakatos. Sweep through both different
         % frequencies and stim durations
         
-        % Setup PP freqmask parameters        
+        % Setup PP freqmask parameters
         inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
         PPmaskdurations = [50,100,150,200,250,300,400,500];
         
@@ -1750,10 +1750,10 @@ switch chosen_cell
         [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
         PPmaskdurations = PPmaskdurations(:)';
         inter_train_interval = inter_train_interval(:)';
-        PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
+        PPmaskfreqs0 = 1000 ./ [PPmaskdurations + inter_train_interval];
         
         % Do rounding, to produce shorter strings (annoying bug in MDD - when merged varied strings get too long, they start to overlap and cause errors)
-        PPmaskfreqs = round(PPmaskfreqs,2);
+        PPmaskfreqs = round(PPmaskfreqs0,2);
         
         % Testing
 %         inter_train_interval2 = 1000 ./ PPmaskfreqs - PPmaskdurations;
@@ -1783,6 +1783,12 @@ switch chosen_cell
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
         s{f}.include_tFS5 = include_tFS5_global;
+        
+        % Save info used to generate vary
+        s{f}.PPmaskdurations = PPmaskdurations;
+        s{f}.inter_train_interval = inter_train_interval;
+        s{f}.PPmaskfreqs0 = PPmaskfreqs0;
+        s{f}.PPmaskfreqs = PPmaskfreqs;
         
         datapf13a = kramer_IB_function_mode(s{f},f);
 

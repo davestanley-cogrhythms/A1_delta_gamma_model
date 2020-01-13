@@ -86,9 +86,9 @@ function data = addfield_IBphaselock_corrcoef_errbar (data)
     
     % Save to data
     for i = 1:Nsims
-        data(i).phase_lock_mu = mu_af(i);
-        data(i).phase_lock_ste = ste_af(i);
-        data(i).labels = cat(2,data(i).labels,{'phase_lock_mu','phase_lock_ste'});
+        data(i).IB_phaselock_CI_mu = mu_af(i);
+        data(i).IB_phaselock_CI_ste = ste_af(i);
+        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_CI_mu','IB_phaselock_CI_ste'});
     end
     
 end

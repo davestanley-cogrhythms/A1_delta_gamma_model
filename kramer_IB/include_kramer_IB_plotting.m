@@ -324,20 +324,25 @@ if save_combined_figures
 %                                                         in this case
 
 
+    % Decimate data to just contain data for calculating phase locking
+    labels2keep = {'IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks','time'};
+    data_decim = dsDecimateLabels(data,labels2keep);
+    data_decim = rmfield(data_decim,'model');
+    
     % Saving workspace code. Should be off in most cases, except for
     % debugging
     save_abbreviated_workspace = false;
     save_workspace = false;
     if save_abbreviated_workspace
-        labels2keep = {'IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks','time'};
-        data_decim = dsDecimateLabels(data,labels2keep);
-        data_decim = rmfield(data_decim,'model');
+        % Save just the decimated version
         save('wrkspc_13a_abbrev.mat','data_decim','-v7.3')
     end
     
     if save_workspace
+        % Save entire workspace
         save('wrkspc_13a.mat','data','-v7.3')
     end
+
     
     if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
         i=i+1;
@@ -360,6 +365,41 @@ if save_combined_figures
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
+    end
+    
+    
+    % These should be imported from deltapaper_scripts2 in the future
+    % Setup PP freqmask parameters
+    inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
+    PPmaskdurations = [50,100,150,200,250,300,400,500];
+
+    % Make into meshgrid and then two giant Nx1 array
+    [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
+    PPmaskdurations = PPmaskdurations(:)';
+    inter_train_interval = inter_train_interval(:)';
+    PPmaskfreqs0 = 1000 ./ [PPmaskdurations + inter_train_interval];
+
+    % Do rounding, to produce shorter strings (annoying bug in MDD - when merged varied strings get too long, they start to overlap and cause errors)
+    PPmaskfreqs = round(PPmaskfreqs0,2);
+    
+    % Code for producing 2D sweep of phase locking values
+    if contains(repo_studyname,'DeltaFig13a')                % If we're doing Fig 13...
+        
+        % Calculate phase locking and add field
+        data_decim2 = addfield_IBphaselock_corrcoef_errbar(data_decim);
+        
+        
+        % plot_options
+        % These should be passed in s{f}.PPmaskdurations via case 13a.
+        % Can't just get these from data due to rounding errors.
+        myplot_options.PPmaskdurations = PPmaskdurations;       
+        myplot_options.PPmaskfreqs0 = PPmaskfreqs0;
+        
+        % Turn off legend
+        so.suppress_legend = true;
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        
     end
     
 end
