@@ -1742,9 +1742,13 @@ switch chosen_cell
         % A 2D version of Fig 4a - Lakatos. Sweep through both different
         % frequencies and stim durations
         
-        % Setup PP freqmask parameters
+        % Setup PP freqmask parameters (x72 simulations)
         inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
         PPmaskdurations = [50,100,150,200,250,300,400,500];
+        
+        % Setup PP freqmask parameters (new values - 99 simulations)
+        inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
+        PPmaskdurations = [50,100,150,200,250,300,400,500,700,900,1100];
         
         % Make into meshgrid and then two giant Nx1 array
         [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
