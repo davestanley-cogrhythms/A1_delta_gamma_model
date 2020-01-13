@@ -325,9 +325,15 @@ if save_combined_figures
 
 
     % Decimate data to just contain data for calculating phase locking
-    labels2keep = {'IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks','time'};
+    % figures
+    labels2keep = {'IB_V','time','IB_NG_GABAall_gTH','IB_iPoissonNested_ampaNMDA_Allmasks'};
     data_decim = dsDecimateLabels(data,labels2keep);
-    data_decim = rmfield(data_decim,'model');
+    
+    % Trim model struct. Remove fixed_variables because it takes a ton of
+    % space. Don't remove entire model structure because dsCalcFR needs
+    % this.
+    for i = 1:length(data_decim); data_decim(i).model = rmfield(data_decim(i).model,'fixed_variables'); end
+%     data_decim = rmfield(data_decim,'model');             % data.model is needed for dsCalcFR
     
     % Saving workspace code. Should be off in most cases, except for
     % debugging
@@ -370,8 +376,14 @@ if save_combined_figures
     % Code for producing 2D sweep of phase locking values
     if contains(repo_studyname,'DeltaFig13a')                % If we're doing Fig 13...
         
+        % Initialize
+        data_decim2 = data_decim;
+        
+        % Add phase locking based on IB firing
+        data_decim2 = addfield_IBphaselock(data_decim2);
+        
         % Calculate phase locking and add field
-        data_decim2 = addfield_IBphaselock_corrcoef_errbar(data_decim);
+        data_decim2 = addfield_IBphaselock_corrcoef_errbar(data_decim2);
         
         
         % plot_options

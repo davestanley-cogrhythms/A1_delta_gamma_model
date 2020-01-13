@@ -1,6 +1,7 @@
 
 
 function data = addfield_IBphaselock_corrcoef_errbar (data)
+    % Should produce same output as xp_IBphaselock_contrast_index_errbar
     duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
     
 
