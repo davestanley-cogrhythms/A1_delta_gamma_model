@@ -367,21 +367,6 @@ if save_combined_figures
 
     end
     
-    
-    % These should be imported from deltapaper_scripts2 in the future
-    % Setup PP freqmask parameters
-    inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
-    PPmaskdurations = [50,100,150,200,250,300,400,500];
-
-    % Make into meshgrid and then two giant Nx1 array
-    [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
-    PPmaskdurations = PPmaskdurations(:)';
-    inter_train_interval = inter_train_interval(:)';
-    PPmaskfreqs0 = 1000 ./ [PPmaskdurations + inter_train_interval];
-
-    % Do rounding, to produce shorter strings (annoying bug in MDD - when merged varied strings get too long, they start to overlap and cause errors)
-    PPmaskfreqs = round(PPmaskfreqs0,2);
-    
     % Code for producing 2D sweep of phase locking values
     if contains(repo_studyname,'DeltaFig13a')                % If we're doing Fig 13...
         
