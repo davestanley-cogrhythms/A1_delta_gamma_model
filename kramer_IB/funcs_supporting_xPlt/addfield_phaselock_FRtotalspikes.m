@@ -1,8 +1,8 @@
 
 
-function data = addfield_phaselock_FRfract (data)
+function data = addfield_phaselock_FRtotalspikes (data)
     % xp must be 1x1 (e.g. 0 dimensional)
-    
+
     % Setup duty cycle
         % Duty cycle determines what fraction of the pulse cycle is
         % considered "on" and "off." Setting this to 50% will cause 50% of
@@ -11,7 +11,7 @@ function data = addfield_phaselock_FRfract (data)
         % This is used for calculating total_spks_pulse_on / off, or other
         % variables for measuring phase locking.
     duty_cycle = -1;        % Set to -1 to use the pulse width to determine the duty cycle
-
+    
     
     % Remove NaNs introduced due to packing
     for i = 1:length(data)
@@ -82,13 +82,13 @@ function data = addfield_phaselock_FRfract (data)
 %                 continue
 %             end
 
-            mystart2 = ons(j+1);
-            
             if duty_cycle > 0
                 mystop = floor((mystart2 - mystart)*duty_cycle + mystart);             % mystop is duty_cycle fraction of the way between mystart and mystart2
             else
                 mystop = offs(temp);
             end
+            
+            mystart2 = ons(j+1);
 
             % Total spikes for the on portion of the  cycle
             total_spks_pulse_on{i}(j) = count_spikes(spikes,mystart,mystop);
@@ -100,33 +100,21 @@ function data = addfield_phaselock_FRfract (data)
     end
     
     
-    % Calculate phase locking ratio for all sims
-    mu_n = zeros(1,Nsims);
+    % Calculate mean number of spikes in each sim
     mu_af = zeros(1,Nsims);
     std_af = zeros(1,Nsims);
-    ste_af = zeros(1,Nsims);
+    ste_af = zeros(1,Nsims);    
     for i = 1:Nsims
-        mu_n(i) = mean(total_spks_pulse_on{i} + total_spks_pulse_off{i});
-    end
-    
-    for i = 1:Nsims
-        for j = 1:Ncycles(i)
-            af{i}(j) = total_spks_pulse_on{i}(j) / mu_n(i);     % Aligned fraction
-
-        end
-    end
-    
-    for i = 1:Nsims
-        mu_af(i) = mean(af{i});
-        std_af(i) = std(af{i});
-        ste_af(i) = std(af{i}) / sqrt(Nsims);
+        mu_af(i) = mean(total_spks_pulse_on{i});
+        std_af(i) = std(total_spks_pulse_on{i});
+        ste_af(i) = std(total_spks_pulse_on{i}) / sqrt(Nsims);
     end
     
     % Save to data
     for i = 1:Nsims
-        data(i).IB_phaselock_FRfract_mu = mu_af(i);
-        data(i).IB_phaselock_FRfract_ste = ste_af(i);
-        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FRfract_mu','IB_phaselock_FRfract_ste'});
+        data(i).IB_phaselock_FRtot_mu = mu_af(i);
+        data(i).IB_phaselock_FRtot_ste = ste_af(i);
+        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FRtot_mu','IB_phaselock_FRtot_ste'});
     end
     
 %     hxp.hcurr = barwitherr(ste_af,mu_af,'k');

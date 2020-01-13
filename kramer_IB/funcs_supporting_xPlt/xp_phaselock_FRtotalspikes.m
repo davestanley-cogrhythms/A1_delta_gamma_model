@@ -11,6 +11,15 @@ function hxp = xp_phaselock_FRtotalspikes (xp, op)
     
     if isempty(op); op = struct; end;
     
+    % Setup duty cycle
+        % Duty cycle determines what fraction of the pulse cycle is
+        % considered "on" and "off." Setting this to 50% will cause 50% of
+        % the time following the start of the pulse to be considered on,
+        % and the remaining to be considered off. 
+        % This is used for calculating total_spks_pulse_on / off, or other
+        % variables for measuring phase locking.
+    duty_cycle = -1;        % Set to -1 to use the pulse width to determine the duty cycle
+    
 %     op = struct_addDef(op,'args',{});
 %     op = struct_addDef(op,'imagesc_zlims',[]);
 %     op = struct_addDef(op,'lineplot_ylims',[]);
@@ -111,7 +120,11 @@ function hxp = xp_phaselock_FRtotalspikes (xp, op)
 %                 continue
 %             end
 
-            mystop = offs(temp);
+            if duty_cycle > 0
+                mystop = floor((mystart2 - mystart)*duty_cycle + mystart);             % mystop is duty_cycle fraction of the way between mystart and mystart2
+            else
+                mystop = offs(temp);
+            end
             mystart2 = ons(j+1);
 
             % Total spikes for the on portion of the  cycle

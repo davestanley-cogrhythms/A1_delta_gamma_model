@@ -379,10 +379,17 @@ if save_combined_figures
         % Initialize
         data_decim2 = data_decim;
         
-        % Add phase locking based on IB firing
+        % Calc FRs
+        data_decim2 = dsCalcFR(data_decim2);
+        
+        % Add phase locking based on fraction of IB firing within pulse-on
         data_decim2 = addfield_phaselock_FRfract(data_decim2);
         
-        % Calculate phase locking and add field
+        % Add phase locking based on total spiking
+        data_decim2 = addfield_phaselock_FRtotalspikes(data_decim2);
+        
+        % Add phase locking based on contrast index between GABA_B values
+        % for start 50% and ending 50% of cycle
         data_decim2 = addfield_phaselock_contrast_index(data_decim2);
         
         
@@ -394,6 +401,14 @@ if save_combined_figures
         
         % Turn off legend
         so.suppress_legend = true;
+        
+        % Plot phaselock_FRfract
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_FRtot_mu
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_CI_mu
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
         
         

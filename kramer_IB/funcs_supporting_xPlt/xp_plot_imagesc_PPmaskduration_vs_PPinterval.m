@@ -89,7 +89,9 @@ function hxp = xp_plot_imagesc_PPmaskduration_vs_PPinterval(xp,op)
             % Error checking
             error('Should only be 1 entry in meshgrid');
         end
-        Z(idx) = data_decim3(i).IB_phaselock_CI_mu;
+%         phase_lock_field = data_decim3(1).labels{1};            % Should be first one we selected in labels
+        phase_lock_field = [xp.axis('populations').values{1} '_' xp.axis('variables').values{1}];
+        Z(idx) = data_decim3(i).(phase_lock_field);
 %         Z_err(idx) = data_decim3(i).IB_phaselock_CI_ste;
     end
 
