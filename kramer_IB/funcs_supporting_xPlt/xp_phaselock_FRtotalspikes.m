@@ -1,6 +1,6 @@
 
 
-function hxp = xp_total_spikes_pulse_on_errbar (xp, op)
+function hxp = xp_phaselock_FRtotalspikes (xp, op)
     % xp must be 1x1 (e.g. 0 dimensional)
     
     hxp = struct;

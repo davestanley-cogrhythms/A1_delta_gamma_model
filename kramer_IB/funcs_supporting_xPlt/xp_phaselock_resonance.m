@@ -1,6 +1,6 @@
 
 
-function hxp = xp_IBphaselock_resonance_errbar (xp, op)
+function hxp = xp_phaselock_resonance (xp, op)
     % xp must be 1x1 (e.g. 0 dimensional)
     % Produces phase locking by taking the PSD and then measuring the power
     % of the combined GABA A/B conductances at the frequency corresponding

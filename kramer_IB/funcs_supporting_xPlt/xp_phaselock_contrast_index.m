@@ -1,6 +1,6 @@
 
 
-function hxp = xp_IBphaselock_contrast_index_errbar (xp, op)
+function hxp = xp_phaselock_contrast_index (xp, op)
     % xp must be 1x1 (e.g. 0 dimensional)
     
     % Setup duty cycle

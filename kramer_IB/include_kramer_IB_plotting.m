@@ -352,22 +352,22 @@ if save_combined_figures
     
     if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_IBphaselock_errbar,'force_last','varied1','Ndims_per_subplot',3,...
+        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/iPoissonNested_ampaNMDA_Allmasks|THALL_GABA_gTH/','plot_handle',@xp_IBphaselock_resonance_errbar,'force_last','variable','Ndims_per_subplot',3,'do_mean',true,...
+        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/iPoissonNested_ampaNMDA_Allmasks|THALL_GABA_gTH/','plot_handle',@xp_phaselock_resonance,'force_last','variable','Ndims_per_subplot',3,'do_mean',true,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_total_spikes_pulse_on_errbar,'force_last','varied1','Ndims_per_subplot',3,...
+        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         
         i=i+1;
-        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_IBphaselock_contrast_index_errbar,'force_last','varied1','Ndims_per_subplot',3,...
+        parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_contrast_index,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
 
@@ -380,10 +380,10 @@ if save_combined_figures
         data_decim2 = data_decim;
         
         % Add phase locking based on IB firing
-        data_decim2 = addfield_IBphaselock(data_decim2);
+        data_decim2 = addfield_phaselock_FRfract(data_decim2);
         
         % Calculate phase locking and add field
-        data_decim2 = addfield_IBphaselock_corrcoef_errbar(data_decim2);
+        data_decim2 = addfield_phaselock_contrast_index(data_decim2);
         
         
         % plot_options
