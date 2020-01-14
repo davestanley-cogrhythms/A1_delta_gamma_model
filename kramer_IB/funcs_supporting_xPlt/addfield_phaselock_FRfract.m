@@ -110,9 +110,13 @@ function data = addfield_phaselock_FRfract (data)
     end
     
     for i = 1:Nsims
-        for j = 1:Ncycles(i)
-            af{i}(j) = total_spks_pulse_on{i}(j) / mu_n(i);     % Aligned fraction
-
+        if Ncycles(i) > 0
+            for j = 1:Ncycles(i)
+                af{i}(j) = total_spks_pulse_on{i}(j) / mu_n(i);     % Aligned fraction
+            end
+        else
+            % If no data, set to NaN
+            af{i}(j) = NaN;
         end
     end
     
