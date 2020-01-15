@@ -1750,6 +1750,18 @@ switch chosen_cell
         inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
         PPmaskdurations = [50,100,150,200,250,300,400,500,700,900,1100];
         
+        % For paper - display freqs corresponding to:
+        % - PPmaskdurations = 100
+        % - inter_train_interval = 
+        % (For comparison to Lakatos figure)
+        disp(1000 ./ (100 + inter_train_interval))
+        
+        % For paper - display freqs corresonding to:
+        % - PPmaskdurations = 100
+        % - inter_train_interval = 
+        % (For comparison to inverse PAC figure)
+        disp(1000 ./ (PPmaskdurations + 300))
+        
         % Make into meshgrid and then two giant Nx1 array
         [PPmaskdurations, inter_train_interval] = meshgrid(PPmaskdurations, inter_train_interval);
         PPmaskdurations = PPmaskdurations(:)';
