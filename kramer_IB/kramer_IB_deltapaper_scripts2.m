@@ -1747,8 +1747,8 @@ switch chosen_cell
         PPmaskdurations = [50,100,150,200,250,300,400,500];
         
         % Setup PP freqmask parameters (new values - 99 simulations)
-        inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
-        PPmaskdurations = [50,100,150,200,250,300,400,500,700,900,1100];
+        inter_train_interval = [200,300,400,600,800,1000,1200,1400,1600,1800,2000];
+        PPmaskdurations = [100,200,300,500,700,900,1100];
         
         % For paper - display freqs corresponding to:
         % - PPmaskdurations = 100

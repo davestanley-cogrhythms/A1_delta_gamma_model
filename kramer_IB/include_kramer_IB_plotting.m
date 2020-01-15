@@ -335,12 +335,12 @@ if save_combined_figures
     save_workspace = false;
     if save_abbreviated_workspace
         % Save just the decimated version
-        save('wrkspc_13a_abbrev.mat','data_decim','-v7.3')
+        save('wrkspc_13a_abbrev.mat','data_decim','PPmaskdurations','inter_train_interval','-v7.3');
     end
     
     if save_workspace
         % Save entire workspace
-        save('wrkspc_13a.mat','data','-v7.3')
+        save('wrkspc_13a.mat','data','PPmaskdurations','inter_train_interval','-v7.3');
     end
 
     
