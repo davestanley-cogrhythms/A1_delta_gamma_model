@@ -102,4 +102,18 @@ function hxp = xp_plot_imagesc_PPmaskduration_vs_PPinterval(xp,op)
 %     Z_err = reshape(Z_err,sz);
 
     imagesc([min(X(:)),max(X(:))],[min(Y(:)),max(Y(:))],Z);
+    
+    % Interpolate
+    Z_dummy = reshape(1:99,[9,11]);
+    Z_toplot = Z_dummy;
+    Z_toplot = Z;
+    interpmeth = 'nearest';
+    N=100;
+    Xq = linspace(min(X(:)),max(X(:)),N);
+    Yq = linspace(min(Y(:)),max(Y(:)),N);
+    [Xq, Yq] = meshgrid(Xq,Yq);
+    Zq = interp2(X,Y,Z,Xq,Yq,interpmeth);
+    Zq = interp2(X,Y,Z_toplot,Xq,Yq,interpmeth);
+    figure; imagesc([min(X(:)),max(X(:))],[min(Y(:)),max(Y(:))],Z_toplot);
+    figure; imagesc([min(Xq(:)),max(Xq(:))],[min(Yq(:)),max(Yq(:))],Zq);
 end
