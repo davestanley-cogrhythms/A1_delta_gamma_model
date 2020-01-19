@@ -4,7 +4,7 @@ function data = addfield_phaselock_contrast_index (data)
     % Should produce same output as xp_IBphaselock_contrast_index_errbar
     use_duty_cycle = true;
     duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
-    minduration = 0;
+    minduration_ms = 0;
     
 
     % For each simulation, pull out the on/off regions and calculate phase
@@ -19,6 +19,9 @@ function data = addfield_phaselock_contrast_index (data)
         downsample_factor = data(i).simulator_options.downsample_factor;
         dt = data(i).simulator_options.dt * downsample_factor;
         t = data(i).time;
+        
+        % Calc min duration
+        minduration = round(minduration / dt);
         
         % Pull out spike times and pulse information
         variable = data(i).IB_NG_GABAall_gTH;    % Used later
