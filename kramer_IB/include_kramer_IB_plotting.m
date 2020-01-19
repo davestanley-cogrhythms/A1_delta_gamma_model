@@ -357,6 +357,12 @@ if save_combined_figures
         % Add phase locking based on total spiking
         data_decim2 = addfield_phaselock_FRtotalspikes(data_decim2);
         
+        % Add multiplication of FractFR and total spiking
+        for i = 1:length(data_decim2)
+            data_decim2(i).IB_phaselock_FRfract_x_total_mu = data_decim2(i).IB_phaselock_FRfract_mu * data_decim2(i).IB_phaselock_FRtot_mu;
+            data_decim2(i).labels = cat(2,data_decim2(i).labels,{'IB_phaselock_FRfract_x_total_mu'});
+        end
+        
         % Add phase locking based on contrast index between GABA_B values
         % for start 50% and ending 50% of cycle
         data_decim2 = addfield_phaselock_contrast_index(data_decim2);
@@ -424,6 +430,9 @@ if save_combined_figures
         
         % Plot phaselock_FRtot_mu
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_FRfract_times_total_mu
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
         
         % Plot phaselock_CI_mu
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
