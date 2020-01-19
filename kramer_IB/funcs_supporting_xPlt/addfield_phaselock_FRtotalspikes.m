@@ -90,11 +90,13 @@ function data = addfield_phaselock_FRtotalspikes (data)
             
             mystart2 = ons(j+1);
 
-            % Total spikes for the on portion of the  cycle
-            total_spks_pulse_on{i}(j) = count_spikes(spikes,mystart,mystop);
+            % Total spikes for the on portion of the  cycle (normalize by
+            % window length)
+            total_spks_pulse_on{i}(j) = count_spikes(spikes,mystart,mystop) / (mystop-mystart) / dt;
             
-            % Total spikes for the off portion of the cycle
-            total_spks_pulse_off{i}(j) = count_spikes(spikes,mystop,mystart2);
+            % Total spikes for the off portion of the cycle (normalize by
+            % window length)
+            total_spks_pulse_off{i}(j) = count_spikes(spikes,mystop,mystart2) / (mystart2-mystop) / dt;
         end
             
     end
