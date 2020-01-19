@@ -342,9 +342,28 @@ if save_combined_figures
         % Save entire workspace
         save('wrkspc_13a.mat','data','PPmaskdurations','inter_train_interval','-v7.3');
     end
-
     
-    if length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800
+    % Add phase locking fields to data_decim
+    if length(data) > 1 && include_IB
+                % Initialize
+        data_decim2 = data_decim;
+        
+        % Calc FRs
+        data_decim2 = dsCalcFR(data_decim2);
+        
+        % Add phase locking based on fraction of IB firing within pulse-on
+        data_decim2 = addfield_phaselock_FRfract(data_decim2);
+        
+        % Add phase locking based on total spiking
+        data_decim2 = addfield_phaselock_FRtotalspikes(data_decim2);
+        
+        % Add phase locking based on contrast index between GABA_B values
+        % for start 50% and ending 50% of cycle
+        data_decim2 = addfield_phaselock_contrast_index(data_decim2);
+    end
+
+    % Bar plots for 1D 
+    if (length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800) && ~contains(repo_studyname,'DeltaFig13a')
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
@@ -369,23 +388,6 @@ if save_combined_figures
     
     % Code for producing 2D sweep of phase locking values
     if contains(repo_studyname,'DeltaFig13a')                % If we're doing Fig 13...
-        
-        % Initialize
-        data_decim2 = data_decim;
-        
-        % Calc FRs
-        data_decim2 = dsCalcFR(data_decim2);
-        
-        % Add phase locking based on fraction of IB firing within pulse-on
-        data_decim2 = addfield_phaselock_FRfract(data_decim2);
-        
-        % Add phase locking based on total spiking
-        data_decim2 = addfield_phaselock_FRtotalspikes(data_decim2);
-        
-        % Add phase locking based on contrast index between GABA_B values
-        % for start 50% and ending 50% of cycle
-        data_decim2 = addfield_phaselock_contrast_index(data_decim2);
-        
         
         % plot_options
         % These should be passed in s{f}.PPmaskdurations via case 13a.
