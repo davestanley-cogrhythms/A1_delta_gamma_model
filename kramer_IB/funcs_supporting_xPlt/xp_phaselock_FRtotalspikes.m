@@ -2,6 +2,10 @@
 
 function hxp = xp_phaselock_FRtotalspikes (xp, op)
     % xp must be 1x1 (e.g. 0 dimensional)
+    % Gets average spikes during pulse on stage
+    % Note - this is not the total spikes, even though the func name says
+    % it is! It is the average spiking rate during the pulse on period (or
+    % duty cycle, if duty_cycle is not -1)
     
     hxp = struct;
     
