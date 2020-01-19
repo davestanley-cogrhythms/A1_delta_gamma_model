@@ -2,9 +2,9 @@
 
 function data = addfield_phaselock_contrast_index (data)
     % Should produce same output as xp_IBphaselock_contrast_index_errbar
-    use_duty_cycle = true;
+    use_duty_cycle = false;
     duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
-    minduration_ms = 0;
+    minduration_ms = 200;
     
 
     % For each simulation, pull out the on/off regions and calculate phase
