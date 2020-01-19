@@ -21,7 +21,7 @@ function data = addfield_phaselock_contrast_index (data)
         t = data(i).time;
         
         % Calc min duration
-        minduration = round(minduration / dt);
+        minduration = round(minduration_ms / dt);
         
         % Pull out spike times and pulse information
         variable = data(i).IB_NG_GABAall_gTH;    % Used later
