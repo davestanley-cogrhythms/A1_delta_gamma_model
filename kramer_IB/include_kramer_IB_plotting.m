@@ -364,6 +364,23 @@ if save_combined_figures
 
     % Bar plots for 1D 
     if (length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800) && ~contains(repo_studyname,'DeltaFig13a')
+        
+        % plot_options
+        % These should be passed in s{f}.PPmaskdurations via case 13a.
+        % Can't just get these from data due to rounding errors.
+        myplot_options = struct;
+        
+        % Turn off legend
+        so.suppress_legend = true;
+        
+        % Plot phaselock_FRfract
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_mu|phaselock_FRfract_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3)
+        
+        % Plot phaselock_CI_mu
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu|phaselock_CI_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_contrast_index,'force_last','varied1','Ndims_per_subplot',3)
+        
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
