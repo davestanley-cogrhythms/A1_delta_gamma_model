@@ -2,7 +2,9 @@
 
 function data = addfield_phaselock_contrast_index (data)
     % Should produce same output as xp_IBphaselock_contrast_index_errbar
+    use_duty_cycle = true;
     duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
+    minduration = 0;
     
 
     % For each simulation, pull out the on/off regions and calculate phase
@@ -44,15 +46,45 @@ function data = addfield_phaselock_contrast_index (data)
             % Start of current pulse
             mystart = ons(j);
             
-            % Find corresponding ending of current pulse
-            temp = find(offs > mystart,1,'first');
-
+            % Start of next pulse
             mystart2 = ons(j+1);
             
-            if duty_cycle > 0
-                mystop = floor((mystart2 - mystart)*duty_cycle + mystart);             % mystop is duty_cycle fraction of the way between mystart and mystart2
+            % Calculate mystop corresponding ending of current pulse
+            temp = find(offs > mystart,1,'first');
+            mystop_endpulse = offs(temp);
+            
+            % Calculate mystop necessary to achieve the desired duty cycle
+            mystop_dutycycle = floor((mystart2 - mystart)*duty_cycle + mystart);             % mystop is duty_cycle fraction of the way between mystart and mystart2
+            
+            if use_duty_cycle
+                mystop = mystop_dutycycle;
+                
+                % Calculate duration
+                duration = mystop-mystart;
+                
+                % Increase duration if below the minimum, but don't go
+                % larger than mystop_endpulse
+                if minduration > 0
+                    if duration < minduration
+                        duration_new = min(minduration, mystop_endpulse-mystart);
+                        mystop = mystart + duration_new;
+                    end
+                end
             else
-                mystop = offs(temp);
+                mystop = mystop_endpulse;
+                
+                % Calculate duration
+                duration = mystop-mystart;
+                
+                % Increase duration if below the minimum, but don't go
+                % larger than the duration we would have if we used duty
+                % cycle.
+                if minduration > 0
+                    if duration < minduration
+                        duration_new = min(minduration, mystop_dutycycle-mystart);
+                        mystop = mystart + duration_new;
+                    end
+                end
             end
 
             % Total spikes for the on portion of the  cycle
