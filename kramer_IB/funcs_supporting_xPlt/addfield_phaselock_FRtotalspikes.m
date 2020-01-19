@@ -15,21 +15,6 @@ function data = addfield_phaselock_FRtotalspikes (data)
         % variables for measuring phase locking.
     duty_cycle = -1;        % Set to -1 to use the pulse width to determine the duty cycle
     
-    
-    % Remove NaNs introduced due to packing
-    for i = 1:length(data)
-        labels = data(i).labels;
-        labels_sans_time = labels(~strcmp(labels,'time'));
-
-        for j = 1:length(labels_sans_time)
-            d = data(i).(labels_sans_time{j});
-            ind = all(~isnan(d),1);
-            d=d(:,ind);
-            data(i).(labels_sans_time{j}) = d;
-        end
-    end
-    
-    
     % Calculate spike timings for data (only if not present already)
     if ~isfield(data,'IB_V_spike_times')
         data = dsCalcFR(data);
