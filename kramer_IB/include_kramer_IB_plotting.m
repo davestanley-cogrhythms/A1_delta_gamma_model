@@ -360,7 +360,8 @@ if save_combined_figures
         % Add multiplication of FractFR and total spiking
         for i = 1:length(data_decim2)
             data_decim2(i).IB_phaselock_FRfract_x_total_mu = data_decim2(i).IB_phaselock_FRfract_mu * data_decim2(i).IB_phaselock_FRtot_mu;
-            data_decim2(i).labels = cat(2,data_decim2(i).labels,{'IB_phaselock_FRfract_x_total_mu'});
+            data_decim2(i).IB_phaselock_FRfract_x_total_ste = zeros(size(data_decim2(i).IB_phaselock_FRfract_mu));
+            data_decim2(i).labels = cat(2,data_decim2(i).labels,{'IB_phaselock_FRfract_x_total_mu','IB_phaselock_FRfract_x_total_ste'});
         end
         
         % Add phase locking based on contrast index between GABA_B values
@@ -386,6 +387,9 @@ if save_combined_figures
         % Plot totalspikes
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRtot_mu|phaselock_FRtot_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3)
+        
+        % Plot totalspikes
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu|phaselock_FRfract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
         
         % Plot phaselock_CI_mu
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu|phaselock_CI_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
