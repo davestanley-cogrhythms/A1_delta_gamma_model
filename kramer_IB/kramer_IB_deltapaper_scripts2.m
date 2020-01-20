@@ -2006,19 +2006,19 @@ switch chosen_cell
         xp = dsAll2mdd(data_decim2,false,false,true);          % Convert to xp. Need to do this in advance, so can have "merge_everything" flag set
         
         % Plot phaselock_FRfract
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
         
         % Plot phaselock_FRtot_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
         
         % Plot phaselock_FRfract_times_total_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
         
         % Plot phaselock_FRfract_times_total_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
         
         % Plot phaselock_CI_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(xp,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
 
         
 
