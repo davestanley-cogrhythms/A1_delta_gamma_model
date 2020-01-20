@@ -379,8 +379,8 @@ if save_combined_figures
 %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3)
         
         % Plot fract * totalspikes 
-        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu|phaselock_FRfract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR3fract_x_total_mu|phaselock_FR3fract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu|phaselock_FRfract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);            % Mean before multiplying
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR3fract_x_total_mu|phaselock_FR3fract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);          % Mean after multiplying (slightly differentf formula than above)
         
         % Plot phaselock_CI_mu
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu|phaselock_CI_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);

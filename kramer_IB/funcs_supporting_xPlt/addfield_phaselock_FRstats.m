@@ -131,6 +131,10 @@ function data = addfield_phaselock_FRstats (data)
     end
     
     % % % % % % Calculate FRfract * FRtot for all sims (mean and standard deviation) % % % % % %
+    % This formula is slightly different than the above, in that the
+    % muliplication is done before taking the mean across trials. This
+    % allows us to get more accurate error bars, but it might not be the
+    % exact statistic we want...
     for i = 1:Nsims
         foo = (total_spks_pulse_on{i} / mean(total_spks_pulse_on{i} + total_spks_pulse_off{i})) .* mean_spks_pulse_on{i};
         mu_af(i) = mean(foo);
