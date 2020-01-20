@@ -1824,7 +1824,6 @@ switch chosen_cell
         % Save datafile
         save_13a_part(s,f,datapf13a_p1,repo_savename)
         
-        
     case '13a_p4'
         %% Paper 1 - 2D Lakatos figure
         % A 2D version of Fig 4a - Lakatos. Sweep through both different
@@ -1837,7 +1836,7 @@ switch chosen_cell
         mysave_combined_figures = 0;
         repo_savename = 'DeltaFig13a_p4';
         inter_train_interval = [200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000];
-        PPmaskdurations = [500];
+        PPmaskdurations = [400];
         
         f=1;
         [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,include_tFS5_global,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
@@ -1847,6 +1846,7 @@ switch chosen_cell
         
         % Save datafile
         save_13a_part(s,f,datapf13a_p1,repo_savename)
+        
         
     case '13a_p5'
         %% Paper 1 - 2D Lakatos figure
@@ -1860,7 +1860,7 @@ switch chosen_cell
         mysave_combined_figures = 0;
         repo_savename = 'DeltaFig13a_p5';
         inter_train_interval = [200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000];
-        PPmaskdurations = [700];
+        PPmaskdurations = [500];
         
         f=1;
         [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,include_tFS5_global,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
@@ -1883,7 +1883,7 @@ switch chosen_cell
         mysave_combined_figures = 0;
         repo_savename = 'DeltaFig13a_p6';
         inter_train_interval = [200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000];
-        PPmaskdurations = [900];
+        PPmaskdurations = [600];
         
         f=1;
         [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,include_tFS5_global,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
@@ -1905,6 +1905,52 @@ switch chosen_cell
         mytspan = [0 6500]*3;
         mysave_combined_figures = 0;
         repo_savename = 'DeltaFig13a_p7';
+        inter_train_interval = [200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000];
+        PPmaskdurations = [700];
+        
+        f=1;
+        [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,include_tFS5_global,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
+        
+        % Run sim
+        datapf13a_p1 = kramer_IB_function_mode(s{f},f);
+        
+        % Save datafile
+        save_13a_part(s,f,datapf13a_p1,repo_savename)
+        
+    case '13a_p8'
+        %% Paper 1 - 2D Lakatos figure
+        % A 2D version of Fig 4a - Lakatos. Sweep through both different
+        % frequencies and stim durations
+        % As Fig13a, but do this in parts, to enable larger simulations.
+        % Trim results at end and save. We'll merge these together later
+        
+        % Setup PP freqmask parameters (new values - 99 simulations)
+        mytspan = [0 6500]*3;
+        mysave_combined_figures = 0;
+        repo_savename = 'DeltaFig13a_p8';
+        inter_train_interval = [200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000];
+        PPmaskdurations = [900];
+        
+        f=1;
+        [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,include_tFS5_global,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
+        
+        % Run sim
+        datapf13a_p1 = kramer_IB_function_mode(s{f},f);
+        
+        % Save datafile
+        save_13a_part(s,f,datapf13a_p1,repo_savename)
+        
+    case '13a_p9'
+        %% Paper 1 - 2D Lakatos figure
+        % A 2D version of Fig 4a - Lakatos. Sweep through both different
+        % frequencies and stim durations
+        % As Fig13a, but do this in parts, to enable larger simulations.
+        % Trim results at end and save. We'll merge these together later
+        
+        % Setup PP freqmask parameters (new values - 99 simulations)
+        mytspan = [0 6500]*3;
+        mysave_combined_figures = 0;
+        repo_savename = 'DeltaFig13a_p9';
         inter_train_interval = [200,300,400,500,600,700,800,1000,1200,1400,1600,1800,2000];
         PPmaskdurations = [1100];
         
