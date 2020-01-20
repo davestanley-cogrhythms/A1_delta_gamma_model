@@ -84,10 +84,6 @@ function data = addfield_phaselock_contrast_index (data)
                         mystop = mystart + duration_new;
                     end
                 end
-                if duration < mystop_endpulse - mystart
-                    duration_new = mystop_endpulse - mystart;
-                    mystop = mystart + duration_new;
-                end
                 
             elseif segmentation_mode == 2
                 mystop = mystop_endpulse;
