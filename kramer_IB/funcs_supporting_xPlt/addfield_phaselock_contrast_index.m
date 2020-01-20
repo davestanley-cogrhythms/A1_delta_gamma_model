@@ -1,11 +1,13 @@
 
 
-function data = addfield_phaselock_contrast_index (data)
+function data = addfield_phaselock_contrast_index (data, segmentation_mode)
     % Should produce same output as xp_IBphaselock_contrast_index_errbar
     
     % Whether to use the pulse offset time to segment data for phase
     % locking or, instead, to use a fixed duty cycle
-    segmentation_mode = 1;      % 1-dutycycle; 2-endpulse; 3-max(dutycycle, endpulse)
+    if nargin < 2
+        segmentation_mode = 3;      % 1-dutycycle; 2-endpulse; 3-max(dutycycle, endpulse)
+    end
     
     % Duty cycle
     duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
