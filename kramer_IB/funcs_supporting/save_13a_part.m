@@ -1,7 +1,6 @@
 
-function save_13a_part(s,f,datapf13a_p1)
-    % Pull out data
-    data = datapf13a_p1.data;
+function save_13a_part(s,f,data)
+
 
     % Save info used to generate vary
     PPmaskdurations = s{f}.PPmaskdurations;
