@@ -1775,7 +1775,7 @@ switch chosen_cell
         datapf13a_p1 = kramer_IB_function_mode(s{f},f);
         
         % Save datafile
-        save_13a_part(s,f,datapf13a_p1)
+        save_13a_part(s,f,datapf13a_p1,repo_savename)
         
 
     case '13a_p2'
@@ -1799,7 +1799,7 @@ switch chosen_cell
         datapf13a_p1 = kramer_IB_function_mode(s{f},f);
         
         % Save datafile
-        save_13a_part(s,f,datapf13a_p1)
+        save_13a_part(s,f,datapf13a_p1,repo_savename)
         
 
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
