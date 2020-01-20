@@ -38,3 +38,6 @@ study_*
 localOutput
 matlab_multi_node_batch.sh.*
 cluster_*
+
+# Scratch files
+deleteme.m
