@@ -1917,6 +1917,64 @@ switch chosen_cell
         % Save datafile
         save_13a_part(s,f,datapf13a_p1,repo_savename)
         
+    case '13a_merge'
+        
+        % Load all data and merge
+        PPmaskdurations = [];
+        PPmaskfreqs0 = [];
+        inter_train_interval = [];
+        for i = 1:7
+            foo = load(['wrkspc_DeltaFig13a_p' num2str(i) '.mat']);
+            PPmaskdurations = [PPmaskdurations foo.PPmaskdurations];
+            PPmaskfreqs0 = [PPmaskfreqs0 foo.PPmaskfreqs0];
+            inter_train_interval = [inter_train_interval foo.inter_train_interval];
+            if i==1
+                data_decim = foo.data_decim;
+            else
+                data_decim = cat(2,data_decim, foo.data_decim);
+            end
+        end
+        
+        data_decim2 = data_decim;
+        
+        % Calc FRs
+        data_decim2 = dsCalcFR(data_decim2);
+        
+        % Add phase locking based on fraction of IB firing within pulse-on
+        data_decim2 = addfield_phaselock_FRstats(data_decim2);
+        
+        % Add phase locking based on contrast index between GABA_B values
+        % for start 50% and ending 50% of cycle
+        data_decim2 = addfield_phaselock_contrast_index(data_decim2);
+        
+                                                    % Disable for now, since we're not saving these anyways
+        % plot_options
+        % These should be passed in s{f}.PPmaskdurations via case 13a.
+        % Can't just get these from data due to rounding errors.
+        myplot_options.PPmaskdurations = PPmaskdurations;       
+        myplot_options.PPmaskfreqs0 = PPmaskfreqs0;
+        
+        % Turn off legend
+        so.suppress_legend = true;
+        
+        xp = dsAll2mdd(data_decim2,false,false,true);          % Convert to xp. Need to do this in advance, so can have "merge_everything" flag set
+        
+        % Plot phaselock_FRfract
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_FRtot_mu
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_FRfract_times_total_mu
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_FRfract_times_total_mu
+        dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+        
+        % Plot phaselock_CI_mu
+        dsPlot2(xp,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so);
+
+        
 
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
 
