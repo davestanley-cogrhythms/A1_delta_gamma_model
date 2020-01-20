@@ -1969,7 +1969,7 @@ switch chosen_cell
         PPmaskdurations = [];
         PPmaskfreqs0 = [];
         inter_train_interval = [];
-        for i = 1:7
+        for i = 1:9
             foo = load(['wrkspc_DeltaFig13a_p' num2str(i) '.mat']);
             PPmaskdurations = [PPmaskdurations foo.PPmaskdurations];
             PPmaskfreqs0 = [PPmaskfreqs0 foo.PPmaskfreqs0];

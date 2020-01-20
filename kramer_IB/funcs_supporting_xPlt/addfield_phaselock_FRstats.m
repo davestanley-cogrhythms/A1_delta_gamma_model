@@ -146,6 +146,9 @@ function data = addfield_phaselock_FRstats (data)
         data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FR3fract_x_total_mu','IB_phaselock_FR3fract_x_total_ste'});
     end
     
+    for i = 1:Nsims
+        data(i).labels = unique(data(i).labels,'stable');
+    end
     
     
     

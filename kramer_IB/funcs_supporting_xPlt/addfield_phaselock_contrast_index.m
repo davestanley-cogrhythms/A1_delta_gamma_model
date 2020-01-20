@@ -124,6 +124,7 @@ function data = addfield_phaselock_contrast_index (data)
         data(i).IB_phaselock_CI_mu = mu_af(i);
         data(i).IB_phaselock_CI_ste = ste_af(i);
         data(i).labels = cat(2,data(i).labels,{'IB_phaselock_CI_mu','IB_phaselock_CI_ste'});
+        data(i).labels = unique(data(i).labels,'stable');
     end
     
 end
