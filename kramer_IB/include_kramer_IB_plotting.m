@@ -382,14 +382,18 @@ if save_combined_figures
         
         % Plot phaselock_FRfract
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_mu|phaselock_FRfract_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-        dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3)
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR2fract_mu|phaselock_FR2fract_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+%         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3)
         
         % Plot totalspikes
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRtot_mu|phaselock_FRtot_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-        dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3)
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR2tot_mu|phaselock_FR2tot_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+%         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3)
         
-        % Plot totalspikes
+        % Plot fract * totalspikes 
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu|phaselock_FRfract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR2fract_x_total_mu|phaselock_FR2fract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
+        dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR3fract_x_total_mu|phaselock_FR3fract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
         
         % Plot phaselock_CI_mu
         dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu|phaselock_CI_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);

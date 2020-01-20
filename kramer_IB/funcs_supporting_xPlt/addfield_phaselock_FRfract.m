@@ -51,6 +51,8 @@ function data = addfield_phaselock_FRfract (data)
         Ncycles(i) = length(ons)-1;
         total_spks_pulse_on{i} = zeros(1, Ncycles(i));
         total_spks_pulse_off{i} = zeros(1, Ncycles(i));
+        mean_spks_pulse_on{i} = zeros(1, Ncycles(i));
+        mean_spks_pulse_off{i} = zeros(1, Ncycles(i));
         for j = 1:Ncycles(i)
             % Start of current pulse
             mystart = ons(j);
@@ -80,12 +82,20 @@ function data = addfield_phaselock_FRfract (data)
             
             % Total spikes for the off portion of the cycle
             total_spks_pulse_off{i}(j) = count_spikes(spikes,mystop,mystart2);
+            
+            % Total spikes for the on portion of the  cycle (normalize by
+            % window length)
+            mean_spks_pulse_on{i}(j) = count_spikes(spikes,mystart,mystop) / (mystop-mystart) / dt;
+            
+            % Total spikes for the off portion of the cycle (normalize by
+            % window length)
+            mean_spks_pulse_off{i}(j) = count_spikes(spikes,mystop,mystart2) / (mystart2-mystop) / dt;
         end
             
     end
     
     
-    % Calculate phase locking ratio for all sims
+    % Calculate mean for all sims
     mu_n = zeros(1,Nsims);
     mu_af = zeros(1,Nsims);
     std_af = zeros(1,Nsims);
@@ -94,6 +104,8 @@ function data = addfield_phaselock_FRfract (data)
         mu_n(i) = mean(total_spks_pulse_on{i} + total_spks_pulse_off{i});
     end
     
+    
+    % % % % % % Calculate FRfract for all sims (mean and standard deviation) % % % % % %
     for i = 1:Nsims
         if Ncycles(i) > 0
             for j = 1:Ncycles(i)
@@ -109,17 +121,62 @@ function data = addfield_phaselock_FRfract (data)
         mu_af(i) = mean(af{i});
         std_af(i) = std(af{i});
         ste_af(i) = std(af{i}) / sqrt(Nsims);
-    end
-    
-    % Save to data
-    for i = 1:Nsims
+        
         data(i).IB_phaselock_FRfract_mu = mu_af(i);
         data(i).IB_phaselock_FRfract_ste = ste_af(i);
         data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FRfract_mu','IB_phaselock_FRfract_ste'});
     end
     
-%     hxp.hcurr = barwitherr(ste_af,mu_af,'k');
-% %     ylim([0,1.2]);
+    % Redo above calculation in simpler manner
+    for i = 1:Nsims
+        foo = total_spks_pulse_on{i} / mean(total_spks_pulse_on{i} + total_spks_pulse_off{i});
+        mu_af(i) = mean(foo);
+        std_af(i) = std(foo);
+        ste_af(i) = std(foo) / sqrt(Nsims);
+        
+        data(i).IB_phaselock_FR2fract_mu = mu_af(i);
+        data(i).IB_phaselock_FR2fract_ste = ste_af(i);
+        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FR2fract_mu','IB_phaselock_FR2fract_ste'});
+    end
+    
+    % % % % % % Calculate FRtot for all sims (mean and standard deviation) % % % % % %
+    for i = 1:Nsims
+        mu_af(i) = mean(mean_spks_pulse_on{i});
+        std_af(i) = std(mean_spks_pulse_on{i});
+        ste_af(i) = std(mean_spks_pulse_on{i}) / sqrt(Nsims);
+        
+        data(i).IB_phaselock_FR2tot_mu = mu_af(i);
+        data(i).IB_phaselock_FR2tot_ste = ste_af(i);
+        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FR2tot_mu','IB_phaselock_FR2tot_ste'});
+    end
+    
+    % % % % % % Calculate FRfract * FRtot for all sims (mean and standard deviation) % % % % % %
+    for i = 1:Nsims
+        foo = (total_spks_pulse_on{i} / mean(total_spks_pulse_on{i} + total_spks_pulse_off{i})) * mean(mean_spks_pulse_on{i});
+        mu_af(i) = mean(foo);
+        std_af(i) = std(foo);
+        ste_af(i) = std(foo) / sqrt(Nsims);
+        
+        data(i).IB_phaselock_FR2fract_x_total_mu = mu_af(i);
+        data(i).IB_phaselock_FR2fract_x_total_ste = ste_af(i);
+        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FR2fract_x_total_mu','IB_phaselock_FR2fract_x_total_ste'});
+    end
+    
+    % % % % % % Calculate FRfract * FRtot for all sims (mean and standard deviation) % % % % % %
+    for i = 1:Nsims
+        foo = (total_spks_pulse_on{i} / mean(total_spks_pulse_on{i} + total_spks_pulse_off{i})) .* mean_spks_pulse_on{i};
+        mu_af(i) = mean(foo);
+        std_af(i) = std(foo);
+        ste_af(i) = std(foo) / sqrt(Nsims);
+        
+        data(i).IB_phaselock_FR3fract_x_total_mu = mu_af(i);
+        data(i).IB_phaselock_FR3fract_x_total_ste = ste_af(i);
+        data(i).labels = cat(2,data(i).labels,{'IB_phaselock_FR3fract_x_total_mu','IB_phaselock_FR3fract_x_total_ste'});
+    end
+    
+    
+    
+    
     
 end
 
