@@ -2014,8 +2014,8 @@ switch chosen_cell
         % Plot phaselock_FRfract_times_total_mu
         dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
         
-        % Plot phaselock_FRfract_times_total_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
+%         % Plot phaselock_FRfract_times_total_mu (this is a nonlinear version - multiply first and then take mean). Disabled b/c usually doesn't work as well as prev
+%         dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
         
         % Plot phaselock_CI_mu
         dsPlot2(xp,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
@@ -2743,9 +2743,4 @@ switch chosen_cell
         s{f}.gCaH_d = 1;
         
         data = kramer_IB_function_mode(s{f},f);
-        
-
-end
-
-end
-
+       
