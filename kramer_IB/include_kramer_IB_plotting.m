@@ -352,7 +352,7 @@ if save_combined_figures
         data_decim2 = dsCalcFR(data_decim2);
         
         % Add phase locking based on fraction of IB firing within pulse-on
-        data_decim2 = addfield_phaselock_FRfract(data_decim2);
+        data_decim2 = addfield_phaselock_FRstats(data_decim2);
         
         % Add phase locking based on contrast index between GABA_B values
         % for start 50% and ending 50% of cycle

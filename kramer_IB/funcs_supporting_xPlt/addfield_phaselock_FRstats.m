@@ -1,6 +1,6 @@
 
 
-function data = addfield_phaselock_FRfract (data)
+function data = addfield_phaselock_FRstats (data)
     % xp must be 1x1 (e.g. 0 dimensional)
     
     % Setup duty cycle
