@@ -1745,6 +1745,9 @@ switch chosen_cell
         % Setup PP freqmask parameters (new values - 99 simulations)
         inter_train_interval = [200,300,400,600,800,1000,1200,1400,1600,1800,2000];
         PPmaskdurations = [100,200,300,500,700,900,1100];
+        mytspan = [0 6500];
+        mysave_combined_figures = 1;
+        repo_savename = 'DeltaFig13a_lakatos2D';
         
         % For paper - display freqs for figure annotations
         % - Given PPmaskdurations = 100
@@ -1771,15 +1774,15 @@ switch chosen_cell
         clear s
         f=1;
         s{f} = struct;
-        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
-        s{f}.repo_studyname = ['DeltaFig13a_lakatos2D'  num2str(f) '' namesuffix];
+        s{f}.save_figures = 1; s{f}.save_combined_figures = mysave_combined_figures; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = [repo_savename  num2str(f) '' namesuffix];
         s{f}.sim_mode = 1;
         s{f}.pulse_mode = 5;
         s{f}.vary = { '(RS,IB,dFS5)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
             };
         s{f}.kerneltype_Poiss_IB = 4;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 6500];
+        s{f}.tspan = mytspan;
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
