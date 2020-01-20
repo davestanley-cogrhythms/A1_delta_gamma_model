@@ -31,6 +31,11 @@ clustersub('kramer_IB_deltapaper_scripts2','4b',8,myhours);         % As Fig 4a,
 clustersub('kramer_IB_deltapaper_scripts2','13a',28,myhours);        % 2D sweeps
 clustersub('kramer_IB_deltapaper_scripts2','13a_p1',28,myhours);     % 2D sweeps (break into parts).
 clustersub('kramer_IB_deltapaper_scripts2','13a_p2',28,myhours);     % 2D sweeps (break into parts).
+clustersub('kramer_IB_deltapaper_scripts2','13a_p3',28,myhours);     % 2D sweeps (break into parts).
+clustersub('kramer_IB_deltapaper_scripts2','13a_p4',28,myhours);     % 2D sweeps (break into parts).
+clustersub('kramer_IB_deltapaper_scripts2','13a_p5',28,myhours);     % 2D sweeps (break into parts).
+clustersub('kramer_IB_deltapaper_scripts2','13a_p6',28,myhours);     % 2D sweeps (break into parts).
+clustersub('kramer_IB_deltapaper_scripts2','13a_p7',28,myhours);     % 2D sweeps (break into parts).
 
 % Inverse phase-amplitude coupling figures
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);        % Inverse PAC  
