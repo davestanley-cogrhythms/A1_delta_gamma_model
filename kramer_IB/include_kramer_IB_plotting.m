@@ -454,6 +454,44 @@ if save_combined_figures
 
     end
     
+    % Code for producing 2D sweep of phase locking values
+    if contains(repo_studyname,'DeltaFig13a_lakatos2D')               % If we're doing Fig 13...
+                                            % Disable for now, since we're not saving these anyways
+        % plot_options
+        % These should be passed in s{f}.PPmaskdurations via case 13a.
+        % Can't just get these from data due to rounding errors.
+        myplot_options.PPmaskdurations = PPmaskdurations;       
+        myplot_options.PPmaskfreqs0 = PPmaskfreqs0;
+        
+        % Turn off legend
+        so.suppress_legend = true;
+        
+        parallel_plot_entries{i} = {@dsPlot2, data_decim2,'populations','IB','variable','/phaselock_FRfract_mu|phaselock_FRfract_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        
+        % Plot phaselock_FRfract
+        parallel_plot_entries{i} = {@dsPlot2, data_decim2,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        
+        % Plot phaselock_FRtot_mu
+        parallel_plot_entries{i} = {@dsPlot2, data_decim2,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so, ...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        
+        % Plot phaselock_FRfract_times_total_mu
+        parallel_plot_entries{i} = {@dsPlot2, data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so, ...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+        
+        % Plot phaselock_CI_mu
+        parallel_plot_entries{i} = {@dsPlot2, data_decim2,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so, ...
+            'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
+            'figheight',1/2,'figwidth',1/2}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
+
+    end
+    
 end
 
 if save_shuffle_figures
