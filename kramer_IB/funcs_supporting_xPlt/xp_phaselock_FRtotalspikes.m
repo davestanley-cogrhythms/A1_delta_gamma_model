@@ -1,6 +1,9 @@
 
 
 function hxp = xp_phaselock_FRtotalspikes (xp, op)
+    % ** Outdated. Use addfield_phaselock_FRstats to calculate statistics and
+    % then xp_barplot_err to do the plotting **
+    
     % xp must be 1x1 (e.g. 0 dimensional)
     % Gets average spikes during pulse on stage
     % Note - this is not the total spikes, even though the func name says

@@ -373,11 +373,11 @@ if save_combined_figures
 
             % Plot phaselock_FRfract
             dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_mu|phaselock_FRfract_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-    %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3)
+    %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3) % Disabled - old version. Use xp_barplot_err instead
 
             % Plot totalspikes
             dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRtot_mu|phaselock_FRtot_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-    %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3)
+    %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3) % Disabled - old version. Use xp_barplot_err instead
 
             % Plot fract * totalspikes 
             dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu|phaselock_FRfract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);            % Mean before multiplying
@@ -385,9 +385,11 @@ if save_combined_figures
 
             % Plot phaselock_CI_mu
             dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu|phaselock_CI_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-            dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_contrast_index,'force_last','varied1','Ndims_per_subplot',3)
+%             dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_contrast_index,'force_last','varied1','Ndims_per_subplot',3) % Disabled - old version. Use xp_barplot_err instead
+
         end
         
+        % Outdated - to disable
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
@@ -398,11 +400,13 @@ if save_combined_figures
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         
+        % Outdated - to disable
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...
             'figheight',1/3}; parallel_plot_entries{i} = [parallel_plot_entries{i} savefigure_options];
         
+        % Outdated - to disable
         i=i+1;
         parallel_plot_entries{i} = {@dsPlot2, xp,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_contrast_index,'force_last','varied1','Ndims_per_subplot',3,...
             'saved_fignum',i,'save_figname_prefix',['Fig ' num2str(i)],...

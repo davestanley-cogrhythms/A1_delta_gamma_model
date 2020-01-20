@@ -1,6 +1,8 @@
 
 
 function hxp = xp_phaselock_FRfract (xp, op)
+    % ** Outdated. Use addfield_phaselock_FRstats to calculate statistics and
+    % then xp_barplot_err to do the plotting **
     % xp must be 1x1 (e.g. 0 dimensional)
     
     % Setup duty cycle
