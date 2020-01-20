@@ -2,9 +2,21 @@
 
 function data = addfield_phaselock_contrast_index (data)
     % Should produce same output as xp_IBphaselock_contrast_index_errbar
-    use_duty_cycle = true;
+    
+    % Whether to use the pulse offset time to segment data for phase
+    % locking or, instead, to use a fixed duty cycle
+    segmentation_mode = 1;      % 1-dutycycle; 2-endpulse; 3-max(dutycycle, endpulse)
+    
+    % Duty cycle
     duty_cycle = 0.5;        % Set to -1 to use the pulse width to determine the duty cycle
+    
+    % Parameters for pulse_offset time. If duration is below
+    % minduration_ms, this will increase the duration up to minduration. If
+    % this would cause us to exceed the complementary metric, (e.g.,
+    % duty_cycle or endpulse), set it to the complementary metric. This is
+    % to prevent overshoot. Only for segmentation_modes 1 and 2.
     minduration_ms = 0;
+    
 
     % For each simulation, pull out the on/off regions and calculate phase
     % locking
@@ -58,7 +70,7 @@ function data = addfield_phaselock_contrast_index (data)
             % Calculate mystop necessary to achieve the desired duty cycle
             mystop_dutycycle = floor((mystart2 - mystart)*duty_cycle + mystart);             % mystop is duty_cycle fraction of the way between mystart and mystart2
             
-            if use_duty_cycle
+            if segmentation_mode == 1
                 mystop = mystop_dutycycle;
                 
                 % Calculate duration
@@ -72,7 +84,12 @@ function data = addfield_phaselock_contrast_index (data)
                         mystop = mystart + duration_new;
                     end
                 end
-            else
+                if duration < mystop_endpulse - mystart
+                    duration_new = mystop_endpulse - mystart;
+                    mystop = mystart + duration_new;
+                end
+                
+            elseif segmentation_mode == 2
                 mystop = mystop_endpulse;
                 
                 % Calculate duration
@@ -87,6 +104,20 @@ function data = addfield_phaselock_contrast_index (data)
                         mystop = mystart + duration_new;
                     end
                 end
+                
+            elseif segmentation_mode == 3
+                % Calculate duration
+                duration_endpulse = mystop_endpulse-mystart;
+                duration_dutycycle = mystop_dutycycle-mystart;
+                
+                duration = max(duration_endpulse,duration_dutycycle);
+                
+                mystop = mystart + duration;
+                % Note: we don't do minduration here, since there is
+                % no complementary metric to bound it 
+
+            else
+                error('Unknown segmentation_mode');
             end
 
             % Total spikes for the on portion of the  cycle
