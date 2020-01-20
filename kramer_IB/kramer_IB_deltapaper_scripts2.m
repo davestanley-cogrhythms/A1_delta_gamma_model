@@ -1742,23 +1742,19 @@ switch chosen_cell
         % A 2D version of Fig 4a - Lakatos. Sweep through both different
         % frequencies and stim durations
         
-        % Setup PP freqmask parameters (x72 simulations)
-        inter_train_interval = [150,200,250,300,400,500,700,1000,2000];
-        PPmaskdurations = [50,100,150,200,250,300,400,500];
-        
         % Setup PP freqmask parameters (new values - 99 simulations)
         inter_train_interval = [200,300,400,600,800,1000,1200,1400,1600,1800,2000];
         PPmaskdurations = [100,200,300,500,700,900,1100];
         
-        % For paper - display freqs corresponding to:
-        % - PPmaskdurations = 100
-        % - inter_train_interval = 
+        % For paper - display freqs for figure annotations
+        % - Given PPmaskdurations = 100
+        % - Given inter_train_interval sweep
         % (For comparison to Lakatos figure)
         disp(1000 ./ (100 + inter_train_interval))
         
-        % For paper - display freqs corresonding to:
-        % - PPmaskdurations = 100
-        % - inter_train_interval = 
+        % For paper annotations - display freqs for figure annotations
+        % - Given inter_train_interval = 300
+        % - Given PPmaskdurations sweep
         % (For comparison to inverse PAC figure)
         disp(1000 ./ (PPmaskdurations + 300))
         
@@ -1770,18 +1766,7 @@ switch chosen_cell
         
         % Do rounding, to produce shorter strings (annoying bug in MDD - when merged varied strings get too long, they start to overlap and cause errors)
         PPmaskfreqs = round(PPmaskfreqs0,2);
-        
-        % Testing
-%         inter_train_interval2 = 1000 ./ PPmaskfreqs - PPmaskdurations;
-        
-        
-%         % Use abbreviated version for testing
-%         PPmaskfreqs = PPmaskfreqs([1,2,end]);
-%         PPmaskdurations = PPmaskdurations([1,2,end]);
-        
-%         % Mask freqs (From fig 4a, for comparison only!)
-%         fig_4a_periods = 1000./[0.01,fliplr([[1:11]-6]*.3+2)];      % Periods in Fig4a (e.g., total ISI + pulse duration)
-        
+                
         % Setup
         clear s
         f=1;
