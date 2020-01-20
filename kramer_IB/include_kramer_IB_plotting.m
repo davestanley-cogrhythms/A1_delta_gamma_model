@@ -360,7 +360,7 @@ if save_combined_figures
     end
 
     % Bar plots for 1D 
-    if (length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800) && ~contains(repo_studyname,'DeltaFig13a')
+    if (length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800) && ~contains(repo_studyname,'DeltaFig13a_lakatos2D')
         
         if 0        % Disable for now, since we're not saving these anyways
             % plot_options
@@ -392,10 +392,10 @@ if save_combined_figures
         end
         
         
-                % plot_options
+        % plot_options
         % These should be passed in s{f}.PPmaskdurations via case 13a.
         % Can't just get these from data due to rounding errors.
-        myplot_options = struct;
+        myplot_options = struct;            % No plot options in this case
 
         % Turn off legend
         so.suppress_legend = true;
@@ -429,7 +429,7 @@ if save_combined_figures
     end
     
     % Code for producing 2D sweep of phase locking values
-    if contains(repo_studyname,'DeltaFig13a') && 0               % If we're doing Fig 13...
+    if contains(repo_studyname,'DeltaFig13a_lakatos2D') && 0               % If we're doing Fig 13...
                                             % Disable for now, since we're not saving these anyways
         % plot_options
         % These should be passed in s{f}.PPmaskdurations via case 13a.

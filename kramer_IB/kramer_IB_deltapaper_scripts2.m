@@ -2743,4 +2743,9 @@ switch chosen_cell
         s{f}.gCaH_d = 1;
         
         data = kramer_IB_function_mode(s{f},f);
-       
+        
+
+end
+
+end
+
