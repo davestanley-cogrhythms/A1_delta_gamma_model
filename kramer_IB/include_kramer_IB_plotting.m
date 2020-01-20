@@ -567,7 +567,7 @@ if save_combined_figures || save_shuffle_figures
 %             catch
 %                 warning('Error, parallel pool failed. Saving figs serially');
             for i = 1:length(parallel_plot_entries); feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end}); end
-            fprintf('Elapsed time for serial saving plots is: %g\n',toc(tv2));
+            fprintf('Elapsed time for parallel saving plots is: %g\n',toc(tv2));
 %             end
     else
         for i = 1:length(parallel_plot_entries); feval(parallel_plot_entries{i}{1},parallel_plot_entries{i}{2:end}); end
