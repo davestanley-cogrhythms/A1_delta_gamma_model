@@ -1753,6 +1753,30 @@ switch chosen_cell
         [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
         
         datapf13a = kramer_IB_function_mode(s{f},f);
+        
+    case '13a_p1'
+        %% Paper 1 - 2D Lakatos figure
+        % A 2D version of Fig 4a - Lakatos. Sweep through both different
+        % frequencies and stim durations
+        % As Fig13a, but do this in parts, to enable larger simulations.
+        % Trim results at end and save. We'll merge these together later
+        
+        % Setup PP freqmask parameters (new values - 99 simulations)
+        mytspan = [0 6500];
+        mysave_combined_figures = 1;
+        repo_savename = 'DeltaFig13a_p1';
+        inter_train_interval = [200,300,400,600,800,1000,1200,1400,1600,1800,2000];
+        PPmaskdurations = [100];
+        
+        f=1;
+        [s,f] = setupf_13a_sf(f,maxNcores,namesuffix,include_tFS5_global,mytspan,mysave_combined_figures,repo_savename,inter_train_interval,PPmaskdurations);
+        
+        % Run sim
+        datapf13a_p1 = kramer_IB_function_mode(s{f},f);
+        
+        % Save datafile
+        save_13a_part(s,f,datapf13a_p1)
+        
 
 %% % % % % % % % % % % % % % % % % % For supplementary figures % % % % % % % % % % % % % % % % % % % % 
 
