@@ -10,6 +10,13 @@ function hxp = xp_plot_imagesc_PPmaskduration_vs_PPinterval(xp,op)
     
     PPmaskdurations = op.PPmaskdurations;
     PPmaskfreqs0 = op.PPmaskfreqs0;
+    
+    % Optional argument - do_colorbar
+    if isfield(op,'do_colorbar')
+        do_colorbar = op.do_colorbar;
+    else
+        do_colorbar=true;
+    end
 
 %     % Manually convert xp to data structure without all the baggage of dsMdd2ds
 %     data_decim = struct;
@@ -116,4 +123,7 @@ function hxp = xp_plot_imagesc_PPmaskduration_vs_PPinterval(xp,op)
     Zq = interp2(X,Y,Z_toplot,Xq,Yq,interpmeth);
 %     figure; imagesc([min(X(:)),max(X(:))],[min(Y(:)),max(Y(:))],Z_toplot);
     imagesc([min(Xq(:)),max(Xq(:))],[min(Yq(:)),max(Yq(:))],Zq);
+    if do_colorbar
+        colorbar
+    end
 end

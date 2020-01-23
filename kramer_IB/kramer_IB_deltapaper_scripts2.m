@@ -1964,7 +1964,7 @@ switch chosen_cell
         save_13a_part(s,f,datapf13a_p1,repo_savename)
         
     case '13a_merge'
-        
+        %%
         % Load all data and merge
         PPmaskdurations = [];
         PPmaskfreqs0 = [];
@@ -1980,12 +1980,15 @@ switch chosen_cell
                 data_decim = cat(2,data_decim, foo.data_decim);
             end
         end
-        
+        %%
+        % Calculate firing rates
         data_decim2 = data_decim;
         
         % Calc FRs
         data_decim2 = dsCalcFR(data_decim2);
         
+        %%
+        % Calcualte stats and plot
         % Add phase locking based on fraction of IB firing within pulse-on
         data_decim2 = addfield_phaselock_FRstats(data_decim2);
         
@@ -1999,26 +2002,61 @@ switch chosen_cell
         % Can't just get these from data due to rounding errors.
         myplot_options.PPmaskdurations = PPmaskdurations;       
         myplot_options.PPmaskfreqs0 = PPmaskfreqs0;
+        myplot_options.do_colorbar = true;
         
         % Turn off legend
         so.suppress_legend = true;
         
         xp = dsAll2mdd(data_decim2,false,false,true);          % Convert to xp. Need to do this in advance, so can have "merge_everything" flag set
         
+        % Flag for saving as fig file, as opposed to .png. If true, will
+        % open figures (requires gui)
+        save_as_fig_file = false;
+        
+        % Set up save figure options
+        fig_prefix = 'Fig13a_plot';
+        save_path = '.';
+        if ~save_as_fig_file
+            savefigure_options = {'supersize_me',false,'visible','off','save_figures',true,'save_figname_path',save_path,'prepend_date_time',false};
+        else
+            savefigure_options = {'supersize_me',false,'visible','on','save_figures',false};
+        end
+        
+        % Initialize
+        i=0;
+        hx = {};
+        
         % Plot phaselock_FRfract
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
+        i=i+1;
+        hx{i}=dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',[fig_prefix num2str(i) '_s'],savefigure_options{:});
         
         % Plot phaselock_FRtot_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
+        i=i+1;
+        hx{i}=dsPlot2(xp,'populations','IB','variable','/phaselock_FRtot_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',[fig_prefix num2str(i) '_s'],savefigure_options{:});
         
         % Plot phaselock_FRfract_times_total_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
+        i=i+1;
+        hx{i}=dsPlot2(xp,'populations','IB','variable','/phaselock_FRfract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',[fig_prefix num2str(i) '_s'],savefigure_options{:});
         
 %         % Plot phaselock_FRfract_times_total_mu (this is a nonlinear version - multiply first and then take mean). Disabled b/c usually doesn't work as well as prev
-%         dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
+%         i=i+1;
+%         hx{i}=dsPlot2(xp,'populations','IB','variable','/phaselock_FR3fract_x_total_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so,...
+%             'saved_fignum',i,'save_figname_prefix',[fig_prefix num2str(i) '_s'],savefigure_options{:});
         
         % Plot phaselock_CI_mu
-        dsPlot2(xp,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so); colorbar
+        i=i+1;
+        hx{i}=dsPlot2(xp,'populations','IB','variable','/phaselock_CI_mu/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_plot_imagesc_PPmaskduration_vs_PPinterval,'plot_options',myplot_options,'subplot_options',so,...
+            'saved_fignum',i,'save_figname_prefix',[fig_prefix num2str(i) '_s'],savefigure_options{:});
+        
+        % If visibility is off, save the figures
+        if save_as_fig_file
+            for i = 1:length(hx)
+                savefig(hx{i}.hcurr, ['Fig13a_plot_' num2str(i) '.fig']);
+            end
+        end
 
         
 
