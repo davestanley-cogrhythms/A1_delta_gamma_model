@@ -41,6 +41,7 @@ clustersub('kramer_IB_deltapaper_scripts2','13a_p9',28,myhours);     % 2D sweeps
 
 % Inverse phase-amplitude coupling figures
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);        % Inverse PAC  
+clustersub('kramer_IB_deltapaper_scripts2','5a2',8,myhours);        % Inverse PAC - long run
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);        % Inverse PAC part 2 - block IB PPStim
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 
