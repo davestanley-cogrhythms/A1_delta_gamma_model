@@ -14,6 +14,9 @@ clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);        % Figs 1a an
 clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);        % Do both Figs 1d and 1c together to do spectrogram comparison (Poisson input)
 clustersub('kramer_IB_deltapaper_scripts2','1a4',1,myhours);        % Core input only
 clustersub('kramer_IB_deltapaper_scripts2','1a5',1,myhours);        % Matrix input only
+clustersub('kramer_IB_deltapaper_scripts2','1a6',1,myhours);        % As 1a1, but low-gamma click train (~30 Hz)
+clustersub('kramer_IB_deltapaper_scripts2','1a7',1,myhours);        % As 1a1, but high-gamma click train (~80 Hz)
+
 
 % Repeated runs with shuffling (not sure what the point of this was)
 clustersub('kramer_IB_deltapaper_scripts2','1a1_shuffle',4,myhours);
@@ -41,7 +44,7 @@ clustersub('kramer_IB_deltapaper_scripts2','13a_p9',28,myhours);     % 2D sweeps
 
 % Inverse phase-amplitude coupling figures
 clustersub('kramer_IB_deltapaper_scripts2','5a',8,myhours);        % Inverse PAC  
-clustersub('kramer_IB_deltapaper_scripts2','5a2',8,myhours);        % Inverse PAC - long run
+clustersub('kramer_IB_deltapaper_scripts2','5a2',16,myhours);        % Inverse PAC - long run
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);        % Inverse PAC part 2 - block IB PPStim
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 

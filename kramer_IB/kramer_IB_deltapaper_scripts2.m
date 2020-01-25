@@ -2421,6 +2421,40 @@ switch chosen_cell
         s{f}.RS_PP_gSYN=0;
         
         data = kramer_IB_function_mode(s{f},f);
+        
+    case '1a6'
+        %% As Fig 1a, but high gamma
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a6'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 600; s{f}.PPoffset = 1800; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.PPfreq = 30;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        datapf1a = kramer_IB_function_mode(s{f},f);
+        
+    case '1a7'
+        %% As Fig 1a, but high gamma
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1a6'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 600; s{f}.PPoffset = 1800; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.PPfreq = 80;
+        a = clock; s{f}.random_seed = floor(a(end-1)*60+a(end));    % Random seed locked to current clock
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        datapf1a = kramer_IB_function_mode(s{f},f);
     
     case '1c2' 
         %% Paper Figs 1c2 - Fig 1c1 with NMDA blocked vs opened
