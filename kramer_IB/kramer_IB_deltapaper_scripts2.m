@@ -2447,7 +2447,7 @@ switch chosen_cell
         s{f} = struct;
         s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
         s{f}.sim_mode = 1;
-        s{f}.repo_studyname = ['DeltaFig1a6'  num2str(f) '' namesuffix];
+        s{f}.repo_studyname = ['DeltaFig1a7'  num2str(f) '' namesuffix];
         s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
         s{f}.tspan=[0 2400]; s{f}.PPonset = 600; s{f}.PPoffset = 1800; s{f}.xlims_range = [300 s{f}.tspan(2)];
         s{f}.PPfreq = 80;
