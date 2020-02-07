@@ -362,36 +362,6 @@ if save_combined_figures
     % Bar plots for 1D 
     if (length(data) > 1 && include_IB && tspan(2) > 5000 && (PPoffset-PPonset) > 800) && ~contains(repo_studyname,'DeltaFig13a_lakatos2D')
         
-        if 0        % Disable for now, since we're not saving these anyways
-            % plot_options
-            % These should be passed in s{f}.PPmaskdurations via case 13a.
-            % Can't just get these from data due to rounding errors.
-            myplot_options = struct;
-
-            % Turn off legend
-            so.suppress_legend = true;
-
-            % Plot phaselock_FRfract
-            dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_mu|phaselock_FRfract_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-    %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRfract,'force_last','varied1','Ndims_per_subplot',3) % Disabled - old version. Use xp_barplot_err instead
-
-            % Plot totalspikes
-            dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRtot_mu|phaselock_FRtot_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-    %         dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/V|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_FRtotalspikes,'force_last','varied1','Ndims_per_subplot',3) % Disabled - old version. Use xp_barplot_err instead
-
-            % Plot fract * totalspikes 
-            dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FRfract_x_total_mu|phaselock_FRfract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);            % Mean before multiplying
-            
-            
-            dsPlot2(data_decim2,'populations','IB','variable','/phaselock_FR3fract_x_total_mu|phaselock_FR3fract_x_total_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);          % Mean after multiplying (slightly differentf formula than above)
-
-            % Plot phaselock_CI_mu
-            dsPlot2(data_decim2,'populations','IB','variable','/phaselock_CI_mu|phaselock_CI_ste/','force_last','varied1','Ndims_per_subplot',3,'plot_handle',@xp_barplot_err,'plot_options',myplot_options,'subplot_options',so);
-%             dsPlot2(data_decim2,'plot_type','waveform','population','IB','variable','/GABAall_gTH|iPoissonNested_ampaNMDA_Allmasks/','plot_handle',@xp_phaselock_contrast_index,'force_last','varied1','Ndims_per_subplot',3) % Disabled - old version. Use xp_barplot_err instead
-
-        end
-        
-        
         % plot_options
         % These should be passed in s{f}.PPmaskdurations via case 13a.
         % Can't just get these from data due to rounding errors.
