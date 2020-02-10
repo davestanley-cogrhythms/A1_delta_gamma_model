@@ -23,8 +23,6 @@ function data = addfield_phaselock_contrast_index (data, segmentation_mode)
     % For each simulation, pull out the on/off regions and calculate phase
     % locking
     Nsims = length(data);
-    total_spks_pulse_on = cell(1,Nsims);
-    total_spks_pulse_off = cell(1,Nsims);
     
     Ncycles = zeros(1,Nsims);
     for i = 1:Nsims
@@ -56,8 +54,6 @@ function data = addfield_phaselock_contrast_index (data, segmentation_mode)
         % Loop through each cycle in the pulse train. Drop the last "on"
         % since this cycle is guaranteed to be incomplete.
         Ncycles(i) = length(ons)-1;
-        total_spks_pulse_on{i} = zeros(1, Ncycles(i));
-        total_spks_pulse_off{i} = zeros(1, Ncycles(i));
         for j = 1:Ncycles(i)
             % Start of current pulse
             mystart = ons(j);
@@ -118,10 +114,10 @@ function data = addfield_phaselock_contrast_index (data, segmentation_mode)
                 error('Unknown segmentation_mode');
             end
 
-            % Total spikes for the on portion of the  cycle
+            % Mean for the on portion of the  cycle
             mean_on{i}(j) = mean(mean(variable(mystart:mystop-1,:)));
             
-            % Total spikes for the off portion of the cycle
+            % Mean for the off portion of the cycle
             mean_off{i}(j) = mean(mean(variable(mystop:mystart2-1,:)));
         end
             
