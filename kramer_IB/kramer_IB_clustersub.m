@@ -48,6 +48,8 @@ clustersub('kramer_IB_deltapaper_scripts2','5a2',16,myhours);        % Inverse P
 clustersub('kramer_IB_deltapaper_scripts2','5b',8,myhours);        % Inverse PAC part 2 - block IB PPStim
 clustersub('kramer_IB_deltapaper_scripts2','5c',8,myhours);
 
+clustersub('kramer_IB_deltapaper_scripts2','5d',8,myhours);        % Inverse PAC - as Fig5a, but with gamma click train stim
+
 % Vary onset timing of PPStim
 clustersub('kramer_IB_deltapaper_scripts2','6a',8,myhours);         % Vary onset, Poisson stim.
 clustersub('kramer_IB_deltapaper_scripts2','6a_core',8,myhours);    % As 6a, but core stim only

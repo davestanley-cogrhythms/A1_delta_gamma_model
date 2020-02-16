@@ -660,7 +660,7 @@ switch chosen_cell
             };
         s{f}.kerneltype_Poiss_IB = 2;
         s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
-        s{f}.tspan=[0 5500];
+        s{f}.tspan=[0 7500];
         s{f}.PPonset = 0;
         s{f}.PPoffset = Inf;
         s{f}.random_seed = 'shuffle';
@@ -766,6 +766,28 @@ switch chosen_cell
         s{f}.deep_gNaF=0;
         
         datapf5c = kramer_IB_function_mode(s{f},f);
+        
+    case '5d'
+        %% Paper Fig 5d - Inverse PAC - As Fig5a, but with 40 Hz click train
+        
+        % Setup
+        clear s
+        f=1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.repo_studyname = ['DeltaFig5d_iPAC_gamma'  num2str(f) '' namesuffix];
+        s{f}.sim_mode = 18;
+        s{f}.pulse_mode = 5;
+        
+        s{f}.maxNcores = maxNcores; if maxNcores > 1; s{f}.parallel_flag = 1; else; s{f}.parallel_flag = 0; end
+        
+        s{f}.tspan=[0 5500];
+        s{f}.PPonset = 0;
+        s{f}.PPoffset = Inf;
+        s{f}.random_seed = 'shuffle';
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        datapf5d = kramer_IB_function_mode(s{f},f);
    
     case '6a'
         %% Paper Fig 6a - Vary onset (Poisson stim)
