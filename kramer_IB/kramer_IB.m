@@ -787,7 +787,7 @@ switch sim_mode
         
         
     case 18     % Inverse PAC with new nested PPStim method
-        inter_train_interval=300;
+        inter_train_interval=600;
         PPmaskdurations = [200, 300, 400, 500:250:1500, 2000];
         PPmaskfreqs = 1000 ./ [PPmaskdurations + inter_train_interval];
         vary = { '(RS,FS,LTS,IB,NG,dFS5,tFS5)','(PPmaskfreq,PPmaskduration)',[PPmaskfreqs; PPmaskdurations];...
