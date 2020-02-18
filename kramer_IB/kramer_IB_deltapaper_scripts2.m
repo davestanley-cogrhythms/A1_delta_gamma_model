@@ -303,6 +303,31 @@ switch chosen_cell
         s{f}.include_tFS5 = include_tFS5_global;
         
         datapf1d = kramer_IB_function_mode(s{f},f);
+        
+        case '1e'
+        %% Paper Figs 1e - Poisson train to both IB and RS cells 
+        % This is for reviewer #1's request: It could also help to compare
+        % the model to one where L4 lacks an intrinsic oscillator, to show
+        % the role that the intrinsic oscillator plays in entrainment.
+        
+        clear s
+        f = 1;
+        s{f} = struct;
+        s{f}.save_figures = 1; s{f}.save_combined_figures = 1; s{f}.save_shuffle_figures = 1; s{f}.plot_on = 0; s{f}.plot_on2 = 0; s{f}.do_visible = 'off'; s{f}.save_simfiles_to_repo_presim = true; s{f}.save_everything_to_repo_postsim = true; s{f}.do_commit = 0;
+        s{f}.sim_mode = 1;
+        s{f}.repo_studyname = ['DeltaFig1e1'  num2str(f) '' namesuffix];
+        s{f}.pulse_mode = 1; s{f}.pulse_train_preset = 0;
+        s{f}.kerneltype_Poiss_IB = 4;
+        
+        % Force L4 input to be Poisson as well
+        s{f}.kerneltype_Poiss_L4 = 4;
+        s{f}.poissScaling_L4 = 100;
+        
+        s{f}.tspan=[0 2400]; s{f}.PPonset = 600; s{f}.PPoffset = 1800; s{f}.xlims_range = [300 s{f}.tspan(2)];
+        s{f}.random_seed = 8;
+        s{f}.include_tFS5 = include_tFS5_global;
+        
+        datapf1e = kramer_IB_function_mode(s{f},f);
        
         
     case '1ac'
