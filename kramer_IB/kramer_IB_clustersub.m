@@ -10,6 +10,7 @@ clustersub('kramer_IB_deltapaper_scripts2','1b1',1,myhours);        % Click trai
 clustersub('kramer_IB_deltapaper_scripts2','1b2',1,myhours);        % As 1b1, but only superficial oscillator
 clustersub('kramer_IB_deltapaper_scripts2','1c1',1,myhours);        % Spontaneous oscillations
 clustersub('kramer_IB_deltapaper_scripts2','1d',1,myhours);         % 1a1, but with Poisson input instead of 
+clustersub('kramer_IB_deltapaper_scripts2','1e',1,myhours);         % 1a1, but with Poisson train to both IB and RS cells 
 clustersub('kramer_IB_deltapaper_scripts2','1ac',1,myhours);        % Figs 1a and 1c together to do spectrogram 
 clustersub('kramer_IB_deltapaper_scripts2','1dc',1,myhours);        % Do both Figs 1d and 1c together to do spectrogram comparison (Poisson input)
 clustersub('kramer_IB_deltapaper_scripts2','1a4',1,myhours);        % Core input only
