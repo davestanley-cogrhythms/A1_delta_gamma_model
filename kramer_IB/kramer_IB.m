@@ -413,6 +413,9 @@ Rr = 6.8*10^-3 + Rd_delta;
 
 %% % % % % % % % % % % % %  ##2.4 Set up parallel sims % % % % % % % % % % % % %
 switch sim_mode
+    
+    case 0 % Null.
+        
     case 1 % FI curve for deepRS cells.
         [include_IB, include_NG, include_RS, include_FS, include_LTS] = deal(0);
         include_deepRS = 1;
