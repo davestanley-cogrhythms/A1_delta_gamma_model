@@ -22,8 +22,26 @@ if isempty(value)
     
 else
     
-    vary_out{param_index, 3} = value;
+    if sum(param_index) == 0
+        
+        if iscell(field)
+            
+            disp('Parameter not found, set anyway.')
+            
+            vary_out(end + 1, :) = {field{1}, field{2}, value};
+            
+        else
+            
+            disp('Parameter not found; population or connection name required to set.')
+            
+        end
+        
+    else
+        
+        vary_out{param_index, 3} = value;
+        
+    end
     
 end
-
+    
 end
