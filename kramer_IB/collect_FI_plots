@@ -1,0 +1,29 @@
+linenames = {'FI curve', 'delta (1-4 Hz)', 'theta (4-8 Hz)', 'theta in delta'};
+linecolors = [0 0 0; 0 1 0; .75 0 .75; 1 .1 .1];
+
+curvenames = {'CBT', 'IBT', 'IBT_gKCa'};
+
+for c = 1:length(curvenames)
+    
+    open([curvenames{c}, '_FI_plot.fig'])
+    
+    lineObjs = get(gca, 'Children');
+    
+    figObjs = get(gcf, 'Children');
+    mylegend = figObjs(1).String;
+    
+    for l = 1:length(linenames)
+        
+        line_index = find(strcmp(linenames{l}, mylegend));
+        
+        x = lineObjs(end - line_index + 1).XData;
+        y = lineObjs(end - line_index + 1).YData;
+        
+        plot(x, y, curvestyles{c}, 'Color', linecolors(l, :))
+        
+        hold on
+        
+    end
+    
+end
+

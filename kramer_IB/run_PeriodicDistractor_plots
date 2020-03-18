@@ -1,0 +1,22 @@
+#!/bin/sh -l
+
+#$ -pe omp 16
+
+echo "Executing cd '"$1"', load(['"$2"', '_sim_spec.mat']),\
+ data = dsImport(name);  spike_locking_to_input_plot(data, [], name,\
+ 'i_field', 'deepRS_iPeriodicPulsesBen_input', 'f_field', 'deepRS_PPfreq', 'i_transform', 'interp_square')"
+
+#module unload matlab/2014a
+
+module load matlab/2018a
+
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']),\
+ data = dsImportDataOrResults(name); spike_locking_to_input_plot(data, [], name,\
+ 'i_field', 'deepRS_iPeriodicPulsesBen_input', 'f_field', 'deepRS_PPfreq', 'i_transform', 'interp_square');\
+ spike_locking_to_input_plot(data, [], name, 'i_field', 'deepRS_iPeriodicDistractors_input',\
+ 'f_field', 'deepRS_PDfreq', 'i_transform', 'interp_square'); exit"
+
+# for i in Figs_Ben/18-02-16/*sim_spec.mat;
+# do j=$(basename $i);
+# echo run_make_fig2_function 18-02-16 ${j%'_sim'*} 1 1 1;
+# done
