@@ -28,7 +28,7 @@ if ~isempty(varargin)
 
             f_field = varargin{2*v};
 
-        elseif strcmp(varargin{2*v - 1}, 'input_transform')
+        elseif strcmp(varargin{2*v - 1}, 'i_transform')
 
             input_transform = varargin{2*v};
 
@@ -50,11 +50,11 @@ v = data.(v_field);
 
 t = data.time;
 
-i = detrend(data.(i_field), 'constant');
+i_vec = detrend(data.(i_field), 'constant');
 
 sampling_freq = round(1000*length(t)/t(end));
 
-v = v(t >= 1000); i = i(t >= 1000); t = t(t >= 1000);
+v = v(t >= 1000); i_vec = i_vec(t >= 1000); t = t(t >= 1000);
 
 %% Getting peak frequency.
 
@@ -68,7 +68,7 @@ v_hat_smoothed = conv(v_hat, gauss_kernel, 'same');
 
 peak_freq = f(v_hat_smoothed == max(v_hat_smoothed));
 
-freqs = [NaN 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
+freqs = [data.(f_field) 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
 
 freq_labels = cell(no_freqs, 1);
 
@@ -80,13 +80,19 @@ if strcmp(input_transform, 'wavelet')
     
     freq_labels{1} = num2str(data.(f_field), '%.2g');
 
-    bandpassed(:, 1) = wavelet_spectrogram(i, sampling_freq, data.(f_field), no_cycles(1), 0, '');
+    bandpassed(:, 1) = wavelet_spectrogram(i_vec, sampling_freq, data.(f_field), no_cycles(1), 0, '');
     
 elseif strcmp(input_transform, 'hilbert')
     
     freq_labels{1} = i_field;
     
-    bandpassed(:, 1) = hilbert(i);
+    bandpassed(:, 1) = hilbert(i_vec);
+    
+elseif strcmp(input_transform, 'interp_square')
+    
+    phase = interp_square_phase(i_vec);
+    
+    bandpassed(:, 1) = cos(phase) + sqrt(-1)*sin(phase);
     
 end
 
@@ -244,5 +250,5 @@ end
 %
 % end
 
-results = struct('v_spike_phases', v_spike_phases, 'peak_freq', peak_freq); 
+results = struct('v_spike_phases', v_spike_phases, 'peak_freq', peak_freq, 'input', i_vec, 'i_phase', phase(:, 1)); 
 results.spikes_per_cycle = spikes_per_cycle; % , 'v_phase_coh', v_phase_coh, 'v_phase_angle', v_phase_angle, 'v_phase_phase', v_phase_phase);
