@@ -1,4 +1,4 @@
-function s4 = getPeriodicPulseFastBensVersion(freq,width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,center_flag,norm,plot_demo_on)
+function s4 = getPeriodicPulseFastBensVersion(freq,width,shift,T,dt,onset,offset,Npop,kernel_type,width2_rise,center_flag,norm,jitter,plot_demo_on)
 
 % switch norm
 %     case 0
@@ -16,7 +16,10 @@ t=(0:dt:T)';                            % Generate times vector
 s = zeros(size(t));
 pulse_period=1000/freq; 
 shift = shift + width/2;                % So that each pulse begins at the time of the corresponding cycle.
-s((1+round(shift/dt)):round(pulse_period/dt):end) = 1;    % Add deltas, allowing for shift.
+pulse_times = (1+round(shift/dt)):round(pulse_period/dt):length(s);
+jitters = randn([1,length(pulse_times)])*jitter/dt;
+pulse_times = round(pulse_times + jitters);
+s(pulse_times) = 1;    % Add deltas, allowing for shift.
 
 % Remove anything outside of onset to offset
 s(t<onset | t>offset) = 0;
