@@ -3,11 +3,14 @@ function make_FI_aggregate
 working_dir = '/projectnb/crc-nak/brpp/model-dnsim-kramer_IB/';
 
 files = {'18-12-20/kramer_IB_17_43_1.251';...
-    '18-12-17/kramer_IB_21_52_46.15';...
-    '18-12-13/kramer_IB_15_5_59.38';...
+    '19-10-31/kramer_IB_17_51_13.63';...
+    '19-07-17/kramer_IB_18_26_14.98';... '18-12-17/kramer_IB_21_52_46.15';...
+    '19-07-29/kramer_IB_12_51_39.96';... '18-12-13/kramer_IB_15_5_59.38';...
+    '19-07-29/kramer_IB_12_46_35.09';... '19-01-04/kramer_IB_13_19_53.94';...
     '19-01-07/kramer_IB_14_0_18.91';...
-    '19-01-04/kramer_IB_13_19_53.94';...
     };
+
+Iapp_vec = [-7.1 -6.5 -7.6 -10.5 -9.8 -9.2];
 
 line_colors = [0 .78 0; .78 0 .78; 1 .65 0]; % distinguishable_colors(length(files) + 3);
 
@@ -16,7 +19,7 @@ files_size = size(files);
 figures(1) = figure;
 figures(2) = figure;
 
-xlimits = {repmat([0 20], prod(files_size), 1), [6 8; 6 8; 6 11; 6 10.5; 2 6]};
+xlimits = {repmat([0 20], prod(files_size), 1), [6 8; [6 8]-.2; [6 8]-.2; 6 11; 6 10.5; 6 10.5]};
 
 suffixes = {'', '_inset'};
 
@@ -24,19 +27,22 @@ for f = 1:prod(files_size)
     
     if exist(['Figs_Ben/', files{f}, '_spike_metrics.mat'], 'file') == 2
         
-        load(['Figs_Ben/', files{f}, '_spike_metrics.mat'])
+        results = load(['Figs_Ben/', files{f}, '_spike_metrics.mat'], 'results');
+        results = results.results;
         
     else
         
         try
             
-            results = dsImportResults(['Figs_Ben/', files{f}]); % (10:end));
+            results = dsImportResults(['Figs_Ben/', files{f}], @spike_metrics); % (10:end));
             
         catch error
             
         end
         
         if isempty(results)
+            
+            display(error)
             
             % cd (['Figs_Ben/', files{f}(1:8)])
             
@@ -52,9 +58,9 @@ for f = 1:prod(files_size)
         
     end
     
-    load(['Figs_Ben/', files{f}, '_sim_spec.mat'])
+    sim_mat = load(['Figs_Ben/', files{f}, '_sim_spec.mat']);
     
-    results(1).t_end = sim_struct.tspan(end);
+    results(1).t_end = sim_mat.sim_struct.tspan(end);
     
     %     t_end_cell = num2cell(repmat(sim_struct.tspan(end), size(results)));
     %
@@ -66,7 +72,7 @@ for f = 1:prod(files_size)
         
         subplot(prod(files_size), 1, f)
         
-        plot_FI(results, xlimits{fig}(f, :)) % , line_colors(f + 3, :))
+        plot_FI(results, xlimits{fig}(f, :), Iapp_vec(f)) % , line_colors(f + 3, :))
         
         if f == 1
             
@@ -88,13 +94,13 @@ for fig = 1:2
     
     set(figures(fig), 'Units', 'inches', 'Position', 1 + [0 0 2 6], 'PaperUnits', 'inches', 'PaperPosition', 1 + [0 0 2 6])
     
-    saveas(figures(fig), ['FI_aggregate', suffixes{fig}, '.fig'])
+    saveas(figures(fig), ['FI_aggregate_w_MI', suffixes{fig}, '.fig'])
     
 end
 
 end
 
-function plot_FI(results, xlimits)
+function plot_FI(results, xlimits, Iapp_star)
 
 F = [results.no_spikes]/(results(1).t_end/1000 - 1);
 I = 0:-.1:-20; % [results.deepRS_I_app];
@@ -123,9 +129,15 @@ band_colors = [0 .78 0; .78 0 .78; 1 .65 0]; % distinguishable_colors(no_bands +
 
 handles(1) = plot(-I, F, 'LineWidth', 2, 'Color', [0 0 0]); % .5*[1 1 1]); % , 'LineStyle', '--');
 
-mylegend = {'FI curve'};
-
 hold on
+
+if sum(abs(xlimits - [0 20])) > 0
+    
+    plot(abs(Iapp_star), mean(F(abs(I - Iapp_star) < 10^-1)), 'ro', 'MarkerSize', 10)
+    
+end
+
+mylegend = {'FI curve'};
 
 axis tight
 
