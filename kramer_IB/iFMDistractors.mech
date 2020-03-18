@@ -1,0 +1,21 @@
+%% Produces frequency modulated input.
+
+% Pulse train properties
+FMDstim = -.1;
+FMDlowfreq = 3;
+FMDhighfreq = 9; % in Hz
+FMDwindowlength = (1000/mean([FMDlowfreq FMDhighfreq]));
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+sampling_freq = 1000/dt;
+
+s2 = phase_modulated(dt, Tend, sampling_freq, [FMDlowfreq FMDhighfreq], FMDwindowlength, 1);
+
+% Functions
+input(X) = s2(k,:)
+Iext(X) = FMDstim*input(X)
+
+@current += -Iext(X)
+

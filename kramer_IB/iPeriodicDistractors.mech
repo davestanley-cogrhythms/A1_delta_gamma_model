@@ -1,0 +1,33 @@
+%%
+% Poisson mechanism based on Jason's email implementation. For some
+% reason this produces huge PSPs
+
+% Pulse train properties
+PDstim = -.1;
+PDfreq = 1.5; % in Hz
+PDduty = .25; % fraction of cycle during which pulse is "on"
+PDshift = 0; % fraction of cycle delay
+PDdelay = (1000/PDfreq)*PDshift; % in ms
+PDwidth = (1000/PDfreq)*PDduty;
+PDcenter = 0;
+PDnorm = 0;
+PDjitter = 0; % fraction of cycle jittered randomly
+PDnoise = (1000/PDfreq)*PDjitter; % in ms
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+PDonset = 500;    % ms, onset time
+PDoffset = Inf;   % ms, offset time
+
+PDkernel_type = 7;
+width2_rise = 0.25;
+
+s2 = getPeriodicPulseFastBensVersion(PDfreq,PDwidth,PDdelay,Tend,dt,PDonset,PDoffset,Npop,PDkernel_type,width2_rise,PDcenter,PDnorm,PDnoise,0);
+
+% Functions
+input(X) = s2(k,:)
+Iext(X) = PDstim*input(X)
+
+@current += -Iext(X)
+

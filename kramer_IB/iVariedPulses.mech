@@ -1,0 +1,39 @@
+%%
+% Poisson mechanism based on Jason's email implementation. For some
+% reason this produces huge PSPs
+
+% Pulse train properties
+VPstim = -.1;
+VPlowfreq = 1; % in Hz
+VPhighfreq = 13; % in Hz
+VPfreqRange = [VPlowfreq VPhighfreq];
+VPlowduty = .1;
+VPhighduty = .9;
+VPdutyRange = [VPlowduty VPhighduty]; % fraction of cycle during which pulse is "on"
+VPlowshift = 0;
+VPhighshift = .75;
+VPshiftRange = [VPlowshift VPhighshift]; % fraction of cycle delayed
+VPcenter = 0;
+VPnorm = 0;
+VPjitter = 0; % fraction of cycle jittered randomly
+% VPnoise = (1000/VPfreq)*VPjitter; % in ms
+
+% Time series properties
+Tend=T(end); 	    % ms, max simulation duration
+dt = 0.01;        % ms, time step duration
+VPonset = 500;    % ms, onset time
+VPoffset = Inf;   % ms, offset time
+
+kernelLow = 1;
+kernelHigh = 25;
+kernelRange = [kernelLow kernelHigh];
+width2_rise = 0.25;
+
+s2 = getVariedPulses(VPfreqRange,VPdutyRange,VPshiftRange,Tend,dt,VPonset,VPoffset,Npop,kernelRange,width2_rise,VPcenter,VPnorm,VPjitter);
+
+% Functions
+input(X) = s2(k,:)
+Iext(X) = VPstim*input(X)
+
+@current += -Iext(X)
+
