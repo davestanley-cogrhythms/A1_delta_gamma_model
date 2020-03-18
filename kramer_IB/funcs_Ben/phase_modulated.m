@@ -48,7 +48,7 @@ rhythm = -cos(2*pi*cumsum(fv_conv*dt/1000))';
 
 rhythm = sign(rhythm).*abs(rhythm).^pow;
 
-rhythm = (rhythm + 1)/2;
+% rhythm = (rhythm + 1)/2;
 
 if plot_opt
    
