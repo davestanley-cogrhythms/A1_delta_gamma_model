@@ -1,14 +1,19 @@
 #!/bin/sh -l
 
 #$ -pe omp 16
+#$ -l mem_total=256G
 
-echo "Executing cd '"$1"', load(['"$2"', '_sim_spec.mat']), data = dsImport(name);  spike_locking_to_input_plot(data, [], name)"
+echo "Executing cd '"$1"', load(['"$2"', '_sim_spec.mat']), data = dsImportDataOrResults(name);\
+ try results = dsImportResults(name); catch results = []; end, spike_locking_to_input_plot(data, [], name),\
+ make_PLV_pcolor_by_PPstim(name), exit"
 
 #module unload matlab/2014a
 
 module load matlab/2018a
 
-matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']), data = dsImportDataOrResults(name); results = dsImportResults(name); spike_locking_to_input_plot(data, results, name), exit"
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load(['$2', '_sim_spec.mat']),\
+    data = dsImportDataOrResults(name); try results = dsImportResults(name); catch results = []; end,\
+    spike_locking_to_input_plot(data, results, name), make_PLV_pcolor_by_PPstim(name), exit"
 
 # for i in Figs_Ben/18-02-16/*sim_spec.mat;
 # do j=$(basename $i);
