@@ -38,6 +38,6 @@ title(['Phase-Locking for ', name], 'Interpreter', 'none')
 
 hold on
 
-plot((all_dimensions(@nanmean, no_spikes(:, :, end))/29)*[1; 1], [0; max(abs(inputs))], 'Color', [1 0 1], 'LineWidth', 3)
+plot((all_dimensions(@nanmean, 1000*no_spikes(:, :, end))/(sim_struct.tspan(end)-1000))*[1; 1], [0; max(abs(inputs))], 'Color', [1 0 1], 'LineWidth', 3)
 
 saveas(gcf, [name, '_PLV_pcolor.fig'])
