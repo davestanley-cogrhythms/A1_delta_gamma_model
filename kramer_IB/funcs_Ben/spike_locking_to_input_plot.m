@@ -1,7 +1,7 @@
 function results = spike_locking_to_input_plot(data, results, name, varargin)
 
 v_field = 'deepRS_V'; i_field = 'deepRS_iPeriodicPulsesBen_input'; f_field = 'deepRS_PPfreq';
-input_transform = 'wavelet'; label = '';
+i_transform = 'wavelet'; label = '';
 
 if ~isempty(varargin)
     
@@ -25,11 +25,11 @@ if ~isempty(varargin)
             
             label = [label, '_', f_field];
         
-        elseif strcmp(varargin{2*v - 1}, 'input_transform')
+        elseif strcmp(varargin{2*v - 1}, 'i_transform')
             
-            input_transform = varargin{2*v};
+            i_transform = varargin{2*v};
             
-            label = [label, '_', input_transform];
+            label = [label, '_', i_transform];
             
         end
         
@@ -322,7 +322,7 @@ for f = 1:no_figures
     
 end
 
-save([name, '_PLV_data.mat'], 'results', 'peak_freqs', 'v_mean_spike_mrvs', 'no_spikes', 'mean_spikes_per_cycle')
+save([name, label, '_PLV_data.mat'], 'results', 'peak_freqs', 'v_mean_spike_mrvs', 'no_spikes', 'mean_spikes_per_cycle')
 
 % linkaxes(reshape(ax(:, :, f), no_rows*no_cols, 1))
 
