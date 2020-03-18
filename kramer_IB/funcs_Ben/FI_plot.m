@@ -56,6 +56,8 @@ else
     
 end
 
+% results = results(~cellfun(@isempty, results));
+
 F = [results.no_spikes]/(tspan/1000 - 1);
 I = [data.deepRS_I_app];
 
