@@ -1,10 +1,12 @@
 function make_PLV_pcolor_aggregate
 
 files7Hz = {'18-12-21/kramer_IB_13_46_54.96';...
-    '18-12-18/kramer_IB_16_3_5.302';...
-    '18-12-14/kramer_IB_15_23_16.83';...
+    '19-12-02/kramer_IB_18_5_29.44';...
+    '19-07-19/kramer_IB_1_41_36.13';... % '18-12-18/kramer_IB_16_3_5.302';...
+    '19-07-29/kramer_IB_15_5_45.59';... % '18-10-30/kramer_IB_21_32_17.93';... % '18-12-14/kramer_IB_15_23_16.83';...
+    '19-07-30/kramer_IB_13_37_2.42';... '19-07-19/kramer_IB_16_50_25.92';... % 
     '19-01-07/kramer_IB_21_18_58.89';...
-    '19-01-04/kramer_IB_16_24_21.91';...
+    % '19-01-04/kramer_IB_16_24_21.91';...
     };
 
 files4Hz = {''; '19-01-02/kramer_IB_21_56_36.38';...
@@ -56,12 +58,14 @@ for f = 1:(files_dim1*files_dim2)
         if mod(f, files_dim2) == 0, xlabel('Freq. (Hz)'), end
         
         % if mod(f, files_dim1) == 1
-            ylabel({'Input Gain (pA)'})
+            ylabel({'Input Strength (pA)'})
         % end
         
         % title(files{f}(20:end), 'Interpreter', 'none')
         
         hold on
+        
+        nochange_colorbar(gca)
         
         plot((all_dimensions(@nanmean, no_spikes(:, :, end))/29)*[1; 1], [0; max(abs(inputs))], 'Color', [1 0 1], 'LineWidth', 3)
         
@@ -69,6 +73,6 @@ for f = 1:(files_dim1*files_dim2)
     
 end
 
-set(gcf, 'Units', 'inches', 'Position', 1 + [0 0 3 8], 'PaperUnits', 'inches', 'PaperPosition', 1 + [0 0 3 8])
+set(gcf, 'Units', 'inches', 'Position', 1 + [0 0 4 8], 'PaperUnits', 'inches', 'PaperPosition', 1 + [0 0 4 8])
 
-saveas(gcf, ['PLV_pcolor_aggregate_v1.fig'])
+saveas(gcf, ['PLV_pcolor_aggregate_w_MI.fig'])
