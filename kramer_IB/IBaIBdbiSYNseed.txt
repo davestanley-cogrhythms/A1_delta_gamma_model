@@ -11,9 +11,8 @@ UB = max(Npre,Npost)
 Xpre = linspace(1,UB,Npre)'*ones(1,Npost)
 Xpost = (linspace(1,UB,Npost)'*ones(1,Npre))'
 mask = (abs(Xpre-Xpost)<=fanout)
-gsyn=unifrnd(g_SYN-gSYNhetero,g_SYN+gSYNhetero,[Npost 1])'
 
-ISYN(X,s) = (gsyn.*(s*mask).*(X-E_SYN))
+ISYN(X,s) = (unifrnd(g_SYN-gSYNhetero,g_SYN+gSYNhetero,[1, Npost]).*(s*mask).*(X-E_SYN))
  
 s' = -s./tauDx + ((1-s)/tauRx).*(1+tanh(X_pre/10));
 s(0) = IC*ones(Npre,1)+IC_noise.*rand(Npre,1)
