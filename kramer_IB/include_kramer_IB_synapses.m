@@ -250,16 +250,16 @@ end
 % % % % % % % % % % % %  Deep connections (RS-FS) % % % % % % % % % % % % % 
 % % % % %  deepRS Cells  % % % % %
 % % deepRS->deepRS recurrent synaptic and gap connections
-if include_deepRS && NdeepRS > 1
-    i=i+1;
-    spec.connections(i).direction = 'deepRS->deepRS';
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSdeepRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
-        'gNMDA',gNMDA_deepRSdeepRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
-        'g_GAP',ggjadeepRS,...
-        };
-end
+% if include_deepRS && NdeepRS > 1
+%     i=i+1;
+%     spec.connections(i).direction = 'deepRS->deepRS';
+%     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','iNMDA','IBaIBaiGAP'};
+%     spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSdeepRS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
+%         'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+%         'gNMDA',gNMDA_deepRSdeepRS,'ENMDA',EAMPA,'tauNMDAr',tauNMDAr,'tauNMDAd',tauNMDAd ...
+%         'g_GAP',ggjadeepRS,...
+%         };
+% end
 
 % % deepRS->deepFS synaptic connection
 if include_deepRS && include_deepFS
@@ -267,21 +267,21 @@ if include_deepRS && include_deepFS
     spec.connections(i).direction = 'deepRS->deepFS';
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gAMPA_deepRSdeepFS,'E_SYN',EAMPA,'tauDx',tauAMPAd,...
-        'tauRx',tauAMPAr,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
+        'tauRx',tauAMPAr,'fanout',0,'IC_noise',0,'g_SYN_hetero',gsyn_hetero, ...
         };
 end
 
 % % % % %  deepFS Cells  % % % % %
 % % deepFS->deepFS Synaptic connections
-if include_deepFS && NdeepFS > 1
-    i=i+1;
-    spec.connections(i).direction = 'deepFS->deepFS';                  
-    spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
-    spec.connections(i).parameters = {'g_SYN',gGABA_deepFSdeepFS,'E_SYN',EGABA,'tauDx',tauGABAad,...
-        'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
-        'g_GAP',ggjdeepFS,...
-        };
-end
+% if include_deepFS && NdeepFS > 1
+%     i=i+1;
+%     spec.connections(i).direction = 'deepFS->deepFS';                  
+%     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed','IBaIBaiGAP'};
+%     spec.connections(i).parameters = {'g_SYN',gGABA_deepFSdeepFS,'E_SYN',EGABA,'tauDx',tauGABAad,...
+%         'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+%         'g_GAP',ggjdeepFS,...
+%         };
+% end
 
 % % deepFS->deepRS Synaptic connections
 if include_deepFS && include_deepRS
@@ -289,7 +289,7 @@ if include_deepFS && include_deepRS
     spec.connections(i).direction = 'deepFS->deepRS';                  
     spec.connections(i).mechanism_list = {'IBaIBdbiSYNseed'};
     spec.connections(i).parameters = {'g_SYN',gGABAa_deepFSdeepRS,'E_SYN',EGABA,'tauDx',tauGABAad,...
-        'tauRx',tauGABAar,'fanout',inf,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
+        'tauRx',tauGABAar,'fanout',0,'IC_noise',0,'g_SYN_hetero',gsyn_hetero,...
         };
 end
 

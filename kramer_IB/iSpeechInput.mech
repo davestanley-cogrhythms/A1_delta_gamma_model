@@ -1,0 +1,22 @@
+%% iSpeechInput.mech
+
+% Spike train properties
+gSpeech = .1;
+%ESpeech = 0;
+SentenceIndex = 1;
+%Speechshift = 0; % in ms
+%% Time series properties
+% Tend = T(end); 	    % ms, max simulation duration
+% dt = 0.01;        % ms, time step duration
+Speechonset = 1000;    % ms, onset time
+%Speechoffset = Inf;   % ms, offset time
+
+sentence = getSentence(T, Npop, SentenceIndex, Speechonset);
+sentenceFile = sentence.filename;
+
+% Functions
+input(X) = sentence.cochlear(k,:)
+syllables(X) = sentence.syllables(k,:)
+Ispike(X) = gSpeech*input(X).*(X-ESpeech)
+
+@current += -Ispike(X)
