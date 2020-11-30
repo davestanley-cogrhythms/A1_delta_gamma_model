@@ -2,7 +2,7 @@
 
 % Spike train properties
 gSpeech = .1;
-%ESpeech = 0;
+ESpeech = 0;
 SentenceIndex = 1;
 %Speechshift = 0; % in ms
 %% Time series properties
@@ -10,8 +10,11 @@ SentenceIndex = 1;
 % dt = 0.01;        % ms, time step duration
 Speechonset = 1000;    % ms, onset time
 %Speechoffset = Inf;   % ms, offset time
+SpeechLowFreq = 0;
+SpeechHighFreq = inf; 
+SpeechNorm = 0;
 
-sentence = getSentence(T, Npop, SentenceIndex, Speechonset);
+sentence = getSentence(T, Npop, SentenceIndex, Speechonset, SpeechLowFreq, SpeechHighFreq, SpeechNorm);
 sentenceFile = sentence.filename;
 
 % Functions
