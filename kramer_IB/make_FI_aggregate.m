@@ -72,7 +72,17 @@ for f = 1:prod(files_size)
         
         subplot(prod(files_size), 1, f)
         
-        plot_FI(results, xlimits{fig}(f, :), Iapp_vec(f)) % , line_colors(f + 3, :))
+        [F, I] = plot_FI(results, xlimits{fig}(f, :), Iapp_vec(f)); % , line_colors(f + 3, :))
+        
+        if fig == 1
+            
+            these_xlimits = xlimits{2}(f, :);
+            
+            this_ylimit = max(F(abs(I) <= max(these_xlimits)));
+            
+            plot([these_xlimits(1), these_xlimits, these_xlimits(end)], [0, repmat(this_ylimit, 1, 2), 0], 'k', 'LineWidth', 0.25)
+            
+        end
         
         if f == 1
             
@@ -100,7 +110,7 @@ end
 
 end
 
-function plot_FI(results, xlimits, Iapp_star)
+function [F, I] = plot_FI(results, xlimits, Iapp_star)
 
 F = [results.no_spikes]/(results(1).t_end/1000 - 1);
 I = 0:-.1:-20; % [results.deepRS_I_app];
