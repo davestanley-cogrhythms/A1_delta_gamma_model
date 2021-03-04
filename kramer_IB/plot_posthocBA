@@ -1,0 +1,17 @@
+#!/bin/sh -l
+# First argument is date folder; second is name of simulation group.
+
+#$ -pe omp 4
+#$ -l mem_total=125G
+# #$ -t 1-3
+
+# thresholds=(.667 .5 .333)
+# index=$(($SGE_TASK_ID-1))
+# threshold=${thresholds[$index]}
+
+# for j in 75 50 25;
+# do
+echo "Executing cd '$1', load('$2'), posthoc_boundary_analysis_wrapper(name, [], [], "$threshold", $3, 'sum_window', $4, 'vp_norm', 3); exit";
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load('$2'),\
+    posthoc_boundary_analysis_wrapper(name, [], [], 'threshold', $3, 'sum_window', $4, 'vp_norm', 3); exit";
+# done

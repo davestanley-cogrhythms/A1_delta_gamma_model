@@ -1,0 +1,8 @@
+#!/bin/sh -l
+# First argument is date folder; second is name of simulation group.
+
+#$ -l mem_total=384G
+#$ -pe omp 28
+
+echo "Executing cd '$1', load('$2'), testPLV(sim_name); exit";
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load('$2'), testPLV(sim_name); exit";

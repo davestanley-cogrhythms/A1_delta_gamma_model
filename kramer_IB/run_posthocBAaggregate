@@ -1,0 +1,17 @@
+#!/bin/sh -l
+# First argument is date folder; second is name of simulation group.
+
+#$ -t 1-4
+
+# thresholds=(.6 .55 .45 .4)
+# syncwins=(100 75 50 25)
+# index=$(($SGE_TASK_ID-1))
+# threshold=${thresholds[$index]}
+# syncwin=${syncwins[$index]}
+
+# for j in 75 50 25;
+# do
+echo "Executing cd '$1', posthocBAaggregate('$2', 'threshold', $3, 'sum_window', $4, 'sychrony_window', 50, 'vp_norm', 3); exit";
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1',\
+    posthocBAaggregate('$2', 'threshold', "$threshold", 'sum_window', $j, 'synchrony_window', 50, 'vp_norm', 3); exit";
+# done

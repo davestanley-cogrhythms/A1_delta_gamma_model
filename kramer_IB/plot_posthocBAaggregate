@@ -1,0 +1,11 @@
+#!/bin/sh -l
+# First argument is date folder; second is name of simulation group.
+
+echo "Executing cd '$1',\
+    thresholds = [.333 .5 .667]; sum_windows = [25 50 75]; for i = 1:3, for j = 1:3,\
+    plotBAaggregate('$2', [], [], 'threshold', thresholds(i), 'sum_window', sum_windows(j));\
+    end, end, exit";
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1',\
+    thresholds = [.333 .5 .667]; sum_windows = [25 50 75]; for i = 1:3, for j = 1:3,\
+    plotBAaggregate('$2', [], [], 'threshold', thresholds(i), 'sum_window', sum_windows(j));\
+    end, end, exit";
