@@ -1,7 +1,9 @@
-function results = spike_locking_to_input_plot(data, results, name, varargin)
+function results = spike_locking_to_input_plot(data, name, results, varargin)
 
 v_field = 'deepRS_V'; i_field = 'deepRS_iPeriodicPulsesBen_input'; f_field = 'deepRS_PPfreq';
-i_transform = 'wavelet'; label = '';
+i_transform = 'wavelet'; no_periods = 1; p_field = ''; rose_plot_flag = 0; modes = [2 3 4];
+
+label = ''; 
 
 if ~isempty(varargin)
     
@@ -30,6 +32,31 @@ if ~isempty(varargin)
             i_transform = varargin{2*v};
             
             label = [label, '_', i_transform];
+        
+        elseif strcmp(varargin{2*v - 1}, 'no_periods')
+            
+            no_periods = varargin{2*v};
+            
+            if no_periods < 0
+                
+                label = [label, '_cutoff10e', num2str(no_periods)];
+                
+            end
+
+        elseif strcmp(varargin{2*v - 1}, 'p_field')
+
+            p_field = varargin{2*v};
+
+        elseif strcmp(varargin{2*v - 1}, 'rose_plot_flag')
+
+            rose_plot_flag = varargin{2*v};
+
+        elseif strcmp(varargin{2*v - 1}, 'modes')
+
+            modes = varargin{2*v};
+            
+            label = [label, '_modes'];
+            for m = 1:length(modes), label = [label, num2str(modes(m))]; end
             
         end
         
@@ -41,7 +68,7 @@ close('all')
 
 if isempty(results)
     
-    results = dsAnalyze(data, @phase_metrics, varargin{:});
+    results = dsAnalyze(data, @phase_metrics, 'function_options', {varargin});
     
 end
 
@@ -65,11 +92,63 @@ no_varied = length(varied);
 
 vary_vectors = nan(length(data), no_varied);
 
+studyinfo = load([name, '/studyinfo.mat']);
+
+sims = studyinfo.studyinfo.simulations;
+
+sims_fields = fields(sims);
+
+sims_cell = struct2cell(sims);
+
+mods_cell = squeeze(sims_cell(strcmp(sims_fields, 'modifications'), :, :));
+
+modified_pops = mods_cell{1}(:, 1);
+
+modified_pops = cellfun(@(x) replace(x, '->', '_'), modified_pops, 'unif', 0);
+
+modified_variables = mods_cell{1}(:, 2);
+
 for variable = 1:no_varied
     
     vary_labels{variable} = varied{variable};
     
-    vary_vectors(:, variable) = [data.(varied{variable})];
+    if size(vary_vectors(:, variable)) == size([data.(varied{variable})])
+    
+        vary_vectors(:, variable) = [data.(varied{variable})];
+        
+    else
+        
+        var_subindex = cell(size(modified_variables));
+        
+        for i = 1:length(modified_variables)
+            
+            modified_variable = split(mods_cell{1}{i, 2}, {'(', ', ', ')'});
+            
+            modified_variable(cellfun(@isempty, modified_variable)) = [];
+                
+            for j = 1:length(modified_variable)
+                
+                var_subindex{i}(j) = contains(varied{variable}, modified_variable{j}) & contains(varied{variable}, modified_pops{i});
+                
+            end
+            
+            variable_index(i) = any(var_subindex{i});
+            
+        end
+        
+        if length(var_subindex{variable_index}) > 1
+            
+            this_vary_mat = cell2mat(cellfun(@(x) squeeze(x{variable_index, 3})', mods_cell, 'unif', 0));
+            
+        else
+            
+            this_vary_mat = cellfun(@(x) [x{variable_index, 3}], mods_cell);
+            
+        end
+        
+        vary_vectors(:, variable) = this_vary_mat(:, var_subindex{variable_index});
+        
+    end
     
     vary_params{variable} = unique(vary_vectors(:, variable));
     
@@ -84,6 +163,7 @@ if prod(vary_lengths(effective_vary_indices)) == length(data)
     vary_labels = vary_labels(effective_vary_indices);
     vary_params = vary_params(effective_vary_indices);
     vary_lengths = vary_lengths(effective_vary_indices);
+    vary_vectors = vary_vectors(:, effective_vary_indices);
     
 else
     
@@ -125,6 +205,10 @@ if length(vary_lengths) > 1
         
         vary_lengths(1:2) = vary_lengths(1);
         
+        vary_vectors(:, 3:(end + 1)) = vary_vectors(:, 2:end);
+        
+        vary_vectors(:, 2) = vary_vectors(:, 1);
+        
     end
     
     no_varied = length(vary_lengths) - 2;
@@ -148,6 +232,8 @@ elseif length(vary_lengths) == 1
     vary_params(1:2) = vary_params(1);
     
     vary_lengths(1:2) = vary_lengths(1);
+    
+    vary_vectors = repmat(vary_vectors, 1, 2);
     
     no_varied = 0;
     
@@ -209,15 +295,19 @@ nonempty_plots = zeros(no_rows, no_cols, no_figures);
 
 for f = 1:no_figures
     
-    figure(f)
+    if rose_plot_flag
     
-    figure_index = ones(1, length(data));
+        figure(f)
+        
+    end
+    
+    figure_index = ones(size(vary_vectors, 1), 1);
     
     figure_labels{f} = 'Spike Locking to Input';
     
     for v = 1:no_varied
         
-        figure_index = figure_index & ([data.(vary_labels{v + 2})] == figure_params(f, v));
+        figure_index = figure_index & (vary_vectors(:, v + 2) == figure_params(f, v));
         
         if v == 1
             
@@ -245,7 +335,7 @@ for f = 1:no_figures
                 
                 if s <= vary_lengths(1)
                     
-                    study_index = figure_index & ([data.(vary_labels{1})] == vary_params{1}(s));
+                    study_index = figure_index & (vary_vectors(:, 1) == vary_params{1}(s));
                     
                     study_label = [vary_labels{1}, ' = ', num2str(vary_params{1}(s), '%.3g')];
                     
@@ -259,9 +349,9 @@ for f = 1:no_figures
                 
             else
                 
-                row_index = figure_index & ([data.(vary_labels{2})] == vary_params{2}(r));
+                row_index = figure_index & (vary_vectors(:, 2) == vary_params{2}(r));
                 
-                study_index = row_index & ([data.(vary_labels{1})] == vary_params{1}(c));
+                study_index = row_index & (vary_vectors(:, 1) == vary_params{1}(c));
                 
                 study_label = [vary_labels{1}, ' = ', num2str(vary_params{1}(c), '%.3g'),...
                     ', ', vary_labels{2}, ' = ', num2str(vary_params{2}(r), '%.3g')];
@@ -272,21 +362,33 @@ for f = 1:no_figures
                 
                 if sum(study_index == 1)
                     
-                    nonempty_plots(r, c, f) = 1;
+                    if ~isempty(results(study_index).peak_freq)
+                        
+                        peak_freqs(r, c, f) = results(study_index).peak_freq;
+                        
+                    end
+                        
+                        % no_spikes = size(results(study_index).v_spike_phases, 1);
+                        
+                        % v_spike_phases(vsp_index + (1:no_spikes), :, :) = results(s).v_spike_phases;
                     
-                    peak_freqs(r, c, f) = results(study_index).peak_freq;
+                    if ~isempty(results(study_index).v_spike_phases)
+                        
+                        nonempty_plots(r, c, f) = 1;
+                        
+                        mean_spike_mrvs = nanmean(exp(sqrt(-1)*results(study_index).v_spike_phases));
+                        
+                        v_mean_spike_mrvs(r, c, f) = mean_spike_mrvs(1); % circ_r(results(s).v_spike_phases); %
+                        
+                    end
                     
-                    % no_spikes = size(results(study_index).v_spike_phases, 1);
-                    
-                    % v_spike_phases(vsp_index + (1:no_spikes), :, :) = results(s).v_spike_phases;
-                    
-                    mean_spike_mrvs = nanmean(exp(sqrt(-1)*results(study_index).v_spike_phases));
-                    
-                    no_spikes(r, c, f) = size(results(study_index).v_spike_phases, 1);
-                    
-                    mean_spikes_per_cycle(r, c, f) = nanmean(results(study_index).spikes_per_cycle{1});
-                    
-                    v_mean_spike_mrvs(r, c, f) = mean_spike_mrvs(1); % circ_r(results(s).v_spike_phases); %
+                    if ~isempty(results(study_index).spikes_per_cycle)
+                        
+                        no_spikes(r, c, f) = size(results(study_index).v_spike_phases, 1);
+                        
+                        mean_spikes_per_cycle(r, c, f) = nanmean(results(study_index).spikes_per_cycle{1});
+                        
+                    end
                     
                     % f_index = mod(s - 1, no_input_freqs) + 1;
                     %
@@ -294,13 +396,17 @@ for f = 1:no_figures
                     
                     % subplot_index = (r - 1)*no_cols + c; % no_other_conditions*(f_index - 1) + o_index;
                     
-                    ax(r, c, f) = subplot(no_rows, no_cols, s); % no_input_freqs, no_other_conditions, (f_index - 1)*no_other_conditions + o_index)
-                    
-                    rose(gca, results(study_index).v_spike_phases(:, 1, 1)) % , 60)
-                    
-                    hold on
-                    
-                    title(study_label, 'interpreter', 'none')
+                    if rose_plot_flag
+                        
+                        ax(r, c, f) = subplot(no_rows, no_cols, s); % no_input_freqs, no_other_conditions, (f_index - 1)*no_other_conditions + o_index)
+                        
+                        rose(gca, results(study_index).v_spike_phases(:, 1, 1)) % , 60)
+                        
+                        hold on
+                        
+                        title(study_label, 'interpreter', 'none')
+                        
+                    end
                     
                     % if ~strcmp(vary_labels{1}, vary_labels{2})
                     %
@@ -322,43 +428,47 @@ for f = 1:no_figures
     
 end
 
-save([name, label, '_PLV_data.mat'], 'results', 'peak_freqs', 'v_mean_spike_mrvs', 'no_spikes', 'mean_spikes_per_cycle')
+save([name, label, '_PLV_data.mat'], 'results', 'peak_freqs', 'v_mean_spike_mrvs', 'no_spikes', 'mean_spikes_per_cycle', '-v7.3')
 
 % linkaxes(reshape(ax(:, :, f), no_rows*no_cols, 1))
 
-for f = 1:no_figures
+if rose_plot_flag
     
-    figure(f)
-    
-    for r = 1:no_rows
+    for f = 1:no_figures
         
-        for c = 1:no_cols
+        figure(f)
+        
+        for r = 1:no_rows
             
-            s = (r - 1)*no_cols + c;
-            
-            if nonempty_plots(r, c, f)
+            for c = 1:no_cols
                 
-                subplot(no_rows, no_cols, s)
+                s = (r - 1)*no_cols + c;
                 
-                multiplier = max(max(xlim), max(ylim));
-                
-                compass(multiplier*real(v_mean_spike_mrvs(r, c, f)), multiplier*imag(v_mean_spike_mrvs(r, c, f)), 'k')
+                if nonempty_plots(r, c, f)
+                    
+                    subplot(no_rows, no_cols, s)
+                    
+                    multiplier = max(max(xlim), max(ylim));
+                    
+                    compass(multiplier*real(v_mean_spike_mrvs(r, c, f)), multiplier*imag(v_mean_spike_mrvs(r, c, f)), 'k')
+                    
+                end
                 
             end
             
         end
         
-    end
-    
-    mtit(gcf, figure_labels{f}, 'FontSize', 16)
-
-    if no_figures > 1
-    
-        save_as_pdf(gcf, [name, label, '_rose_', num2str(f)])
-    
-    else
+        mtit(gcf, figure_labels{f}, 'FontSize', 16)
         
-        save_as_pdf(gcf, [name, label, '_rose'])
+        if no_figures > 1
+            
+            save_as_pdf(gcf, [name, label, '_rose_', num2str(f)])
+            
+        else
+            
+            save_as_pdf(gcf, [name, label, '_rose'])
+            
+        end
         
     end
     
@@ -454,7 +564,7 @@ if no_varied >= 0
         
         subplot(4, 1, 4)
         
-        plot(vary_params{1}, zeros(size(spc_for_plot)), 'k:')
+        plot(vary_params{1}, zeros(size(spc_for_plot(:, :, f))), 'k:')
         
         hold on, plot(vary_params{1}, spc_for_plot(:, :, f) - 1)
         
@@ -482,6 +592,8 @@ if no_varied >= 0
         
     end
     
+end
+
 end
 
 
