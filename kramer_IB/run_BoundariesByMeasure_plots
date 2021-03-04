@@ -1,0 +1,17 @@
+#!/bin/sh -l
+# First argument is date folder; second is name of simulation group.
+
+#$ -l mem_total=125G
+#$ -pe omp 4
+# #$ -t 1-3
+
+# thresholds=(.667 .5 .333)
+# index=$(($SGE_TASK_ID-1))
+# threshold=${thresholds[$index]}
+
+for j in 50;
+do
+echo "Executing cd '$1', load('$2'), plotBoundariesByMeasure('vpdist', sim_name, 'threshold', .5, 'sum_window', $j, 'synchrony_window', 50, 'vp_norm', 3); exit";
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load('$2'),\
+    collectBoundariesByMeasure('vpdist', sim_name, 'threshold', .5, 'sum_window', $j, 'synchrony_window', 50, 'vp_norm', 3); exit";
+done

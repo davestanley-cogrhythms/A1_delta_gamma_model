@@ -1,0 +1,19 @@
+#!/bin/sh -l
+# First argument is date folder; second is name of simulation.
+
+#$ -pe omp 4
+#$ -l mem_total=125G
+# #$ -t 1-4
+
+# thresholds=(.6)
+# sumwindows=(75 65 60 50) 
+# index=$(($SGE_TASK_ID-1))
+# threshold=${thresholds[$index]}
+# sumwindow=${sumwindows[$index]}
+
+# for j in 50 60 65 75;
+# do
+echo "Executing cd '$1', load('$2'), plotVPaggregate(name, 'threshold', $3, 'sum_window', $4, 'synchrony_window', 50, 'vp_norm', 3); exit";
+matlab -nosplash -nodisplay -r "Figs_Ben_dir, cd '$1', load('$2'),\
+    plotVPaggregate(sim_name, 'threshold', $3, 'sum_window', $4, 'synchrony_window', 50, 'vp_norm', 3); exit";
+# done
