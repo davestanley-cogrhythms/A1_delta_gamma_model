@@ -55,7 +55,7 @@ pswk = pswk(periods_in_bound, :);
 
 no_periods = size(pswk, 1);
 
-pulses = zeros(onset/dt, 1);
+pulses = zeros(onset/dt, Npop);
 
 t = 0:dt:T;
 
@@ -73,10 +73,10 @@ end
 
 if length(pulses) < length(t)
    
-    pulses(end:(end + length(t) - length(pulses) + 1)) = 0;
+    pulses(end:(end + length(t) - length(pulses) + 1), :) = 0;
     
 end
 
-pulses = sum(t>=onset & t<=offset)*dt*pulses/sum(pulses*dt);
+pulses = sum(t>=onset & t<=offset)*dt*pulses*diag(1./sum(pulses*dt));
 
 end
