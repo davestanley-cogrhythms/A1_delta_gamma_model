@@ -4,7 +4,15 @@ dataList = dir(fullfile(fullfile(name, 'data'), '*.mat'));
 
 if ~isempty(dataList)
     
-    data = dsImport(name);
+    try
+        
+        data = dsImport(name);
+        
+    catch
+        
+        data = dsImportResults(name);
+        
+    end
     
 else
     
