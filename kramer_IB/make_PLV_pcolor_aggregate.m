@@ -45,6 +45,8 @@ for f = 1:(files_dim1*files_dim2)
         
         inputs = pick_vary_field(vary, 'PPstim');
         
+        inputs = inputs*29500/10^3;
+        
         subplot(files_dim2, files_dim1, f)
         
         pcolor(frequencies, fliplr(abs(inputs)), PLV(1:length(frequencies), :)')
@@ -57,17 +59,41 @@ for f = 1:(files_dim1*files_dim2)
         
         if mod(f, files_dim2) == 0, xlabel('Freq. (Hz)'), end
         
+        if f == files_dim1*files_dim2
         % if mod(f, files_dim1) == 1
-            ylabel({'Input Strength (pA)'})
+            ylabel({'Total Input (nA)'})
         % end
+        end
         
         % title(files{f}(20:end), 'Interpreter', 'none')
         
         hold on
         
-        nochange_colorbar(gca)
+        nochange_colorbar(gca);
+        
+        SPC = diag(1./(29*frequencies))*nspikes(1:47, :);
+        
+        contour(frequencies, fliplr(abs(inputs)), SPC(1:length(frequencies), :)', [1 1], 'Color', [1 1 1], 'LineWidth', 2);
+        
+        contour(frequencies, fliplr(abs(inputs)), SPC(1:length(frequencies), :)', [.9 .9], 'Color', [1 1 1], 'LineStyle', ':', 'LineWidth', 2);
+        
+        for n = 2:10
+        
+            contour(frequencies, fliplr(abs(inputs)), SPC(1:length(frequencies), :)', [n n], 'Color', [1 1 1], 'LineWidth', 0.5);
+            
+        end
+        
+        caxis([0 1])
         
         plot((all_dimensions(@nanmean, no_spikes(:, :, end))/29)*[1; 1], [0; max(abs(inputs))], 'Color', [1 0 1], 'LineWidth', 3)
+        
+        plot(2.5, 3.9, '*', 'Color', [0 1 1], 'Marker', '.', 'MarkerSize', 10)
+        
+        if f ~= files_dim1*files_dim2
+            
+            set(gca, 'XTick', [], 'YTick', [])
+            
+        end
         
     end
     
@@ -75,4 +101,4 @@ end
 
 set(gcf, 'Units', 'inches', 'Position', 1 + [0 0 4 8], 'PaperUnits', 'inches', 'PaperPosition', 1 + [0 0 4 8])
 
-saveas(gcf, ['PLV_pcolor_aggregate_w_MI.fig'])
+saveas(gcf, ['PLV_pcolor_w_contour.fig'])
