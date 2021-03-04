@@ -132,7 +132,7 @@ end
 if include_deepFS
     i=i+1;
     spec.populations(i).name = 'deepFS';
-    spec.populations(i).size = 6;
+    spec.populations(i).size = NdeepFS; % 1;
     spec.populations(i).equations = {['V''=(@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions;']};
     spec.populations(i).mechanism_list = {'IBitonic','IBnoise','FSiNaF','FSiKDR','IBleak','iSpeechInput'};
     spec.populations(i).parameters = {...
@@ -152,10 +152,10 @@ if include_deepRS
     
     i=i+1;
     spec.populations(i).name = 'deepRS';
-    spec.populations(i).size = 6;
+    spec.populations(i).size = NdeepRS; % 1;
     spec.populations(i).equations = {['V''=(I_const+@current)/Cm; V(0)=' num2str(IC_V) '; monitor functions; monitor V.spikes(0);']};
     spec.populations(i).mechanism_list = {'iNaP','iKs','iKsConst','iKDRG','iNaG','iLeak',...
-        'CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','itonicBen', 'iSpeechInput'}; %,'iFMPulses'}; %,...'iCarracedoEPSPs'}; % 'iSpikeTriggeredPulse',, 'VaryRandomSeed'}; % 'iPeriodicSpikes',
+        'CaDynT','iCaT','iKCaT','iPeriodicPulsesBen','itonicBen', 'iSpeechInput', 'iVariedPulses'}; %,'iFMPulses'}; %,...'iCarracedoEPSPs'}; % 'iSpikeTriggeredPulse',, 'VaryRandomSeed'}; % 'iPeriodicSpikes',
     spec.populations(i).parameters = {...
       'Cm',Cm_Ben,'PPstim',deepRSPPstim,'gSpike',deepRSgSpike,'PPcenter',0,'PPnorm',0,...
       'gKs',gKs,'gKCs',0,'gNaP',gKs/gNaP_denom,'gKCa',gKCa,'bKCa',bKCa,'gCa',gCa,'CAF',CAF,...
@@ -164,5 +164,6 @@ if include_deepRS
       'ton',500,'toff',tspan(end),'I_app',JdeepRS,'Inoise',0,...                                         %  (ton<t&t<toff) %%% 'PPstim = 0; PPfreq = 1.5; PPwidth = floor((1000/PPfreq)/4); PPshift = 0; ap_pulse_num = 0; kernel_type = 7;',... % in ms
       'PPonset',PPonset,'gCar',0,... % 'STPstim',0, 'dsfact',dsfact,...
       'gSpeech', 0,...
+      'VPstim', 0,...
       };
 end
