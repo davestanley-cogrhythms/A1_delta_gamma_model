@@ -33,6 +33,8 @@ for f = 1:(files_dim1*files_dim2)
         
         frequencies = pick_vary_field(vary, 'PPfreq');
         
+        SPC = diag(1./(29*frequencies))*nspikes(1:length(frequencies), :);
+        
         inputs = pick_vary_field(vary, 'PPstim');
         
         subplot(files_dim1, files_dim2, f)
@@ -42,6 +44,20 @@ for f = 1:(files_dim1*files_dim2)
         shading interp
         
         axis xy
+        
+        hold on
+        
+        contour(frequencies, fliplr(abs(inputs)), SPC(1:length(frequencies), :)', [1 1], 'Color', [1 1 1], 'LineWidth', 2);
+        
+        contour(frequencies, fliplr(abs(inputs)), SPC(1:length(frequencies), :)', [.9 .9], 'Color', [1 1 1], 'LineStyle', ':', 'LineWidth', 2);
+        
+        for n = 2:10
+        
+            contour(frequencies, fliplr(abs(inputs)), SPC(1:length(frequencies), :)', [n n], 'Color', [1 1 1], 'LineWidth', 0.5);
+            
+        end
+        
+        caxis([0 1])
         
         set(gca, 'FontSize', 12)
         
