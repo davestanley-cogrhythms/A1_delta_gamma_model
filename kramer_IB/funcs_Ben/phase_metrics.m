@@ -12,6 +12,10 @@ figure_flag = 0;
 
 no_periods = 1;
 
+p_field = '';
+
+modes = [2 3 4];
+
 if ~isempty(varargin)
 
     for v = 1:(length(varargin)/2)
@@ -40,6 +44,14 @@ if ~isempty(varargin)
 
             no_periods = varargin{2*v};
 
+        elseif strcmp(varargin{2*v - 1}, 'p_field')
+
+            p_field = varargin{2*v};
+
+        elseif strcmp(varargin{2*v - 1}, 'modes')
+
+            modes = varargin{2*v};
+
         end
 
     end
@@ -50,11 +62,23 @@ v = data.(v_field);
 
 t = data.time;
 
-i_vec = detrend(data.(i_field), 'constant');
+if strcmp(input_transform, 'wavelet_reduce')
+
+    i_vec = data.(i_field);
+    
+else
+    
+    i_vec = detrend(data.(i_field), 'constant');
+    
+end
+     
+if ~isempty(p_field)
+    
+    p_vec = data.(p_field); % p_vec = p_vec(t >= 1000);
+    
+end
 
 sampling_freq = round(1000*length(t)/t(end));
-
-v = v(t >= 1000); i_vec = i_vec(t >= 1000); t = t(t >= 1000);
 
 %% Getting peak frequency.
 
@@ -68,7 +92,7 @@ v_hat_smoothed = conv(v_hat, gauss_kernel, 'same');
 
 peak_freq = f(v_hat_smoothed == max(v_hat_smoothed));
 
-freqs = [data.(f_field) 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
+freqs = [nan 4.5 peak_freq]'; no_cycles = [7 7 7]'; no_freqs = length(freqs);
 
 freq_labels = cell(no_freqs, 1);
 
@@ -76,28 +100,44 @@ for f = 2:no_freqs, freq_labels{f} = num2str(freqs(f), '%.2g'); end
 
 %% Getting wavelet components.
 
-if strcmp(input_transform, 'wavelet')
-    
-    freq_labels{1} = num2str(data.(f_field), '%.2g');
+bandpassed = nan(size(i_vec, 1), 3);
 
-    bandpassed(:, 1) = wavelet_spectrogram(i_vec, sampling_freq, data.(f_field), no_cycles(1), 0, '');
+switch input_transform
     
-elseif strcmp(input_transform, 'hilbert')
+    case 'wavelet'
+
+        v = v(t >= 1000); i_vec = i_vec(t >= 1000); t = t(t >= 1000);
+        
+        freqs(1) = data.(f_field);
+        
+        freq_labels{1} = num2str(data.(f_field), '%.2g');
+        
+        bandpassed(:, 1) = wavelet_spectrogram(i_vec, sampling_freq, data.(f_field), no_cycles(1), 0, '');
+        
+    case 'hilbert'
+
+        v = v(t >= 1000); i_vec = i_vec(t >= 1000); t = t(t >= 1000);
+        
+        freq_labels{1} = i_field;
+        
+        bandpassed(:, 1) = hilbert(i_vec);
+        
+    case 'interp_square'
+
+        v = v(t >= 1000); i_vec = i_vec(t >= 1000); t = t(t >= 1000);
+        
+        phase = interp_square_phase(i_vec);
+        
+        bandpassed(:, 1) = cos(phase) + sqrt(-1)*sin(phase);
     
-    freq_labels{1} = i_field;
-    
-    bandpassed(:, 1) = hilbert(i_vec);
-    
-elseif strcmp(input_transform, 'interp_square')
-    
-    phase = interp_square_phase(i_vec);
-    
-    bandpassed(:, 1) = cos(phase) + sqrt(-1)*sin(phase);
+    case 'wavelet_reduce'
+        
+        bandpassed(:, 1) = wavelet_reduce(i_vec, sampling_freq, modes, 2);
     
 end
 
 bandpassed(:, 2:3) = wavelet_spectrogram(v, sampling_freq, freqs(2:3), no_cycles(2:3), 0, '');
-
+ 
 phase = angle(bandpassed);
 
 if figure_flag
@@ -138,16 +178,38 @@ end
 
 v_spikes = [diff(v > 0) == 1; zeros(1, size(v, 2))];
 
-pd_length = (t(end) - t(1))/no_periods; t_pd = nan(length(t), no_periods);
-
-no_spikes = nan(no_periods, 1);
-
-for p = 1:no_periods
-
-   t_pd(:, p) = t > (p - 1)*pd_length & t <= p*pd_length;
-
-   no_spikes(p) = sum(v_spikes & t_pd(:, p));
-
+if no_periods < 0
+    
+    i_pd = i_vec/max(i_vec) >= 10^no_periods;
+    
+    if ~isempty(p_field)
+    
+        i_pd = i_pd | (p_vec/max(p_vec) >= 10^no_periods);
+        
+    end
+    
+    i_pd_blocks = index_to_blocks(i_pd);
+    
+    t_pd = blocks_to_index(t([i_pd_blocks(1,1) i_pd_blocks(end, end)])', t);
+        
+    no_spikes = sum(v_spikes & t_pd);
+    
+    no_periods = 1;
+    
+else
+    
+    pd_length = (t(end) - t(1))/no_periods; t_pd = nan(length(t), no_periods);
+    
+    no_spikes = nan(no_periods, 1);
+    
+    for p = 1:no_periods
+        
+        t_pd(:, p) = t > (p - 1)*pd_length & t <= p*pd_length;
+        
+        no_spikes(p) = sum(v_spikes & t_pd(:, p));
+        
+    end
+    
 end
 
 v_spike_phases = nan(max(no_spikes), no_periods, no_freqs);
@@ -250,5 +312,7 @@ end
 %
 % end
 
-results = struct('v_spike_phases', v_spike_phases, 'peak_freq', peak_freq, 'input', i_vec, 'i_phase', phase(:, 1)); 
-results.spikes_per_cycle = spikes_per_cycle; % , 'v_phase_coh', v_phase_coh, 'v_phase_angle', v_phase_angle, 'v_phase_phase', v_phase_phase);
+results = struct('voltage', v, 'v_spikes', v_spikes, 'v_spike_phases', v_spike_phases,...
+    'peak_freq', peak_freq, 'input', i_vec, 'i_phase', phase(:, 1), 'no_spikes', no_spikes);
+results.spikes_per_cycle = spikes_per_cycle; % Otherwise output is a 3x1 struct.
+% , 'v_phase_coh', v_phase_coh, 'v_phase_angle', v_phase_angle, 'v_phase_phase', v_phase_phase);
