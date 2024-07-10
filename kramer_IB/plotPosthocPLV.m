@@ -1,5 +1,9 @@
 function plotPosthocPLV(sim_name)
 
+sim_name_struct = load(sim_name);
+
+no_sims = numel(sim_name_struct.names);
+
 %% Loading PLV.
 
 PLV_struct = load([sim_name, '_PLV_variables.mat']);
@@ -8,21 +12,21 @@ plv = PLV_struct.plv;
 
 plv_size = size(plv);
 
-plv = reshape(plv, [prod(plv_size(1:2)), plv_size(3)]);
+plv = reshape(plv, [prod(plv_size(1:2)), size(plv, 3)]); % plv_size(3)]);
 
 model = PLV_struct.models;
 models = unique(model(:));
-model = reshape(model, [prod(plv_size(1:2)), plv_size(3)]);
+model = reshape(model, [prod(plv_size(1:2)), size(plv, 3)]); % plv_size(3)]);
 
 predictors = PLV_struct.predictors;
 
 gS = predictors(:, 1);
 gSs = unique(gS);
-gS = reshape(gS, [prod(plv_size(1:2)), plv_size(3)]);
+gS = reshape(gS, [prod(plv_size(1:2)), size(plv, 3)]); % plv_size(3)]);
 
 channel = predictors(:, 2);
 channels = unique(channel);
-channel = reshape(channel, [prod(plv_size(1:2)), plv_size(3)]);
+channel = reshape(channel, [prod(plv_size(1:2)), size(plv, 3)]); % plv_size(3)]);
 
 %% Averaging PLV.
 

@@ -6,6 +6,7 @@ sum_window = options_struct.sum_window;
 threshold = options_struct.threshold;
 synchrony_window = options_struct.synchrony_window;
 vp_norm = options_struct.vp_norm;
+midsyl_indicator = options_struct.midsyl_indicator;
 
 results_struct = load([name, '_boundary_analysis.mat']);
 results = results_struct.results;
@@ -26,7 +27,7 @@ vpdist = nan(size(results));
 parfor i = 1:length(results)
     
     [vpdist(i), mod_boundaries{i}, syl_boundaries{i}, mid_syl_boundaries{i}] =...
-        calcVPdist_guts(results(i), threshold, sum_window, synchrony_window, vp_norm);
+        calcVPdist_guts(results(i), threshold, sum_window, synchrony_window, vp_norm, midsyl_indicator);
     
 end
 
@@ -78,7 +79,7 @@ save([name, label, '_vpdist.mat'], 'mod_boundaries', 'mid_syl_boundaries', 'syl_
 end
 
 
-function [vpdist, mod_boundaries, syl_boundaries, mid_syl_boundaries] = calcVPdist_guts(results, threshold, sum_window, synchrony_window, vp_norm)
+function [vpdist, mod_boundaries, syl_boundaries, mid_syl_boundaries] = calcVPdist_guts(results, threshold, sum_window, synchrony_window, vp_norm, midsyl_indicator)
 
 vpdist = nan; mod_boundaries = []; syl_boundaries = []; mid_syl_boundaries = [];
 
@@ -101,9 +102,17 @@ if ~(isempty(syl_boundaries) || isempty(mod_boundaries))
     
     mod_boundaries = mod_boundaries(mod_boundaries >= sentence_start & mod_boundaries <= sentence_end);
     
-    mid_syl_boundaries = conv(syl_boundaries, [1 1]*.5, 'valid');
+    if midsyl_indicator
+        
+        mid_syl_boundaries = conv(syl_boundaries, [1 1]*.5, 'valid');
+        
+        vpdist = VP_distance(synchrony_window, mid_syl_boundaries, mod_boundaries, vp_norm);
     
-    vpdist = VP_distance(synchrony_window, mid_syl_boundaries, mod_boundaries, vp_norm);
+    else
+        
+        vpdist = VP_distance(synchrony_window, syl_boundaries, mod_boundaries, vp_norm);
+        
+    end
     
 end
 

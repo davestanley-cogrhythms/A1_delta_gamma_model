@@ -1,11 +1,11 @@
 %% boundary_defaults script.
 
 variables = {'sum_window', 'smooth_window', 'boundary_window', 'threshold',...
-    'refractory', 'onset_time', 'synchrony_window', 'vp_norm', 'plot_opt', 'spike_field', 'input_field'};
+    'refractory', 'onset_time', 'synchrony_window', 'vp_norm', 'plot_opt', 'midsyl_indicator', 'spike_field', 'input_field'};
 
-short_vars = {'sumwin', 'smoothwin', 'boundwin', 'thresh', 'refrac', 'onset', 'syncwin', 'vpnorm', '', ''};
+short_vars = {'sumwin', 'smoothwin', 'boundwin', 'thresh', 'refrac', 'onset', 'syncwin', 'vpnorm', 'plot', 'midsyl', '', ''};
 
-defaults = {50, 25, 100, 2/3, 50, 1000, 50, 1, 0, 'deepRS_V_spikes', 'deepRS_iSpeechInput_input'};
+defaults = {50, 25, 100, 2/3, 50, 1000, 50, 1, 0, 1, 'deepRS_V_spikes', 'deepRS_iSpeechInput_input'};
 
 options_struct = struct;
 

@@ -1,12 +1,27 @@
-function collectPLV(sim_name) % synchrony_window, vpnorm, 
+function collectPLV(sim_name, func_handle) % synchrony_window, vpnorm, 
 
 %% Defaults & arguments.
+
+if isempty(func_handle), func_handle = @boundary_analysis; end
 
 suffix = '_PLV';
 
 sim_struct = load(sim_name);
 
 names = sim_struct.names;
+names = names(:);
+
+%% Checking PLV has been calculated.
+
+for n = 1:length(names)
+    
+    if exist([names{n}, suffix, '.mat']) ~= 2
+        
+        posthocPLV(names{n}, func_handle)
+        
+    end
+    
+end
 
 %% Collecting PLV.
 

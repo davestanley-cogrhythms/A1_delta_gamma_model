@@ -1,10 +1,10 @@
 function results = phase_metrics(data, varargin)
 
-v_field = 'deepRS_V';
+v_field = 'deepRS_V'; % Output (used for 
 
-i_field = 'deepRS_iPeriodicPulsesBen_input';
+i_field = 'deepRS_iPeriodicPulsesBen_input'; % Input (used for phase).
 
-f_field = 'deepRS_PPfreq';
+f_field = 'deepRS_PPfreq'; % Gives frequency of interest.
 
 input_transform = 'wavelet';
 
@@ -176,9 +176,11 @@ end
 
 %% Getting spike times and computing spike phases.
 
+% v_spikes = data.([v_field, '_spikes']);
+
 v_spikes = [diff(v > 0) == 1; zeros(1, size(v, 2))];
 
-if no_periods < 0
+if no_periods < 0 % Gets number of spikes per interval in a zero-one vector of interval boundaries (e.g., number of spikes per phoneme).
     
     i_pd = i_vec/max(i_vec) >= 10^no_periods;
     
@@ -312,7 +314,7 @@ end
 %
 % end
 
-results = struct('voltage', v, 'v_spikes', v_spikes, 'v_spike_phases', v_spike_phases,...
+results = struct('time', t, 'voltage', v, 'v_spikes', v_spikes, 'v_spike_phases', v_spike_phases,...
     'peak_freq', peak_freq, 'input', i_vec, 'i_phase', phase(:, 1), 'no_spikes', no_spikes);
 results.spikes_per_cycle = spikes_per_cycle; % Otherwise output is a 3x1 struct.
 % , 'v_phase_coh', v_phase_coh, 'v_phase_angle', v_phase_angle, 'v_phase_phase', v_phase_phase);

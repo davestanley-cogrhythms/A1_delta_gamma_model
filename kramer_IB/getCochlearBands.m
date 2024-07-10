@@ -1,5 +1,8 @@
 function cochlearBands = getCochlearBands(no_bands)
 
+if nargin == 0, no_bands = []; end
+if isempty(no_bands), no_bands = length(-30:97); end
+
 CF = 440 * 2 .^ ((-30:97)/24 - 1);
 
 total_channels = length(CF);

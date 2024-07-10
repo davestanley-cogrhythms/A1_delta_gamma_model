@@ -10,7 +10,7 @@ for t = 1:length(thresholds)
         
         for s = 1:length(sum_windows)
             
-            check = dir(sprintf('Figs_Ben/%s/%s_thresh_%.2g_sumwin_%d_vpnorm_3_vpdist.mat', folder, names{n}, thresholds(t), sum_windows(s)));
+            check = dir(sprintf('Figs_Ben/%s/%s_thresh_%.2g_sumwin_%d_vpnorm_3_midsyl_0_vpdist.mat', folder, names{n}, thresholds(t), sum_windows(s)));
             
             if isempty(check)
                 
@@ -24,7 +24,7 @@ for t = 1:length(thresholds)
             
         end
         
-        check = dir(sprintf('Figs_Ben/%s/%s_thresh_%.2g_vpnorm_3_vpdist.mat', folder, names{n}, thresholds(t)));
+        check = dir(sprintf('Figs_Ben/%s/%s_thresh_%.2g_vpnorm_3_midsyl_0_vpdist.mat', folder, names{n}, thresholds(t)));
         
         if isempty(check)
             

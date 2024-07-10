@@ -177,6 +177,8 @@ vary_labels = vary_labels(vary_permute);
 
 vary_params = vary_params(vary_permute);
 
+vary_vectors = vary_vectors(:, vary_permute);
+
 vary_labels(vary_lengths <= 1) = ''; 
 
 vary_params(vary_lengths <= 1) = [];

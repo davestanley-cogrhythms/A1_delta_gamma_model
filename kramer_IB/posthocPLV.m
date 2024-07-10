@@ -1,20 +1,23 @@
-function results_cell = posthocPLV(name)
+function results = posthocPLV(name, func_handle)
 
 %% Defaults & arguments.
+
+if nargin < 2, func_handle = []; end
+if isempty(func_handle), func_handle = @boundary_analysis; end
 
 % boundary_defaults %% See boundary_defaults.m, which is a script, not a function.
 
 analysis_name = [name, '_PLV.mat'];
 
-if exist([name, '_boundary_analysis.mat'], 'file')
+if exist([name, func2str(func_handle), '.mat'], 'file')
     
-    results_in = load([name, '_boundary_analysis.mat']);
+    results_in = load([name, func2str(func_handle), '.mat']);
     
     results_in = results_in.results;
 
 else
     
-    results_in = dsImportResults(name, @boundary_analysis);
+    results_in = dsImportResults(name, func_handle);
     
 end
 
@@ -26,7 +29,7 @@ output_fields = {'no_spikes', 'v_spike_phases', 'mrvs', 'phase'};
 
 results_cell = cell(length(results_in), length(output_fields));
 
-parfor i = 1:length(results_in)
+for i = 1:length(results_in)
     
     if ~any(cellfun(@isempty, struct2cell(results_in(i))))
         
@@ -49,6 +52,8 @@ sampling_freq = round(length(results.time(results.time <= 1000))/1000);
 bandpassed = wavelet_reduce(results.input, sampling_freq, 2:4, 2);
 
 phase = angle(bandpassed);
+    
+if isfield(results, 'v_spikes'), results.spikes = results.v_spikes; end
 
 no_spikes = sum(results.spikes);
 
